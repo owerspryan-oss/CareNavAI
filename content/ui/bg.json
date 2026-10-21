@@ -1,0 +1,648 @@
+{
+  "$comment": "Interface text, bg. DRAFT translation of content/ui/en.json (scripts/translate-ui.mjs). Not reviewed by a native speaker unless \"reviewed\" is true. sourceHashes record which English each string was translated from; a string whose English has changed falls back to English until it is translated and reviewed again.",
+  "language": "bg",
+  "derivedFrom": "en",
+  "reviewed": false,
+  "sourceHashes": {
+    "common.landing.guest": "873f40311e",
+    "common.landing.headline": "ef81e39422",
+    "common.landing.lead": "84ca990b53",
+    "common.landing.navLabel": "a16919b178",
+    "common.landing.prepare": "a1b19e4d17",
+    "common.landing.understand": "d463f3a2a2",
+    "common.language.label": "a4fe65264e",
+    "common.language.unreviewedNotice": "5deef406b5",
+    "common.meta.description": "65b153e624",
+    "common.meta.prepareTitle": "a1b19e4d17",
+    "common.meta.understandTitle": "d463f3a2a2",
+    "explain.actions.backToWords": "e0d38190d3",
+    "explain.byWhen": "41a51da85e",
+    "explain.checkThese": "c3e09855da",
+    "explain.draftNotice": "c2370528be",
+    "explain.englishOnlyNotice": "d4dc5ef397",
+    "explain.fromLetter": "9e54bec2d3",
+    "explain.hideSources": "2382e49d00",
+    "explain.languagePicker.defaultOption": "99ab3cad5c",
+    "explain.languagePicker.failed": "3bd16bc163",
+    "explain.languagePicker.label": "884e1fc50c",
+    "explain.languagePicker.toggle": "009ed110ba",
+    "explain.languagePicker.updating": "dfe40efe92",
+    "explain.medicine.dose": "6b942766c4",
+    "explain.medicine.duration": "8ddab050d5",
+    "explain.medicine.frequency": "7710cdf129",
+    "explain.medicine.instructions": "ba223548fd",
+    "explain.medicine.notStated": "070bbda206",
+    "explain.notFound.heading": "f3c741426e",
+    "explain.notFound.lead": "9fa5636d77",
+    "explain.nothingFound": "ed35cd8f1a",
+    "explain.sections.disclaimer": "56e6d260b6",
+    "explain.sections.means": "eed88f3aa1",
+    "explain.sections.medicines": "42dce2871e",
+    "explain.sections.steps": "dd00d3d3e9",
+    "explain.sections.told": "98a0d7e0fd",
+    "explain.sections.unclear": "61f655c99d",
+    "explain.showSources": "35846a52c1",
+    "explain.title": "b09f43951a",
+    "explain.whoToAsk.clinician": "392d70a076",
+    "explain.whoToAsk.gp_surgery": "adb43a203c",
+    "explain.whoToAsk.pharmacist": "1d55ae6c0e",
+    "prepare.actions.back": "76900f1bfd",
+    "prepare.actions.backToStart": "1287adb7b0",
+    "prepare.actions.checking": "e7b8fec7d2",
+    "prepare.actions.next": "1ff57a29d7",
+    "prepare.actions.saveAndReview": "9a5e7cf983",
+    "prepare.actions.skip": "9af278eb4a",
+    "prepare.changes.label": "07f6ba0440",
+    "prepare.changes.nonePattern": "e76cb60621",
+    "prepare.changes.placeholder": "01097e0651",
+    "prepare.concern.label": "5fb0541bf3",
+    "prepare.concern.placeholder": "01097e0651",
+    "prepare.draftNotice": "3925db23d5",
+    "prepare.errors.changesRequired": "f54df7d11f",
+    "prepare.errors.chooseAge": "69f9a3271c",
+    "prepare.errors.chooseOne": "1c16ddf265",
+    "prepare.errors.required": "0e3279a6e8",
+    "prepare.errors.tooLong": "bcf89f862d",
+    "prepare.followUps.continue": "31fbef1625",
+    "prepare.followUps.lead": "d75d934705",
+    "prepare.followUps.placeholder": "01097e0651",
+    "prepare.followUps.skip": "28d03596d2",
+    "prepare.followUps.skipped": "12698ce1ea",
+    "prepare.followUps.title": "72e220930b",
+    "prepare.followUps.undoSkip": "518ec333ae",
+    "prepare.medicines.medicinesHint": "6743825b8f",
+    "prepare.medicines.medicinesLabel": "dd81a64303",
+    "prepare.medicines.supportHint": "dd8ec4cdb4",
+    "prepare.medicines.supportLabel": "b8f0f0e2a6",
+    "prepare.review.change": "c0bf75bd78",
+    "prepare.review.changesHeading": "f40d16695e",
+    "prepare.review.childAge": "22c4e5c86c",
+    "prepare.review.concernHeading": "5c643bf729",
+    "prepare.review.followUpsHeading": "e7785388dd",
+    "prepare.review.getSummary": "b068971d45",
+    "prepare.review.medicinesHeading": "42dce2871e",
+    "prepare.review.noPattern": "e76cb60621",
+    "prepare.review.otherAge": "def6b4bcb7",
+    "prepare.review.patternPrefix": "2947d0f18d",
+    "prepare.review.skipped": "e9ff992f01",
+    "prepare.review.startedPrefix": "8301e51f74",
+    "prepare.review.supportHeading": "497d53de9e",
+    "prepare.review.timingHeading": "b158fd9fba",
+    "prepare.review.whoHeading": "60c3907ec2",
+    "prepare.review.worriesHeading": "3a1f715d1a",
+    "prepare.stepLabel": "82e0b7bc4b",
+    "prepare.steps.changes.lead": "9c9b8f487a",
+    "prepare.steps.changes.title": "f5df1cd960",
+    "prepare.steps.concern.lead": "1a019a781d",
+    "prepare.steps.concern.title": "a8e103d2ac",
+    "prepare.steps.medicines.lead": "1a0da9756e",
+    "prepare.steps.medicines.title": "242dc0493f",
+    "prepare.steps.review.lead": "35d525874b",
+    "prepare.steps.review.title": "7e405e1dad",
+    "prepare.steps.timing.lead": "cff1d53374",
+    "prepare.steps.timing.title": "8d5a3abd76",
+    "prepare.steps.who.lead": "600ac50757",
+    "prepare.steps.who.title": "10bc77f238",
+    "prepare.steps.worries.lead": "1a0da9756e",
+    "prepare.steps.worries.title": "91e06b4856",
+    "prepare.summaryStatus.backToAnswers": "67b40f0fdc",
+    "prepare.summaryStatus.errors.busy.body": "74a9e412a4",
+    "prepare.summaryStatus.errors.busy.title": "ee07829913",
+    "prepare.summaryStatus.errors.failed.body": "724b777423",
+    "prepare.summaryStatus.errors.failed.title": "ab827e3fe1",
+    "prepare.summaryStatus.errors.too_long.body": "58f33fb0ab",
+    "prepare.summaryStatus.errors.too_long.title": "4d0d5e78ab",
+    "prepare.summaryStatus.makingLead": "2b01df9628",
+    "prepare.summaryStatus.makingTitle": "df61eba7de",
+    "prepare.summaryStatus.tryAgain": "d8b8392e2c",
+    "prepare.timing.notesLabel": "9ef9359cbd",
+    "prepare.timing.pattern.changing": "734207131b",
+    "prepare.timing.pattern.comes_and_goes": "607e244ab1",
+    "prepare.timing.pattern.constant": "4cfd553929",
+    "prepare.timing.pattern.not_sure": "9fdc1d357f",
+    "prepare.timing.patternLegend": "3a1084ad30",
+    "prepare.timing.started.days": "30a190dd59",
+    "prepare.timing.started.months": "c11607ce93",
+    "prepare.timing.started.not_sure": "9fdc1d357f",
+    "prepare.timing.started.over_6_months": "a3c5b87810",
+    "prepare.timing.started.today": "2b065c7c9c",
+    "prepare.timing.started.weeks": "edbbe584b9",
+    "prepare.timing.startedLegend": "fa5c931819",
+    "prepare.who.ageBands.12_to_17": "91d93f330d",
+    "prepare.who.ageBands.1_to_4": "8fa72306f4",
+    "prepare.who.ageBands.5_to_11": "cfd2bbca85",
+    "prepare.who.ageBands.adult": "bf62a5e20a",
+    "prepare.who.ageBands.under_1": "ac42c9a2c9",
+    "prepare.who.ageLegend": "84dc5a2c86",
+    "prepare.who.ageLegendOther": "819708806c",
+    "prepare.who.labelHint": "a7dcc778fb",
+    "prepare.who.labelLabel": "6b95163c84",
+    "prepare.who.legend": "0b24aed53a",
+    "prepare.who.options.carer": "5032983329",
+    "prepare.who.options.other": "3233cb049a",
+    "prepare.who.options.parent": "ea4c0f6bd9",
+    "prepare.who.options.self": "d30af076b0",
+    "prepare.worries.label": "ec6a666d57",
+    "prepare.worries.placeholder": "01097e0651",
+    "result.actions.backToAnswers": "67b40f0fdc",
+    "result.actions.comingSoon": "4f7d640176",
+    "result.actions.pdfFailed": "a9dfbbbc79",
+    "result.actions.savePdf": "4cab70e922",
+    "result.actions.savingPdf": "46a760e3fd",
+    "result.confidenceNotice": "75e5b0c6d5",
+    "result.draftNotice": "982ad08f6d",
+    "result.englishOnlyNotice": "cdc32a8e13",
+    "result.forDoctor": "60091ce4c9",
+    "result.hideOwnWords": "f9a010b89a",
+    "result.layout.back": "76900f1bfd",
+    "result.layout.deckLabel": "79a0e8cf57",
+    "result.layout.next": "1ff57a29d7",
+    "result.layout.position": "3612e1cd75",
+    "result.layout.toDeck": "237210ae56",
+    "result.layout.toList": "aadb759187",
+    "result.match.notQuite": "fd682cdc1f",
+    "result.match.question": "d831ba4b87",
+    "result.match.thanks": "bbcc2eded9",
+    "result.match.yes": "85a39ab345",
+    "result.nothingMissing": "ed030afa16",
+    "result.ownWordsHeading": "f00e9fef8c",
+    "result.sections.changes": "f40d16695e",
+    "result.sections.disclaimer": "c83aac6d99",
+    "result.sections.duration": "8ddab050d5",
+    "result.sections.followUps": "e7785388dd",
+    "result.sections.forWhom": "60c3907ec2",
+    "result.sections.frequency": "7710cdf129",
+    "result.sections.mainConcern": "5c643bf729",
+    "result.sections.medicines": "42dce2871e",
+    "result.sections.notMentioned": "8ec2bff4fe",
+    "result.sections.previousSupport": "497d53de9e",
+    "result.sections.questions": "a1ac9ed143",
+    "result.sections.serviceRoutes": "00f1193a04",
+    "result.sections.whatToBring": "3090fd37d1",
+    "result.sections.worries": "3a1f715d1a",
+    "result.showOwnWords": "e981d03ad7",
+    "result.simpleEnglish": "99ab3cad5c",
+    "result.skippedQuestion": "862f38bf2b",
+    "result.tabsLabel": "ae8211ceb8",
+    "result.title": "faef0e95d9",
+    "result.weReadThisAs": "92090ff602",
+    "result.youDidntMention": "ed3d6bf6e4",
+    "understand.actions.back": "76900f1bfd",
+    "understand.actions.backToStart": "1287adb7b0",
+    "understand.actions.continue": "31fbef1625",
+    "understand.choose.lead": "8c1909f0f5",
+    "understand.choose.noticeMore": "45899765d3",
+    "understand.choose.noticeSummary": "93af5098b9",
+    "understand.choose.photo": "1d464c6866",
+    "understand.choose.photoHint": "23713ba50d",
+    "understand.choose.title": "0ba2e8cb3b",
+    "understand.choose.type": "58bf85aea1",
+    "understand.choose.typeHint": "09b0b38669",
+    "understand.confirm.checkThese": "c3e09855da",
+    "understand.confirm.checking": "0dfe1d63c9",
+    "understand.confirm.confirm": "8bcd820ce3",
+    "understand.confirm.found": "c7151b0cda",
+    "understand.confirm.label": "d745b48fd4",
+    "understand.confirm.photoLead": "e0943063d3",
+    "understand.confirm.photoTitle": "05cf08fba0",
+    "understand.confirm.placeholder": "ac9ccd16ee",
+    "understand.confirm.required": "282a5373dd",
+    "understand.confirm.retakePhoto": "657d13eb83",
+    "understand.confirm.typedLead": "18f0582f1c",
+    "understand.confirm.typedTitle": "a8c0b08b0c",
+    "understand.errors.tooLong": "bcf89f862d",
+    "understand.followUpsLead": "e13c4f6611",
+    "understand.fromLetter.heading": "9e54bec2d3",
+    "understand.fromLetter.showAll": "8b61252d4b",
+    "understand.fromLetter.showLess": "94ea9b1d33",
+    "understand.photo.alt": "d0b55dc80c",
+    "understand.photo.caption": "c554de8df5",
+    "understand.photo.larger": "b33e2dafec",
+    "understand.photo.smaller": "f537f6c64a",
+    "understand.photoAdvice.afterItems": "2c98b95a17",
+    "understand.photoAdvice.choosePhoto": "f28ab0436b",
+    "understand.photoAdvice.items.0": "2c6b2e253c",
+    "understand.photoAdvice.items.1": "aa7eb8c4c9",
+    "understand.photoAdvice.items.2": "20d06c7411",
+    "understand.photoAdvice.lead": "867e342492",
+    "understand.photoAdvice.openCamera": "8cbda064f2",
+    "understand.photoAdvice.privacy": "9d76a4e686",
+    "understand.photoAdvice.title": "fd9f4e6cef",
+    "understand.photoProblems.busy.body": "74a9e412a4",
+    "understand.photoProblems.busy.title": "ee07829913",
+    "understand.photoProblems.failed.body": "bb6e802931",
+    "understand.photoProblems.failed.title": "ab827e3fe1",
+    "understand.photoProblems.invalid.body": "e6e0e6c942",
+    "understand.photoProblems.invalid.title": "2c469279a4",
+    "understand.photoProblems.rate_limited.body": "398e77646e",
+    "understand.photoProblems.rate_limited.title": "8c98449c5a",
+    "understand.photoProblems.retake.body": "6efd7bbb92",
+    "understand.photoProblems.retake.title": "116a992130",
+    "understand.photoProblems.too_large.body": "f16bd23a49",
+    "understand.photoProblems.too_large.title": "a279d469a8",
+    "understand.photoProblems.unreadable.body": "e6e0e6c942",
+    "understand.photoProblems.unreadable.title": "2c469279a4",
+    "understand.reading.lead": "2b01df9628",
+    "understand.reading.title": "85ee7dea78",
+    "understand.retake": "89e40dd9f6",
+    "understand.status.backToAnswers": "e0d38190d3",
+    "understand.status.errors.busy.body": "74a9e412a4",
+    "understand.status.errors.busy.title": "ee07829913",
+    "understand.status.errors.failed.body": "7c82b4a18e",
+    "understand.status.errors.failed.title": "ab827e3fe1",
+    "understand.status.errors.too_long.body": "e9df507afd",
+    "understand.status.errors.too_long.title": "10be6dad9e",
+    "understand.status.makingLead": "2b01df9628",
+    "understand.status.makingTitle": "7f777619c6",
+    "understand.status.tryAgain": "d8b8392e2c",
+    "understand.typeInstead": "83644bf92d"
+  },
+  "messages": {
+    "common": {
+      "landing": {
+        "headline": "Нека се подготвим за вашия преглед.",
+        "lead": "Ясна информация. По-добър разговор с лекаря. Ще се справите.",
+        "navLabel": "Изберете от какво имате нужда",
+        "prepare": "Подготовка за моя преглед",
+        "understand": "Да разбера какво ми казаха",
+        "guest": "Режим за гости — нищо не се запазва."
+      },
+      "language": {
+        "label": "Език",
+        "unreviewedNotice": "Тази страница е преведена автоматично и все още не е проверена от носител на езика."
+      },
+      "meta": {
+        "description": "Подгответе се за прегледа си в NHS и разберете какво ви казаха.",
+        "prepareTitle": "Подготовка за моя преглед",
+        "understandTitle": "Да разбера какво ми казаха"
+      }
+    },
+    "prepare": {
+      "draftNotice": "Това е чернова, която да ви помогне да се подготвите. Това не е медицински съвет.",
+      "stepLabel": "Стъпка {n} от {total}",
+      "steps": {
+        "who": {
+          "title": "За кого е този преглед?",
+          "lead": "Ще напишем обобщението ви от правилната гледна точка."
+        },
+        "concern": {
+          "title": "За какво искате да говорите с лекаря си?",
+          "lead": "Напишете го със свои думи, на какъвто и да е език. Няма грешен начин да го кажете."
+        },
+        "timing": {
+          "title": "Откога и колко често?",
+          "lead": "Изберете отговорите, които пасват най-добре. „Не съм сигурен/сигурна“ също е наред."
+        },
+        "changes": {
+          "title": "Забелязали ли сте промени или закономерности?",
+          "lead": "Например дали е по-зле през нощта, след хранене или в определени часове."
+        },
+        "medicines": {
+          "title": "Лекарства и помощ досега",
+          "lead": "Тази стъпка не е задължителна. Можете да я пропуснете."
+        },
+        "worries": {
+          "title": "Тревожи ли ви нещо, или ви е трудно да говорите за това?",
+          "lead": "Тази стъпка не е задължителна. Можете да я пропуснете."
+        },
+        "review": {
+          "title": "Проверете отговорите си",
+          "lead": "Можете да промените всичко, преди да направим обобщението ви."
+        }
+      },
+      "who": {
+        "legend": "Изберете едно",
+        "options": {
+          "self": "За мен",
+          "parent": "За моето дете",
+          "carer": "За човек, за когото се грижа",
+          "other": "За някой друг"
+        },
+        "ageLegend": "На колко години е детето ви?",
+        "ageLegendOther": "На колко години е човекът?",
+        "ageBands": {
+          "under_1": "Под 1 година",
+          "1_to_4": "От 1 до 4 години",
+          "5_to_11": "От 5 до 11 години",
+          "12_to_17": "От 12 до 17 години",
+          "adult": "18 или повече години"
+        },
+        "labelLabel": "Какъв ви е този човек? (по желание)",
+        "labelHint": "Например: майка ми, съседът ми."
+      },
+      "concern": {
+        "label": "Основното, което ви тревожи",
+        "placeholder": "Пишете тук, на какъвто и да е език."
+      },
+      "timing": {
+        "startedLegend": "Кога започна?",
+        "started": {
+          "today": "Днес",
+          "days": "През последните няколко дни",
+          "weeks": "Преди 1 до 4 седмици",
+          "months": "Преди 1 до 6 месеца",
+          "over_6_months": "Преди повече от 6 месеца",
+          "not_sure": "Не съм сигурен/сигурна"
+        },
+        "patternLegend": "Колко често се появява?",
+        "pattern": {
+          "constant": "През цялото време",
+          "comes_and_goes": "Идва и си отива",
+          "changing": "Променя се",
+          "not_sure": "Не съм сигурен/сигурна"
+        },
+        "notesLabel": "Нещо друго за това кога се случва? (по желание)"
+      },
+      "changes": {
+        "label": "Промени или закономерности, които сте забелязали",
+        "placeholder": "Пишете тук, на какъвто и да е език.",
+        "nonePattern": "Не съм забелязал/а никаква закономерност"
+      },
+      "medicines": {
+        "medicinesLabel": "Лекарства, които приемате сега",
+        "medicinesHint": "Включете и всичко от аптека или магазин.",
+        "supportLabel": "Помощ, която вече сте получили",
+        "supportHint": "Например: фармацевт, посещение при GP или болница."
+      },
+      "worries": {
+        "label": "Вашите тревоги",
+        "placeholder": "Пишете тук, на какъвто и да е език."
+      },
+      "review": {
+        "change": "Промяна",
+        "followUpsHeading": "Вашите допълнителни отговори",
+        "skipped": "Пропуснахте това",
+        "noPattern": "Не съм забелязал/а никаква закономерност",
+        "whoHeading": "За кого е",
+        "concernHeading": "Основен проблем",
+        "timingHeading": "Откога и колко често",
+        "changesHeading": "Промени и закономерности",
+        "medicinesHeading": "Лекарства",
+        "supportHeading": "Помощ досега",
+        "worriesHeading": "Тревоги",
+        "startedPrefix": "Започна:",
+        "patternPrefix": "Колко често:",
+        "childAge": "Моето дете, възраст: {band}",
+        "otherAge": "възраст: {band}",
+        "getSummary": "Вземи моето обобщение"
+      },
+      "followUps": {
+        "title": "Няколко кратки въпроса",
+        "lead": "Те помагат на лекаря да ви разбере. Можете да пропуснете всеки от тях.",
+        "placeholder": "Пишете тук, на какъвто и да е език.",
+        "skip": "Пропусни",
+        "skipped": "Пропуснато",
+        "undoSkip": "Отговори на това",
+        "continue": "Продължи"
+      },
+      "summaryStatus": {
+        "makingTitle": "Правим вашето обобщение",
+        "makingLead": "Това може да отнеме до една минута. Моля, не затваряйте тази страница.",
+        "errors": {
+          "too_long": {
+            "title": "Някои от отговорите ви са твърде дълги",
+            "body": "Моля, върнете се, направете отговорите си малко по-кратки и опитайте отново."
+          },
+          "busy": {
+            "title": "В момента сме много заети",
+            "body": "В момента твърде много хора използват CareNav AI. Моля, опитайте отново след няколко минути."
+          },
+          "failed": {
+            "title": "Нещо се обърка",
+            "body": "Този път не успяхме да направим обобщението ви. Отговорите ви са все още тук. Моля, опитайте отново."
+          }
+        },
+        "tryAgain": "Опитай отново",
+        "backToAnswers": "Обратно към моите отговори"
+      },
+      "actions": {
+        "back": "Назад",
+        "backToStart": "Към началото",
+        "next": "Напред",
+        "skip": "Пропусни тази стъпка",
+        "saveAndReview": "Запази и прегледай",
+        "checking": "Проверяваме отговора ви"
+      },
+      "errors": {
+        "chooseOne": "Моля, изберете едно.",
+        "chooseAge": "Моля, изберете възраст.",
+        "required": "Моля, напишете няколко думи. Всеки език е подходящ.",
+        "changesRequired": "Моля, напишете какво сте забелязали или отметнете „Не съм забелязал/а никаква закономерност“.",
+        "tooLong": "Текстът е с {over} знака по-дълъг от позволеното. Моля, съкратете го до {max} знака или по-малко."
+      }
+    },
+    "understand": {
+      "choose": {
+        "title": "Какво ви казаха?",
+        "lead": "Добавете писмо, рецепта или бележка от прегледа си. Ще го обясним с по-прости думи.",
+        "photo": "Снимайте писмо или рецепта",
+        "photoHint": "Ще прочетем текста, а вие ще го проверите.",
+        "type": "Напишете или поставете текста",
+        "typeHint": "Всеки език е подходящ.",
+        "noticeSummary": "Изпращаме думите ви на услуга с изкуствен интелект (OpenAI), за да ги обясним. Като гост нищо не се запазва.",
+        "noticeMore": "Повече за поверителността"
+      },
+      "photoAdvice": {
+        "title": "Преди да снимате",
+        "lead": "Моля, покрийте или прегънете тези неща, за да не се виждат на снимката:",
+        "items": [
+          "Вашето име",
+          "Вашият адрес",
+          "Вашият номер в NHS"
+        ],
+        "afterItems": "Поставете писмото равно, на добра светлина, и съберете цялата страница в снимката.",
+        "privacy": "Снимката ви остава на това устройство. Никога не я запазваме.",
+        "openCamera": "Отвори камерата",
+        "choosePhoto": "Избери снимка вместо това"
+      },
+      "reading": {
+        "title": "Четем писмото ви",
+        "lead": "Това може да отнеме до една минута. Моля, не затваряйте тази страница."
+      },
+      "photoProblems": {
+        "retake": {
+          "title": "Не успяхме да го прочетем ясно",
+          "body": "Моля, снимайте отново. Поставете писмото равно, използвайте добра светлина и дръжте телефона неподвижно."
+        },
+        "unreadable": {
+          "title": "Не успяхме да отворим тази снимка",
+          "body": "Моля, опитайте с друга снимка или напишете текста."
+        },
+        "invalid": {
+          "title": "Не успяхме да отворим тази снимка",
+          "body": "Моля, опитайте с друга снимка или напишете текста."
+        },
+        "too_large": {
+          "title": "Снимката е твърде голяма",
+          "body": "Моля, снимайте отново или напишете текста."
+        },
+        "rate_limited": {
+          "title": "Моля, изчакайте малко",
+          "body": "Изпратихте много неща за кратко време. Моля, изчакайте една минута и опитайте отново."
+        },
+        "busy": {
+          "title": "В момента сме много заети",
+          "body": "В момента твърде много хора използват CareNav AI. Моля, опитайте отново след няколко минути."
+        },
+        "failed": {
+          "title": "Нещо се обърка",
+          "body": "Този път не успяхме да прочетем снимката ви. Моля, опитайте отново или напишете текста."
+        }
+      },
+      "retake": "Снимай отново",
+      "typeInstead": "Напиши го вместо това",
+      "confirm": {
+        "photoTitle": "Проверете текста от снимката си",
+        "photoLead": "Възможно е да сме прочели нещо грешно. Поправете всичко грешно, преди да го обясним.",
+        "typedTitle": "Какво пише в писмото ви?",
+        "typedLead": "Напишете или поставете текста от писмото, рецептата или записката от прегледа си.",
+        "label": "Текстът от писмото ви",
+        "placeholder": "Напишете или поставете тук.",
+        "found": "Лекарства, дози и дати, които открихме:",
+        "checkThese": "Сверете ги с писмото или етикета.",
+        "confirm": "Това е вярно, обяснете го",
+        "checking": "Проверяваме",
+        "required": "Моля, първо напишете или поставете текст.",
+        "retakePhoto": "Снимай отново"
+      },
+      "photo": {
+        "alt": "Вашата снимка на писмото",
+        "caption": "Вашата снимка. Тя остава на това устройство и изчезва, когато излезете.",
+        "larger": "Покажи по-голямо",
+        "smaller": "Покажи по-малко"
+      },
+      "fromLetter": {
+        "heading": "От вашето писмо",
+        "showAll": "Покажи всичко",
+        "showLess": "Покажи по-малко"
+      },
+      "followUpsLead": "Те ни помагат да обясним писмото ви ясно. Можете да пропуснете всеки от тях.",
+      "status": {
+        "makingTitle": "Обясняваме писмото ви",
+        "makingLead": "Това може да отнеме до една минута. Моля, не затваряйте тази страница.",
+        "errors": {
+          "too_long": {
+            "title": "Писмото ви е твърде дълго",
+            "body": "Моля, върнете се, оставете само частта, която искате да ви обясним, и опитайте отново."
+          },
+          "busy": {
+            "title": "В момента сме много заети",
+            "body": "В момента твърде много хора използват CareNav AI. Моля, опитайте отново след няколко минути."
+          },
+          "failed": {
+            "title": "Нещо се обърка",
+            "body": "Този път не успяхме да обясним писмото ви. Думите ви са все още тук. Моля, опитайте отново."
+          }
+        },
+        "tryAgain": "Опитай отново",
+        "backToAnswers": "Обратно към текста"
+      },
+      "actions": {
+        "back": "Назад",
+        "backToStart": "Към началото",
+        "continue": "Продължи"
+      },
+      "errors": {
+        "tooLong": "Текстът е с {over} знака по-дълъг от позволеното. Моля, съкратете го до {max} знака или по-малко."
+      }
+    },
+    "result": {
+      "title": "Ето вашето обобщение",
+      "draftNotice": "Чернова, която да ви помогне да се подготвите. Не е медицински съвет.",
+      "weReadThisAs": "Разпознахме езика като: {language}",
+      "tabsLabel": "Изберете версия",
+      "simpleEnglish": "Прост английски",
+      "forDoctor": "Английски (за вашия лекар)",
+      "confidenceNotice": "Моля, проверете това с човек, който говори вашия език.",
+      "englishOnlyNotice": "Този път не успяхме да направим надеждна версия на вашия език, затова обобщението ви е само на английски. В него нищо не липсва и можете да го покажете на лекаря си така, както е.",
+      "sections": {
+        "forWhom": "За кого е",
+        "mainConcern": "Основен проблем",
+        "duration": "Откога",
+        "frequency": "Колко често",
+        "changes": "Промени и закономерности",
+        "medicines": "Лекарства",
+        "previousSupport": "Помощ досега",
+        "worries": "Тревоги",
+        "questions": "Въпроси, които можете да зададете",
+        "whatToBring": "Какво да носите",
+        "notMentioned": "Не е споменато",
+        "followUps": "Вашите допълнителни отговори",
+        "serviceRoutes": "Къде да потърсите помощ",
+        "disclaimer": "За това обобщение"
+      },
+      "youDidntMention": "Не споменахте: {sections}.",
+      "nothingMissing": "Изглежда, че не липсва нищо важно.",
+      "showOwnWords": "Покажи моите думи",
+      "hideOwnWords": "Скрий моите думи",
+      "ownWordsHeading": "Какво ни казахте",
+      "skippedQuestion": "Пропуснахте този въпрос.",
+      "match": {
+        "question": "Това ли имахте предвид?",
+        "yes": "Да",
+        "notQuite": "Не съвсем",
+        "thanks": "Благодарим ви. Можете да покажете това на лекаря или медицинската сестра."
+      },
+      "actions": {
+        "backToAnswers": "Обратно към моите отговори",
+        "savePdf": "Запази като PDF",
+        "savingPdf": "Правим вашия PDF",
+        "pdfFailed": "За съжаление не успяхме да направим PDF файла. Моля, опитайте отново.",
+        "comingSoon": "Очаквайте скоро"
+      },
+      "layout": {
+        "toDeck": "По една карта",
+        "toList": "Покажи като списък",
+        "deckLabel": "Вашият резултат, по една карта",
+        "next": "Напред",
+        "back": "Назад",
+        "position": "{n} от {total}"
+      }
+    },
+    "explain": {
+      "title": "Ето какво означава писмото ви",
+      "draftNotice": "Чернова, а не медицински съвет. Моля, проверете го с фармацевт или GP.",
+      "englishOnlyNotice": "Този път не успяхме да направим надеждна версия на вашия език, затова това обяснение е само на английски. В него нищо не липсва.",
+      "sections": {
+        "told": "Какво ви казаха",
+        "means": "Какво означава",
+        "steps": "Следващи стъпки",
+        "medicines": "Лекарства",
+        "unclear": "Неясно или липсващо",
+        "disclaimer": "За това обяснение"
+      },
+      "nothingFound": "Не успяхме да откроим основните неща. Моля, вижте самото писмо.",
+      "byWhen": "Кога: {when}",
+      "medicine": {
+        "dose": "Доза",
+        "frequency": "Колко често",
+        "duration": "Колко дълго",
+        "instructions": "Как да го приемате",
+        "notStated": "Не е посочено в писмото ви"
+      },
+      "checkThese": "Сверете ги с писмото или етикета.",
+      "whoToAsk": {
+        "clinician": "Попитайте човека, който е написал писмото ви",
+        "pharmacist": "Попитайте фармацевт",
+        "gp_surgery": "Попитайте в кабинета на вашия GP"
+      },
+      "showSources": "Покажи думите от писмото",
+      "hideSources": "Скрий думите от писмото",
+      "fromLetter": "От вашето писмо",
+      "notFound": {
+        "heading": "Не намерихме това в писмото ви",
+        "lead": "Не намерихме тези неща в писмото ви, затова не разчитайте на тях."
+      },
+      "languagePicker": {
+        "toggle": "Смени езика",
+        "label": "Покажи ми това на",
+        "defaultOption": "Прост английски",
+        "updating": "Обновяваме…",
+        "failed": "Този път не успяхме да направим тази версия. Все още виждате предишната."
+      },
+      "actions": {
+        "backToWords": "Обратно към текста"
+      }
+    }
+  }
+}

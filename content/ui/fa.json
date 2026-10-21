@@ -1,0 +1,648 @@
+{
+  "$comment": "Interface text, fa. DRAFT translation of content/ui/en.json (scripts/translate-ui.mjs). Not reviewed by a native speaker unless \"reviewed\" is true. sourceHashes record which English each string was translated from; a string whose English has changed falls back to English until it is translated and reviewed again.",
+  "language": "fa",
+  "derivedFrom": "en",
+  "reviewed": false,
+  "sourceHashes": {
+    "common.landing.guest": "873f40311e",
+    "common.landing.headline": "ef81e39422",
+    "common.landing.lead": "84ca990b53",
+    "common.landing.navLabel": "a16919b178",
+    "common.landing.prepare": "a1b19e4d17",
+    "common.landing.understand": "d463f3a2a2",
+    "common.language.label": "a4fe65264e",
+    "common.language.unreviewedNotice": "5deef406b5",
+    "common.meta.description": "65b153e624",
+    "common.meta.prepareTitle": "a1b19e4d17",
+    "common.meta.understandTitle": "d463f3a2a2",
+    "explain.actions.backToWords": "e0d38190d3",
+    "explain.byWhen": "41a51da85e",
+    "explain.checkThese": "c3e09855da",
+    "explain.draftNotice": "c2370528be",
+    "explain.englishOnlyNotice": "d4dc5ef397",
+    "explain.fromLetter": "9e54bec2d3",
+    "explain.hideSources": "2382e49d00",
+    "explain.languagePicker.defaultOption": "99ab3cad5c",
+    "explain.languagePicker.failed": "3bd16bc163",
+    "explain.languagePicker.label": "884e1fc50c",
+    "explain.languagePicker.toggle": "009ed110ba",
+    "explain.languagePicker.updating": "dfe40efe92",
+    "explain.medicine.dose": "6b942766c4",
+    "explain.medicine.duration": "8ddab050d5",
+    "explain.medicine.frequency": "7710cdf129",
+    "explain.medicine.instructions": "ba223548fd",
+    "explain.medicine.notStated": "070bbda206",
+    "explain.notFound.heading": "f3c741426e",
+    "explain.notFound.lead": "9fa5636d77",
+    "explain.nothingFound": "ed35cd8f1a",
+    "explain.sections.disclaimer": "56e6d260b6",
+    "explain.sections.means": "eed88f3aa1",
+    "explain.sections.medicines": "42dce2871e",
+    "explain.sections.steps": "dd00d3d3e9",
+    "explain.sections.told": "98a0d7e0fd",
+    "explain.sections.unclear": "61f655c99d",
+    "explain.showSources": "35846a52c1",
+    "explain.title": "b09f43951a",
+    "explain.whoToAsk.clinician": "392d70a076",
+    "explain.whoToAsk.gp_surgery": "adb43a203c",
+    "explain.whoToAsk.pharmacist": "1d55ae6c0e",
+    "prepare.actions.back": "76900f1bfd",
+    "prepare.actions.backToStart": "1287adb7b0",
+    "prepare.actions.checking": "e7b8fec7d2",
+    "prepare.actions.next": "1ff57a29d7",
+    "prepare.actions.saveAndReview": "9a5e7cf983",
+    "prepare.actions.skip": "9af278eb4a",
+    "prepare.changes.label": "07f6ba0440",
+    "prepare.changes.nonePattern": "e76cb60621",
+    "prepare.changes.placeholder": "01097e0651",
+    "prepare.concern.label": "5fb0541bf3",
+    "prepare.concern.placeholder": "01097e0651",
+    "prepare.draftNotice": "3925db23d5",
+    "prepare.errors.changesRequired": "f54df7d11f",
+    "prepare.errors.chooseAge": "69f9a3271c",
+    "prepare.errors.chooseOne": "1c16ddf265",
+    "prepare.errors.required": "0e3279a6e8",
+    "prepare.errors.tooLong": "bcf89f862d",
+    "prepare.followUps.continue": "31fbef1625",
+    "prepare.followUps.lead": "d75d934705",
+    "prepare.followUps.placeholder": "01097e0651",
+    "prepare.followUps.skip": "28d03596d2",
+    "prepare.followUps.skipped": "12698ce1ea",
+    "prepare.followUps.title": "72e220930b",
+    "prepare.followUps.undoSkip": "518ec333ae",
+    "prepare.medicines.medicinesHint": "6743825b8f",
+    "prepare.medicines.medicinesLabel": "dd81a64303",
+    "prepare.medicines.supportHint": "dd8ec4cdb4",
+    "prepare.medicines.supportLabel": "b8f0f0e2a6",
+    "prepare.review.change": "c0bf75bd78",
+    "prepare.review.changesHeading": "f40d16695e",
+    "prepare.review.childAge": "22c4e5c86c",
+    "prepare.review.concernHeading": "5c643bf729",
+    "prepare.review.followUpsHeading": "e7785388dd",
+    "prepare.review.getSummary": "b068971d45",
+    "prepare.review.medicinesHeading": "42dce2871e",
+    "prepare.review.noPattern": "e76cb60621",
+    "prepare.review.otherAge": "def6b4bcb7",
+    "prepare.review.patternPrefix": "2947d0f18d",
+    "prepare.review.skipped": "e9ff992f01",
+    "prepare.review.startedPrefix": "8301e51f74",
+    "prepare.review.supportHeading": "497d53de9e",
+    "prepare.review.timingHeading": "b158fd9fba",
+    "prepare.review.whoHeading": "60c3907ec2",
+    "prepare.review.worriesHeading": "3a1f715d1a",
+    "prepare.stepLabel": "82e0b7bc4b",
+    "prepare.steps.changes.lead": "9c9b8f487a",
+    "prepare.steps.changes.title": "f5df1cd960",
+    "prepare.steps.concern.lead": "1a019a781d",
+    "prepare.steps.concern.title": "a8e103d2ac",
+    "prepare.steps.medicines.lead": "1a0da9756e",
+    "prepare.steps.medicines.title": "242dc0493f",
+    "prepare.steps.review.lead": "35d525874b",
+    "prepare.steps.review.title": "7e405e1dad",
+    "prepare.steps.timing.lead": "cff1d53374",
+    "prepare.steps.timing.title": "8d5a3abd76",
+    "prepare.steps.who.lead": "600ac50757",
+    "prepare.steps.who.title": "10bc77f238",
+    "prepare.steps.worries.lead": "1a0da9756e",
+    "prepare.steps.worries.title": "91e06b4856",
+    "prepare.summaryStatus.backToAnswers": "67b40f0fdc",
+    "prepare.summaryStatus.errors.busy.body": "74a9e412a4",
+    "prepare.summaryStatus.errors.busy.title": "ee07829913",
+    "prepare.summaryStatus.errors.failed.body": "724b777423",
+    "prepare.summaryStatus.errors.failed.title": "ab827e3fe1",
+    "prepare.summaryStatus.errors.too_long.body": "58f33fb0ab",
+    "prepare.summaryStatus.errors.too_long.title": "4d0d5e78ab",
+    "prepare.summaryStatus.makingLead": "2b01df9628",
+    "prepare.summaryStatus.makingTitle": "df61eba7de",
+    "prepare.summaryStatus.tryAgain": "d8b8392e2c",
+    "prepare.timing.notesLabel": "9ef9359cbd",
+    "prepare.timing.pattern.changing": "734207131b",
+    "prepare.timing.pattern.comes_and_goes": "607e244ab1",
+    "prepare.timing.pattern.constant": "4cfd553929",
+    "prepare.timing.pattern.not_sure": "9fdc1d357f",
+    "prepare.timing.patternLegend": "3a1084ad30",
+    "prepare.timing.started.days": "30a190dd59",
+    "prepare.timing.started.months": "c11607ce93",
+    "prepare.timing.started.not_sure": "9fdc1d357f",
+    "prepare.timing.started.over_6_months": "a3c5b87810",
+    "prepare.timing.started.today": "2b065c7c9c",
+    "prepare.timing.started.weeks": "edbbe584b9",
+    "prepare.timing.startedLegend": "fa5c931819",
+    "prepare.who.ageBands.12_to_17": "91d93f330d",
+    "prepare.who.ageBands.1_to_4": "8fa72306f4",
+    "prepare.who.ageBands.5_to_11": "cfd2bbca85",
+    "prepare.who.ageBands.adult": "bf62a5e20a",
+    "prepare.who.ageBands.under_1": "ac42c9a2c9",
+    "prepare.who.ageLegend": "84dc5a2c86",
+    "prepare.who.ageLegendOther": "819708806c",
+    "prepare.who.labelHint": "a7dcc778fb",
+    "prepare.who.labelLabel": "6b95163c84",
+    "prepare.who.legend": "0b24aed53a",
+    "prepare.who.options.carer": "5032983329",
+    "prepare.who.options.other": "3233cb049a",
+    "prepare.who.options.parent": "ea4c0f6bd9",
+    "prepare.who.options.self": "d30af076b0",
+    "prepare.worries.label": "ec6a666d57",
+    "prepare.worries.placeholder": "01097e0651",
+    "result.actions.backToAnswers": "67b40f0fdc",
+    "result.actions.comingSoon": "4f7d640176",
+    "result.actions.pdfFailed": "a9dfbbbc79",
+    "result.actions.savePdf": "4cab70e922",
+    "result.actions.savingPdf": "46a760e3fd",
+    "result.confidenceNotice": "75e5b0c6d5",
+    "result.draftNotice": "982ad08f6d",
+    "result.englishOnlyNotice": "cdc32a8e13",
+    "result.forDoctor": "60091ce4c9",
+    "result.hideOwnWords": "f9a010b89a",
+    "result.layout.back": "76900f1bfd",
+    "result.layout.deckLabel": "79a0e8cf57",
+    "result.layout.next": "1ff57a29d7",
+    "result.layout.position": "3612e1cd75",
+    "result.layout.toDeck": "237210ae56",
+    "result.layout.toList": "aadb759187",
+    "result.match.notQuite": "fd682cdc1f",
+    "result.match.question": "d831ba4b87",
+    "result.match.thanks": "bbcc2eded9",
+    "result.match.yes": "85a39ab345",
+    "result.nothingMissing": "ed030afa16",
+    "result.ownWordsHeading": "f00e9fef8c",
+    "result.sections.changes": "f40d16695e",
+    "result.sections.disclaimer": "c83aac6d99",
+    "result.sections.duration": "8ddab050d5",
+    "result.sections.followUps": "e7785388dd",
+    "result.sections.forWhom": "60c3907ec2",
+    "result.sections.frequency": "7710cdf129",
+    "result.sections.mainConcern": "5c643bf729",
+    "result.sections.medicines": "42dce2871e",
+    "result.sections.notMentioned": "8ec2bff4fe",
+    "result.sections.previousSupport": "497d53de9e",
+    "result.sections.questions": "a1ac9ed143",
+    "result.sections.serviceRoutes": "00f1193a04",
+    "result.sections.whatToBring": "3090fd37d1",
+    "result.sections.worries": "3a1f715d1a",
+    "result.showOwnWords": "e981d03ad7",
+    "result.simpleEnglish": "99ab3cad5c",
+    "result.skippedQuestion": "862f38bf2b",
+    "result.tabsLabel": "ae8211ceb8",
+    "result.title": "faef0e95d9",
+    "result.weReadThisAs": "92090ff602",
+    "result.youDidntMention": "ed3d6bf6e4",
+    "understand.actions.back": "76900f1bfd",
+    "understand.actions.backToStart": "1287adb7b0",
+    "understand.actions.continue": "31fbef1625",
+    "understand.choose.lead": "8c1909f0f5",
+    "understand.choose.noticeMore": "45899765d3",
+    "understand.choose.noticeSummary": "93af5098b9",
+    "understand.choose.photo": "1d464c6866",
+    "understand.choose.photoHint": "23713ba50d",
+    "understand.choose.title": "0ba2e8cb3b",
+    "understand.choose.type": "58bf85aea1",
+    "understand.choose.typeHint": "09b0b38669",
+    "understand.confirm.checkThese": "c3e09855da",
+    "understand.confirm.checking": "0dfe1d63c9",
+    "understand.confirm.confirm": "8bcd820ce3",
+    "understand.confirm.found": "c7151b0cda",
+    "understand.confirm.label": "d745b48fd4",
+    "understand.confirm.photoLead": "e0943063d3",
+    "understand.confirm.photoTitle": "05cf08fba0",
+    "understand.confirm.placeholder": "ac9ccd16ee",
+    "understand.confirm.required": "282a5373dd",
+    "understand.confirm.retakePhoto": "657d13eb83",
+    "understand.confirm.typedLead": "18f0582f1c",
+    "understand.confirm.typedTitle": "a8c0b08b0c",
+    "understand.errors.tooLong": "bcf89f862d",
+    "understand.followUpsLead": "e13c4f6611",
+    "understand.fromLetter.heading": "9e54bec2d3",
+    "understand.fromLetter.showAll": "8b61252d4b",
+    "understand.fromLetter.showLess": "94ea9b1d33",
+    "understand.photo.alt": "d0b55dc80c",
+    "understand.photo.caption": "c554de8df5",
+    "understand.photo.larger": "b33e2dafec",
+    "understand.photo.smaller": "f537f6c64a",
+    "understand.photoAdvice.afterItems": "2c98b95a17",
+    "understand.photoAdvice.choosePhoto": "f28ab0436b",
+    "understand.photoAdvice.items.0": "2c6b2e253c",
+    "understand.photoAdvice.items.1": "aa7eb8c4c9",
+    "understand.photoAdvice.items.2": "20d06c7411",
+    "understand.photoAdvice.lead": "867e342492",
+    "understand.photoAdvice.openCamera": "8cbda064f2",
+    "understand.photoAdvice.privacy": "9d76a4e686",
+    "understand.photoAdvice.title": "fd9f4e6cef",
+    "understand.photoProblems.busy.body": "74a9e412a4",
+    "understand.photoProblems.busy.title": "ee07829913",
+    "understand.photoProblems.failed.body": "bb6e802931",
+    "understand.photoProblems.failed.title": "ab827e3fe1",
+    "understand.photoProblems.invalid.body": "e6e0e6c942",
+    "understand.photoProblems.invalid.title": "2c469279a4",
+    "understand.photoProblems.rate_limited.body": "398e77646e",
+    "understand.photoProblems.rate_limited.title": "8c98449c5a",
+    "understand.photoProblems.retake.body": "6efd7bbb92",
+    "understand.photoProblems.retake.title": "116a992130",
+    "understand.photoProblems.too_large.body": "f16bd23a49",
+    "understand.photoProblems.too_large.title": "a279d469a8",
+    "understand.photoProblems.unreadable.body": "e6e0e6c942",
+    "understand.photoProblems.unreadable.title": "2c469279a4",
+    "understand.reading.lead": "2b01df9628",
+    "understand.reading.title": "85ee7dea78",
+    "understand.retake": "89e40dd9f6",
+    "understand.status.backToAnswers": "e0d38190d3",
+    "understand.status.errors.busy.body": "74a9e412a4",
+    "understand.status.errors.busy.title": "ee07829913",
+    "understand.status.errors.failed.body": "7c82b4a18e",
+    "understand.status.errors.failed.title": "ab827e3fe1",
+    "understand.status.errors.too_long.body": "e9df507afd",
+    "understand.status.errors.too_long.title": "10be6dad9e",
+    "understand.status.makingLead": "2b01df9628",
+    "understand.status.makingTitle": "7f777619c6",
+    "understand.status.tryAgain": "d8b8392e2c",
+    "understand.typeInstead": "83644bf92d"
+  },
+  "messages": {
+    "common": {
+      "landing": {
+        "headline": "بیایید برای وقت ملاقات‌تان آماده شویم.",
+        "lead": "اطلاعات روشن. گفت‌وگوی بهتر. شما از پسش برمی‌آیید.",
+        "navLabel": "آنچه را لازم دارید انتخاب کنید",
+        "prepare": "آماده شدن برای وقت ملاقاتم",
+        "understand": "فهمیدن آنچه به من گفتند",
+        "guest": "حالت مهمان — هیچ چیزی ذخیره نمی‌شود."
+      },
+      "language": {
+        "label": "زبان",
+        "unreviewedNotice": "این صفحه به‌طور خودکار ترجمه شده و هنوز یک گویشور بومی آن را بررسی نکرده است."
+      },
+      "meta": {
+        "description": "برای وقت ملاقات NHS خود آماده شوید، و آنچه به شما گفتند را بفهمید.",
+        "prepareTitle": "آماده شدن برای وقت ملاقاتم",
+        "understandTitle": "فهمیدن آنچه به من گفتند"
+      }
+    },
+    "prepare": {
+      "draftNotice": "این یک پیش‌نویس است تا به آماده شدن شما کمک کند. این توصیه پزشکی نیست.",
+      "stepLabel": "مرحله {n} از {total}",
+      "steps": {
+        "who": {
+          "title": "این وقت ملاقات برای چه کسی است؟",
+          "lead": "خلاصه شما را از زاویه درست می‌نویسیم."
+        },
+        "concern": {
+          "title": "درباره چه چیزی می‌خواهید با پزشک‌تان صحبت کنید؟",
+          "lead": "با کلمات خودتان و به هر زبانی بنویسید. هیچ راه غلطی برای گفتنش وجود ندارد."
+        },
+        "timing": {
+          "title": "از کی و چند وقت یک بار؟",
+          "lead": "پاسخ‌هایی را که بیشتر به شما می‌خورد انتخاب کنید. «مطمئن نیستم» هم اشکالی ندارد."
+        },
+        "changes": {
+          "title": "آیا تغییر یا الگوی خاصی دیده‌اید؟",
+          "lead": "مثلاً اگر شب‌ها، بعد از غذا، یا در زمان‌های خاصی بدتر می‌شود."
+        },
+        "medicines": {
+          "title": "داروها و کمک‌هایی که تا حالا گرفته‌اید",
+          "lead": "این مرحله اختیاری است. می‌توانید از آن بگذرید."
+        },
+        "worries": {
+          "title": "آیا چیزی نگران‌تان می‌کند، یا صحبت درباره این موضوع را سخت می‌کند؟",
+          "lead": "این مرحله اختیاری است. می‌توانید از آن بگذرید."
+        },
+        "review": {
+          "title": "پاسخ‌های‌تان را بررسی کنید",
+          "lead": "پیش از اینکه خلاصه‌تان را آماده کنیم، می‌توانید هر چیزی را تغییر دهید."
+        }
+      },
+      "who": {
+        "legend": "یکی را انتخاب کنید",
+        "options": {
+          "self": "خودم",
+          "parent": "فرزندم",
+          "carer": "کسی که از او مراقبت می‌کنم",
+          "other": "شخص دیگری"
+        },
+        "ageLegend": "فرزندتان چند سال دارد؟",
+        "ageLegendOther": "او چند سال دارد؟",
+        "ageBands": {
+          "under_1": "کمتر از 1 سال",
+          "1_to_4": "1 تا 4",
+          "5_to_11": "5 تا 11",
+          "12_to_17": "12 تا 17",
+          "adult": "18 یا بیشتر"
+        },
+        "labelLabel": "او چه نسبتی با شما دارد؟ (اختیاری)",
+        "labelHint": "مثلاً: مادرم، همسایه‌ام."
+      },
+      "concern": {
+        "label": "نگرانی اصلی شما",
+        "placeholder": "اینجا بنویسید، به هر زبانی."
+      },
+      "timing": {
+        "startedLegend": "از کی شروع شد؟",
+        "started": {
+          "today": "امروز",
+          "days": "در چند روز گذشته",
+          "weeks": "1 تا 4 هفته پیش",
+          "months": "1 تا 6 ماه پیش",
+          "over_6_months": "بیش از 6 ماه پیش",
+          "not_sure": "مطمئن نیستم"
+        },
+        "patternLegend": "چند وقت یک بار هست؟",
+        "pattern": {
+          "constant": "همیشه",
+          "comes_and_goes": "می‌آید و می‌رود",
+          "changing": "دارد تغییر می‌کند",
+          "not_sure": "مطمئن نیستم"
+        },
+        "notesLabel": "چیز دیگری درباره اینکه کی پیش می‌آید؟ (اختیاری)"
+      },
+      "changes": {
+        "label": "تغییرها یا الگوهایی که دیده‌اید",
+        "placeholder": "اینجا بنویسید، به هر زبانی.",
+        "nonePattern": "هیچ الگویی ندیده‌ام"
+      },
+      "medicines": {
+        "medicinesLabel": "داروهایی که الان مصرف می‌کنید",
+        "medicinesHint": "هر چیزی را که از داروخانه یا مغازه گرفته‌اید هم بنویسید.",
+        "supportLabel": "کمکی که تا حالا گرفته‌اید",
+        "supportHint": "مثلاً: داروساز، مراجعه به GP یا بیمارستان."
+      },
+      "worries": {
+        "label": "نگرانی‌های شما",
+        "placeholder": "اینجا بنویسید، به هر زبانی."
+      },
+      "review": {
+        "change": "تغییر",
+        "followUpsHeading": "پاسخ‌های اضافه شما",
+        "skipped": "از این گذشتید",
+        "noPattern": "هیچ الگویی ندیده‌ام",
+        "whoHeading": "برای چه کسی است",
+        "concernHeading": "نگرانی اصلی",
+        "timingHeading": "از کی و چند وقت یک بار",
+        "changesHeading": "تغییرها و الگوها",
+        "medicinesHeading": "داروها",
+        "supportHeading": "کمک تا حالا",
+        "worriesHeading": "نگرانی‌ها",
+        "startedPrefix": "شروع:",
+        "patternPrefix": "چند وقت یک بار:",
+        "childAge": "فرزندم، سن {band}",
+        "otherAge": "سن {band}",
+        "getSummary": "خلاصه‌ام را بگیرم"
+      },
+      "followUps": {
+        "title": "چند سؤال کوتاه",
+        "lead": "این‌ها به پزشک‌تان کمک می‌کنند شما را بفهمد. می‌توانید از هر کدام بگذرید.",
+        "placeholder": "اینجا بنویسید، به هر زبانی.",
+        "skip": "رد شدن",
+        "skipped": "رد شد",
+        "undoSkip": "به این پاسخ بدهم",
+        "continue": "ادامه"
+      },
+      "summaryStatus": {
+        "makingTitle": "در حال آماده کردن خلاصه شما",
+        "makingLead": "این کار ممکن است تا یک دقیقه طول بکشد. لطفاً این صفحه را باز نگه دارید.",
+        "errors": {
+          "too_long": {
+            "title": "بعضی از پاسخ‌های‌تان خیلی طولانی است",
+            "body": "لطفاً برگردید و پاسخ‌های‌تان را کمی کوتاه‌تر کنید، بعد دوباره امتحان کنید."
+          },
+          "busy": {
+            "title": "الان سرمان شلوغ است",
+            "body": "در این لحظه افراد زیادی از CareNav AI استفاده می‌کنند. لطفاً چند دقیقه دیگر دوباره امتحان کنید."
+          },
+          "failed": {
+            "title": "مشکلی پیش آمد",
+            "body": "این بار نتوانستیم خلاصه شما را آماده کنیم. پاسخ‌های‌تان هنوز اینجاست. لطفاً دوباره امتحان کنید."
+          }
+        },
+        "tryAgain": "دوباره امتحان کنید",
+        "backToAnswers": "بازگشت به پاسخ‌هایم"
+      },
+      "actions": {
+        "back": "بازگشت",
+        "backToStart": "بازگشت به ابتدا",
+        "next": "بعدی",
+        "skip": "رد شدن از این مرحله",
+        "saveAndReview": "ذخیره و بررسی",
+        "checking": "در حال بررسی پاسخ شما"
+      },
+      "errors": {
+        "chooseOne": "لطفاً یکی را انتخاب کنید.",
+        "chooseAge": "لطفاً سن را انتخاب کنید.",
+        "required": "لطفاً چند کلمه بنویسید. هر زبانی اشکالی ندارد.",
+        "changesRequired": "لطفاً بنویسید چه چیزی دیده‌اید، یا گزینه «هیچ الگویی ندیده‌ام» را علامت بزنید.",
+        "tooLong": "این {over} نویسه بیش از حد مجاز است. لطفاً آن را به {max} نویسه یا کمتر کوتاه کنید."
+      }
+    },
+    "understand": {
+      "choose": {
+        "title": "به شما چه گفتند؟",
+        "lead": "نامه، نسخه یا یادداشتی از وقت ملاقات‌تان اضافه کنید. ما آن را با کلمات ساده‌تر توضیح می‌دهیم.",
+        "photo": "از نامه یا نسخه عکس بگیرید",
+        "photoHint": "ما کلمات را می‌خوانیم تا شما بررسی‌شان کنید.",
+        "type": "آن را تایپ یا جای‌گذاری کنید",
+        "typeHint": "هر زبانی اشکالی ندارد.",
+        "noticeSummary": "ما کلمات شما را برای توضیح دادن به یک سرویس هوش مصنوعی (OpenAI) می‌فرستیم. به‌عنوان مهمان، هیچ چیزی ذخیره نمی‌شود.",
+        "noticeMore": "اطلاعات بیشتر درباره حریم خصوصی"
+      },
+      "photoAdvice": {
+        "title": "پیش از گرفتن عکس",
+        "lead": "لطفاً این‌ها را بپوشانید یا کاغذ را رویشان تا کنید، تا در عکس نباشند:",
+        "items": [
+          "نام شما",
+          "نشانی شما",
+          "شماره NHS شما"
+        ],
+        "afterItems": "نامه را در نور خوب صاف بگذارید، و کل صفحه را در عکس جا دهید.",
+        "privacy": "عکس شما روی همین دستگاه می‌ماند. ما هرگز آن را ذخیره نمی‌کنیم.",
+        "openCamera": "باز کردن دوربین",
+        "choosePhoto": "به جای آن یک عکس انتخاب کنید"
+      },
+      "reading": {
+        "title": "در حال خواندن نامه شما",
+        "lead": "این کار ممکن است تا یک دقیقه طول بکشد. لطفاً این صفحه را باز نگه دارید."
+      },
+      "photoProblems": {
+        "retake": {
+          "title": "نتوانستیم آن را واضح بخوانیم",
+          "body": "لطفاً دوباره عکس بگیرید. نامه را صاف بگذارید، از نور خوب استفاده کنید، و گوشی را ثابت نگه دارید."
+        },
+        "unreadable": {
+          "title": "نتوانستیم آن عکس را باز کنیم",
+          "body": "لطفاً عکس دیگری را امتحان کنید، یا به جای آن کلمات را تایپ کنید."
+        },
+        "invalid": {
+          "title": "نتوانستیم آن عکس را باز کنیم",
+          "body": "لطفاً عکس دیگری را امتحان کنید، یا به جای آن کلمات را تایپ کنید."
+        },
+        "too_large": {
+          "title": "آن عکس خیلی بزرگ است",
+          "body": "لطفاً دوباره عکس بگیرید، یا به جای آن کلمات را تایپ کنید."
+        },
+        "rate_limited": {
+          "title": "لطفاً کمی صبر کنید",
+          "body": "در مدت کوتاهی چیزهای زیادی فرستاده‌اید. لطفاً یک دقیقه صبر کنید، بعد دوباره امتحان کنید."
+        },
+        "busy": {
+          "title": "الان سرمان شلوغ است",
+          "body": "در این لحظه افراد زیادی از CareNav AI استفاده می‌کنند. لطفاً چند دقیقه دیگر دوباره امتحان کنید."
+        },
+        "failed": {
+          "title": "مشکلی پیش آمد",
+          "body": "این بار نتوانستیم عکس شما را بخوانیم. لطفاً دوباره امتحان کنید، یا به جای آن کلمات را تایپ کنید."
+        }
+      },
+      "retake": "دوباره عکس بگیرید",
+      "typeInstead": "به جای آن تایپ کنید",
+      "confirm": {
+        "photoTitle": "کلمات خوانده‌شده از عکس‌تان را بررسی کنید",
+        "photoLead": "شاید چیزی را اشتباه خوانده باشیم. پیش از اینکه توضیح دهیم، هر اشتباهی را درست کنید.",
+        "typedTitle": "در نامه شما چه نوشته شده است؟",
+        "typedLead": "کلمات نامه، نسخه یا وقت ملاقات‌تان را تایپ یا جای‌گذاری کنید.",
+        "label": "کلمات نامه شما",
+        "placeholder": "اینجا تایپ یا جای‌گذاری کنید.",
+        "found": "داروها، مقدارهای مصرف و تاریخ‌هایی که پیدا کردیم:",
+        "checkThese": "این‌ها را با نامه یا برچسب دارو مقایسه کنید.",
+        "confirm": "درست است، توضیحش بدهید",
+        "checking": "در حال بررسی",
+        "required": "لطفاً اول چند کلمه تایپ یا جای‌گذاری کنید.",
+        "retakePhoto": "گرفتن دوباره عکس"
+      },
+      "photo": {
+        "alt": "عکس شما از نامه",
+        "caption": "عکس شما. روی همین دستگاه می‌ماند و وقتی بیرون بروید پاک می‌شود.",
+        "larger": "نمایش بزرگ‌تر",
+        "smaller": "نمایش کوچک‌تر"
+      },
+      "fromLetter": {
+        "heading": "از نامه شما",
+        "showAll": "نمایش همه",
+        "showLess": "نمایش کمتر"
+      },
+      "followUpsLead": "این‌ها به ما کمک می‌کنند نامه شما را روشن توضیح دهیم. می‌توانید از هر کدام بگذرید.",
+      "status": {
+        "makingTitle": "در حال توضیح نامه شما",
+        "makingLead": "این کار ممکن است تا یک دقیقه طول بکشد. لطفاً این صفحه را باز نگه دارید.",
+        "errors": {
+          "too_long": {
+            "title": "نامه شما خیلی طولانی است",
+            "body": "لطفاً برگردید و آن را فقط به بخشی که می‌خواهید توضیح داده شود کوتاه کنید، بعد دوباره امتحان کنید."
+          },
+          "busy": {
+            "title": "الان سرمان شلوغ است",
+            "body": "در این لحظه افراد زیادی از CareNav AI استفاده می‌کنند. لطفاً چند دقیقه دیگر دوباره امتحان کنید."
+          },
+          "failed": {
+            "title": "مشکلی پیش آمد",
+            "body": "این بار نتوانستیم نامه شما را توضیح دهیم. کلمات شما هنوز اینجاست. لطفاً دوباره امتحان کنید."
+          }
+        },
+        "tryAgain": "دوباره امتحان کنید",
+        "backToAnswers": "بازگشت به کلمات"
+      },
+      "actions": {
+        "back": "بازگشت",
+        "backToStart": "بازگشت به ابتدا",
+        "continue": "ادامه"
+      },
+      "errors": {
+        "tooLong": "این {over} نویسه بیش از حد مجاز است. لطفاً آن را به {max} نویسه یا کمتر کوتاه کنید."
+      }
+    },
+    "result": {
+      "title": "این خلاصه شماست",
+      "draftNotice": "پیش‌نویسی برای کمک به آماده شدن شما. توصیه پزشکی نیست.",
+      "weReadThisAs": "ما این را این‌طور تشخیص دادیم: {language}",
+      "tabsLabel": "یک نسخه انتخاب کنید",
+      "simpleEnglish": "انگلیسی ساده",
+      "forDoctor": "انگلیسی (برای پزشک‌تان)",
+      "confidenceNotice": "لطفاً این را با کسی که به زبان شما صحبت می‌کند دوباره بررسی کنید.",
+      "englishOnlyNotice": "این بار نتوانستیم نسخه‌ای قابل اعتماد به زبان شما بسازیم، برای همین خلاصه شما فقط به انگلیسی است. چیزی از آن کم نیست، و می‌توانید همین‌طور که هست آن را به پزشک‌تان نشان دهید.",
+      "sections": {
+        "forWhom": "برای چه کسی است",
+        "mainConcern": "نگرانی اصلی",
+        "duration": "از کی",
+        "frequency": "چند وقت یک بار",
+        "changes": "تغییرها و الگوها",
+        "medicines": "داروها",
+        "previousSupport": "کمک تا حالا",
+        "worries": "نگرانی‌ها",
+        "questions": "سؤال‌هایی که می‌توانید بپرسید",
+        "whatToBring": "چه چیزهایی همراه بیاورید",
+        "notMentioned": "گفته نشده",
+        "followUps": "پاسخ‌های اضافه شما",
+        "serviceRoutes": "از کجا کمک بگیرید",
+        "disclaimer": "درباره این خلاصه"
+      },
+      "youDidntMention": "شما به این‌ها اشاره نکردید: {sections}.",
+      "nothingMissing": "به نظر می‌رسد چیز مهمی جا نیفتاده است.",
+      "showOwnWords": "نمایش کلمات من",
+      "hideOwnWords": "پنهان کردن کلمات من",
+      "ownWordsHeading": "آنچه به ما گفتید",
+      "skippedQuestion": "شما از این سؤال گذشتید.",
+      "match": {
+        "question": "آیا این با منظور شما یکی است؟",
+        "yes": "بله",
+        "notQuite": "نه کاملاً",
+        "thanks": "متشکریم. می‌توانید این را به پزشک یا پرستارتان نشان دهید."
+      },
+      "actions": {
+        "backToAnswers": "بازگشت به پاسخ‌هایم",
+        "savePdf": "ذخیره به‌صورت PDF",
+        "savingPdf": "در حال ساختن PDF شما",
+        "pdfFailed": "متأسفیم، نتوانستیم PDF را بسازیم. لطفاً دوباره امتحان کنید.",
+        "comingSoon": "به‌زودی"
+      },
+      "layout": {
+        "toDeck": "هر بار یک کارت",
+        "toList": "نمایش به‌صورت فهرست",
+        "deckLabel": "نتیجه شما، هر بار یک کارت",
+        "next": "بعدی",
+        "back": "بازگشت",
+        "position": "{n} از {total}"
+      }
+    },
+    "explain": {
+      "title": "معنی نامه شما این است",
+      "draftNotice": "یک پیش‌نویس است، نه توصیه پزشکی. لطفاً آن را با داروساز یا GP بررسی کنید.",
+      "englishOnlyNotice": "این بار نتوانستیم نسخه‌ای قابل اعتماد به زبان شما بسازیم، برای همین این توضیح فقط به انگلیسی است. چیزی از آن کم نیست.",
+      "sections": {
+        "told": "آنچه به شما گفتند",
+        "means": "معنی آن",
+        "steps": "قدم‌های بعدی",
+        "medicines": "داروها",
+        "unclear": "نامشخص یا ناقص",
+        "disclaimer": "درباره این توضیح"
+      },
+      "nothingFound": "نتوانستیم نکته‌های اصلی را پیدا کنیم. لطفاً خود نامه را بررسی کنید.",
+      "byWhen": "کی: {when}",
+      "medicine": {
+        "dose": "مقدار مصرف",
+        "frequency": "چند وقت یک بار",
+        "duration": "تا کی",
+        "instructions": "چطور مصرف کنید",
+        "notStated": "در نامه شما نیست"
+      },
+      "checkThese": "این‌ها را با نامه یا برچسب دارو مقایسه کنید.",
+      "whoToAsk": {
+        "clinician": "از کسی که نامه‌تان را نوشته بپرسید",
+        "pharmacist": "از یک داروساز بپرسید",
+        "gp_surgery": "از مطب GP خود بپرسید"
+      },
+      "showSources": "نمایش کلمات نامه",
+      "hideSources": "پنهان کردن کلمات نامه",
+      "fromLetter": "از نامه شما",
+      "notFound": {
+        "heading": "این را در نامه شما پیدا نکردیم",
+        "lead": "این موارد را در نامه شما پیدا نکردیم، پس به آن‌ها تکیه نکنید."
+      },
+      "languagePicker": {
+        "toggle": "تغییر زبان",
+        "label": "نمایش این متن به زبان",
+        "defaultOption": "انگلیسی ساده",
+        "updating": "در حال به‌روزرسانی…",
+        "failed": "این بار نتوانستیم آن نسخه را بسازیم. هنوز نسخه قبلی را می‌بینید."
+      },
+      "actions": {
+        "backToWords": "بازگشت به کلمات"
+      }
+    }
+  }
+}

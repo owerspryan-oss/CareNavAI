@@ -1,0 +1,648 @@
+{
+  "$comment": "Interface text, pcm. DRAFT translation of content/ui/en.json (scripts/translate-ui.mjs). Not reviewed by a native speaker unless \"reviewed\" is true. sourceHashes record which English each string was translated from; a string whose English has changed falls back to English until it is translated and reviewed again.",
+  "language": "pcm",
+  "derivedFrom": "en",
+  "reviewed": false,
+  "sourceHashes": {
+    "common.landing.guest": "873f40311e",
+    "common.landing.headline": "ef81e39422",
+    "common.landing.lead": "84ca990b53",
+    "common.landing.navLabel": "a16919b178",
+    "common.landing.prepare": "a1b19e4d17",
+    "common.landing.understand": "d463f3a2a2",
+    "common.language.label": "a4fe65264e",
+    "common.language.unreviewedNotice": "5deef406b5",
+    "common.meta.description": "65b153e624",
+    "common.meta.prepareTitle": "a1b19e4d17",
+    "common.meta.understandTitle": "d463f3a2a2",
+    "explain.actions.backToWords": "e0d38190d3",
+    "explain.byWhen": "41a51da85e",
+    "explain.checkThese": "c3e09855da",
+    "explain.draftNotice": "c2370528be",
+    "explain.englishOnlyNotice": "d4dc5ef397",
+    "explain.fromLetter": "9e54bec2d3",
+    "explain.hideSources": "2382e49d00",
+    "explain.languagePicker.defaultOption": "99ab3cad5c",
+    "explain.languagePicker.failed": "3bd16bc163",
+    "explain.languagePicker.label": "884e1fc50c",
+    "explain.languagePicker.toggle": "009ed110ba",
+    "explain.languagePicker.updating": "dfe40efe92",
+    "explain.medicine.dose": "6b942766c4",
+    "explain.medicine.duration": "8ddab050d5",
+    "explain.medicine.frequency": "7710cdf129",
+    "explain.medicine.instructions": "ba223548fd",
+    "explain.medicine.notStated": "070bbda206",
+    "explain.notFound.heading": "f3c741426e",
+    "explain.notFound.lead": "9fa5636d77",
+    "explain.nothingFound": "ed35cd8f1a",
+    "explain.sections.disclaimer": "56e6d260b6",
+    "explain.sections.means": "eed88f3aa1",
+    "explain.sections.medicines": "42dce2871e",
+    "explain.sections.steps": "dd00d3d3e9",
+    "explain.sections.told": "98a0d7e0fd",
+    "explain.sections.unclear": "61f655c99d",
+    "explain.showSources": "35846a52c1",
+    "explain.title": "b09f43951a",
+    "explain.whoToAsk.clinician": "392d70a076",
+    "explain.whoToAsk.gp_surgery": "adb43a203c",
+    "explain.whoToAsk.pharmacist": "1d55ae6c0e",
+    "prepare.actions.back": "76900f1bfd",
+    "prepare.actions.backToStart": "1287adb7b0",
+    "prepare.actions.checking": "e7b8fec7d2",
+    "prepare.actions.next": "1ff57a29d7",
+    "prepare.actions.saveAndReview": "9a5e7cf983",
+    "prepare.actions.skip": "9af278eb4a",
+    "prepare.changes.label": "07f6ba0440",
+    "prepare.changes.nonePattern": "e76cb60621",
+    "prepare.changes.placeholder": "01097e0651",
+    "prepare.concern.label": "5fb0541bf3",
+    "prepare.concern.placeholder": "01097e0651",
+    "prepare.draftNotice": "3925db23d5",
+    "prepare.errors.changesRequired": "f54df7d11f",
+    "prepare.errors.chooseAge": "69f9a3271c",
+    "prepare.errors.chooseOne": "1c16ddf265",
+    "prepare.errors.required": "0e3279a6e8",
+    "prepare.errors.tooLong": "bcf89f862d",
+    "prepare.followUps.continue": "31fbef1625",
+    "prepare.followUps.lead": "d75d934705",
+    "prepare.followUps.placeholder": "01097e0651",
+    "prepare.followUps.skip": "28d03596d2",
+    "prepare.followUps.skipped": "12698ce1ea",
+    "prepare.followUps.title": "72e220930b",
+    "prepare.followUps.undoSkip": "518ec333ae",
+    "prepare.medicines.medicinesHint": "6743825b8f",
+    "prepare.medicines.medicinesLabel": "dd81a64303",
+    "prepare.medicines.supportHint": "dd8ec4cdb4",
+    "prepare.medicines.supportLabel": "b8f0f0e2a6",
+    "prepare.review.change": "c0bf75bd78",
+    "prepare.review.changesHeading": "f40d16695e",
+    "prepare.review.childAge": "22c4e5c86c",
+    "prepare.review.concernHeading": "5c643bf729",
+    "prepare.review.followUpsHeading": "e7785388dd",
+    "prepare.review.getSummary": "b068971d45",
+    "prepare.review.medicinesHeading": "42dce2871e",
+    "prepare.review.noPattern": "e76cb60621",
+    "prepare.review.otherAge": "def6b4bcb7",
+    "prepare.review.patternPrefix": "2947d0f18d",
+    "prepare.review.skipped": "e9ff992f01",
+    "prepare.review.startedPrefix": "8301e51f74",
+    "prepare.review.supportHeading": "497d53de9e",
+    "prepare.review.timingHeading": "b158fd9fba",
+    "prepare.review.whoHeading": "60c3907ec2",
+    "prepare.review.worriesHeading": "3a1f715d1a",
+    "prepare.stepLabel": "82e0b7bc4b",
+    "prepare.steps.changes.lead": "9c9b8f487a",
+    "prepare.steps.changes.title": "f5df1cd960",
+    "prepare.steps.concern.lead": "1a019a781d",
+    "prepare.steps.concern.title": "a8e103d2ac",
+    "prepare.steps.medicines.lead": "1a0da9756e",
+    "prepare.steps.medicines.title": "242dc0493f",
+    "prepare.steps.review.lead": "35d525874b",
+    "prepare.steps.review.title": "7e405e1dad",
+    "prepare.steps.timing.lead": "cff1d53374",
+    "prepare.steps.timing.title": "8d5a3abd76",
+    "prepare.steps.who.lead": "600ac50757",
+    "prepare.steps.who.title": "10bc77f238",
+    "prepare.steps.worries.lead": "1a0da9756e",
+    "prepare.steps.worries.title": "91e06b4856",
+    "prepare.summaryStatus.backToAnswers": "67b40f0fdc",
+    "prepare.summaryStatus.errors.busy.body": "74a9e412a4",
+    "prepare.summaryStatus.errors.busy.title": "ee07829913",
+    "prepare.summaryStatus.errors.failed.body": "724b777423",
+    "prepare.summaryStatus.errors.failed.title": "ab827e3fe1",
+    "prepare.summaryStatus.errors.too_long.body": "58f33fb0ab",
+    "prepare.summaryStatus.errors.too_long.title": "4d0d5e78ab",
+    "prepare.summaryStatus.makingLead": "2b01df9628",
+    "prepare.summaryStatus.makingTitle": "df61eba7de",
+    "prepare.summaryStatus.tryAgain": "d8b8392e2c",
+    "prepare.timing.notesLabel": "9ef9359cbd",
+    "prepare.timing.pattern.changing": "734207131b",
+    "prepare.timing.pattern.comes_and_goes": "607e244ab1",
+    "prepare.timing.pattern.constant": "4cfd553929",
+    "prepare.timing.pattern.not_sure": "9fdc1d357f",
+    "prepare.timing.patternLegend": "3a1084ad30",
+    "prepare.timing.started.days": "30a190dd59",
+    "prepare.timing.started.months": "c11607ce93",
+    "prepare.timing.started.not_sure": "9fdc1d357f",
+    "prepare.timing.started.over_6_months": "a3c5b87810",
+    "prepare.timing.started.today": "2b065c7c9c",
+    "prepare.timing.started.weeks": "edbbe584b9",
+    "prepare.timing.startedLegend": "fa5c931819",
+    "prepare.who.ageBands.12_to_17": "91d93f330d",
+    "prepare.who.ageBands.1_to_4": "8fa72306f4",
+    "prepare.who.ageBands.5_to_11": "cfd2bbca85",
+    "prepare.who.ageBands.adult": "bf62a5e20a",
+    "prepare.who.ageBands.under_1": "ac42c9a2c9",
+    "prepare.who.ageLegend": "84dc5a2c86",
+    "prepare.who.ageLegendOther": "819708806c",
+    "prepare.who.labelHint": "a7dcc778fb",
+    "prepare.who.labelLabel": "6b95163c84",
+    "prepare.who.legend": "0b24aed53a",
+    "prepare.who.options.carer": "5032983329",
+    "prepare.who.options.other": "3233cb049a",
+    "prepare.who.options.parent": "ea4c0f6bd9",
+    "prepare.who.options.self": "d30af076b0",
+    "prepare.worries.label": "ec6a666d57",
+    "prepare.worries.placeholder": "01097e0651",
+    "result.actions.backToAnswers": "67b40f0fdc",
+    "result.actions.comingSoon": "4f7d640176",
+    "result.actions.pdfFailed": "a9dfbbbc79",
+    "result.actions.savePdf": "4cab70e922",
+    "result.actions.savingPdf": "46a760e3fd",
+    "result.confidenceNotice": "75e5b0c6d5",
+    "result.draftNotice": "982ad08f6d",
+    "result.englishOnlyNotice": "cdc32a8e13",
+    "result.forDoctor": "60091ce4c9",
+    "result.hideOwnWords": "f9a010b89a",
+    "result.layout.back": "76900f1bfd",
+    "result.layout.deckLabel": "79a0e8cf57",
+    "result.layout.next": "1ff57a29d7",
+    "result.layout.position": "3612e1cd75",
+    "result.layout.toDeck": "237210ae56",
+    "result.layout.toList": "aadb759187",
+    "result.match.notQuite": "fd682cdc1f",
+    "result.match.question": "d831ba4b87",
+    "result.match.thanks": "bbcc2eded9",
+    "result.match.yes": "85a39ab345",
+    "result.nothingMissing": "ed030afa16",
+    "result.ownWordsHeading": "f00e9fef8c",
+    "result.sections.changes": "f40d16695e",
+    "result.sections.disclaimer": "c83aac6d99",
+    "result.sections.duration": "8ddab050d5",
+    "result.sections.followUps": "e7785388dd",
+    "result.sections.forWhom": "60c3907ec2",
+    "result.sections.frequency": "7710cdf129",
+    "result.sections.mainConcern": "5c643bf729",
+    "result.sections.medicines": "42dce2871e",
+    "result.sections.notMentioned": "8ec2bff4fe",
+    "result.sections.previousSupport": "497d53de9e",
+    "result.sections.questions": "a1ac9ed143",
+    "result.sections.serviceRoutes": "00f1193a04",
+    "result.sections.whatToBring": "3090fd37d1",
+    "result.sections.worries": "3a1f715d1a",
+    "result.showOwnWords": "e981d03ad7",
+    "result.simpleEnglish": "99ab3cad5c",
+    "result.skippedQuestion": "862f38bf2b",
+    "result.tabsLabel": "ae8211ceb8",
+    "result.title": "faef0e95d9",
+    "result.weReadThisAs": "92090ff602",
+    "result.youDidntMention": "ed3d6bf6e4",
+    "understand.actions.back": "76900f1bfd",
+    "understand.actions.backToStart": "1287adb7b0",
+    "understand.actions.continue": "31fbef1625",
+    "understand.choose.lead": "8c1909f0f5",
+    "understand.choose.noticeMore": "45899765d3",
+    "understand.choose.noticeSummary": "93af5098b9",
+    "understand.choose.photo": "1d464c6866",
+    "understand.choose.photoHint": "23713ba50d",
+    "understand.choose.title": "0ba2e8cb3b",
+    "understand.choose.type": "58bf85aea1",
+    "understand.choose.typeHint": "09b0b38669",
+    "understand.confirm.checkThese": "c3e09855da",
+    "understand.confirm.checking": "0dfe1d63c9",
+    "understand.confirm.confirm": "8bcd820ce3",
+    "understand.confirm.found": "c7151b0cda",
+    "understand.confirm.label": "d745b48fd4",
+    "understand.confirm.photoLead": "e0943063d3",
+    "understand.confirm.photoTitle": "05cf08fba0",
+    "understand.confirm.placeholder": "ac9ccd16ee",
+    "understand.confirm.required": "282a5373dd",
+    "understand.confirm.retakePhoto": "657d13eb83",
+    "understand.confirm.typedLead": "18f0582f1c",
+    "understand.confirm.typedTitle": "a8c0b08b0c",
+    "understand.errors.tooLong": "bcf89f862d",
+    "understand.followUpsLead": "e13c4f6611",
+    "understand.fromLetter.heading": "9e54bec2d3",
+    "understand.fromLetter.showAll": "8b61252d4b",
+    "understand.fromLetter.showLess": "94ea9b1d33",
+    "understand.photo.alt": "d0b55dc80c",
+    "understand.photo.caption": "c554de8df5",
+    "understand.photo.larger": "b33e2dafec",
+    "understand.photo.smaller": "f537f6c64a",
+    "understand.photoAdvice.afterItems": "2c98b95a17",
+    "understand.photoAdvice.choosePhoto": "f28ab0436b",
+    "understand.photoAdvice.items.0": "2c6b2e253c",
+    "understand.photoAdvice.items.1": "aa7eb8c4c9",
+    "understand.photoAdvice.items.2": "20d06c7411",
+    "understand.photoAdvice.lead": "867e342492",
+    "understand.photoAdvice.openCamera": "8cbda064f2",
+    "understand.photoAdvice.privacy": "9d76a4e686",
+    "understand.photoAdvice.title": "fd9f4e6cef",
+    "understand.photoProblems.busy.body": "74a9e412a4",
+    "understand.photoProblems.busy.title": "ee07829913",
+    "understand.photoProblems.failed.body": "bb6e802931",
+    "understand.photoProblems.failed.title": "ab827e3fe1",
+    "understand.photoProblems.invalid.body": "e6e0e6c942",
+    "understand.photoProblems.invalid.title": "2c469279a4",
+    "understand.photoProblems.rate_limited.body": "398e77646e",
+    "understand.photoProblems.rate_limited.title": "8c98449c5a",
+    "understand.photoProblems.retake.body": "6efd7bbb92",
+    "understand.photoProblems.retake.title": "116a992130",
+    "understand.photoProblems.too_large.body": "f16bd23a49",
+    "understand.photoProblems.too_large.title": "a279d469a8",
+    "understand.photoProblems.unreadable.body": "e6e0e6c942",
+    "understand.photoProblems.unreadable.title": "2c469279a4",
+    "understand.reading.lead": "2b01df9628",
+    "understand.reading.title": "85ee7dea78",
+    "understand.retake": "89e40dd9f6",
+    "understand.status.backToAnswers": "e0d38190d3",
+    "understand.status.errors.busy.body": "74a9e412a4",
+    "understand.status.errors.busy.title": "ee07829913",
+    "understand.status.errors.failed.body": "7c82b4a18e",
+    "understand.status.errors.failed.title": "ab827e3fe1",
+    "understand.status.errors.too_long.body": "e9df507afd",
+    "understand.status.errors.too_long.title": "10be6dad9e",
+    "understand.status.makingLead": "2b01df9628",
+    "understand.status.makingTitle": "7f777619c6",
+    "understand.status.tryAgain": "d8b8392e2c",
+    "understand.typeInstead": "83644bf92d"
+  },
+  "messages": {
+    "common": {
+      "landing": {
+        "headline": "Make we get ready for your appointment.",
+        "lead": "Clear information. Better talk. You fit do am.",
+        "navLabel": "Choose wetin you need",
+        "prepare": "Make I prepare for my appointment",
+        "understand": "Make I understand wetin dem tell me",
+        "guest": "Guest mode — we no dey save anything."
+      },
+      "language": {
+        "label": "Language",
+        "unreviewedNotice": "Na machine translate dis page, and person wey sabi dis language never check am yet."
+      },
+      "meta": {
+        "description": "Get ready for your NHS appointment, and understand wetin dem tell you.",
+        "prepareTitle": "Make I prepare for my appointment",
+        "understandTitle": "Make I understand wetin dem tell me"
+      }
+    },
+    "prepare": {
+      "draftNotice": "Dis na draft to help you prepare. E no be medical advice.",
+      "stepLabel": "Step {n} out of {total}",
+      "steps": {
+        "who": {
+          "title": "Who dis appointment dey for?",
+          "lead": "We go write your summary from the correct point of view."
+        },
+        "concern": {
+          "title": "Wetin you wan talk to your doctor about?",
+          "lead": "Write am for your own words, for any language. No wrong way to talk am."
+        },
+        "timing": {
+          "title": "How long and how often?",
+          "lead": "Choose the answers wey fit best. “I no sure” dey okay."
+        },
+        "changes": {
+          "title": "You don notice any change or pattern?",
+          "lead": "For example, if e dey worse for night, after you chop, or for some kind time."
+        },
+        "medicines": {
+          "title": "Medicine and help wey you don get so far",
+          "lead": "You no must do dis step. You fit skip am."
+        },
+        "worries": {
+          "title": "Anything dey worry you, or dey make am hard to talk about?",
+          "lead": "You no must do dis step. You fit skip am."
+        },
+        "review": {
+          "title": "Check your answers",
+          "lead": "You fit change anything before we make your summary."
+        }
+      },
+      "who": {
+        "legend": "Choose one",
+        "options": {
+          "self": "Me",
+          "parent": "My pikin",
+          "carer": "Person wey I dey take care of",
+          "other": "Another person"
+        },
+        "ageLegend": "How old your pikin be?",
+        "ageLegendOther": "How old dem be?",
+        "ageBands": {
+          "under_1": "Under 1",
+          "1_to_4": "1 to 4",
+          "5_to_11": "5 to 11",
+          "12_to_17": "12 to 17",
+          "adult": "18 or pass"
+        },
+        "labelLabel": "Who dem be to you? (you no must answer)",
+        "labelHint": "For example: my mama, my neighbour."
+      },
+      "concern": {
+        "label": "The main thing wey dey worry you",
+        "placeholder": "Type here, for any language."
+      },
+      "timing": {
+        "startedLegend": "When e start?",
+        "started": {
+          "today": "Today",
+          "days": "For the last few days",
+          "weeks": "1 to 4 weeks ago",
+          "months": "1 to 6 months ago",
+          "over_6_months": "Pass 6 months ago",
+          "not_sure": "I no sure"
+        },
+        "patternLegend": "How often e dey happen?",
+        "pattern": {
+          "constant": "All the time",
+          "comes_and_goes": "E dey come and go",
+          "changing": "E dey change",
+          "not_sure": "I no sure"
+        },
+        "notesLabel": "Anything else about when e dey happen? (you no must answer)"
+      },
+      "changes": {
+        "label": "Change or pattern wey you don notice",
+        "placeholder": "Type here, for any language.",
+        "nonePattern": "I never notice any pattern"
+      },
+      "medicines": {
+        "medicinesLabel": "Medicine wey you dey take now",
+        "medicinesHint": "Put anything wey you buy for pharmacy or shop.",
+        "supportLabel": "Help wey you don get before",
+        "supportHint": "For example: pharmacist, GP visit or hospital."
+      },
+      "worries": {
+        "label": "Wetin dey worry you",
+        "placeholder": "Type here, for any language."
+      },
+      "review": {
+        "change": "Change",
+        "followUpsHeading": "Your extra answers",
+        "skipped": "You skip dis one",
+        "noPattern": "I never notice any pattern",
+        "whoHeading": "Who e dey for",
+        "concernHeading": "Main thing",
+        "timingHeading": "How long and how often",
+        "changesHeading": "Changes and patterns",
+        "medicinesHeading": "Medicine",
+        "supportHeading": "Help so far",
+        "worriesHeading": "Wetin dey worry you",
+        "startedPrefix": "E start:",
+        "patternPrefix": "How often:",
+        "childAge": "My pikin, age {band}",
+        "otherAge": "age {band}",
+        "getSummary": "Give me my summary"
+      },
+      "followUps": {
+        "title": "Small quick questions",
+        "lead": "Dem go help your doctor understand you. You fit skip any of dem.",
+        "placeholder": "Type here, for any language.",
+        "skip": "Skip",
+        "skipped": "You don skip am",
+        "undoSkip": "Answer dis one",
+        "continue": "Continue"
+      },
+      "summaryStatus": {
+        "makingTitle": "We dey make your summary",
+        "makingLead": "E fit take reach one minute. Abeg leave dis page open.",
+        "errors": {
+          "too_long": {
+            "title": "Some of your answers too long",
+            "body": "Abeg go back, make your answers short small, then try again."
+          },
+          "busy": {
+            "title": "We dey busy now",
+            "body": "Too many people dey use CareNav AI now. Abeg try again after few minutes."
+          },
+          "failed": {
+            "title": "Something no work",
+            "body": "We no fit make your summary dis time. Your answers still dey here. Abeg try again."
+          }
+        },
+        "tryAgain": "Try again",
+        "backToAnswers": "Go back to my answers"
+      },
+      "actions": {
+        "back": "Back",
+        "backToStart": "Go back to start",
+        "next": "Next",
+        "skip": "Skip dis step",
+        "saveAndReview": "Save and check am",
+        "checking": "We dey check your answer"
+      },
+      "errors": {
+        "chooseOne": "Abeg choose one.",
+        "chooseAge": "Abeg choose age.",
+        "required": "Abeg write small words. Any language dey okay.",
+        "changesRequired": "Abeg write wetin you don notice, or tick “I never notice any pattern”.",
+        "tooLong": "Dis one pass by {over} characters. Abeg make am short reach {max} characters or less."
+      }
+    },
+    "understand": {
+      "choose": {
+        "title": "Wetin dem tell you?",
+        "lead": "Add letter, prescription or note from your appointment. We go explain am for simple words.",
+        "photo": "Snap photo of letter or prescription",
+        "photoHint": "We go read the words make you check dem.",
+        "type": "Type am or paste am",
+        "typeHint": "Any language dey okay.",
+        "noticeSummary": "We dey send your words go AI service (OpenAI) to explain dem. As guest, we no dey save anything.",
+        "noticeMore": "More about privacy"
+      },
+      "photoAdvice": {
+        "title": "Before you snap the photo",
+        "lead": "Abeg cover or fold dis ones, make dem no dey inside the photo:",
+        "items": [
+          "Your name",
+          "Your address",
+          "Your NHS number"
+        ],
+        "afterItems": "Lay the letter flat for good light, and make the whole page enter the photo.",
+        "privacy": "Your photo go stay for dis device. We no dey ever save am.",
+        "openCamera": "Open camera",
+        "choosePhoto": "Choose photo instead"
+      },
+      "reading": {
+        "title": "We dey read your letter",
+        "lead": "E fit take reach one minute. Abeg leave dis page open."
+      },
+      "photoProblems": {
+        "retake": {
+          "title": "We no fit read am well",
+          "body": "Abeg snap the photo again. Lay the letter flat, use good light, and hold the phone steady."
+        },
+        "unreadable": {
+          "title": "We no fit open dat photo",
+          "body": "Abeg try another photo, or type the words instead."
+        },
+        "invalid": {
+          "title": "We no fit open dat photo",
+          "body": "Abeg try another photo, or type the words instead."
+        },
+        "too_large": {
+          "title": "Dat photo too big",
+          "body": "Abeg snap the photo again, or type the words instead."
+        },
+        "rate_limited": {
+          "title": "Abeg wait small",
+          "body": "You don send plenty for short time. Abeg wait one minute, then try again."
+        },
+        "busy": {
+          "title": "We dey busy now",
+          "body": "Too many people dey use CareNav AI now. Abeg try again after few minutes."
+        },
+        "failed": {
+          "title": "Something no work",
+          "body": "We no fit read your photo dis time. Abeg try again, or type the words instead."
+        }
+      },
+      "retake": "Snap the photo again",
+      "typeInstead": "Type am instead",
+      "confirm": {
+        "photoTitle": "Check the words from your photo",
+        "photoLead": "We fit don read something wrong. Correct anything wey no correct before we explain am.",
+        "typedTitle": "Wetin your letter talk?",
+        "typedLead": "Type or paste the words from your letter, prescription or appointment.",
+        "label": "The words from your letter",
+        "placeholder": "Type or paste here.",
+        "found": "Medicine, dose and date wey we see:",
+        "checkThese": "Check dem against your letter or the label.",
+        "confirm": "Na correct, explain am",
+        "checking": "We dey check",
+        "required": "Abeg type or paste some words first.",
+        "retakePhoto": "Snap photo again"
+      },
+      "photo": {
+        "alt": "Your photo of the letter",
+        "caption": "Your photo. E dey stay for dis device and e go disappear when you comot.",
+        "larger": "Make am big",
+        "smaller": "Make am small"
+      },
+      "fromLetter": {
+        "heading": "From your letter",
+        "showAll": "Show all of am",
+        "showLess": "Show less"
+      },
+      "followUpsLead": "Dem go help us explain your letter well. You fit skip any of dem.",
+      "status": {
+        "makingTitle": "We dey explain your letter",
+        "makingLead": "E fit take reach one minute. Abeg leave dis page open.",
+        "errors": {
+          "too_long": {
+            "title": "Your letter too long",
+            "body": "Abeg go back, cut am reach the part wey you wan make we explain, then try again."
+          },
+          "busy": {
+            "title": "We dey busy now",
+            "body": "Too many people dey use CareNav AI now. Abeg try again after few minutes."
+          },
+          "failed": {
+            "title": "Something no work",
+            "body": "We no fit explain your letter dis time. Your words still dey here. Abeg try again."
+          }
+        },
+        "tryAgain": "Try again",
+        "backToAnswers": "Go back to the words"
+      },
+      "actions": {
+        "back": "Back",
+        "backToStart": "Go back to start",
+        "continue": "Continue"
+      },
+      "errors": {
+        "tooLong": "Dis one pass by {over} characters. Abeg make am short reach {max} characters or less."
+      }
+    },
+    "result": {
+      "title": "See your summary",
+      "draftNotice": "Draft to help you prepare. E no be medical advice.",
+      "weReadThisAs": "We read dis one as: {language}",
+      "tabsLabel": "Choose one version",
+      "simpleEnglish": "Simple English",
+      "forDoctor": "English (for your doctor)",
+      "confidenceNotice": "Abeg make person wey sabi your language check dis one again.",
+      "englishOnlyNotice": "We no fit make version for your language wey we fit trust dis time, so your summary dey only for English. Nothing miss from am, and you fit show your doctor as e be so.",
+      "sections": {
+        "forWhom": "Who e dey for",
+        "mainConcern": "Main thing",
+        "duration": "How long",
+        "frequency": "How often",
+        "changes": "Changes and patterns",
+        "medicines": "Medicine",
+        "previousSupport": "Help so far",
+        "worries": "Wetin dey worry you",
+        "questions": "Questions wey you fit ask",
+        "whatToBring": "Wetin to carry come",
+        "notMentioned": "You no talk am",
+        "followUps": "Your extra answers",
+        "serviceRoutes": "Where to find help",
+        "disclaimer": "About dis summary"
+      },
+      "youDidntMention": "You no talk about: {sections}.",
+      "nothingMissing": "E be like say nothing important miss.",
+      "showOwnWords": "Show my words",
+      "hideOwnWords": "Hide my words",
+      "ownWordsHeading": "Wetin you tell us",
+      "skippedQuestion": "You skip dis question.",
+      "match": {
+        "question": "Dis one match wetin you mean?",
+        "yes": "Yes",
+        "notQuite": "No be exactly",
+        "thanks": "Thank you. You fit show dis one to your doctor or nurse."
+      },
+      "actions": {
+        "backToAnswers": "Go back to my answers",
+        "savePdf": "Save as PDF",
+        "savingPdf": "We dey make your PDF",
+        "pdfFailed": "Sorry, we no fit make the PDF. Abeg try again.",
+        "comingSoon": "E dey come soon"
+      },
+      "layout": {
+        "toDeck": "One card at a time",
+        "toList": "Show am as list",
+        "deckLabel": "Your result, one card at a time",
+        "next": "Next",
+        "back": "Back",
+        "position": "{n} out of {total}"
+      }
+    },
+    "explain": {
+      "title": "See wetin your letter mean",
+      "draftNotice": "Na draft, e no be medical advice. Abeg check am with pharmacist or GP.",
+      "englishOnlyNotice": "We no fit make version for your language wey we fit trust dis time, so dis explanation dey only for English. Nothing miss from am.",
+      "sections": {
+        "told": "Wetin dem tell you",
+        "means": "Wetin e mean",
+        "steps": "Wetin to do next",
+        "medicines": "Medicine",
+        "unclear": "No clear or e miss",
+        "disclaimer": "About dis explanation"
+      },
+      "nothingFound": "We no fit pick out the main points. Abeg check the letter itself.",
+      "byWhen": "When: {when}",
+      "medicine": {
+        "dose": "Dose",
+        "frequency": "How often",
+        "duration": "How long",
+        "instructions": "How to take am",
+        "notStated": "E no dey your letter"
+      },
+      "checkThese": "Check dem against your letter or the label.",
+      "whoToAsk": {
+        "clinician": "Ask the person wey write your letter",
+        "pharmacist": "Ask pharmacist",
+        "gp_surgery": "Ask your GP surgery"
+      },
+      "showSources": "Show the letter words",
+      "hideSources": "Hide the letter words",
+      "fromLetter": "From your letter",
+      "notFound": {
+        "heading": "We no fit find dis one for your letter",
+        "lead": "We no fit find dis ones for your letter, so no depend on dem."
+      },
+      "languagePicker": {
+        "toggle": "Change language",
+        "label": "Show me dis one for",
+        "defaultOption": "Simple English",
+        "updating": "E dey update…",
+        "failed": "We no fit make dat version dis time. Na the last one you still dey see."
+      },
+      "actions": {
+        "backToWords": "Go back to the words"
+      }
+    }
+  }
+}

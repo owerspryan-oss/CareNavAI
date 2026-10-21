@@ -1,0 +1,648 @@
+{
+  "$comment": "Interface text, lt. DRAFT translation of content/ui/en.json (scripts/translate-ui.mjs). Not reviewed by a native speaker unless \"reviewed\" is true. sourceHashes record which English each string was translated from; a string whose English has changed falls back to English until it is translated and reviewed again.",
+  "language": "lt",
+  "derivedFrom": "en",
+  "reviewed": false,
+  "sourceHashes": {
+    "common.landing.guest": "873f40311e",
+    "common.landing.headline": "ef81e39422",
+    "common.landing.lead": "84ca990b53",
+    "common.landing.navLabel": "a16919b178",
+    "common.landing.prepare": "a1b19e4d17",
+    "common.landing.understand": "d463f3a2a2",
+    "common.language.label": "a4fe65264e",
+    "common.language.unreviewedNotice": "5deef406b5",
+    "common.meta.description": "65b153e624",
+    "common.meta.prepareTitle": "a1b19e4d17",
+    "common.meta.understandTitle": "d463f3a2a2",
+    "explain.actions.backToWords": "e0d38190d3",
+    "explain.byWhen": "41a51da85e",
+    "explain.checkThese": "c3e09855da",
+    "explain.draftNotice": "c2370528be",
+    "explain.englishOnlyNotice": "d4dc5ef397",
+    "explain.fromLetter": "9e54bec2d3",
+    "explain.hideSources": "2382e49d00",
+    "explain.languagePicker.defaultOption": "99ab3cad5c",
+    "explain.languagePicker.failed": "3bd16bc163",
+    "explain.languagePicker.label": "884e1fc50c",
+    "explain.languagePicker.toggle": "009ed110ba",
+    "explain.languagePicker.updating": "dfe40efe92",
+    "explain.medicine.dose": "6b942766c4",
+    "explain.medicine.duration": "8ddab050d5",
+    "explain.medicine.frequency": "7710cdf129",
+    "explain.medicine.instructions": "ba223548fd",
+    "explain.medicine.notStated": "070bbda206",
+    "explain.notFound.heading": "f3c741426e",
+    "explain.notFound.lead": "9fa5636d77",
+    "explain.nothingFound": "ed35cd8f1a",
+    "explain.sections.disclaimer": "56e6d260b6",
+    "explain.sections.means": "eed88f3aa1",
+    "explain.sections.medicines": "42dce2871e",
+    "explain.sections.steps": "dd00d3d3e9",
+    "explain.sections.told": "98a0d7e0fd",
+    "explain.sections.unclear": "61f655c99d",
+    "explain.showSources": "35846a52c1",
+    "explain.title": "b09f43951a",
+    "explain.whoToAsk.clinician": "392d70a076",
+    "explain.whoToAsk.gp_surgery": "adb43a203c",
+    "explain.whoToAsk.pharmacist": "1d55ae6c0e",
+    "prepare.actions.back": "76900f1bfd",
+    "prepare.actions.backToStart": "1287adb7b0",
+    "prepare.actions.checking": "e7b8fec7d2",
+    "prepare.actions.next": "1ff57a29d7",
+    "prepare.actions.saveAndReview": "9a5e7cf983",
+    "prepare.actions.skip": "9af278eb4a",
+    "prepare.changes.label": "07f6ba0440",
+    "prepare.changes.nonePattern": "e76cb60621",
+    "prepare.changes.placeholder": "01097e0651",
+    "prepare.concern.label": "5fb0541bf3",
+    "prepare.concern.placeholder": "01097e0651",
+    "prepare.draftNotice": "3925db23d5",
+    "prepare.errors.changesRequired": "f54df7d11f",
+    "prepare.errors.chooseAge": "69f9a3271c",
+    "prepare.errors.chooseOne": "1c16ddf265",
+    "prepare.errors.required": "0e3279a6e8",
+    "prepare.errors.tooLong": "bcf89f862d",
+    "prepare.followUps.continue": "31fbef1625",
+    "prepare.followUps.lead": "d75d934705",
+    "prepare.followUps.placeholder": "01097e0651",
+    "prepare.followUps.skip": "28d03596d2",
+    "prepare.followUps.skipped": "12698ce1ea",
+    "prepare.followUps.title": "72e220930b",
+    "prepare.followUps.undoSkip": "518ec333ae",
+    "prepare.medicines.medicinesHint": "6743825b8f",
+    "prepare.medicines.medicinesLabel": "dd81a64303",
+    "prepare.medicines.supportHint": "dd8ec4cdb4",
+    "prepare.medicines.supportLabel": "b8f0f0e2a6",
+    "prepare.review.change": "c0bf75bd78",
+    "prepare.review.changesHeading": "f40d16695e",
+    "prepare.review.childAge": "22c4e5c86c",
+    "prepare.review.concernHeading": "5c643bf729",
+    "prepare.review.followUpsHeading": "e7785388dd",
+    "prepare.review.getSummary": "b068971d45",
+    "prepare.review.medicinesHeading": "42dce2871e",
+    "prepare.review.noPattern": "e76cb60621",
+    "prepare.review.otherAge": "def6b4bcb7",
+    "prepare.review.patternPrefix": "2947d0f18d",
+    "prepare.review.skipped": "e9ff992f01",
+    "prepare.review.startedPrefix": "8301e51f74",
+    "prepare.review.supportHeading": "497d53de9e",
+    "prepare.review.timingHeading": "b158fd9fba",
+    "prepare.review.whoHeading": "60c3907ec2",
+    "prepare.review.worriesHeading": "3a1f715d1a",
+    "prepare.stepLabel": "82e0b7bc4b",
+    "prepare.steps.changes.lead": "9c9b8f487a",
+    "prepare.steps.changes.title": "f5df1cd960",
+    "prepare.steps.concern.lead": "1a019a781d",
+    "prepare.steps.concern.title": "a8e103d2ac",
+    "prepare.steps.medicines.lead": "1a0da9756e",
+    "prepare.steps.medicines.title": "242dc0493f",
+    "prepare.steps.review.lead": "35d525874b",
+    "prepare.steps.review.title": "7e405e1dad",
+    "prepare.steps.timing.lead": "cff1d53374",
+    "prepare.steps.timing.title": "8d5a3abd76",
+    "prepare.steps.who.lead": "600ac50757",
+    "prepare.steps.who.title": "10bc77f238",
+    "prepare.steps.worries.lead": "1a0da9756e",
+    "prepare.steps.worries.title": "91e06b4856",
+    "prepare.summaryStatus.backToAnswers": "67b40f0fdc",
+    "prepare.summaryStatus.errors.busy.body": "74a9e412a4",
+    "prepare.summaryStatus.errors.busy.title": "ee07829913",
+    "prepare.summaryStatus.errors.failed.body": "724b777423",
+    "prepare.summaryStatus.errors.failed.title": "ab827e3fe1",
+    "prepare.summaryStatus.errors.too_long.body": "58f33fb0ab",
+    "prepare.summaryStatus.errors.too_long.title": "4d0d5e78ab",
+    "prepare.summaryStatus.makingLead": "2b01df9628",
+    "prepare.summaryStatus.makingTitle": "df61eba7de",
+    "prepare.summaryStatus.tryAgain": "d8b8392e2c",
+    "prepare.timing.notesLabel": "9ef9359cbd",
+    "prepare.timing.pattern.changing": "734207131b",
+    "prepare.timing.pattern.comes_and_goes": "607e244ab1",
+    "prepare.timing.pattern.constant": "4cfd553929",
+    "prepare.timing.pattern.not_sure": "9fdc1d357f",
+    "prepare.timing.patternLegend": "3a1084ad30",
+    "prepare.timing.started.days": "30a190dd59",
+    "prepare.timing.started.months": "c11607ce93",
+    "prepare.timing.started.not_sure": "9fdc1d357f",
+    "prepare.timing.started.over_6_months": "a3c5b87810",
+    "prepare.timing.started.today": "2b065c7c9c",
+    "prepare.timing.started.weeks": "edbbe584b9",
+    "prepare.timing.startedLegend": "fa5c931819",
+    "prepare.who.ageBands.12_to_17": "91d93f330d",
+    "prepare.who.ageBands.1_to_4": "8fa72306f4",
+    "prepare.who.ageBands.5_to_11": "cfd2bbca85",
+    "prepare.who.ageBands.adult": "bf62a5e20a",
+    "prepare.who.ageBands.under_1": "ac42c9a2c9",
+    "prepare.who.ageLegend": "84dc5a2c86",
+    "prepare.who.ageLegendOther": "819708806c",
+    "prepare.who.labelHint": "a7dcc778fb",
+    "prepare.who.labelLabel": "6b95163c84",
+    "prepare.who.legend": "0b24aed53a",
+    "prepare.who.options.carer": "5032983329",
+    "prepare.who.options.other": "3233cb049a",
+    "prepare.who.options.parent": "ea4c0f6bd9",
+    "prepare.who.options.self": "d30af076b0",
+    "prepare.worries.label": "ec6a666d57",
+    "prepare.worries.placeholder": "01097e0651",
+    "result.actions.backToAnswers": "67b40f0fdc",
+    "result.actions.comingSoon": "4f7d640176",
+    "result.actions.pdfFailed": "a9dfbbbc79",
+    "result.actions.savePdf": "4cab70e922",
+    "result.actions.savingPdf": "46a760e3fd",
+    "result.confidenceNotice": "75e5b0c6d5",
+    "result.draftNotice": "982ad08f6d",
+    "result.englishOnlyNotice": "cdc32a8e13",
+    "result.forDoctor": "60091ce4c9",
+    "result.hideOwnWords": "f9a010b89a",
+    "result.layout.back": "76900f1bfd",
+    "result.layout.deckLabel": "79a0e8cf57",
+    "result.layout.next": "1ff57a29d7",
+    "result.layout.position": "3612e1cd75",
+    "result.layout.toDeck": "237210ae56",
+    "result.layout.toList": "aadb759187",
+    "result.match.notQuite": "fd682cdc1f",
+    "result.match.question": "d831ba4b87",
+    "result.match.thanks": "bbcc2eded9",
+    "result.match.yes": "85a39ab345",
+    "result.nothingMissing": "ed030afa16",
+    "result.ownWordsHeading": "f00e9fef8c",
+    "result.sections.changes": "f40d16695e",
+    "result.sections.disclaimer": "c83aac6d99",
+    "result.sections.duration": "8ddab050d5",
+    "result.sections.followUps": "e7785388dd",
+    "result.sections.forWhom": "60c3907ec2",
+    "result.sections.frequency": "7710cdf129",
+    "result.sections.mainConcern": "5c643bf729",
+    "result.sections.medicines": "42dce2871e",
+    "result.sections.notMentioned": "8ec2bff4fe",
+    "result.sections.previousSupport": "497d53de9e",
+    "result.sections.questions": "a1ac9ed143",
+    "result.sections.serviceRoutes": "00f1193a04",
+    "result.sections.whatToBring": "3090fd37d1",
+    "result.sections.worries": "3a1f715d1a",
+    "result.showOwnWords": "e981d03ad7",
+    "result.simpleEnglish": "99ab3cad5c",
+    "result.skippedQuestion": "862f38bf2b",
+    "result.tabsLabel": "ae8211ceb8",
+    "result.title": "faef0e95d9",
+    "result.weReadThisAs": "92090ff602",
+    "result.youDidntMention": "ed3d6bf6e4",
+    "understand.actions.back": "76900f1bfd",
+    "understand.actions.backToStart": "1287adb7b0",
+    "understand.actions.continue": "31fbef1625",
+    "understand.choose.lead": "8c1909f0f5",
+    "understand.choose.noticeMore": "45899765d3",
+    "understand.choose.noticeSummary": "93af5098b9",
+    "understand.choose.photo": "1d464c6866",
+    "understand.choose.photoHint": "23713ba50d",
+    "understand.choose.title": "0ba2e8cb3b",
+    "understand.choose.type": "58bf85aea1",
+    "understand.choose.typeHint": "09b0b38669",
+    "understand.confirm.checkThese": "c3e09855da",
+    "understand.confirm.checking": "0dfe1d63c9",
+    "understand.confirm.confirm": "8bcd820ce3",
+    "understand.confirm.found": "c7151b0cda",
+    "understand.confirm.label": "d745b48fd4",
+    "understand.confirm.photoLead": "e0943063d3",
+    "understand.confirm.photoTitle": "05cf08fba0",
+    "understand.confirm.placeholder": "ac9ccd16ee",
+    "understand.confirm.required": "282a5373dd",
+    "understand.confirm.retakePhoto": "657d13eb83",
+    "understand.confirm.typedLead": "18f0582f1c",
+    "understand.confirm.typedTitle": "a8c0b08b0c",
+    "understand.errors.tooLong": "bcf89f862d",
+    "understand.followUpsLead": "e13c4f6611",
+    "understand.fromLetter.heading": "9e54bec2d3",
+    "understand.fromLetter.showAll": "8b61252d4b",
+    "understand.fromLetter.showLess": "94ea9b1d33",
+    "understand.photo.alt": "d0b55dc80c",
+    "understand.photo.caption": "c554de8df5",
+    "understand.photo.larger": "b33e2dafec",
+    "understand.photo.smaller": "f537f6c64a",
+    "understand.photoAdvice.afterItems": "2c98b95a17",
+    "understand.photoAdvice.choosePhoto": "f28ab0436b",
+    "understand.photoAdvice.items.0": "2c6b2e253c",
+    "understand.photoAdvice.items.1": "aa7eb8c4c9",
+    "understand.photoAdvice.items.2": "20d06c7411",
+    "understand.photoAdvice.lead": "867e342492",
+    "understand.photoAdvice.openCamera": "8cbda064f2",
+    "understand.photoAdvice.privacy": "9d76a4e686",
+    "understand.photoAdvice.title": "fd9f4e6cef",
+    "understand.photoProblems.busy.body": "74a9e412a4",
+    "understand.photoProblems.busy.title": "ee07829913",
+    "understand.photoProblems.failed.body": "bb6e802931",
+    "understand.photoProblems.failed.title": "ab827e3fe1",
+    "understand.photoProblems.invalid.body": "e6e0e6c942",
+    "understand.photoProblems.invalid.title": "2c469279a4",
+    "understand.photoProblems.rate_limited.body": "398e77646e",
+    "understand.photoProblems.rate_limited.title": "8c98449c5a",
+    "understand.photoProblems.retake.body": "6efd7bbb92",
+    "understand.photoProblems.retake.title": "116a992130",
+    "understand.photoProblems.too_large.body": "f16bd23a49",
+    "understand.photoProblems.too_large.title": "a279d469a8",
+    "understand.photoProblems.unreadable.body": "e6e0e6c942",
+    "understand.photoProblems.unreadable.title": "2c469279a4",
+    "understand.reading.lead": "2b01df9628",
+    "understand.reading.title": "85ee7dea78",
+    "understand.retake": "89e40dd9f6",
+    "understand.status.backToAnswers": "e0d38190d3",
+    "understand.status.errors.busy.body": "74a9e412a4",
+    "understand.status.errors.busy.title": "ee07829913",
+    "understand.status.errors.failed.body": "7c82b4a18e",
+    "understand.status.errors.failed.title": "ab827e3fe1",
+    "understand.status.errors.too_long.body": "e9df507afd",
+    "understand.status.errors.too_long.title": "10be6dad9e",
+    "understand.status.makingLead": "2b01df9628",
+    "understand.status.makingTitle": "7f777619c6",
+    "understand.status.tryAgain": "d8b8392e2c",
+    "understand.typeInstead": "83644bf92d"
+  },
+  "messages": {
+    "common": {
+      "landing": {
+        "headline": "Pasiruoškime jūsų vizitui pas gydytoją.",
+        "lead": "Aiški informacija. Geresnis pokalbis. Jums pavyks.",
+        "navLabel": "Pasirinkite, ko jums reikia",
+        "prepare": "Pasiruošti vizitui",
+        "understand": "Suprasti, ką man pasakė",
+        "guest": "Svečio režimas — niekas neišsaugoma."
+      },
+      "language": {
+        "label": "Kalba",
+        "unreviewedNotice": "Šis puslapis išverstas automatiškai, ir gimtakalbis jo dar nepatikrino."
+      },
+      "meta": {
+        "description": "Pasiruoškite vizitui NHS ir supraskite, ką jums pasakė.",
+        "prepareTitle": "Pasiruošti vizitui",
+        "understandTitle": "Suprasti, ką man pasakė"
+      }
+    },
+    "prepare": {
+      "draftNotice": "Tai juodraštis, padėsiantis jums pasiruošti. Tai nėra medicininis patarimas.",
+      "stepLabel": "Žingsnis {n} iš {total}",
+      "steps": {
+        "who": {
+          "title": "Kam skirtas šis vizitas?",
+          "lead": "Jūsų santrauką parašysime tinkamo asmens vardu."
+        },
+        "concern": {
+          "title": "Apie ką norėtumėte pasikalbėti su gydytoju?",
+          "lead": "Parašykite savais žodžiais, bet kuria kalba. Čia nėra neteisingo būdo tai pasakyti."
+        },
+        "timing": {
+          "title": "Kiek laiko ir kaip dažnai?",
+          "lead": "Pasirinkite labiausiai tinkančius atsakymus. Atsakyti „Nesu tikras (-a)“ irgi galima."
+        },
+        "changes": {
+          "title": "Ar pastebėjote kokių nors pokyčių ar dėsningumų?",
+          "lead": "Pavyzdžiui, ar būna blogiau naktį, po valgio ar tam tikru metu."
+        },
+        "medicines": {
+          "title": "Vaistai ir iki šiol gauta pagalba",
+          "lead": "Šis žingsnis neprivalomas. Galite jį praleisti."
+        },
+        "worries": {
+          "title": "Ar kas nors jus neramina, ar jums sunku apie tai kalbėti?",
+          "lead": "Šis žingsnis neprivalomas. Galite jį praleisti."
+        },
+        "review": {
+          "title": "Patikrinkite savo atsakymus",
+          "lead": "Galite bet ką pakeisti, kol dar nesudarėme jūsų santraukos."
+        }
+      },
+      "who": {
+        "legend": "Pasirinkite vieną",
+        "options": {
+          "self": "Man",
+          "parent": "Mano vaikui",
+          "carer": "Žmogui, kuriuo rūpinuosi",
+          "other": "Kitam asmeniui"
+        },
+        "ageLegend": "Kiek metų jūsų vaikui?",
+        "ageLegendOther": "Kiek metų tam asmeniui?",
+        "ageBands": {
+          "under_1": "Iki 1 metų",
+          "1_to_4": "Nuo 1 iki 4 metų",
+          "5_to_11": "Nuo 5 iki 11 metų",
+          "12_to_17": "Nuo 12 iki 17 metų",
+          "adult": "18 metų ar vyresnis (-ė)"
+        },
+        "labelLabel": "Kas jums yra šis asmuo? (neprivaloma)",
+        "labelHint": "Pavyzdžiui: mano mama, mano kaimynas."
+      },
+      "concern": {
+        "label": "Kas jus labiausiai neramina",
+        "placeholder": "Rašykite čia, bet kuria kalba."
+      },
+      "timing": {
+        "startedLegend": "Kada tai prasidėjo?",
+        "started": {
+          "today": "Šiandien",
+          "days": "Per pastarąsias kelias dienas",
+          "weeks": "Prieš 1–4 savaites",
+          "months": "Prieš 1–6 mėnesius",
+          "over_6_months": "Daugiau nei prieš 6 mėnesius",
+          "not_sure": "Nesu tikras (-a)"
+        },
+        "patternLegend": "Kaip dažnai tai būna?",
+        "pattern": {
+          "constant": "Visą laiką",
+          "comes_and_goes": "Tai atsiranda, tai praeina",
+          "changing": "Keičiasi",
+          "not_sure": "Nesu tikras (-a)"
+        },
+        "notesLabel": "Dar kas nors apie tai, kada tai būna? (neprivaloma)"
+      },
+      "changes": {
+        "label": "Pokyčiai ar dėsningumai, kuriuos pastebėjote",
+        "placeholder": "Rašykite čia, bet kuria kalba.",
+        "nonePattern": "Jokio dėsningumo nepastebėjau"
+      },
+      "medicines": {
+        "medicinesLabel": "Vaistai, kuriuos dabar vartojate",
+        "medicinesHint": "Įrašykite ir tai, ką pirkote vaistinėje ar parduotuvėje.",
+        "supportLabel": "Pagalba, kurią jau gavote",
+        "supportHint": "Pavyzdžiui: vaistininkas, vizitas pas GP ar ligoninė."
+      },
+      "worries": {
+        "label": "Kas jus neramina",
+        "placeholder": "Rašykite čia, bet kuria kalba."
+      },
+      "review": {
+        "change": "Keisti",
+        "followUpsHeading": "Jūsų papildomi atsakymai",
+        "skipped": "Jūs tai praleidote",
+        "noPattern": "Jokio dėsningumo nepastebėjau",
+        "whoHeading": "Kam skirta",
+        "concernHeading": "Pagrindinis rūpestis",
+        "timingHeading": "Kiek laiko ir kaip dažnai",
+        "changesHeading": "Pokyčiai ir dėsningumai",
+        "medicinesHeading": "Vaistai",
+        "supportHeading": "Iki šiol gauta pagalba",
+        "worriesHeading": "Rūpesčiai",
+        "startedPrefix": "Prasidėjo:",
+        "patternPrefix": "Kaip dažnai:",
+        "childAge": "Mano vaikas, amžius: {band}",
+        "otherAge": "amžius: {band}",
+        "getSummary": "Gauti mano santrauką"
+      },
+      "followUps": {
+        "title": "Keli trumpi klausimai",
+        "lead": "Jie padeda gydytojui jus suprasti. Bet kurį iš jų galite praleisti.",
+        "placeholder": "Rašykite čia, bet kuria kalba.",
+        "skip": "Praleisti",
+        "skipped": "Praleista",
+        "undoSkip": "Atsakyti į šį klausimą",
+        "continue": "Tęsti"
+      },
+      "summaryStatus": {
+        "makingTitle": "Sudarome jūsų santrauką",
+        "makingLead": "Tai gali užtrukti iki minutės. Prašome neuždaryti šio puslapio.",
+        "errors": {
+          "too_long": {
+            "title": "Kai kurie jūsų atsakymai per ilgi",
+            "body": "Prašome grįžti, šiek tiek sutrumpinti atsakymus ir bandyti dar kartą."
+          },
+          "busy": {
+            "title": "Šiuo metu esame labai užimti",
+            "body": "Šiuo metu CareNav AI naudojasi per daug žmonių. Prašome po kelių minučių bandyti dar kartą."
+          },
+          "failed": {
+            "title": "Kažkas nepavyko",
+            "body": "Šį kartą nepavyko sudaryti jūsų santraukos. Jūsų atsakymai vis dar čia. Prašome bandyti dar kartą."
+          }
+        },
+        "tryAgain": "Bandyti dar kartą",
+        "backToAnswers": "Atgal į mano atsakymus"
+      },
+      "actions": {
+        "back": "Atgal",
+        "backToStart": "Į pradžią",
+        "next": "Toliau",
+        "skip": "Praleisti šį žingsnį",
+        "saveAndReview": "Išsaugoti ir peržiūrėti",
+        "checking": "Tikriname jūsų atsakymą"
+      },
+      "errors": {
+        "chooseOne": "Prašome pasirinkti vieną.",
+        "chooseAge": "Prašome pasirinkti amžių.",
+        "required": "Prašome parašyti kelis žodžius. Tinka bet kuri kalba.",
+        "changesRequired": "Prašome parašyti, ką pastebėjote, arba pažymėti „Jokio dėsningumo nepastebėjau“.",
+        "tooLong": "Tekstas per ilgas {over} ženklais. Prašome sutrumpinti iki {max} ženklų ar mažiau."
+      }
+    },
+    "understand": {
+      "choose": {
+        "title": "Ką jums pasakė?",
+        "lead": "Pridėkite laišką, receptą ar raštelį iš savo vizito. Paaiškinsime tai paprastesniais žodžiais.",
+        "photo": "Nufotografuoti laišką ar receptą",
+        "photoHint": "Perskaitysime tekstą, o jūs jį patikrinsite.",
+        "type": "Įrašyti arba įklijuoti tekstą",
+        "typeHint": "Tinka bet kuri kalba.",
+        "noticeSummary": "Kad paaiškintume jūsų tekstą, siunčiame jį dirbtinio intelekto paslaugai (OpenAI). Svečio režimu niekas neišsaugoma.",
+        "noticeMore": "Daugiau apie privatumą"
+      },
+      "photoAdvice": {
+        "title": "Prieš fotografuodami",
+        "lead": "Prašome uždengti arba užlenkti šiuos duomenis, kad jų nebūtų nuotraukoje:",
+        "items": [
+          "Jūsų vardą ir pavardę",
+          "Jūsų adresą",
+          "Jūsų NHS numerį"
+        ],
+        "afterItems": "Padėkite laišką lygiai, gerai apšviestoje vietoje, ir nufotografuokite visą puslapį.",
+        "privacy": "Jūsų nuotrauka lieka šiame įrenginyje. Mes jos niekada neišsaugome.",
+        "openCamera": "Atidaryti kamerą",
+        "choosePhoto": "Verčiau pasirinkti nuotrauką"
+      },
+      "reading": {
+        "title": "Skaitome jūsų laišką",
+        "lead": "Tai gali užtrukti iki minutės. Prašome neuždaryti šio puslapio."
+      },
+      "photoProblems": {
+        "retake": {
+          "title": "Nepavyko aiškiai perskaityti",
+          "body": "Prašome nufotografuoti dar kartą. Padėkite laišką lygiai, naudokite gerą apšvietimą ir laikykite telefoną nejudindami."
+        },
+        "unreadable": {
+          "title": "Nepavyko atidaryti šios nuotraukos",
+          "body": "Prašome pabandyti kitą nuotrauką arba įrašyti tekstą."
+        },
+        "invalid": {
+          "title": "Nepavyko atidaryti šios nuotraukos",
+          "body": "Prašome pabandyti kitą nuotrauką arba įrašyti tekstą."
+        },
+        "too_large": {
+          "title": "Ši nuotrauka per didelė",
+          "body": "Prašome nufotografuoti dar kartą arba įrašyti tekstą."
+        },
+        "rate_limited": {
+          "title": "Prašome šiek tiek palaukti",
+          "body": "Per trumpą laiką išsiuntėte daug. Prašome palaukti minutę ir bandyti dar kartą."
+        },
+        "busy": {
+          "title": "Šiuo metu esame labai užimti",
+          "body": "Šiuo metu CareNav AI naudojasi per daug žmonių. Prašome po kelių minučių bandyti dar kartą."
+        },
+        "failed": {
+          "title": "Kažkas nepavyko",
+          "body": "Šį kartą nepavyko perskaityti jūsų nuotraukos. Prašome bandyti dar kartą arba įrašyti tekstą."
+        }
+      },
+      "retake": "Nufotografuoti dar kartą",
+      "typeInstead": "Verčiau įrašyti tekstą",
+      "confirm": {
+        "photoTitle": "Patikrinkite tekstą iš nuotraukos",
+        "photoLead": "Galbūt ką nors perskaitėme neteisingai. Ištaisykite klaidas, kol dar nepaaiškinome.",
+        "typedTitle": "Kas parašyta jūsų laiške?",
+        "typedLead": "Įrašykite arba įklijuokite tekstą iš savo laiško, recepto ar vizito.",
+        "label": "Tekstas iš jūsų laiško",
+        "placeholder": "Įrašykite arba įklijuokite čia.",
+        "found": "Vaistai, dozės ir datos, kuriuos radome:",
+        "checkThese": "Palyginkite juos su savo laišku ar etikete.",
+        "confirm": "Viskas teisinga, paaiškinkite",
+        "checking": "Tikriname",
+        "required": "Prašome pirmiausia įrašyti arba įklijuoti tekstą.",
+        "retakePhoto": "Fotografuoti iš naujo"
+      },
+      "photo": {
+        "alt": "Jūsų laiško nuotrauka",
+        "caption": "Jūsų nuotrauka. Ji lieka šiame įrenginyje ir dingsta, kai išeinate.",
+        "larger": "Rodyti didesnę",
+        "smaller": "Rodyti mažesnę"
+      },
+      "fromLetter": {
+        "heading": "Iš jūsų laiško",
+        "showAll": "Rodyti viską",
+        "showLess": "Rodyti mažiau"
+      },
+      "followUpsLead": "Jie padeda mums aiškiai paaiškinti jūsų laišką. Bet kurį iš jų galite praleisti.",
+      "status": {
+        "makingTitle": "Aiškiname jūsų laišką",
+        "makingLead": "Tai gali užtrukti iki minutės. Prašome neuždaryti šio puslapio.",
+        "errors": {
+          "too_long": {
+            "title": "Jūsų laiškas per ilgas",
+            "body": "Prašome grįžti, palikti tik tą dalį, kurią norite paaiškinti, ir bandyti dar kartą."
+          },
+          "busy": {
+            "title": "Šiuo metu esame labai užimti",
+            "body": "Šiuo metu CareNav AI naudojasi per daug žmonių. Prašome po kelių minučių bandyti dar kartą."
+          },
+          "failed": {
+            "title": "Kažkas nepavyko",
+            "body": "Šį kartą nepavyko paaiškinti jūsų laiško. Jūsų tekstas vis dar čia. Prašome bandyti dar kartą."
+          }
+        },
+        "tryAgain": "Bandyti dar kartą",
+        "backToAnswers": "Atgal į tekstą"
+      },
+      "actions": {
+        "back": "Atgal",
+        "backToStart": "Į pradžią",
+        "continue": "Tęsti"
+      },
+      "errors": {
+        "tooLong": "Tekstas per ilgas {over} ženklais. Prašome sutrumpinti iki {max} ženklų ar mažiau."
+      }
+    },
+    "result": {
+      "title": "Štai jūsų santrauka",
+      "draftNotice": "Juodraštis, padėsiantis jums pasiruošti. Ne medicininis patarimas.",
+      "weReadThisAs": "Atpažinome kalbą: {language}",
+      "tabsLabel": "Pasirinkite versiją",
+      "simpleEnglish": "Paprasta anglų kalba",
+      "forDoctor": "Anglų kalba (jūsų gydytojui)",
+      "confidenceNotice": "Prašome dar kartą patikrinti tai su žmogumi, kuris kalba jūsų kalba.",
+      "englishOnlyNotice": "Šį kartą nepavyko parengti patikimos versijos jūsų kalba, todėl jūsų santrauka yra tik anglų kalba. Joje nieko netrūksta, ir galite ją parodyti gydytojui tokią, kokia yra.",
+      "sections": {
+        "forWhom": "Kam skirta",
+        "mainConcern": "Pagrindinis rūpestis",
+        "duration": "Kiek laiko",
+        "frequency": "Kaip dažnai",
+        "changes": "Pokyčiai ir dėsningumai",
+        "medicines": "Vaistai",
+        "previousSupport": "Iki šiol gauta pagalba",
+        "worries": "Rūpesčiai",
+        "questions": "Klausimai, kuriuos galėtumėte užduoti",
+        "whatToBring": "Ką pasiimti",
+        "notMentioned": "Nepaminėta",
+        "followUps": "Jūsų papildomi atsakymai",
+        "serviceRoutes": "Kur gauti pagalbos",
+        "disclaimer": "Apie šią santrauką"
+      },
+      "youDidntMention": "Jūs nepaminėjote: {sections}.",
+      "nothingMissing": "Atrodo, kad nieko svarbaus netrūksta.",
+      "showOwnWords": "Rodyti mano žodžius",
+      "hideOwnWords": "Slėpti mano žodžius",
+      "ownWordsHeading": "Ką mums papasakojote",
+      "skippedQuestion": "Jūs praleidote šį klausimą.",
+      "match": {
+        "question": "Ar tai atitinka tai, ką norėjote pasakyti?",
+        "yes": "Taip",
+        "notQuite": "Ne visai",
+        "thanks": "Ačiū. Galite tai parodyti savo gydytojui ar slaugytojui."
+      },
+      "actions": {
+        "backToAnswers": "Atgal į mano atsakymus",
+        "savePdf": "Išsaugoti kaip PDF",
+        "savingPdf": "Kuriame jūsų PDF",
+        "pdfFailed": "Atsiprašome, nepavyko sukurti PDF. Prašome bandyti dar kartą.",
+        "comingSoon": "Netrukus"
+      },
+      "layout": {
+        "toDeck": "Po vieną kortelę",
+        "toList": "Rodyti sąrašu",
+        "deckLabel": "Jūsų rezultatas, po vieną kortelę",
+        "next": "Toliau",
+        "back": "Atgal",
+        "position": "{n} iš {total}"
+      }
+    },
+    "explain": {
+      "title": "Štai ką reiškia jūsų laiškas",
+      "draftNotice": "Juodraštis, ne medicininis patarimas. Prašome tai patikrinti su vaistininku ar GP.",
+      "englishOnlyNotice": "Šį kartą nepavyko parengti patikimos versijos jūsų kalba, todėl šis paaiškinimas yra tik anglų kalba. Jame nieko netrūksta.",
+      "sections": {
+        "told": "Ką jums pasakė",
+        "means": "Ką tai reiškia",
+        "steps": "Kiti žingsniai",
+        "medicines": "Vaistai",
+        "unclear": "Neaišku arba trūksta",
+        "disclaimer": "Apie šį paaiškinimą"
+      },
+      "nothingFound": "Nepavyko išskirti pagrindinių dalykų. Prašome pažiūrėti patį laišką.",
+      "byWhen": "Kada: {when}",
+      "medicine": {
+        "dose": "Dozė",
+        "frequency": "Kaip dažnai",
+        "duration": "Kiek laiko",
+        "instructions": "Kaip vartoti",
+        "notStated": "Jūsų laiške nenurodyta"
+      },
+      "checkThese": "Palyginkite juos su savo laišku ar etikete.",
+      "whoToAsk": {
+        "clinician": "Paklauskite žmogaus, kuris parašė jūsų laišką",
+        "pharmacist": "Paklauskite vaistininko",
+        "gp_surgery": "Paklauskite savo GP klinikoje"
+      },
+      "showSources": "Rodyti laiško žodžius",
+      "hideSources": "Slėpti laiško žodžius",
+      "fromLetter": "Iš jūsų laiško",
+      "notFound": {
+        "heading": "To neradome jūsų laiške",
+        "lead": "Šių dalykų neradome jūsų laiške, todėl jais nesiremkite."
+      },
+      "languagePicker": {
+        "toggle": "Keisti kalbą",
+        "label": "Rodyti man tai šia kalba:",
+        "defaultOption": "Paprasta anglų kalba",
+        "updating": "Atnaujiname…",
+        "failed": "Šį kartą nepavyko parengti tos versijos. Jūs vis dar matote ankstesnę."
+      },
+      "actions": {
+        "backToWords": "Atgal į tekstą"
+      }
+    }
+  }
+}
