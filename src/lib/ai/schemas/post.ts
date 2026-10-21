@@ -39,7 +39,7 @@ export const ungroundedItemSchema = z.object({
 
 export const postAppointmentResultSchema = postAppointmentDraftSchema.extend({
   ungrounded: z.array(ungroundedItemSchema),
-  disclaimer: z.string(),
+  disclaimer: z.array(z.string()),
   meta: resultMetaSchema,
 });
 export type PostAppointmentResult = z.infer<typeof postAppointmentResultSchema>;

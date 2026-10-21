@@ -13,6 +13,7 @@ export const envSchema = z.object({
   RATE_LIMIT_PER_MINUTE: z.coerce.number().int().positive().default(20),
   RATE_LIMIT_PER_DAY: z.coerce.number().int().positive().default(300),
   MAX_TEXT_CHARS: z.coerce.number().int().positive().default(2000),
+  MAX_LETTER_CHARS: z.coerce.number().int().positive().default(6000),
   MAX_AUDIO_SECONDS: z.coerce.number().int().positive().default(90),
   MAX_IMAGE_PX: z.coerce.number().int().positive().default(1600),
   MAX_IMAGE_MB: z.coerce.number().positive().default(8),

@@ -63,3 +63,9 @@ export function prepareFreeText(a: PrepareAnswers): { step: string; text: string
   ];
   return parts.filter((p): p is { step: string; text: string } => !!p.text && p.text.length > 0);
 }
+
+export const followUpsRequestSchema = z.discriminatedUnion("journey", [
+  z.object({ journey: z.literal("prepare"), answers: prepareAnswersSchema, acknowledgedUrgent: z.boolean().default(false) }),
+  z.object({ journey: z.literal("understand"), confirmedText: freeText.min(1), acknowledgedUrgent: z.boolean().default(false) }),
+]);
+export type FollowUpsRequest = z.infer<typeof followUpsRequestSchema>;

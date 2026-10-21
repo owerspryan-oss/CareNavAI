@@ -26,11 +26,17 @@ export const preAppointmentDraftSchema = z.object({
 });
 export type PreAppointmentDraft = z.infer<typeof preAppointmentDraftSchema>;
 
-export const serviceRouteSchema = z.object({ key: z.string(), title: z.string(), body: z.string() });
+/** Static service route, copied from content/service-routes (never model-written). */
+export const serviceRouteSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  description: z.string(),
+  contacts: z.array(z.object({ label: z.string(), href: z.string() })),
+});
 
 export const preAppointmentResultSchema = preAppointmentDraftSchema.extend({
   serviceRoutes: z.array(serviceRouteSchema),
-  disclaimer: z.string(),
+  disclaimer: z.array(z.string()),
   meta: resultMetaSchema,
 });
 export type PreAppointmentResult = z.infer<typeof preAppointmentResultSchema>;
