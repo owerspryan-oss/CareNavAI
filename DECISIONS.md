@@ -26,6 +26,13 @@ Running decisions log for the CareNav AI workspace and build. Newest at the bott
 **Affects:** all future UI work across every epic; `CLAUDE.md` now points to `DESIGN_SYSTEM.md` as required reading before UI tasks.
 **Alternatives considered:** waiting for an exact-hex design-tool export before building a tokens file — rejected because it would block UI work with no scheduled source for that export; documented as an open item (DESIGN_SYSTEM.md §10) instead, to be reconciled later if exact values are supplied.
 
+## T-01 scaffold choices — 2026-10-21
+
+**Decision:** Next.js 16.4 (App Router), React 19, Zod 4, OpenAI SDK 7, pino 10, Vitest 5. TypeScript pinned to `~6.0` (not 7.x) because typescript-eslint supports `<6.1`. New env vars not named in CONTEXT.md §11: `SHOW_DRAFT_LABEL` (FR-29 switch, default `true`), `RATE_LIMIT_PER_MINUTE` / `RATE_LIMIT_PER_DAY` (the `RATE_LIMIT_*` placeholder), `LOG_LEVEL`. Model names in `config/models.json` and prices in `config/pricing.json` are **untested/unverified placeholders** — each file says so, pending model evaluation and a pricing-page check. The logger exposes no free-text message argument at all; strings in allowed fields must look like short identifiers or are replaced with `[dropped]`.
+**Why:** stable toolchain for a tight deadline; FR-29 needs a config switch; rule 8 is easier to keep if the logger cannot accept content.
+**Affects:** `package.json`, `.env.example`, `config/*`, `src/lib/config/*`, `src/lib/log/logger.ts`.
+**Alternatives considered:** TypeScript 7 (breaks linting); per-call message strings in logs (rejected — content leak path).
+
 *(Populate further entries as the build progresses. Log anything that changes or narrows a requirement, picks between two valid architectural approaches, or resolves one of the open items in CONTEXT.md §15.)*
 
 Suggested format per entry:

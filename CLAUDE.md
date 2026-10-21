@@ -65,4 +65,10 @@ UI work (mockups, components, motion) follows Apple's interface-design approach,
 
 ## Commands
 
-No build/lint/test commands exist yet — there is no `package.json`. Once the Next.js project is scaffolded, record the actual commands here (dev server, typecheck, lint, `vitest`/`vitest run <file>` for a single test, the urgency test runner, Playwright e2e) rather than guessing generic ones.
+- `npm run dev` — Next.js dev server (http://localhost:3000)
+- `npm run build` — production build (also typechecks)
+- `npm run typecheck` — `tsc --noEmit`
+- `npm run lint` — ESLint (next core-web-vitals + typescript)
+- `npm test` — all Vitest tests; single file: `npx vitest run tests/unit/logger.test.ts`
+- Copy `.env.example` to `.env.local` for local config. The urgency test runner and Playwright e2e will be recorded here when they exist.
+- Next.js 16 differs from older versions — check `node_modules/next/dist/docs/` before using an unfamiliar API (see `AGENTS.md`).
