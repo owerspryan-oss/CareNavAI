@@ -1,0 +1,50 @@
+{
+  "$comment": "Static service routes (FR-01 serviceRoutes, ADR-004). The model never writes these. English is the master. DRAFT until the product owner and clinical adviser approve.",
+  "language": "en",
+  "status": "DRAFT_NOT_CLINICALLY_APPROVED",
+  "reviewed": false,
+  "derivedFrom": null,
+  "routes": [
+    {
+      "id": "gp_surgery",
+      "name": "Your GP surgery",
+      "description": "For health concerns that are not urgent, and to book or change an appointment.",
+      "contacts": []
+    },
+    {
+      "id": "pharmacy",
+      "name": "A pharmacy",
+      "description": "Pharmacists can talk to you about your medicines and help with many everyday health problems, often without an appointment.",
+      "contacts": []
+    },
+    {
+      "id": "nhs_111",
+      "name": "NHS 111",
+      "description": "If you need help quickly but it is not an emergency. Free, any time, day or night.",
+      "contacts": [
+        { "label": "Call NHS 111", "href": "tel:111" },
+        { "label": "NHS 111 online", "href": "https://111.nhs.uk" }
+      ]
+    },
+    {
+      "id": "emergency_999",
+      "name": "999",
+      "description": "Only in an emergency, when someone is seriously ill or hurt, or their life is at risk.",
+      "contacts": [
+        { "label": "Call 999", "href": "tel:999" }
+      ]
+    },
+    {
+      "id": "samaritans",
+      "name": "Samaritans",
+      "description": "If you are finding things hard to cope with, you can talk to someone for free, any time, day or night.",
+      "contacts": [
+        { "label": "Call Samaritans 116 123", "href": "tel:116123" }
+      ]
+    }
+  ],
+  "sets": {
+    "preAppointment": ["gp_surgery", "pharmacy", "nhs_111", "emergency_999", "samaritans"],
+    "postAppointment": ["gp_surgery", "pharmacy", "nhs_111", "emergency_999"]
+  }
+}

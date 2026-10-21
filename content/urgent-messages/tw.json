@@ -1,0 +1,56 @@
+{
+  "$comment": "Twi (Asante) urgent messages. DRAFT translation derived from en.json; needs native-speaker review and clinical adviser approval. Phone numbers and hrefs are byte-identical to en.json.",
+  "language": "tw",
+  "status": "DRAFT_NOT_CLINICALLY_APPROVED",
+  "reviewed": false,
+  "derivedFrom": "en",
+  "labels": {
+    "acknowledge": "Mete aseɛ, ma yɛnkɔ so",
+    "startAgain": "Fi ase bio"
+  },
+  "messages": {
+    "emergency": {
+      "title": "Ebia eyi yɛ asɛm a ɛhia mmoa ntɛm ara (emergency)",
+      "body": [
+        "Nea woaka no betumi ayɛ asɛm a ɛyɛ den.",
+        "Frɛ 999 seesei ara.",
+        "Ntwɛn nhwɛ sɛ ebeyɛ yie anaa.",
+        "App yi ntumi nhwɛ yare ho nsɛnkyerɛnne, na ɛntumi mma ayaresa ho afotu."
+      ],
+      "banner": "Woaka biribi a ebia ɛyɛ asɛm a ɛhia mmoa ntɛm ara. Sɛ wonyɛɛ no da a, frɛ 999 seesei ara.",
+      "actions": [
+        { "id": "call_999", "label": "Frɛ 999", "href": "tel:999" }
+      ]
+    },
+    "urgent": {
+      "title": "Mesrɛ wo, hwehwɛ mmoa ntɛm",
+      "body": [
+        "Nea woaka no betumi ahia sɛ ɔyarehwɛfo hwɛ ntɛm.",
+        "Frɛ NHS 111 seesei, wɔ telefon so anaa intanɛt so, anaa frɛ wo GP surgery sɛ wɔabue a.",
+        "Sɛ ɛreyɛ den kɛse, anaa wususuw sɛ ɛyɛ emergency a, frɛ 999.",
+        "App yi ntumi nhwɛ yare ho nsɛnkyerɛnne, na ɛntumi mma ayaresa ho afotu."
+      ],
+      "banner": "Woaka biribi a ebia ɛhia mmoa ntɛm. Sɛ wonyɛɛ no da a, frɛ NHS 111 anaa wo GP surgery.",
+      "actions": [
+        { "id": "call_111", "label": "Frɛ NHS 111", "href": "tel:111" },
+        { "id": "nhs_111_online", "label": "NHS 111 wɔ intanɛt so", "href": "https://111.nhs.uk" },
+        { "id": "call_999", "label": "Frɛ 999", "href": "tel:999" }
+      ]
+    },
+    "crisis": {
+      "title": "Ɛnsɛ sɛ wo nko ara gyina eyi ano",
+      "body": [
+        "Ɛte sɛ nea worefa biribi a ɛyɛ den yiye mu seesei.",
+        "Wobɛtumi ne Samaritans akasa kwa, bere biara, awia anaa anadwo. Frɛ 116 123.",
+        "Sɛ wowɔ asiane mu seesei, anaa ebia wobɛyɛ saa adwene yi so adwuma a, frɛ 999 seesei ara.",
+        "Wobɛtumi nso afrɛ NHS 111 ama adwenem yare ho mmoa ntɛm."
+      ],
+      "banner": "Woaka sɛ ebia worefa biribi a ɛyɛ den mu. Samaritans wɔ hɔ bere biara wɔ 116 123. Sɛ wowɔ asiane mu seesei a, frɛ 999.",
+      "actions": [
+        { "id": "call_samaritans", "label": "Frɛ Samaritans 116 123", "href": "tel:116123" },
+        { "id": "call_999", "label": "Frɛ 999", "href": "tel:999" },
+        { "id": "call_111", "label": "Frɛ NHS 111", "href": "tel:111" }
+      ]
+    }
+  }
+}

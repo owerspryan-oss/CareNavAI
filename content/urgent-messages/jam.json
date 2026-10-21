@@ -1,0 +1,56 @@
+{
+  "$comment": "Jamaican Patois urgent messages. DRAFT translation derived from en.json; needs native-speaker review and clinical adviser approval. Phone numbers and hrefs are byte-identical to en.json.",
+  "language": "jam",
+  "status": "DRAFT_NOT_CLINICALLY_APPROVED",
+  "reviewed": false,
+  "derivedFrom": "en",
+  "labels": {
+    "acknowledge": "Mi understand, mek wi continue",
+    "startAgain": "Start ova"
+  },
+  "messages": {
+    "emergency": {
+      "title": "Dis coulda be a emergency",
+      "body": [
+        "Wha yuh describe coulda serious.",
+        "Call 999 now.",
+        "Nuh wait fi see if it get betta.",
+        "Dis app cyaan check symptom or give medical advice."
+      ],
+      "banner": "Yuh tell wi someting weh coulda be a emergency. If yuh nuh do it yet, call 999 now.",
+      "actions": [
+        { "id": "call_999", "label": "Call 999", "href": "tel:999" }
+      ]
+    },
+    "urgent": {
+      "title": "Beg yuh, get help soon",
+      "body": [
+        "Wha yuh describe might need a doctor or nurse fi look pon it soon.",
+        "Contact NHS 111 now, pon di phone or online, or call yuh GP surgery if it open.",
+        "If it get worse, or yuh tink a emergency, call 999.",
+        "Dis app cyaan check symptom or give medical advice."
+      ],
+      "banner": "Yuh tell wi someting weh might need help soon. If yuh nuh do it yet, contact NHS 111 or yuh GP surgery.",
+      "actions": [
+        { "id": "call_111", "label": "Call NHS 111", "href": "tel:111" },
+        { "id": "nhs_111_online", "label": "NHS 111 online", "href": "https://111.nhs.uk" },
+        { "id": "call_999", "label": "Call 999", "href": "tel:999" }
+      ]
+    },
+    "crisis": {
+      "title": "Yuh nuh haffi face dis by yuhself",
+      "body": [
+        "It sound like yuh a go through someting really hard right now.",
+        "Yuh can talk to Samaritans fi free, any time, day or night. Call 116 123.",
+        "If yuh in danger right now, or yuh might act pon dem thought deh, call 999 now.",
+        "Yuh can call NHS 111 too fi urgent mental health help."
+      ],
+      "banner": "Yuh tell wi yuh might a go through someting really hard. Samaritans deh deh any time pon 116 123. If yuh in danger right now, call 999.",
+      "actions": [
+        { "id": "call_samaritans", "label": "Call Samaritans 116 123", "href": "tel:116123" },
+        { "id": "call_999", "label": "Call 999", "href": "tel:999" },
+        { "id": "call_111", "label": "Call NHS 111", "href": "tel:111" }
+      ]
+    }
+  }
+}
