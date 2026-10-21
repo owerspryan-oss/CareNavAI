@@ -33,6 +33,13 @@ Running decisions log for the CareNav AI workspace and build. Newest at the bott
 **Affects:** `package.json`, `.env.example`, `config/*`, `src/lib/config/*`, `src/lib/log/logger.ts`.
 **Alternatives considered:** TypeScript 7 (breaks linting); per-call message strings in logs (rejected — content leak path).
 
+## T-02 database access without an ORM — 2026-10-21
+
+**Decision:** better-sqlite3 with plain numbered SQL migrations (`src/lib/db/migrations/NNN_*.sql`) and a ~30-line runner. No Drizzle/Kysely. New env var `DATABASE_PATH` (default `data/carenav.sqlite`, gitignored).
+**Why:** eleven small tables and prepared statements don't need an ORM. Plain SQL is easiest to review and port to Postgres for the pilot.
+**Affects:** `src/lib/db/*`, FR-14/15/16 storage.
+**Alternatives considered:** Drizzle (CONTEXT.md §4.4 default). Rejected for now as extra surface for no gain at this size; revisit if queries grow.
+
 *(Populate further entries as the build progresses. Log anything that changes or narrows a requirement, picks between two valid architectural approaches, or resolves one of the open items in CONTEXT.md §15.)*
 
 Suggested format per entry:

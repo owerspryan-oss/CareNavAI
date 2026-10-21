@@ -21,6 +21,7 @@ export const envSchema = z.object({
   PUBLIC_BASE_URL: z.url().default("http://localhost:3000"),
   CHILD_AGE_BANDS_STRICT: bool.default(true),
   SHOW_DRAFT_LABEL: bool.default(true),
+  DATABASE_PATH: z.string().min(1).default("data/carenav.sqlite"),
   LOG_LEVEL: z.enum(["debug", "info", "warn", "error", "silent"]).default("info"),
 });
 

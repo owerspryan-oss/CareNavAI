@@ -36,3 +36,6 @@ test-results/
 # TypeScript / Next generated
 *.tsbuildinfo
 next-env.d.ts
+
+# Claude Code agent worktrees
+.claude/worktrees/
