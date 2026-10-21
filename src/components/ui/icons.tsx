@@ -140,3 +140,23 @@ export const DocumentIcon = (p: IconProps) => (
     <path d="M14 3v5h5M9 13h6M9 17h6" />
   </Icon>
 );
+
+export const AlertTriangleIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M10.3 4.1 2.6 17.5A2 2 0 0 0 4.3 20.5h15.4a2 2 0 0 0 1.7-3L13.7 4.1a2 2 0 0 0-3.4 0Z" />
+    <path d="M12 9.5v4.5M12 17h.01" />
+  </Icon>
+);
+
+export const PhoneIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M6.6 3.5h2.2l1.5 4-2 1.3a11 11 0 0 0 4.9 4.9l1.3-2 4 1.5v2.2a2 2 0 0 1-2.2 2A16 16 0 0 1 4.5 5.7a2 2 0 0 1 2.1-2.2Z" />
+  </Icon>
+);
+
+export const ExternalLinkIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M14 4h6v6M20 4l-9 9" />
+    <path d="M18 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4" />
+  </Icon>
+);

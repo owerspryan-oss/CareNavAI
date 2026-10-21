@@ -30,7 +30,9 @@ import { Button } from "@/components/ui/Button";
 import { ProgressStepper } from "@/components/ui/ProgressStepper";
 import { TopBar } from "@/components/ui/TopBar";
 import { UrgentGate } from "@/components/safety/UrgentGate";
-import { ResultView, type ResultStatics } from "@/components/result/ResultView";
+import { ResultView } from "@/components/result/ResultView";
+import type { LanguageNames } from "@/lib/result/view";
+import type { UrgentContent } from "@/lib/safety/urgent-content";
 import { prepareCopy as c } from "./copy";
 import { FollowUpsStep } from "./FollowUpsStep";
 import { ownWords } from "./ownWords";
@@ -50,8 +52,10 @@ import styles from "./PrepareFlow.module.css";
 export interface PrepareFlowProps {
   /** MAX_TEXT_CHARS from server config (AC-06.1), passed down so it isn't hard-coded on the client. */
   maxChars: number;
-  /** Static content and language names for the result view (T-13), read on the server. */
-  statics: ResultStatics;
+  /** Static urgent-message content and URGENT_MODE, built on the server (getUrgentContent). */
+  urgentContent: UrgentContent;
+  /** Language names and direction from config/languages.json, for the result view (T-13). */
+  languages: LanguageNames;
 }
 
 type Direction = "forward" | "back";
@@ -102,7 +106,7 @@ function firstInvalidStep(state: PrepareState, maxChars: number): { step: StepId
  * All answers live in React state only (guest = stateless). Every free-text answer is screened by the
  * urgency gate before the journey moves on; anything but `clear` hands over to <UrgentGate>.
  */
-export function PrepareFlow({ maxChars, statics }: PrepareFlowProps) {
+export function PrepareFlow({ maxChars, urgentContent, languages }: PrepareFlowProps) {
   const router = useRouter();
   const [state, dispatch] = useReducer(prepareReducer, undefined, initialPrepareState);
   const [errors, setErrors] = useState<StepErrors>({});
@@ -288,6 +292,7 @@ export function PrepareFlow({ maxChars, statics }: PrepareFlowProps) {
     return (
       <UrgentGate
         result={gate.result}
+        content={urgentContent}
         onStartAgain={() => {
           dispatch({ type: "reset" });
           setErrors({});
@@ -327,7 +332,8 @@ export function PrepareFlow({ maxChars, statics }: PrepareFlowProps) {
       <ResultView
         result={stage.result}
         ownWords={ownWords(state, stage.followUps)}
-        statics={statics}
+        urgentContent={urgentContent}
+        languages={languages}
         onNotQuite={backToReview}
       />
     );

@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import type { PreAppointmentResult, SafetyLevel, UrgentMessageKey } from "@/lib/ai/schemas";
+import type { PreAppointmentResult } from "@/lib/ai/schemas";
 import type { SummaryResult } from "@/lib/client/prepare";
-import type { UrgentMessage } from "@/lib/content/schemas";
+import { urgentMessageFor, type UrgentContent } from "@/lib/safety/urgent-content";
 import {
   detectedLanguageName,
   highlightSegments,
@@ -52,27 +52,17 @@ export interface OwnWords {
   followUps: { question: string; answer: string | null }[];
 }
 
-/** Static, server-provided content the result view needs. Never model text. */
-export interface ResultStatics {
-  urgentMessages: Record<UrgentMessageKey, UrgentMessage>;
-  showDraftLabel: boolean;
-  draftLabel: string;
-  languages: LanguageNames;
-}
-
 export interface ResultViewProps {
   result: SummaryResult;
   ownWords: OwnWords;
-  statics: ResultStatics;
+  /** Static urgent content (server-built) for the persistent banner (v0.3 A2). Never model text. */
+  urgentContent: UrgentContent;
+  languages: LanguageNames;
   /** "Not quite" and the back chevron: return to review with every answer kept (AC-03.5). */
   onNotQuite: () => void;
 }
 
 type Tab = "user" | "english";
-
-function urgentKey(level: Exclude<SafetyLevel, "clear">): UrgentMessageKey {
-  return level === "emergency" || level === "crisis" ? level : "urgent";
-}
 
 /** Model text, rendered as React text only, with medicine names and doses highlighted. */
 function Hl({ text, terms }: { text: string; terms: string[] }) {
@@ -208,7 +198,7 @@ function Summary({ v, own }: { v: PreAppointmentResult; own: OwnWords["sections"
  * Journey 1 result (FR-01, FR-03): user version and English master side by side via a segmented
  * control, the user's own words beside each section, and the static routes and disclaimer.
  */
-export function ResultView({ result, ownWords, statics, onNotQuite }: ResultViewProps) {
+export function ResultView({ result, ownWords, urgentContent, languages, onNotQuite }: ResultViewProps) {
   const { english, user } = result;
   const [tab, setTab] = useState<Tab>(user ? "user" : "english");
   const [matched, setMatched] = useState(false);
@@ -222,8 +212,8 @@ export function ResultView({ result, ownWords, statics, onNotQuite }: ResultView
   const shown = tab === "user" && user ? user : english;
   const isUser = shown === user;
   const urgentLevel = english.meta.urgentAcknowledged;
-  const detected = detectedLanguageName(english.meta.detectedLanguage, statics.languages);
-  const dir = versionDir(shown.meta, statics.languages);
+  const detected = detectedLanguageName(english.meta.detectedLanguage, languages);
+  const dir = versionDir(shown.meta, languages);
   const lang = shown.meta.outputMode === "translation" ? shown.meta.outputLanguage : "en";
   const terms = medicineTerms(shown);
   const answeredFollowUps = ownWords.followUps;
@@ -235,9 +225,9 @@ export function ResultView({ result, ownWords, statics, onNotQuite }: ResultView
         {urgentLevel && (
           <UrgentBanner
             level={urgentLevel}
-            content={statics.urgentMessages[urgentKey(urgentLevel)]}
-            showDraftLabel={statics.showDraftLabel}
-            draftLabel={statics.draftLabel}
+            content={urgentMessageFor(urgentContent, urgentLevel)}
+            showDraftLabel={urgentContent.showDraftLabel}
+            draftLabel={urgentContent.draftLabel}
           />
         )}
 
@@ -248,7 +238,7 @@ export function ResultView({ result, ownWords, statics, onNotQuite }: ResultView
             value={tab}
             onChange={setTab}
             options={[
-              { value: "user", label: userTabLabel(user.meta, statics.languages, c.simpleEnglish) },
+              { value: "user", label: userTabLabel(user.meta, languages, c.simpleEnglish) },
               { value: "english", label: c.forDoctor },
             ]}
           />
