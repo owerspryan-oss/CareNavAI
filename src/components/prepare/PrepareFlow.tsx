@@ -36,7 +36,7 @@ import type { UrgentContent } from "@/lib/safety/urgent-content";
 import { prepareCopy as c } from "./copy";
 import { FollowUpsStep } from "./FollowUpsStep";
 import { ownWords } from "./ownWords";
-import { ReviewStep } from "./ReviewStep";
+import { FollowUpsReview, ReviewStep } from "./ReviewStep";
 import { SummaryStatus } from "./SummaryStatus";
 import {
   ChangesStep,
@@ -69,8 +69,8 @@ const BODIES: Record<Exclude<StepId, "review">, (p: StepBodyProps) => ReactNode>
   worries: WorriesStep,
 };
 
-/** What to carry on with after an urgent message raised after review is acknowledged. */
-type Resume = { to: "followups" } | { to: "summary"; followUps: AnsweredFollowUp[] };
+/** What to carry on with after an urgent message raised by a follow-up or summary call is acknowledged. */
+type Resume = { to: "followups" } | { to: "review"; followUps: AnsweredFollowUp[] } | { to: "summary"; followUps: AnsweredFollowUp[] };
 
 type PendingGate = {
   result: GateResult;
@@ -79,10 +79,10 @@ type PendingGate = {
   resume?: Resume;
 };
 
-/** Steps 7-9, after review (FR-22, FR-01, FR-03). `steps` = the guided steps and review. */
+/** `steps` = the guided steps and review; follow-ups sit between the last step and review (FR-22). */
 type Stage =
   | { name: "steps" }
-  | { name: "followups"; questions: FollowUpQuestion[]; busy: boolean }
+  | { name: "followups"; questions: FollowUpQuestion[]; initial: AnsweredFollowUp[]; busy: boolean }
   | { name: "loading" }
   | { name: "error"; error: CallError; followUps: AnsweredFollowUp[] }
   | { name: "result"; result: SummaryResult; followUps: AnsweredFollowUp[] };
@@ -113,6 +113,9 @@ export function PrepareFlow({ maxChars, urgentContent, languages }: PrepareFlowP
   const [screening, setScreening] = useState(false);
   const [gate, setGate] = useState<PendingGate | null>(null);
   const [stage, setStage] = useState<Stage>({ name: "steps" });
+  /** Answered follow-ups, shown and editable on review. Asked once, after the last guided step. */
+  const [followUps, setFollowUps] = useState<AnsweredFollowUp[]>([]);
+  const [followUpsAsked, setFollowUpsAsked] = useState(false);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const transitionToken = useRef(0);
   const firstRender = useRef(true);
@@ -204,7 +207,14 @@ export function PrepareFlow({ maxChars, urgentContent, languages }: PrepareFlowP
       return;
     }
     const { clear, screened } = await screenPending();
-    if (clear) navigate({ type: "advance", screened }, "forward");
+    if (!clear) return;
+    navigate({ type: "advance", screened }, "forward");
+    if (leadsToFollowUps()) await startFollowUps(state.urgentAcknowledged !== null);
+  }
+
+  /** The last guided step, on the first pass (not when editing from review), opens the follow-ups. */
+  function leadsToFollowUps(): boolean {
+    return state.stepIndex === REVIEW_INDEX - 1 && !state.returnToReview && !followUpsAsked;
   }
 
   async function onGetSummary() {
@@ -218,36 +228,41 @@ export function PrepareFlow({ maxChars, urgentContent, languages }: PrepareFlowP
     const { clear, screened } = await screenPending();
     if (!clear) return;
     dispatch({ type: "advance", screened });
-    await startFollowUps(state.urgentAcknowledged !== null);
+    await requestSummary(followUps, state.urgentAcknowledged !== null);
   }
 
-  /** Step 7 (FR-22): ask for follow-ups. None, or any failure, goes straight on to the summary. */
+  /** Step 7 (FR-22): ask for follow-ups before review. None, or any failure, goes straight to review. */
   async function startFollowUps(acknowledged: boolean) {
+    setFollowUpsAsked(true);
     setScreening(true);
     const out = await fetchFollowUps(toPrepareAnswers(state), acknowledged);
     setScreening(false);
     if (out.kind === "urgent") {
       setGate({ result: out.gate, level: urgentLevel(out.gate), screened: {}, resume: { to: "followups" } });
     } else if (out.kind === "followups" && out.questions.length > 0) {
-      setStage({ name: "followups", questions: out.questions, busy: false });
-    } else {
-      await requestSummary([], acknowledged);
+      setStage({ name: "followups", questions: out.questions, initial: [], busy: false });
     }
   }
 
+  function editFollowUps() {
+    const questions = followUps.map(({ intent, question }) => ({ intent, question }));
+    setStage({ name: "followups", questions, initial: followUps, busy: false });
+  }
+
   /** Every follow-up answer passes the gate before the journey continues (AC-22.5). */
-  async function submitFollowUps(followUps: AnsweredFollowUp[]) {
+  async function submitFollowUps(answered: AnsweredFollowUp[]) {
     if (stage.name !== "followups" || stage.busy) return;
     setStage({ ...stage, busy: true });
     const ageBand = effectiveAgeBand(state);
-    const answers = followUps.map((f) => f.answer).filter((a): a is string => a !== null);
+    const answers = answered.map((f) => f.answer).filter((a): a is string => a !== null);
     const worst = mostCautious(await Promise.all(answers.map((a) => screenText(a, "followup_answer", ageBand))));
     if (worst) {
       setStage({ ...stage, busy: false });
-      setGate({ result: worst, level: urgentLevel(worst), screened: {}, resume: { to: "summary", followUps } });
+      setGate({ result: worst, level: urgentLevel(worst), screened: {}, resume: { to: "review", followUps: answered } });
       return;
     }
-    await requestSummary(followUps, state.urgentAcknowledged !== null);
+    setFollowUps(answered);
+    setStage({ name: "steps" });
   }
 
   /** Steps 8-9: the summary call (the server re-screens the combined input first). */
@@ -271,12 +286,17 @@ export function PrepareFlow({ maxChars, urgentContent, languages }: PrepareFlowP
   function onUrgentAcknowledged(pending: PendingGate) {
     setGate(null);
     if (!pending.resume) {
+      const toFollowUps = leadsToFollowUps();
       dispatch({ type: "advanceAfterUrgent", screened: pending.screened, level: pending.level });
+      if (toFollowUps) void startFollowUps(true);
       return;
     }
     dispatch({ type: "acknowledgeUrgent", level: pending.level });
     if (pending.resume.to === "followups") void startFollowUps(true);
-    else void requestSummary(pending.resume.followUps, true);
+    else if (pending.resume.to === "review") {
+      setFollowUps(pending.resume.followUps);
+      setStage({ name: "steps" });
+    } else void requestSummary(pending.resume.followUps, true);
   }
 
   function onBack() {
@@ -298,6 +318,8 @@ export function PrepareFlow({ maxChars, urgentContent, languages }: PrepareFlowP
           setErrors({});
           setGate(null);
           setStage({ name: "steps" });
+          setFollowUps([]);
+          setFollowUpsAsked(false);
         }}
         onAcknowledge={() => onUrgentAcknowledged(gate)}
       />
@@ -308,21 +330,25 @@ export function PrepareFlow({ maxChars, urgentContent, languages }: PrepareFlowP
     return (
       <FollowUpsStep
         questions={stage.questions}
+        initial={stage.initial}
         maxChars={maxChars}
         busy={stage.busy}
         onContinue={(answers) => void submitFollowUps(answers)}
-        onBack={backToReview}
+        onBack={() => {
+          // From review ("Change"): back to review. First pass: back to the last guided step.
+          if (stage.initial.length === 0) navigate({ type: "back" }, "back");
+          setStage({ name: "steps" });
+        }}
       />
     );
   }
   if (stage.name === "loading") return <SummaryStatus kind="loading" />;
   if (stage.name === "error") {
-    const { followUps } = stage;
     return (
       <SummaryStatus
         kind="error"
         error={stage.error}
-        onRetry={() => void requestSummary(followUps, state.urgentAcknowledged !== null)}
+        onRetry={() => void requestSummary(stage.followUps, state.urgentAcknowledged !== null)}
         onBackToAnswers={backToReview}
       />
     );
@@ -386,11 +412,14 @@ export function PrepareFlow({ maxChars, urgentContent, languages }: PrepareFlowP
               setStructured={setStructured}
             />
           ) : (
-            <ReviewStep
-              state={state}
-              locked={screening}
-              onEdit={(target) => navigate({ type: "editFromReview", step: target }, "back")}
-            />
+            <>
+              <ReviewStep
+                state={state}
+                locked={screening}
+                onEdit={(target) => navigate({ type: "editFromReview", step: target }, "back")}
+              />
+              <FollowUpsReview followUps={followUps} locked={screening} onEdit={editFollowUps} />
+            </>
           )}
         </form>
       </main>

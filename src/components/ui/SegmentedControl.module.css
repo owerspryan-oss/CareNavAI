@@ -14,7 +14,7 @@
   bottom: var(--space-1);
   left: 0;
   border-radius: var(--radius-pill);
-  background: var(--color-coral-600);
+  background: var(--color-coral-700);
   box-shadow: var(--shadow-button);
   pointer-events: none;
 }
@@ -55,7 +55,7 @@
   transition-duration: 0.1s;
 }
 
-/* coral-600 rather than coral-500: white 15px text needs the darker fill for contrast (DESIGN_SYSTEM.md §2). */
+/* Thumb is coral-700: white 15px text needs >= 4.5:1, which coral-500/600 don't reach (DESIGN_SYSTEM.md §2). */
 .tab[aria-selected="true"] {
   color: var(--color-on-accent);
 }

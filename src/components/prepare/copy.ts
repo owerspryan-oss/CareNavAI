@@ -107,6 +107,7 @@ export const prepareCopy = {
 
   review: {
     change: "Change",
+    followUpsHeading: "Your extra answers",
     skipped: "You skipped this",
     noPattern: "I haven't noticed any pattern",
     whoHeading: "Who it's for",

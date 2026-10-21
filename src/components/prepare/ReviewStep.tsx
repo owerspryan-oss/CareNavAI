@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
+import type { AnsweredFollowUp } from "@/lib/prepare/answers";
 import type { PrepareState, StepId } from "@/lib/prepare/state";
 import { Button } from "@/components/ui/Button";
 import { prepareCopy as c } from "./copy";
@@ -104,6 +105,32 @@ export function ReviewStep({ state, onEdit, locked }: ReviewStepProps) {
       <Section heading={c.review.worriesHeading} step="worries" {...props}>
         <Answer text={t.worries} />
       </Section>
+    </div>
+  );
+}
+
+/** Follow-up answers on review (FR-22 before review): each question shown with the answer as typed. */
+export function FollowUpsReview({ followUps, onEdit, locked }: { followUps: AnsweredFollowUp[]; onEdit: () => void; locked: boolean }) {
+  if (followUps.length === 0) return null;
+  const heading = c.review.followUpsHeading;
+  return (
+    <div className={styles.reviewList}>
+      <section className={styles.reviewItem} aria-label={heading}>
+        <div className={styles.reviewHeader}>
+          <h2 className={styles.reviewHeading}>{heading}</h2>
+          <Button variant="link" className={styles.changeButton} onClick={onEdit} disabled={locked} aria-label={`${c.review.change}: ${heading}`}>
+            {c.review.change}
+          </Button>
+        </div>
+        <div className={styles.reviewBody}>
+          {followUps.map((f, i) => (
+            <div key={i}>
+              <p className={styles.structuredText}>{f.question}</p>
+              <Answer text={f.answer ?? ""} />
+            </div>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

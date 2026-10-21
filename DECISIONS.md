@@ -54,6 +54,13 @@ Running decisions log for the CareNav AI workspace and build. Newest at the bott
 **Affects:** FR-21, FR-09, FR-06, `src/lib/prepare/state.ts`, `src/components/prepare/*`, `src/components/ui/Button.module.css`, `design/tokens.css`.
 **Alternatives considered:** making step 4 optional (contradicts AC-21.2); asking an age band for every "someone else" (more friction, not in AC-09.3, flagged to the product owner instead); Motion/Framer Motion for springs (new dependency for one transition).
 
+## Product-owner answers on Journey 1 result — 2026-10-21
+
+**Decision:** (1) Follow-up questions come **before** review (PRD §3.2 order), asked once after the last guided step; their answers appear on review under "Your extra answers" and can be changed there. (2) Active segmented-control tab uses a new `--color-coral-700` (`#C93F2A`, 4.97:1 with white) so small white text passes AA; coral-500/600 stay for large-text buttons. (3) Draft, confidence and English-only notices are merged into one caution banner. (4) English-only notice reworded: "We couldn't make a reliable version in your language this time, so your summary is in English only. Nothing is missing from it, and you can show it to your doctor as it is."
+**Why:** product owner's answers on 2026-10-21 (2 was delegated: "whatever you think").
+**Affects:** `src/components/prepare/*`, `src/components/ui/SegmentedControl.module.css`, `design/tokens.css`, `DESIGN_SYSTEM.md`, `src/components/result/copy.ts`.
+**Alternatives considered:** larger/bolder tab text to meet the 3:1 large-text threshold (would crowd the tab labels at 390px).
+
 *(Populate further entries as the build progresses. Log anything that changes or narrows a requirement, picks between two valid architectural approaches, or resolves one of the open items in CONTEXT.md §15.)*
 
 Suggested format per entry:

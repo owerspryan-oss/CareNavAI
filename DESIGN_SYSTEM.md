@@ -48,6 +48,7 @@ All values are light-mode. **Dark mode has not been designed** — flag this as 
 | `--color-coral-400` | `#FD8A6E` | Hover/active tints, progress-bar filled segments |
 | `--color-coral-500` | `#F2654B` | **Primary accent** — primary buttons, active tab, links on dark |
 | `--color-coral-600` | `#E8543E` | Primary button pressed state, urgent CTA ("I understand, continue") |
+| `--color-coral-700` | `#C93F2A` | Coral fill behind small white text (e.g. active segmented-control tab). 4.97:1 with white, passes AA at any size |
 | `--color-teal-100` | `#D6EDE6` | Pale teal tint (info banners, secondary icon badges) |
 | `--color-teal-500` | `#1F6F6B` | **Secondary accent** — secondary button fill ("Understand what I was told"), secondary links ("Start again") |
 | `--color-teal-700` | `#14504C` | Secondary button pressed state |
@@ -72,7 +73,7 @@ All values are light-mode. **Dark mode has not been designed** — flag this as 
 | Pairing | Ratio | Pass? |
 | --- | --- | --- |
 | `--color-ink` on `--color-bg` | ~17.8:1 | ✅ |
-| White text on `--color-coral-500` | ~3.1:1 | ⚠️ borderline — use white text only at ≥18px/bold (large-text threshold is 3:1), or darken to `--color-coral-600` for small text on buttons |
+| White text on `--color-coral-500` | ~3.1:1 | ⚠️ borderline — use white text only at ≥18px/bold (large-text threshold is 3:1), or use `--color-coral-700` for small text (coral-600 is only ~3.6:1) |
 | `--color-caution-icon` on `--color-caution-bg` | ~2.6:1 | ❌ fails for text — only ever use this pairing for the icon glyph, not for caution body copy (body copy on caution banners must use `--color-ink`, as in the mockup) |
 | `--color-ink` on `--color-urgent-bg` | ~15.9:1 | ✅ |
 

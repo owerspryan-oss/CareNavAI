@@ -17,7 +17,7 @@ export const resultCopy = {
   confidenceNotice: "Please double-check this with someone who speaks your language.",
   /** Shown when there is no user-language version (`user` is null). */
   englishOnlyNotice:
-    "We couldn't make a version in your language this time, so this is the English version. It is still safe to show your doctor.",
+    "We couldn't make a reliable version in your language this time, so your summary is in English only. Nothing is missing from it, and you can show it to your doctor as it is.",
 
   sections: {
     forWhom: "Who it's for",

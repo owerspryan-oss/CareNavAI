@@ -12,6 +12,8 @@ import styles from "./PrepareFlow.module.css";
 export interface FollowUpsStepProps {
   /** Up to 3 server-validated, clarity-only questions (FR-22, AC-22.3, AC-22.4). Rendered as text only. */
   questions: FollowUpQuestion[];
+  /** Earlier answers when coming back from review to change them; empty on the first pass. */
+  initial?: AnsweredFollowUp[];
   maxChars: number;
   /** True while the answers are being screened or the summary is starting. Fields go read-only. */
   busy: boolean;
@@ -20,10 +22,10 @@ export interface FollowUpsStepProps {
   onBack: () => void;
 }
 
-/** Journey 1 step 7: dynamic follow-up questions. Each can be answered or skipped. */
-export function FollowUpsStep({ questions, maxChars, busy, onContinue, onBack }: FollowUpsStepProps) {
-  const [values, setValues] = useState<string[]>(() => questions.map(() => ""));
-  const [skipped, setSkipped] = useState<boolean[]>(() => questions.map(() => false));
+/** Journey 1 step 7, before review: dynamic follow-up questions. Each can be answered or skipped. */
+export function FollowUpsStep({ questions, initial = [], maxChars, busy, onContinue, onBack }: FollowUpsStepProps) {
+  const [values, setValues] = useState<string[]>(() => questions.map((_, i) => initial[i]?.answer ?? ""));
+  const [skipped, setSkipped] = useState<boolean[]>(() => questions.map((_, i) => initial.length > 0 && initial[i]?.answer === null));
   const headingRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
