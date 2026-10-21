@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 CareNav AI — a local-only web app that helps a person prepare for an NHS appointment and understand what they were told afterwards, in any language or dialect, with a safety gate in front of everything. No code exists yet; this workspace is scaffolded with context and conventions so the build can start cleanly. Read **CONTEXT.md first, always** — it is the consolidated, precedence-resolved source of truth for requirements and architecture. Do not re-derive requirements from `Context/*` files directly; `CONTEXT.md` has already resolved conflicts between them (v0.3 requirements doc > PRD v0.2 > deck).
 
-Also read **DECISIONS.md** (why things are the way they are, including workspace-setup decisions) and **FEEDBACK.md** (standing guidance from the product owner on how to work in this repo) before starting non-trivial work.
+Also read **DECISIONS.md** (why things are the way they are, including workspace-setup decisions), **FEEDBACK.md** (standing guidance from the product owner on how to work in this repo), and **DESIGN_SYSTEM.md** (the agreed visual/interaction system, derived from the approved mockups in `Brand/`) before starting non-trivial work. Any UI task reads `DESIGN_SYSTEM.md` and its companion tokens (`design/tokens.css`) first — don't invent colors, spacing, type, or component shapes ad hoc when a token or component spec already exists for it.
 
 ## Non-negotiable engineering rules
 
@@ -54,6 +54,10 @@ Build work is split by the deck's five epics (full detail in CONTEXT.md §2). Su
 - Request tests alongside each task, not after. The urgency test set and grounding tests are the two that must never regress.
 - The product owner reviews every prompt file and every static content file (urgent messages, service routes, disclaimers) personally before it's treated as final — don't mark a prompt-authoring task complete without flagging it for that review.
 - Commit per task. Urgency rules and urgent-message content get their own commits, separate from code, so they're easy to review and diff in isolation.
+
+## Front-end design language
+
+UI work (mockups, components, motion) follows Apple's interface-design approach, translated for the web — gesture physics, springs, translucent materials, typography discipline, and the eight design principles (purpose, agency, responsibility, familiarity, flexibility, simplicity, craft, delight). The full reference is installed as a project skill at `.claude/skills/apple-design/SKILL.md` — invoke it with `/apple-design` (or let Claude Code auto-load it) before designing or reviewing any screen, component, or interaction, and before writing a design-mockup image prompt. Pair it with the warm, non-clinical tone established for CareNav AI (soft coral/teal accents, rounded friendly typography) rather than Apple's own product branding.
 
 ## Environment variables
 

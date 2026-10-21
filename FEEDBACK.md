@@ -8,7 +8,14 @@ This is distinct from `DECISIONS.md` (decisions about *what* to build) and `CONT
 
 ## Standing guidance
 
-*(Empty — this is a new workspace. Add entries as they come up, in the form below.)*
+### Test, validate and verify before showing the user anything — 2026-10-21
+
+Nothing is presented to the user — a UI, a feature, generated content, a document, a script's output — until Claude Code has tested/run it, validated the result against the task's success criteria, and fixed any issues found. "Looks right by inspection" is not enough when it can be actually run or checked.
+
+**Why:** the product owner should never be the first one to discover a bug, broken screen, or wrong output — that's Claude Code's job to catch first, every time, not just when explicitly reminded.
+**How to apply:** for code, this means running it (dev server, tests, scripts) and checking real output, not just reading the diff — exactly what the global CLAUDE.md's "UI or frontend changes" rule and "Goal-driven execution" section already require; this entry makes it a hard gate rather than a best-effort habit. For non-code deliverables (generated images, documents, prompts, config/content files), it means re-reading the actual produced artifact against the stated requirements (e.g. non-negotiable engineering rules, acceptance criteria) before calling the task done. If something genuinely can't be verified in this environment (e.g. no browser available to render a UI), say so explicitly rather than claiming it was checked — don't silently skip the gate.
+
+
 
 ```
 ### <short title> — <date>

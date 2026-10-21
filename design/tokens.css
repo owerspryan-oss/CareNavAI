@@ -1,0 +1,81 @@
+/*
+ * CareNav AI design tokens.
+ * Source of truth for values: DESIGN_SYSTEM.md (do not edit one without the other).
+ * Derived from Brand/CareNav AI App Walkthrough Screens.png + Brand/CareNav AI Heart Chat Logo.png.
+ * Light mode only — dark mode is an open item, see DESIGN_SYSTEM.md §10.
+ */
+
+:root {
+  /* Core palette */
+  --color-bg: #F8F3EC;
+  --color-surface: #FDFAF5;
+  --color-surface-muted: #F3EFE8;
+  --color-ink: #0B1216;
+  --color-ink-muted: #5B6670;
+  --color-border: #E4DED3;
+
+  /* Brand accents */
+  --color-coral-100: #FBDED1;
+  --color-coral-400: #FD8A6E;
+  --color-coral-500: #F2654B;
+  --color-coral-600: #E8543E;
+  --color-teal-100: #D6EDE6;
+  --color-teal-500: #1F6F6B;
+  --color-teal-700: #14504C;
+
+  /* Semantic / status */
+  --color-info-bg: var(--color-teal-100);
+  --color-info-icon: var(--color-teal-500);
+  --color-caution-bg: #FBEAC4;
+  --color-caution-icon: #ED9F33;
+  --color-highlight-bg: #F8E3AA;
+  --color-urgent-bg: #FBDED5;
+  --color-urgent-icon: var(--color-coral-600);
+
+  /* Typography */
+  --font-sans: -apple-system, "SF Pro Text", "Segoe UI", system-ui, "Inter", sans-serif;
+  --text-display-size: 1.75rem;   /* 28px */
+  --text-display-leading: 1.15;
+  --text-display-tracking: -0.01em;
+  --text-title-size: 1.25rem;     /* 20px */
+  --text-title-leading: 1.25;
+  --text-title-tracking: -0.005em;
+  --text-body-size: 1rem;         /* 16px */
+  --text-body-leading: 1.5;
+  --text-caption-size: 0.8125rem; /* 13px */
+  --text-caption-leading: 1.4;
+  --text-caption-tracking: 0.01em;
+  --text-button-size: 1rem;       /* 16px */
+  --text-button-weight: 600;
+
+  /* Spacing (8pt grid) */
+  --space-1: 0.25rem; /* 4px */
+  --space-2: 0.5rem;  /* 8px */
+  --space-3: 0.75rem; /* 12px */
+  --space-4: 1rem;    /* 16px */
+  --space-5: 1.5rem;  /* 24px */
+  --space-6: 2rem;    /* 32px */
+  --space-7: 3rem;    /* 48px */
+
+  /* Radius */
+  --radius-pill: 999px;
+  --radius-card: 20px;
+  --radius-badge: 999px;
+
+  /* Elevation */
+  --shadow-button: 0 6px 16px rgba(242, 101, 75, 0.28);
+  --shadow-card: 0 2px 8px rgba(11, 18, 22, 0.06);
+
+  /* Motion (see DESIGN_SYSTEM.md §8 and .claude/skills/apple-design) */
+  --spring-default-damping: 1;
+  --spring-default-response: 0.35s;
+  --spring-momentum-damping: 0.8;
+  --spring-momentum-response: 0.35s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --spring-default-response: 0s;
+    --spring-momentum-response: 0s;
+  }
+}

@@ -19,7 +19,14 @@ Running decisions log for the CareNav AI workspace and build. Newest at the bott
 
 ## Build decisions
 
-*(Empty — populate as the build progresses. Log anything that changes or narrows a requirement, picks between two valid architectural approaches, or resolves one of the open items in CONTEXT.md §15.)*
+## Design system derived from agreed Brand/ mockups — 2026-10-21
+
+**Decision:** Created `DESIGN_SYSTEM.md` + `design/tokens.css` as the canonical visual/interaction system, derived from the four product-owner-approved mockup screens in `Brand/CareNav AI App Walkthrough Screens.png` and the logo in `Brand/CareNav AI Heart Chat Logo.png`. Color tokens were extracted by pixel-sampling those PNGs (via a PowerShell/System.Drawing script, no Figma/export file exists), not re-designed from scratch. Motion/interaction guidance layers the `apple-design` skill on top of the static mockups.
+**Why:** the user explicitly asked for a design system to build the UI from, following the agreed designs rather than a freshly invented style.
+**Affects:** all future UI work across every epic; `CLAUDE.md` now points to `DESIGN_SYSTEM.md` as required reading before UI tasks.
+**Alternatives considered:** waiting for an exact-hex design-tool export before building a tokens file — rejected because it would block UI work with no scheduled source for that export; documented as an open item (DESIGN_SYSTEM.md §10) instead, to be reconciled later if exact values are supplied.
+
+*(Populate further entries as the build progresses. Log anything that changes or narrows a requirement, picks between two valid architectural approaches, or resolves one of the open items in CONTEXT.md §15.)*
 
 Suggested format per entry:
 
