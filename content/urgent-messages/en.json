@@ -20,7 +20,8 @@
       "banner": "You told us something that could be an emergency. If you have not already, call 999 now.",
       "actions": [
         { "id": "call_999", "label": "Call 999", "href": "tel:999" }
-      ]
+      ],
+      "selfHarmLine": "When you are safe, Samaritans are there any time, day or night. Call 116 123."
     },
     "urgent": {
       "title": "Please get help soon",
@@ -43,7 +44,8 @@
         "It sounds like you are going through something very hard right now.",
         "You can talk to Samaritans for free, any time, day or night. Call 116 123.",
         "If you are in immediate danger, or you might act on these thoughts, call 999 now.",
-        "You can also call NHS 111 for urgent mental health help."
+        "You can also call NHS 111 for urgent mental health help.",
+        "If you would rather talk in your own language, call NHS 111 and ask for an interpreter."
       ],
       "banner": "You told us you may be going through something very hard. Samaritans are there any time on 116 123. If you are in immediate danger, call 999.",
       "actions": [

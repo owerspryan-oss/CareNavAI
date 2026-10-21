@@ -20,7 +20,8 @@
       "banner": "You tell us something wey fit be emergency. If you never do am, call 999 now now.",
       "actions": [
         { "id": "call_999", "label": "Call 999", "href": "tel:999" }
-      ]
+      ],
+      "selfHarmLine": "When you don dey safe, Samaritans dey any time, day or night. Call 116 123."
     },
     "urgent": {
       "title": "Abeg, find help quick",
@@ -43,7 +44,8 @@
         "E be like say you dey pass through something wey hard well well now.",
         "You fit talk to Samaritans free, any time, day or night. Call 116 123.",
         "If you dey for danger now now, or you fit act on dis kain thought, call 999 now now.",
-        "You fit also call NHS 111 for urgent mental health help."
+        "You fit also call NHS 111 for urgent mental health help.",
+        "To talk for your own language, call NHS 111 and ask for interpreter."
       ],
       "banner": "You tell us say you fit dey pass through something wey hard well well. Samaritans dey any time for 116 123. If you dey for danger now now, call 999.",
       "actions": [

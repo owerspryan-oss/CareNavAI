@@ -20,7 +20,8 @@
       "banner": "Yuh tell we something wha coulda be a emergency. If yuh ain do it yet, call 999 right now.",
       "actions": [
         { "id": "call_999", "label": "Call 999", "href": "tel:999" }
-      ]
+      ],
+      "selfHarmLine": "When yuh safe, Samaritans deh deh any time, day or night. Call 116 123."
     },
     "urgent": {
       "title": "Please, get help soon",
@@ -43,7 +44,8 @@
         "It soun like yuh going through something real hard right now.",
         "Yuh could talk to Samaritans fuh free, any time, day or night. Call 116 123.",
         "If yuh in danger right now, or yuh might act pun dem thought, call 999 right now.",
-        "Yuh could call NHS 111 too fuh urgent mental health help."
+        "Yuh could call NHS 111 too fuh urgent mental health help.",
+        "Fuh talk in yuh own language, call NHS 111 an ask fuh a interpreter."
       ],
       "banner": "Yuh tell we yuh might be going through something real hard. Samaritans deh deh any time pun 116 123. If yuh in danger right now, call 999.",
       "actions": [

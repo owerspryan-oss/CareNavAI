@@ -20,7 +20,8 @@
       "banner": "Woaka biribi a ebia ɛyɛ asɛm a ɛhia mmoa ntɛm ara. Sɛ wonyɛɛ no da a, frɛ 999 seesei ara.",
       "actions": [
         { "id": "call_999", "label": "Frɛ 999", "href": "tel:999" }
-      ]
+      ],
+      "selfHarmLine": "Sɛ wonni asiane mu bio a, Samaritans wɔ hɔ bere biara, awia anaa anadwo. Frɛ 116 123."
     },
     "urgent": {
       "title": "Mesrɛ wo, hwehwɛ mmoa ntɛm",
@@ -43,7 +44,8 @@
         "Ɛte sɛ nea worefa biribi a ɛyɛ den yiye mu seesei.",
         "Wobɛtumi ne Samaritans akasa kwa, bere biara, awia anaa anadwo. Frɛ 116 123.",
         "Sɛ wowɔ asiane mu seesei, anaa ebia wobɛyɛ saa adwene yi so adwuma a, frɛ 999 seesei ara.",
-        "Wobɛtumi nso afrɛ NHS 111 ama adwenem yare ho mmoa ntɛm."
+        "Wobɛtumi nso afrɛ NHS 111 ama adwenem yare ho mmoa ntɛm.",
+        "Sɛ wopɛ sɛ wokasa wo kasa mu a, frɛ NHS 111 na bisa ɔkyerɛaseɛfo."
       ],
       "banner": "Woaka sɛ ebia worefa biribi a ɛyɛ den mu. Samaritans wɔ hɔ bere biara wɔ 116 123. Sɛ wowɔ asiane mu seesei a, frɛ 999.",
       "actions": [

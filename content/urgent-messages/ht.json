@@ -20,7 +20,8 @@
       "banner": "Ou di nou yon bagay ki ka yon ijans. Si ou poko fè l, rele 999 kounye a.",
       "actions": [
         { "id": "call_999", "label": "Rele 999", "href": "tel:999" }
-      ]
+      ],
+      "selfHarmLine": "Lè ou an sekirite, Samaritans la nenpòt ki lè, lajounen kou lannwit. Rele 116 123."
     },
     "urgent": {
       "title": "Tanpri, chèche èd byento",
@@ -43,7 +44,8 @@
         "Sanble w ap pase yon bagay ki difisil anpil kounye a.",
         "Ou ka pale ak Samaritans gratis, nenpòt ki lè, lajounen kou lannwit. Rele 116 123.",
         "Si ou an danje kounye a, oswa si ou ka aji sou panse sa yo, rele 999 kounye a.",
-        "Ou ka rele NHS 111 tou pou èd ijan pou sante mantal."
+        "Ou ka rele NHS 111 tou pou èd ijan pou sante mantal.",
+        "Pou pale nan pwòp lang ou, rele NHS 111 epi mande yon entèprèt."
       ],
       "banner": "Ou di nou ou ka ap pase yon bagay ki difisil anpil. Samaritans la nenpòt ki lè nan 116 123. Si ou an danje kounye a, rele 999.",
       "actions": [

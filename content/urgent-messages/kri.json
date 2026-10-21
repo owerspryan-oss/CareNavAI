@@ -20,7 +20,8 @@
       "banner": "Yu tɛl wi sɔntin we kin bi emergency. If yu nɔ dɔn du am yet, kɔl 999 naw.",
       "actions": [
         { "id": "call_999", "label": "Kɔl 999", "href": "tel:999" }
-      ]
+      ],
+      "selfHarmLine": "We yu de sef, Samaritans de ɛnitɛm, de ɔ nɛt. Kɔl 116 123."
     },
     "urgent": {
       "title": "Duya, go fɛn ɛp kwik",
@@ -43,7 +44,8 @@
         "I tan lɛk se yu de pas tru sɔntin we at bad bad naw.",
         "Yu kin tɔk to Samaritans fri, ɛnitɛm, de ɔ nɛt. Kɔl 116 123.",
         "If yu de na denja naw, ɔ yu kin du sɔntin bɔt dɛn tin we yu de tink, kɔl 999 naw.",
-        "Yu kin kɔl NHS 111 bak fɔ kwik ɛp fɔ mental health."
+        "Yu kin kɔl NHS 111 bak fɔ kwik ɛp fɔ mental health.",
+        "Fɔ tɔk na yu yon langwej, kɔl NHS 111 ɛn aks fɔ intapreta."
       ],
       "banner": "Yu tɛl wi se yu kin de pas tru sɔntin we at bad bad. Samaritans de ɛnitɛm na 116 123. If yu de na denja naw, kɔl 999.",
       "actions": [
