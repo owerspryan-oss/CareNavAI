@@ -1,0 +1,105 @@
+{
+  "$comment": "DRAFT Twi (Asante) red-flag rules (FR-05, PRD 9.1 layer 1). NOT CLINICALLY APPROVED and NOT YET REVIEWED BY A NATIVE SPEAKER: seed list for the local demo only. English rules (en.json) always run as well, because Twi speakers often code-switch, so this file only adds Twi wording. Matching rules are the same as en.json (normalised text, whole words; see en.json $comment). Many people type Twi without the special letters, so patterns accept both ɛ/e and ɔ/o. Apostrophes are removed by normalisation, so n'anim is written nanim.",
+  "language": "tw",
+  "kind": "language",
+  "status": "DRAFT_NOT_CLINICALLY_APPROVED",
+  "reviewed": false,
+  "rules": [
+    {
+      "id": "tw.breathing.cannot_breathe",
+      "level": "emergency",
+      "category": "breathing",
+      "patterns": [
+        "(me|wo|ɔ|o|yɛ|ye)?ntumi n?home",
+        "(ɔ|o)nhome( bio)?"
+      ]
+    },
+    {
+      "id": "tw.breathing.difficult",
+      "level": "urgent",
+      "category": "breathing",
+      "patterns": [
+        "(ahome|home) .{0,10}(a|re)?y(ɛ|e) den"
+      ]
+    },
+    {
+      "id": "tw.chest.pain_with_red_flags",
+      "level": "emergency",
+      "category": "chest_pain",
+      "patterns": [
+        "koko (mu )?(r(e|ɛ))?y(ɛ|e) (me|no|wo) ya"
+      ],
+      "requiresAlso": [
+        [
+          "home|ahome",
+          "fifiri|fifire|fifi",
+          "(nsa|abasa|kɔn|kon|ekɔn) .{0,20}y(ɛ|e) (me|no) ya",
+          "(me|ne) ti (re)?(dwiri|dwiriw|kyini)"
+        ]
+      ]
+    },
+    {
+      "id": "tw.chest.pain",
+      "level": "urgent",
+      "category": "chest_pain",
+      "patterns": [
+        "koko (mu )?(r(e|ɛ))?y(ɛ|e) (me|no|wo) ya"
+      ]
+    },
+    {
+      "id": "tw.stroke.face_side_speech",
+      "level": "emergency",
+      "category": "stroke_signs",
+      "patterns": [
+        "(n)?(anim|ano) (a)?kyea",
+        "fa baako .{0,25}(awu|wui|ntumi nkeka)",
+        "ntumi nkasa yie"
+      ]
+    },
+    {
+      "id": "tw.bleeding.severe",
+      "level": "emergency",
+      "category": "severe_bleeding",
+      "patterns": [
+        "mogya .{0,15}(nnyae|ntumi nnyae|annyae)",
+        "mogya pii (re)?(tu|sen|fi)"
+      ]
+    },
+    {
+      "id": "tw.consciousness.unresponsive",
+      "level": "emergency",
+      "category": "loss_of_consciousness",
+      "patterns": [
+        "(ɔ|o)nnyan(e|ɛ)( so)?",
+        "ntumi nnyan(e|ɛ)"
+      ]
+    },
+    {
+      "id": "tw.seizure.asram",
+      "level": "emergency",
+      "category": "seizure",
+      "patterns": [
+        "asram"
+      ]
+    },
+    {
+      "id": "tw.allergy.swelling",
+      "level": "emergency",
+      "category": "severe_allergic_reaction",
+      "patterns": [
+        "(menewa|ano|nano|tɛkrɛma|tekrema|anim|nanim) .{0,10}(a|re)?hon(o)?"
+      ]
+    },
+    {
+      "id": "tw.crisis.suicide_self_harm",
+      "level": "crisis",
+      "category": "self_harm_or_suicide",
+      "patterns": [
+        "m(ɛ|e)p(ɛ|e) s(ɛ|e) m(ɛ|e) ?wu",
+        "(m(ɛ|e)|mere|merek(ɔ|o)|m(ɛ|e)p(ɛ|e) s(ɛ|e) me) ?kum me ho",
+        "memp(ɛ|e) s(ɛ|e) m(ɛ|e)te ase bio",
+        "memp(ɛ|e) nkwa bio"
+      ]
+    }
+  ]
+}

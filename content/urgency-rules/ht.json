@@ -1,0 +1,122 @@
+{
+  "$comment": "DRAFT Haitian Creole (Kreyòl ayisyen) red-flag rules (FR-05, PRD 9.1 layer 1). NOT CLINICALLY APPROVED and NOT YET REVIEWED BY A NATIVE SPEAKER: seed list for the local demo only. English rules (en.json) always run as well, so this file only adds Kreyòl wording. Matching rules are the same as en.json (normalised text, whole words; see en.json $comment). Apostrophes are removed by normalisation (m'ap -> map). Many people type without accents, so patterns accept both è/e and ò/o. 'lestomak' (chest, but also stomach) is only used together with a second red flag, to avoid routing ordinary stomach ache up.",
+  "language": "ht",
+  "kind": "language",
+  "status": "DRAFT_NOT_CLINICALLY_APPROVED",
+  "reviewed": false,
+  "rules": [
+    {
+      "id": "ht.breathing.cannot_breathe",
+      "level": "emergency",
+      "category": "breathing",
+      "patterns": [
+        "pa (ka|kab|kap|kapab) respire",
+        "(li|l|m|mwen|pitit la|bebe a) pa respire",
+        "(m|mwen|li|l) ?ap toufe",
+        "map toufe"
+      ]
+    },
+    {
+      "id": "ht.chest.pain_with_red_flags",
+      "level": "emergency",
+      "category": "chest_pain",
+      "patterns": [
+        "(doulè|doule|dlè|dle|mal) (nan|o) (pwatrin|lestomak)",
+        "(pwatrin|lestomak|k(è|e)) (mwen |m |li |l )?(ap )?(f(è|e)|fe) (m|mwen|li|l) mal",
+        "(pwatrin|lestomak) (mwen |m |li |l )?(sere|lou)"
+      ],
+      "requiresAlso": [
+        [
+          "respire|souf|toufe",
+          "sw(è|e)|swe|tranpe",
+          "(bra|machw(è|e)|kou|zepòl|zepol) .{0,20}(f(è|e) (m|mwen|li|l) mal|angoudi|lou)",
+          "vomi|toudi|t(è|e)t (mwen |m )?(ap )?vire"
+        ]
+      ]
+    },
+    {
+      "id": "ht.chest.pain",
+      "level": "urgent",
+      "category": "chest_pain",
+      "patterns": [
+        "(doulè|doule|dlè|dle|mal) (nan|o) pwatrin",
+        "(pwatrin|k(è|e)) (mwen |m |li |l )?(ap )?(f(è|e)|fe) (m|mwen|li|l) mal",
+        "pwatrin (mwen |m |li |l )?(sere|lou)",
+        "kriz k(è|e)"
+      ]
+    },
+    {
+      "id": "ht.stroke.face_side_speech",
+      "level": "emergency",
+      "category": "stroke_signs",
+      "patterns": [
+        "(bouch|figi) (li |l |mwen |m )?(vin |fin )?(kwochi|t(ò|o)de|devye|tonbe)",
+        "yon b(ò|o) .{0,20}(paralize|pa ka bouje|pa ka leve|angoudi|mouri|f(è|e)b)",
+        "pa ka pale (byen|kl(è|e)|n(ò|o)mal)",
+        "lang (li|l) (vin )?(lou|mare)"
+      ]
+    },
+    {
+      "id": "ht.bleeding.severe",
+      "level": "emergency",
+      "category": "severe_bleeding",
+      "patterns": [
+        "san (an|a) pa (vle |ka )?(sispann|kanpe)",
+        "senyen .{0,15}pa (vle |ka )?(sispann|kanpe)",
+        "(ap )?senyen (anpil|tw(ò|o)p)",
+        "anpil san (ap )?(soti|koule)"
+      ]
+    },
+    {
+      "id": "ht.consciousness.unresponsive",
+      "level": "emergency",
+      "category": "loss_of_consciousness",
+      "patterns": [
+        "p(è|e)di konesans",
+        "san konesans",
+        "(li|l|la|a) pa (vle |ka )?reveye"
+      ]
+    },
+    {
+      "id": "ht.consciousness.fainted",
+      "level": "urgent",
+      "category": "loss_of_consciousness",
+      "patterns": [
+        "endispoze"
+      ]
+    },
+    {
+      "id": "ht.seizure.ongoing",
+      "level": "emergency",
+      "category": "seizure",
+      "patterns": [
+        "ap (f(è|e)) (yon )?kriz( malkadi| epilepsi| konvilsyon)?",
+        "konvilse|konvilsyon",
+        "tranble .{0,15}pa (vle |ka )?sispann"
+      ]
+    },
+    {
+      "id": "ht.allergy.severe",
+      "level": "emergency",
+      "category": "severe_allergic_reaction",
+      "patterns": [
+        "(g(ò|o)j|lang|bouch|po bouch|l(è|e)v|figi) (mwen |m |li |l )?(ap |vin |fin )?(anfle|gonfle)",
+        "g(ò|o)j (mwen |m |li |l )?(ap |vin )?f(è|e)men"
+      ]
+    },
+    {
+      "id": "ht.crisis.suicide_self_harm",
+      "level": "crisis",
+      "category": "self_harm_or_suicide",
+      "patterns": [
+        "(?<!pa )(?<!pa ta )vle mouri",
+        "pito (m|mwen) mouri",
+        "touye t(è|e)t (mwen|m)",
+        "(m|mwen) pa (vle|ka) viv (konsa )?ank(ò|o)",
+        "(m|mwen) pa vle viv konsa",
+        "(fini|fin|mete fen) (ak|nan) (lavi|vi) (mwen|m)",
+        "swisid"
+      ]
+    }
+  ]
+}

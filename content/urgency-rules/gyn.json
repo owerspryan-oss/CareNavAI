@@ -1,0 +1,73 @@
+{
+  "$comment": "DRAFT Guyanese Creole (Creolese) red-flag rules (FR-05, PRD 9.1 layer 1). NOT CLINICALLY APPROVED and NOT YET REVIEWED BY A NATIVE SPEAKER: seed list for the local demo only. English (en.json) and Jamaican Patois (jam.json) rules always run as well and already catch much Creolese wording (cyaan, nah, waan dead, ketch fits), so this file only adds Creolese-specific forms such as 'cyan', 'fuh', 'ain' and 'drop down'. Matching rules are the same as en.json (normalised text, whole words; see en.json $comment). Apostrophes are removed by normalisation (ain't -> aint).",
+  "language": "gyn",
+  "kind": "language",
+  "status": "DRAFT_NOT_CLINICALLY_APPROVED",
+  "reviewed": false,
+  "rules": [
+    {
+      "id": "gyn.breathing.cannot_breathe",
+      "level": "emergency",
+      "category": "breathing",
+      "patterns": [
+        "(cyan|cyaan|kyaan|caan|cyah) (get|ketch|catch|draw|find) (me|mi|he|she|him|her|e) (breath|bret)",
+        "(cyan|cyah) (breathe|breath|breed)",
+        "(he|she|e|de baby|de pickney) (nah|na|nuh|ain|aint) (breathin|breathing)"
+      ]
+    },
+    {
+      "id": "gyn.chest.pain",
+      "level": "urgent",
+      "category": "chest_pain",
+      "patterns": [
+        "chest .{0,15}(hurtin|painin|paining|tight up|tightin)"
+      ]
+    },
+    {
+      "id": "gyn.stroke.face_side_speech",
+      "level": "emergency",
+      "category": "stroke_signs",
+      "patterns": [
+        "face (gone|went|turn|tun) (to )?(one side|crooked|cross)",
+        "(mout|mouth) (gone|went|turn|tun) (to )?(one side|crooked|cross)",
+        "(cyan|cyah) talk (proper|good|straight|right|clear)"
+      ]
+    },
+    {
+      "id": "gyn.bleeding.severe",
+      "level": "emergency",
+      "category": "severe_bleeding",
+      "patterns": [
+        "(blood|bleedin|bleeding) .{0,15}(na|nah|ain|aint|cyan) (stop|stoppin|stopping)",
+        "bleed an bleed"
+      ]
+    },
+    {
+      "id": "gyn.consciousness.unresponsive",
+      "level": "emergency",
+      "category": "loss_of_consciousness",
+      "patterns": [
+        "(he|she|e|de baby|de pickney|me mudda|me fadda|granny) (na|nah|nuh|ain|aint) (wake|wakin|waking)( up)?",
+        "drop down .{0,20}(na|nah|nuh|ain|aint|cyan|cyaan) (wake|wakin|waking|answer|talkin|talking)"
+      ]
+    },
+    {
+      "id": "gyn.allergy.swelling",
+      "level": "emergency",
+      "category": "severe_allergic_reaction",
+      "patterns": [
+        "(throat|troat|tongue|lip|lips|mout|mouth|face) .{0,10}(swell up|swellin|closin up|closin)"
+      ]
+    },
+    {
+      "id": "gyn.crisis.suicide_self_harm",
+      "level": "crisis",
+      "category": "self_harm_or_suicide",
+      "patterns": [
+        "(?<!(nah|na|nuh|doan|dont|ain|aint) )(wan|want|waan) (fuh |fu )dead",
+        "(nah|na|nuh|doan|dont) (wan|want|waan) (fuh |fu )?live (no more|again|anymore)",
+        "tired (fuh|fu|of) (live|livin|living)"
+      ]
+    }
+  ]
+}
