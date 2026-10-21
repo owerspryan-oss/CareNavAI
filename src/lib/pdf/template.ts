@@ -135,6 +135,7 @@ function versionPage(req: PdfRequest, v: Version, opts: TemplateOptions, urgentL
   const banner = urgentLevel ? `<div class="urgent" role="alert">${WARNING_ICON}<p>${esc(getUrgentMessage(urgentLevel, lang).message.banner)}</p></div>` : "";
   const confidence = !v.clinician && meta.confidenceNotice ? `<p class="notice">${esc(c.confidenceNotice)}</p>` : "";
   const body = req.flow === "prepare" ? preBody(v.result as PreAppointmentResult, v.clinician) : postBody(v.result as PostAppointmentResult);
+  // On page 1, under the lead: a busy clinician may only read the first page.
   const qr = v.clinician
     ? `<aside class="qr"><img src="data:image/svg+xml;base64,${Buffer.from(opts.qrSvg).toString("base64")}" alt=""><div><h2>${esc(c.qr.title)}</h2><p>${esc(c.qr.body)}</p><p class="link">${esc(opts.feedbackUrl)}</p><p class="small">${esc(c.qr.privacy)}</p></div></aside>`
     : "";
@@ -144,9 +145,9 @@ function versionPage(req: PdfRequest, v: Version, opts: TemplateOptions, urgentL
 ${draft}${banner}
 <h1>${esc(title)}</h1>
 ${v.clinician ? `<p class="lead">${esc(copy.clinicianLead)}</p>` : ""}${confidence}
+${qr}
 <div class="body">${body}</div>
 <section class="about"><h2>${esc(c.aboutThis)}</h2>${list(v.result.disclaimer)}</section>
-${qr}
 </article>`;
 }
 
