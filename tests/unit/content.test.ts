@@ -76,7 +76,8 @@ describe("static content files (T-05)", () => {
 
   it("rejects a file whose crisis message has no 'continue' check", () => {
     const raw = readJson("urgent-messages", "en.json") as { messages: { crisis: Record<string, unknown> } };
-    const { continueCheck: _dropped, ...crisis } = raw.messages.crisis;
+    const crisis = { ...raw.messages.crisis };
+    delete crisis.continueCheck;
     expect(urgentMessagesFileSchema.safeParse({ ...raw, messages: { ...raw.messages, crisis } }).success).toBe(false);
   });
 
