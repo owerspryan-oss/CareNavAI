@@ -1,3 +1,4 @@
+import { LanguagePicker } from "@/components/i18n/LanguagePicker";
 import { ChevronLeftIcon } from "./icons";
 import styles from "./TopBar.module.css";
 
@@ -9,7 +10,7 @@ export interface TopBarProps {
   backDisabled?: boolean;
 }
 
-/** Translucent top bar: back chevron + centered text wordmark (DESIGN_SYSTEM.md §7). */
+/** Translucent top bar: back chevron, centered wordmark, language picker (DESIGN_SYSTEM.md §7, AC-27.1). */
 export function TopBar({ backLabel, onBack, backDisabled }: TopBarProps) {
   return (
     <header className={styles.bar}>
@@ -17,7 +18,9 @@ export function TopBar({ backLabel, onBack, backDisabled }: TopBarProps) {
         <ChevronLeftIcon className={styles.backIcon} />
       </button>
       <p className={styles.wordmark}>CareNav AI</p>
-      <span aria-hidden="true" />
+      <div className={styles.end}>
+        <LanguagePicker />
+      </div>
     </header>
   );
 }

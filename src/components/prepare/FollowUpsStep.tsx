@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { TextArea } from "@/components/ui/TextArea";
 import { TopBar } from "@/components/ui/TopBar";
-import { prepareCopy as c } from "./copy";
+import { usePrepareCopy } from "./copy";
 import styles from "./PrepareFlow.module.css";
 
 /** A question and its answer, for either journey's intent list. Skipped or empty answers are `null`. */
@@ -29,12 +29,13 @@ export interface FollowUpsStepProps<I extends string> {
 export function FollowUpsStep<I extends string>({
   questions,
   initial = [],
-  lead = c.followUps.lead,
+  lead,
   maxChars,
   busy,
   onContinue,
   onBack,
 }: FollowUpsStepProps<I>) {
+  const c = usePrepareCopy();
   const [values, setValues] = useState<string[]>(() => questions.map((_, i) => initial[i]?.answer ?? ""));
   const [skipped, setSkipped] = useState<boolean[]>(() => questions.map((_, i) => initial.length > 0 && initial[i]?.answer === null));
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -76,7 +77,7 @@ export function FollowUpsStep<I extends string>({
             <h1 ref={headingRef} tabIndex={-1} className={styles.title}>
               {c.followUps.title}
             </h1>
-            <p className={styles.lead}>{lead}</p>
+            <p className={styles.lead}>{lead ?? c.followUps.lead}</p>
           </div>
 
           <ol className={styles.followUpList}>

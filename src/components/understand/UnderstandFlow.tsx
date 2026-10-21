@@ -21,6 +21,7 @@ import type { LanguageNames } from "@/lib/result/view";
 import type { UrgentContent } from "@/lib/safety/urgent-content";
 import { letterTerms } from "@/lib/understand/view";
 import { DemoMenu } from "@/components/demo/DemoMenu";
+import { UnreviewedNotice } from "@/components/i18n/LanguagePicker";
 import { FollowUpsStep } from "@/components/prepare/FollowUpsStep";
 import { SummaryStatus } from "@/components/prepare/SummaryStatus";
 import { ExplainResultView } from "@/components/result/ExplainResultView";
@@ -28,7 +29,7 @@ import { UrgentGate } from "@/components/safety/UrgentGate";
 import { Button } from "@/components/ui/Button";
 import { TopBar } from "@/components/ui/TopBar";
 import { CameraIcon, ChevronRightIcon, EyeOffIcon, LockIcon, PencilIcon } from "@/components/ui/icons";
-import { understandCopy as c } from "./copy";
+import { useUnderstandCopy } from "./copy";
 import { LetterPhoto } from "./LetterPhoto";
 import { LetterQuote } from "./LetterQuote";
 import { LetterTextArea } from "./LetterTextArea";
@@ -94,6 +95,7 @@ export function UnderstandFlow({
   languages,
   demo,
 }: UnderstandFlowProps) {
+  const c = useUnderstandCopy();
   const router = useRouter();
   const [stage, setStage] = useState<Stage>({ name: "choose" });
   const [source, setSource] = useState<Source>("typed");
@@ -375,6 +377,7 @@ export function UnderstandFlow({
               {c.choose.title}
             </h1>
             <p className={p.lead}>{c.choose.lead}</p>
+            <UnreviewedNotice />
           </div>
 
           <div className={styles.options}>

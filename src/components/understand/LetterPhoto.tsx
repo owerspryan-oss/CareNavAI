@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { understandCopy as c } from "./copy";
+import { useUnderstandCopy } from "./copy";
 import styles from "./Understand.module.css";
 
 /**
@@ -9,6 +9,7 @@ import styles from "./Understand.module.css";
  * URL owned (and revoked) by the flow; the photo is never written to storage.
  */
 export function LetterPhoto({ url }: { url: string }) {
+  const c = useUnderstandCopy();
   const [large, setLarge] = useState(false);
   return (
     <figure className={styles.photo} data-large={large || undefined}>

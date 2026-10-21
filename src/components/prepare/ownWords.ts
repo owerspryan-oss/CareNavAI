@@ -1,13 +1,13 @@
 import type { AnsweredFollowUp } from "@/lib/prepare/answers";
 import type { PrepareState } from "@/lib/prepare/state";
 import type { OwnWords } from "@/components/result/ResultView";
-import { prepareCopy as c } from "./copy";
+import type { PrepareCopy } from "./copy";
 
 /**
  * The user's own words for each result section (AC-01.5), exactly as typed. Picker answers are
  * shown with their on-screen labels. Sections with nothing typed or picked are left out.
  */
-export function ownWords(state: PrepareState, followUps: readonly AnsweredFollowUp[]): OwnWords {
+export function ownWords(state: PrepareState, followUps: readonly AnsweredFollowUp[], c: PrepareCopy): OwnWords {
   const { structured: s, text: t } = state;
   const typed = (...v: string[]) => v.filter((x) => x.trim() !== "");
 

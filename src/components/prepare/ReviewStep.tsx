@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import type { AnsweredFollowUp } from "@/lib/prepare/answers";
 import type { PrepareState, StepId } from "@/lib/prepare/state";
 import { Button } from "@/components/ui/Button";
-import { prepareCopy as c } from "./copy";
+import { usePrepareCopy, type PrepareCopy } from "./copy";
 import styles from "./PrepareFlow.module.css";
 
 export interface ReviewStepProps {
@@ -15,6 +15,7 @@ export interface ReviewStepProps {
 
 /** User text is shown exactly as typed (rendered as text, never HTML). Empty answers say so, never blank. */
 function Answer({ text }: { text: string }) {
+  const c = usePrepareCopy();
   const trimmed = text.trim();
   return trimmed ? <p className={styles.userText}>{text}</p> : <p className={styles.skipped}>{c.review.skipped}</p>;
 }
@@ -32,6 +33,7 @@ function Section({
   locked: boolean;
   children: ReactNode;
 }) {
+  const c = usePrepareCopy();
   return (
     <section className={styles.reviewItem} aria-label={heading}>
       <div className={styles.reviewHeader}>
@@ -51,7 +53,7 @@ function Section({
   );
 }
 
-function whoText(state: PrepareState): string {
+function whoText(state: PrepareState, c: PrepareCopy): string {
   const { relationship, ageBand } = state.structured;
   if (!relationship) return "";
   if (relationship === "parent") return c.review.childAge(ageBand ? c.who.ageBands[ageBand] : "");
@@ -63,12 +65,13 @@ function whoText(state: PrepareState): string {
 }
 
 export function ReviewStep({ state, onEdit, locked }: ReviewStepProps) {
+  const c = usePrepareCopy();
   const { structured: s, text: t } = state;
   const props = { onEdit, locked };
   return (
     <div className={styles.reviewList}>
       <Section heading={c.review.whoHeading} step="who" {...props}>
-        <p className={styles.structuredText}>{whoText(state)}</p>
+        <p className={styles.structuredText}>{whoText(state, c)}</p>
       </Section>
 
       <Section heading={c.review.concernHeading} step="concern" {...props}>
@@ -112,6 +115,7 @@ export function ReviewStep({ state, onEdit, locked }: ReviewStepProps) {
 
 /** Follow-up answers on review (FR-22 before review): each question shown with the answer as typed. */
 export function FollowUpsReview({ followUps, onEdit, locked }: { followUps: AnsweredFollowUp[]; onEdit: () => void; locked: boolean }) {
+  const c = usePrepareCopy();
   if (followUps.length === 0) return null;
   const heading = c.review.followUpsHeading;
   return (

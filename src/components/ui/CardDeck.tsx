@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useId, useRef, useState, type KeyboardEvent, type PointerEvent, type ReactNode } from "react";
+import { useUi } from "@/components/i18n/UiProvider";
 import { Button } from "./Button";
 import { ChevronLeftIcon, ChevronRightIcon } from "./icons";
 import {
@@ -57,6 +58,8 @@ export function CardDeck({ cards, label, labels }: CardDeckProps) {
   const target = useRef(0);
   const params = useRef<SpringParams>(SPRING_DEFAULT);
   const frame = useRef<number | null>(null);
+  // Right-to-left (AC-27.3): the deck travels the other way, so every x is mirrored by `s`.
+  const s = useUi().dir === "rtl" ? -1 : 1;
   const viewport = useRef<HTMLDivElement>(null);
   const drag = useRef<{ id: number; startX: number; startY: number; startPos: number; startIndex: number; axis: "x" | "y" | null; samples: { t: number; x: number }[] } | null>(null);
   const liveId = useId();
@@ -127,13 +130,13 @@ export function CardDeck({ cards, label, labels }: CardDeckProps) {
       cancelAnimationFrame(frame.current);
       frame.current = null;
     }
-    drag.current = { id: e.pointerId, startX: e.clientX, startY: e.clientY, startPos: pos.current.x, startIndex: index, axis: null, samples: [{ t: e.timeStamp, x: e.clientX }] };
+    drag.current = { id: e.pointerId, startX: e.clientX, startY: e.clientY, startPos: pos.current.x, startIndex: index, axis: null, samples: [{ t: e.timeStamp, x: e.clientX * s }] };
   }
 
   function onPointerMove(e: PointerEvent<HTMLDivElement>) {
     const d = drag.current;
     if (!d || d.id !== e.pointerId) return;
-    const dx = e.clientX - d.startX;
+    const dx = (e.clientX - d.startX) * s;
     const dy = e.clientY - d.startY;
     if (d.axis === null) {
       if (Math.hypot(dx, dy) < DRAG_THRESHOLD) return;
@@ -146,7 +149,7 @@ export function CardDeck({ cards, label, labels }: CardDeckProps) {
       e.currentTarget.dataset.dragging = "";
     }
     if (d.axis !== "x") return;
-    d.samples.push({ t: e.timeStamp, x: e.clientX });
+    d.samples.push({ t: e.timeStamp, x: e.clientX * s });
     if (d.samples.length > 8) d.samples.shift();
     if (prefersReducedMotion()) return;
     const w = width();
@@ -170,7 +173,7 @@ export function CardDeck({ cards, label, labels }: CardDeckProps) {
     const pxPerSec = velocityFrom(d.samples);
     const w = width();
     if (prefersReducedMotion()) {
-      const dx = e.clientX - d.startX;
+      const dx = (e.clientX - d.startX) * s;
       goTo(Math.abs(dx) > w / 4 ? d.startIndex + (dx < 0 ? 1 : -1) : d.startIndex);
       return;
     }
@@ -180,12 +183,9 @@ export function CardDeck({ cards, label, labels }: CardDeckProps) {
   }
 
   function onKeyDown(e: KeyboardEvent<HTMLDivElement>) {
-    if (e.key === "ArrowRight") {
+    if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
       e.preventDefault();
-      goTo(index + 1);
-    } else if (e.key === "ArrowLeft") {
-      e.preventDefault();
-      goTo(index - 1);
+      goTo(index + (e.key === "ArrowRight" ? 1 : -1) * s);
     }
   }
 
@@ -207,9 +207,9 @@ export function CardDeck({ cards, label, labels }: CardDeckProps) {
           const style =
             i === 0 && position < 0
               ? // Pulled right past the first card: it follows the (rubber-banded) finger, on top.
-                { transform: `translate3d(${-position * 100}%, 0, 0)`, zIndex: count + 1, opacity: 1 }
+                { transform: `translate3d(${-position * 100 * s}%, 0, 0)`, zIndex: count + 1, opacity: 1 }
               : d < 0
-              ? { transform: `translate3d(${d * 108}%, 0, 0) rotate(${d * 4}deg)`, zIndex: count + 1, opacity: d <= -1 ? 0 : 1 }
+              ? { transform: `translate3d(${d * 108 * s}%, 0, 0) rotate(${d * 4 * s}deg)`, zIndex: count + 1, opacity: d <= -1 ? 0 : 1 }
               : {
                   transform: `translate3d(0, ${Math.min(d, 2) * 0.625}rem, 0) scale(${1 - Math.min(d, 2) * 0.04})`,
                   zIndex: count - i,

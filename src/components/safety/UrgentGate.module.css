@@ -11,9 +11,17 @@
 /* Plain wordmark bar: no back chevron here, the only ways on are the actions below. */
 .header {
   display: grid;
-  place-items: center;
+  grid-template-columns: minmax(2.75rem, 1fr) auto minmax(2.75rem, 1fr);
+  align-items: center;
+  gap: var(--space-1);
   min-height: 3.5rem;
   padding: var(--space-1) var(--space-4);
+}
+
+.headerEnd {
+  display: flex;
+  justify-content: flex-end;
+  min-width: 0;
 }
 
 .wordmark {

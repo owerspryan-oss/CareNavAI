@@ -28,7 +28,7 @@ import {
   QuestionIcon,
 } from "@/components/ui/icons";
 import { LetterPhoto } from "@/components/understand/LetterPhoto";
-import { explainCopy as c, resultCopy as rc } from "./copy";
+import { useExplainCopy, useResultCopy, type ExplainCopy } from "./copy";
 import styles from "./ResultView.module.css";
 import own from "./ExplainResultView.module.css";
 import { SavePdfButton } from "./SavePdfButton";
@@ -77,6 +77,7 @@ function Hl({ text, terms }: { text: string; terms: string[] }) {
  * every point at once when the person turns on "Show letter's words", rather than a chip on each point.
  */
 function Source({ quote, show }: { quote: string; show: boolean }) {
+  const c = useExplainCopy();
   if (!show) return null;
   return (
     <figure className={styles.quote}>
@@ -117,7 +118,7 @@ function Section({ id, heading, children }: { id: string; heading: string; child
  * The explanation's sections. `deckable` can be shown one card at a time; `unclear` is always shown
  * in full, never only at the back of a deck (DECISIONS.md, 2026-10-21).
  */
-function explanationSections(view: UnderstandView, showSources: boolean): { deckable: { id: string; heading: string; node: ReactNode }[]; unclear: ReactNode } {
+function explanationSections(view: UnderstandView, showSources: boolean, c: ExplainCopy): { deckable: { id: string; heading: string; node: ReactNode }[]; unclear: ReactNode } {
   const t = view.terms;
   const told = (
     <Section key="told" id="told" heading={c.sections.told}>
@@ -215,6 +216,7 @@ function explanationSections(view: UnderstandView, showSources: boolean): { deck
 }
 
 function Fact({ label, value, terms }: { label: string; value: string | null; terms: string[] }) {
+  const c = useExplainCopy();
   return (
     <div className={own.fact}>
       <dt>{label}</dt>
@@ -240,6 +242,8 @@ export function ExplainResultView({
   updateFailed,
   onBack,
 }: ExplainResultViewProps) {
+  const c = useExplainCopy();
+  const rc = useResultCopy();
   const { english, user } = result;
   const [tab, setTab] = useState<Tab>(user ? "user" : "english");
   const [layout, setLayout] = useResultLayout();
@@ -265,7 +269,7 @@ export function ExplainResultView({
   const dir = versionDir(shown.meta, languages);
   const lang = shown.meta.outputMode === "translation" ? shown.meta.outputLanguage : "en";
   const view = buildUnderstandView(shown, english, confirmedText);
-  const sections = explanationSections(view, showSources);
+  const sections = explanationSections(view, showSources, c);
 
   return (
     <div className={`${styles.page} ${photoUrl ? own.withPhoto : ""}`}>

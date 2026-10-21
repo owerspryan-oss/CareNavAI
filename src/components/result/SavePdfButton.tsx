@@ -3,11 +3,12 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { downloadPdf, type PdfBody } from "@/lib/client/pdf";
-import { resultCopy as c } from "./copy";
+import { useResultCopy } from "./copy";
 import styles from "./ResultView.module.css";
 
 /** Save as PDF (FR-10). Errors are a short static message; nothing is retried behind the user's back. */
 export function SavePdfButton({ body }: { body: PdfBody }) {
+  const c = useResultCopy();
   const [state, setState] = useState<"idle" | "saving" | "failed">("idle");
   return (
     <div className={styles.pdfAction}>

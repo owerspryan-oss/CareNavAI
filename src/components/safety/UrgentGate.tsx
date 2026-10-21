@@ -5,6 +5,7 @@ import type { GateResult } from "@/lib/ai/schemas";
 import type { UrgentMessage } from "@/lib/content/schemas";
 import { canContinueAfterUrgent, selfHarmExtras, urgentMessageFor, type UrgentContent } from "@/lib/safety/urgent-content";
 import { Button } from "@/components/ui/Button";
+import { LanguagePicker } from "@/components/i18n/LanguagePicker";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { AlertTriangleIcon } from "@/components/ui/icons";
 import { DraftLabel } from "./DraftLabel";
@@ -59,7 +60,11 @@ export function UrgentGate({ result, content, onStartAgain, onAcknowledge, sourc
       data-mode={content.mode}
     >
       <header className={styles.header}>
+        <span aria-hidden="true" />
         <p className={styles.wordmark}>CareNav AI</p>
+        <div className={styles.headerEnd}>
+          <LanguagePicker />
+        </div>
       </header>
       {content.showDraftLabel && <DraftLabel text={content.draftLabel} />}
 

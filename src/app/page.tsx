@@ -1,10 +1,13 @@
+import { LanguagePicker, UnreviewedNotice } from "@/components/i18n/LanguagePicker";
 import { ButtonLink } from "@/components/ui/Button";
 import { CalendarIcon, DocumentIcon, LockIcon } from "@/components/ui/icons";
 import { LogoMark } from "@/components/ui/LogoMark";
+import { requestUiLocale } from "@/lib/i18n/request";
 import styles from "./page.module.css";
 
-/** Landing screen (agreed mockup, screen 1): the two journeys, then the guest-mode caption. */
-export default function Home() {
+/** Landing screen (agreed mockup, screen 1): the two journeys, the language picker, then the guest-mode caption. */
+export default async function Home() {
+  const t = (await requestUiLocale()).messages.common.landing;
   return (
     <main className={styles.landing}>
       <div className={styles.top}>
@@ -14,14 +17,14 @@ export default function Home() {
             CareNav <span className={styles.brandAi}>AI</span>
           </span>
         </p>
-        <h1 className={styles.headline}>Let&rsquo;s get ready for your appointment.</h1>
-        <p className={styles.lead}>Clear information. Better conversations. You&rsquo;ve got this.</p>
+        <h1 className={styles.headline}>{t.headline}</h1>
+        <p className={styles.lead}>{t.lead}</p>
       </div>
 
       <div className={styles.bottom}>
-        <nav aria-label="Choose what you need" className={styles.actions}>
+        <nav aria-label={t.navLabel} className={styles.actions}>
           <ButtonLink href="/prepare" variant="primary" size="large" fullWidth trailingChevron leadingIcon={<CalendarIcon />}>
-            Prepare for my appointment
+            {t.prepare}
           </ButtonLink>
           <ButtonLink
             href="/understand"
@@ -31,15 +34,18 @@ export default function Home() {
             trailingChevron
             leadingIcon={<DocumentIcon />}
           >
-            Understand what I was told
+            {t.understand}
           </ButtonLink>
         </nav>
 
-        {/* Language picker slot — epic-language (FR-27) renders its picker here, between the journeys and the caption. */}
+        <div className={styles.language}>
+          <LanguagePicker variant="full" />
+          <UnreviewedNotice />
+        </div>
 
         <p className={styles.guest}>
           <LockIcon className={styles.guestIcon} />
-          Guest mode — nothing is saved.
+          {t.guest}
         </p>
       </div>
     </main>

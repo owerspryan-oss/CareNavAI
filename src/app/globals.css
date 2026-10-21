@@ -95,6 +95,23 @@ html[data-step-direction="back"]::view-transition-new(guided-step) {
   animation-name: step-in-from-left;
 }
 
+/* Right-to-left (AC-27.3): forward travels the other way, and arrow icons point the other way. */
+html[dir="rtl"][data-step-direction="forward"]::view-transition-old(guided-step) {
+  animation-name: step-out-to-right;
+}
+html[dir="rtl"][data-step-direction="forward"]::view-transition-new(guided-step) {
+  animation-name: step-in-from-left;
+}
+html[dir="rtl"][data-step-direction="back"]::view-transition-old(guided-step) {
+  animation-name: step-out-to-left;
+}
+html[dir="rtl"][data-step-direction="back"]::view-transition-new(guided-step) {
+  animation-name: step-in-from-right;
+}
+[dir="rtl"] svg[data-mirror] {
+  transform: scaleX(-1);
+}
+
 @keyframes step-in-from-right {
   from { opacity: 0; transform: translateX(2rem); }
 }

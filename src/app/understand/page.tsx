@@ -5,11 +5,13 @@ import { languagesConfig } from "@/lib/config";
 import { env } from "@/lib/config/env";
 import { getDisclaimers, getUrgentContent } from "@/lib/content";
 import { demoLetterPresets } from "@/lib/demo/presets";
+import { requestUiLocale } from "@/lib/i18n/request";
 import type { LanguageNames } from "@/lib/result/view";
 
-export const metadata: Metadata = {
-  title: "Understand what I was told · CareNav AI",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { messages } = await requestUiLocale();
+  return { title: `${messages.common.meta.understandTitle} · CareNav AI` };
+}
 
 /** Language names and direction for the result view and the "Show me this in" picker (CLAUDE.md rule 10). */
 function languageNames(): LanguageNames {
@@ -23,14 +25,15 @@ export default async function UnderstandPage() {
   // Read limits at request time so a config change applies without a rebuild (CLAUDE.md rule 10).
   await connection();
   const e = env();
-  // TODO(epic-language): pass the interface language here once the picker sets it.
+  // Static content in the interface language (English where it has no file yet).
+  const { language } = await requestUiLocale();
   return (
     <UnderstandFlow
       maxImagePx={e.MAX_IMAGE_PX}
       maxLetterChars={e.MAX_LETTER_CHARS}
       maxAnswerChars={e.MAX_TEXT_CHARS}
-      urgentContent={getUrgentContent("en")}
-      providerNotice={getDisclaimers("en").content.guestProviderNotice}
+      urgentContent={getUrgentContent(language)}
+      providerNotice={getDisclaimers(language).content.guestProviderNotice}
       languages={languageNames()}
       demo={e.DEMO_MODE ? demoLetterPresets() : undefined}
     />

@@ -14,7 +14,7 @@ import {
 import { Checkbox } from "@/components/ui/Checkbox";
 import { ChoiceGroup } from "@/components/ui/ChoiceGroup";
 import { TextArea } from "@/components/ui/TextArea";
-import { prepareCopy as c } from "./copy";
+import { usePrepareCopy } from "./copy";
 import styles from "./PrepareFlow.module.css";
 
 export interface StepBodyProps {
@@ -43,6 +43,7 @@ function Field({
   placeholder?: string;
   rows?: number;
 }) {
+  const c = usePrepareCopy();
   return (
     <TextArea
       id={`prepare-${field}`}
@@ -62,6 +63,7 @@ function Field({
 }
 
 export function WhoStep(p: StepBodyProps) {
+  const c = usePrepareCopy();
   const s = p.state.structured;
   return (
     <div className={styles.stack}>
@@ -93,10 +95,12 @@ export function WhoStep(p: StepBodyProps) {
 }
 
 export function ConcernStep(p: StepBodyProps) {
+  const c = usePrepareCopy();
   return <Field {...p} field="concern" label={c.concern.label} labelHidden placeholder={c.concern.placeholder} rows={6} />;
 }
 
 export function TimingStep(p: StepBodyProps) {
+  const c = usePrepareCopy();
   const s = p.state.structured;
   return (
     <div className={styles.stack}>
@@ -122,6 +126,7 @@ export function TimingStep(p: StepBodyProps) {
 }
 
 export function ChangesStep(p: StepBodyProps) {
+  const c = usePrepareCopy();
   return (
     <div className={styles.stack}>
       <Field {...p} field="changes" label={c.changes.label} labelHidden placeholder={c.changes.placeholder} />
@@ -136,6 +141,7 @@ export function ChangesStep(p: StepBodyProps) {
 }
 
 export function MedicinesStep(p: StepBodyProps) {
+  const c = usePrepareCopy();
   return (
     <div className={styles.stack}>
       <Field {...p} field="medicines" label={c.medicines.medicinesLabel} hint={c.medicines.medicinesHint} rows={3} />
@@ -145,5 +151,6 @@ export function MedicinesStep(p: StepBodyProps) {
 }
 
 export function WorriesStep(p: StepBodyProps) {
+  const c = usePrepareCopy();
   return <Field {...p} field="worries" label={c.worries.label} labelHidden placeholder={c.worries.placeholder} />;
 }

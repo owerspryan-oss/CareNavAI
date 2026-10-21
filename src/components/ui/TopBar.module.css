@@ -4,7 +4,9 @@
   top: 0;
   z-index: 10;
   display: grid;
-  grid-template-columns: 2.75rem 1fr 2.75rem;
+  /* Equal outer columns keep the wordmark centred whatever the picker's width. */
+  grid-template-columns: minmax(2.75rem, 1fr) auto minmax(2.75rem, 1fr);
+  gap: var(--space-1);
   align-items: center;
   min-height: 3.5rem;
   padding: var(--space-1) var(--space-2);
@@ -36,6 +38,12 @@
 .backIcon {
   width: 1.5rem;
   height: 1.5rem;
+}
+
+.end {
+  display: flex;
+  justify-content: flex-end;
+  min-width: 0;
 }
 
 .wordmark {

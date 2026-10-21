@@ -33,7 +33,7 @@ import {
   QuestionIcon,
   RepeatIcon,
 } from "@/components/ui/icons";
-import { resultCopy as c } from "./copy";
+import { useResultCopy, type ResultCopy } from "./copy";
 import styles from "./ResultView.module.css";
 
 export type OwnWordsSection =
@@ -82,6 +82,7 @@ function Hl({ text, terms }: { text: string; terms: string[] }) {
 }
 
 function OwnWordsQuote({ words }: { words: string[] }) {
+  const c = useResultCopy();
   if (words.length === 0) return null;
   return (
     <figure className={styles.quote}>
@@ -143,7 +144,7 @@ type SummaryRow = { id: string; heading: string; row: ReactNode };
  * or a card deck. Sections the person didn't fill are not shown as empty rows: their names are listed
  * once under "Not mentioned" instead (AC-01.1, without a wall of "You didn't mention this").
  */
-function summaryRows(v: PreAppointmentResult, own: OwnWords["sections"] | null): { rows: SummaryRow[]; empty: string[] } {
+function summaryRows(v: PreAppointmentResult, own: OwnWords["sections"] | null, c: ResultCopy): { rows: SummaryRow[]; empty: string[] } {
   const terms = medicineTerms(v);
   const m = v.medicationAndSupport;
   const ownFor = (k: OwnWordsSection) => (own ? own[k] : undefined);
@@ -187,6 +188,7 @@ function summaryRows(v: PreAppointmentResult, own: OwnWords["sections"] | null):
  * control, the user's own words beside each section, and the static routes and disclaimer.
  */
 export function ResultView({ result, ownWords, urgentContent, languages, onNotQuite }: ResultViewProps) {
+  const c = useResultCopy();
   const { english, user } = result;
   const [tab, setTab] = useState<Tab>(user ? "user" : "english");
   const [matched, setMatched] = useState(false);
@@ -207,7 +209,7 @@ export function ResultView({ result, ownWords, urgentContent, languages, onNotQu
   const lang = shown.meta.outputMode === "translation" ? shown.meta.outputLanguage : "en";
   const terms = medicineTerms(shown);
   const answeredFollowUps = ownWords.followUps;
-  const { rows, empty } = summaryRows(shown, showOwn ? ownWords.sections : null);
+  const { rows, empty } = summaryRows(shown, showOwn ? ownWords.sections : null, c);
 
   return (
     <div className={styles.page}>

@@ -9,6 +9,7 @@ import { mostCautious, screenText } from "@/lib/client/screen";
 import { fromPrepareAnswers, toPrepareAnswers, type AnsweredFollowUp } from "@/lib/prepare/answers";
 import type { DemoPreparePreset } from "@/lib/demo/presets";
 import { DemoMenu } from "@/components/demo/DemoMenu";
+import { UnreviewedNotice } from "@/components/i18n/LanguagePicker";
 import {
   REVIEW_INDEX,
   STEP_IDS,
@@ -35,7 +36,7 @@ import { UrgentGate } from "@/components/safety/UrgentGate";
 import { ResultView } from "@/components/result/ResultView";
 import type { LanguageNames } from "@/lib/result/view";
 import type { UrgentContent } from "@/lib/safety/urgent-content";
-import { prepareCopy as c } from "./copy";
+import { usePrepareCopy, type PrepareCopy } from "./copy";
 import { FollowUpsStep } from "./FollowUpsStep";
 import { ownWords } from "./ownWords";
 import { FollowUpsReview, ReviewStep } from "./ReviewStep";
@@ -97,7 +98,7 @@ function urgentLevel(g: GateResult): Exclude<SafetyLevel, "clear"> {
 }
 
 /** First step (in journey order) whose answers fail validation, across the whole journey. */
-function firstInvalidStep(state: PrepareState, maxChars: number): { step: StepId; errors: StepErrors } | null {
+function firstInvalidStep(state: PrepareState, maxChars: number, c: PrepareCopy): { step: StepId; errors: StepErrors } | null {
   for (const step of STEP_IDS) {
     const errors = validateStep(state, step, maxChars, c.errors);
     if (Object.keys(errors).length > 0) return { step, errors };
@@ -111,6 +112,7 @@ function firstInvalidStep(state: PrepareState, maxChars: number): { step: StepId
  * urgency gate before the journey moves on; anything but `clear` hands over to <UrgentGate>.
  */
 export function PrepareFlow({ maxChars, urgentContent, languages, demo }: PrepareFlowProps) {
+  const c = usePrepareCopy();
   const router = useRouter();
   const [state, dispatch] = useReducer(prepareReducer, undefined, initialPrepareState);
   const [errors, setErrors] = useState<StepErrors>({});
@@ -223,7 +225,7 @@ export function PrepareFlow({ maxChars, urgentContent, languages, demo }: Prepar
 
   async function onGetSummary() {
     if (screening) return;
-    const invalid = firstInvalidStep(state, maxChars);
+    const invalid = firstInvalidStep(state, maxChars, c);
     if (invalid) {
       navigate({ type: "editFromReview", step: invalid.step }, "back");
       setErrors(invalid.errors);
@@ -372,7 +374,7 @@ export function PrepareFlow({ maxChars, urgentContent, languages, demo }: Prepar
     return (
       <ResultView
         result={stage.result}
-        ownWords={ownWords(state, stage.followUps)}
+        ownWords={ownWords(state, stage.followUps, c)}
         urgentContent={urgentContent}
         languages={languages}
         onNotQuite={backToReview}
@@ -403,6 +405,7 @@ export function PrepareFlow({ maxChars, urgentContent, languages, demo }: Prepar
         <ProgressStepper current={state.stepIndex + 1} total={total} label={c.stepLabel(state.stepIndex + 1, total)} />
         {/* Said once, at the start: repeating it on every step was noise. The result says it again. */}
         {state.stepIndex === 0 && <Banner tone="info">{c.draftNotice}</Banner>}
+        {state.stepIndex === 0 && <UnreviewedNotice />}
 
         <form
           id="prepare-step"

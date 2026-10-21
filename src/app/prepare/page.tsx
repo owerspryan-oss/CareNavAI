@@ -5,11 +5,13 @@ import { languagesConfig } from "@/lib/config";
 import { env } from "@/lib/config/env";
 import { getUrgentContent } from "@/lib/content";
 import { demoPreparePresets } from "@/lib/demo/presets";
+import { requestUiLocale } from "@/lib/i18n/request";
 import type { LanguageNames } from "@/lib/result/view";
 
-export const metadata: Metadata = {
-  title: "Prepare for my appointment · CareNav AI",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { messages } = await requestUiLocale();
+  return { title: `${messages.common.meta.prepareTitle} · CareNav AI` };
+}
 
 /** Language names and direction for the result view (config/languages.json, CLAUDE.md rule 10). */
 function languageNames(): LanguageNames {
@@ -21,9 +23,9 @@ function languageNames(): LanguageNames {
 export default async function PreparePage() {
   // Read limits at request time so a config change applies without a rebuild (CLAUDE.md rule 10).
   await connection();
-  // Static urgent-screen content, built server-side so no server config reaches the client bundle.
-  // TODO(epic-language): pass the interface language here once the picker sets it.
-  const urgentContent = getUrgentContent("en");
+  // Static urgent-screen content in the interface language (English if it has no file), built
+  // server-side so no server config reaches the client bundle.
+  const urgentContent = getUrgentContent((await requestUiLocale()).language);
   const e = env();
   return (
     <PrepareFlow

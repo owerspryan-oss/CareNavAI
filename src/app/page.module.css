@@ -56,6 +56,13 @@
   gap: var(--space-3);
 }
 
+.language {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-2);
+  text-align: center;
+}
+
 .guest {
   display: flex;
   align-items: center;

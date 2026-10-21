@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import type { CallError } from "@/lib/client/prepare";
 import { Button } from "@/components/ui/Button";
 import { TopBar } from "@/components/ui/TopBar";
-import { prepareCopy as c } from "./copy";
+import { usePrepareCopy } from "./copy";
 import styles from "./PrepareFlow.module.css";
 
 /** The static copy for these states. Defaults to Journey 1's; Journey 2 passes its own. */
@@ -23,6 +23,7 @@ export type SummaryStatusProps = { copy?: StatusCopy } & (
 
 /** "Making your summary" (or the journey's own wording) and the friendly, static error states (413 / 503 / 502 or network). */
 export function SummaryStatus(props: SummaryStatusProps) {
+  const c = usePrepareCopy();
   const headingRef = useRef<HTMLHeadingElement>(null);
   useEffect(() => {
     window.scrollTo({ top: 0 });

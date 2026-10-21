@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { QuoteIcon } from "@/components/ui/icons";
-import { understandCopy as c } from "./copy";
+import { useUnderstandCopy } from "./copy";
 import styles from "./Understand.module.css";
 
 /** Longer than this, the card starts clamped with a "Show all of it" toggle. */
@@ -14,6 +14,7 @@ const CLAMP_LINES = 7;
  * clearly apart from the static urgent message. It is source text, never AI text (CLAUDE.md rule 3).
  */
 export function LetterQuote({ text }: { text: string }) {
+  const c = useUnderstandCopy();
   const long = text.length > CLAMP_CHARS || text.split("\n").length > CLAMP_LINES;
   const [open, setOpen] = useState(!long);
   return (
