@@ -113,6 +113,44 @@ describe("rules layer: must route up", () => {
   });
 });
 
+// Product owner, 2026-10-21: not being able to breathe is an emergency; difficulty breathing is urgent.
+// Exact levels, adult subject. Chest pain with breathlessness stays emergency through the chest-pain rule.
+const BREATHING: [text: string, lang: string, level: SafetyLevel][] = [
+  ["I can't breathe", "en", "emergency"],
+  ["He's not breathing", "en", "emergency"],
+  ["She's choking", "en", "emergency"],
+  ["His lips are going blue", "en", "emergency"],
+  ["I'm gasping for air", "en", "emergency"],
+  ["I'm struggling to breathe", "en", "urgent"],
+  ["I have difficulty breathing", "en", "urgent"],
+  ["It's hard to breathe when I lie down", "en", "urgent"],
+  ["I get short of breath on the stairs", "en", "urgent"],
+  ["My breathing has been laboured all week", "en", "urgent"],
+  ["Chest pain and I'm short of breath", "en", "emergency"],
+  ["Mi cyaan breathe", "jam", "emergency"],
+  ["Mi breath short", "jam", "urgent"],
+  ["It hard fuh breathe", "gyn", "urgent"],
+  ["Meh breath tight", "trf", "urgent"],
+  ["I no fit breathe", "pcm", "emergency"],
+  ["My breath dey hard", "pcm", "urgent"],
+  ["Mwen pa ka respire", "ht", "emergency"],
+  ["Mwen gen souf kout", "ht", "urgent"],
+  ["Saans lene mein takleef hai", "hi", "urgent"],
+];
+
+describe("rules layer: breathing (product owner, 2026-10-21)", () => {
+  it.each(BREATHING)("%s [%s] -> %s", (text, lang, level) => {
+    const r = screen(text, lang, "adult");
+    expect(r.level, r.ruleIds.join(", ")).toBe(level);
+  });
+
+  it("doesn't fire on negated breathlessness in a letter", () => {
+    for (const t of ["He denies shortness of breath.", "No difficulty breathing today.", "She is not short of breath at rest."]) {
+      expect(screen(t, "en", "adult").level, t).toBe("clear");
+    }
+  });
+});
+
 describe("rules layer: child subjects (PRD 9.4)", () => {
   it("applies infant patterns only when the subject is a child", () => {
     expect(screen("She is hot and won't feed", "en", "adult").level).toBe("clear");
