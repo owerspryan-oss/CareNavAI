@@ -51,6 +51,7 @@ All values are light-mode. **Dark mode has not been designed** — flag this as 
 | `--color-teal-100` | `#D6EDE6` | Pale teal tint (info banners, secondary icon badges) |
 | `--color-teal-500` | `#1F6F6B` | **Secondary accent** — secondary button fill ("Understand what I was told"), secondary links ("Start again") |
 | `--color-teal-700` | `#14504C` | Secondary button pressed state |
+| `--color-on-accent` | `#FFFFFF` | Text and icons on coral/teal fills |
 
 ### Semantic / status colors
 
@@ -134,6 +135,7 @@ Follows the Apple Design rule: tighten tracking as size increases, loosen (sligh
 | Token | Value | Use |
 | --- | --- | --- |
 | `--shadow-button` | `0 6px 16px rgba(242,101,75,0.28)` | Under filled coral/teal buttons — colored, soft, matches the button hue (not a generic gray shadow) |
+| `--shadow-button-secondary` | `0 6px 16px rgba(31,111,107,0.28)` | Same recipe under teal (secondary) buttons |
 | `--shadow-card` | `0 2px 8px rgba(11,18,22,0.06)` | Cards/banners on cream background |
 
 ---
@@ -199,6 +201,8 @@ Load `.claude/skills/apple-design/SKILL.md` before implementing any of this — 
 | Banner/card appearance | Materialize (blur+scale together), not a flat fade — per materials guidance §12 of the skill |
 | Mic button while listening | Continuous, real-time feedback (waveform or pulsing ring) synced to actual audio input — never a looping decorative animation that's disconnected from real mic state |
 | Reduced motion | All of the above degrade to opacity cross-fades only, no scale/slide, per `prefers-reduced-motion` |
+
+CSS can't run a true spring, so `design/tokens.css` exposes `--ease-spring-default` (a `linear()` curve sampled from the critically damped spring above, damping 1.0 / response 0.35s) with `--spring-default-duration` (0.45s, the curve's settle time). Use them for CSS transitions and view transitions; switch to a JS spring only for gesture-driven, interruptible motion.
 
 ---
 

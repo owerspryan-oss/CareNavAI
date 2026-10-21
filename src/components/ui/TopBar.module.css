@@ -1,0 +1,54 @@
+/* Translucent material per DESIGN_SYSTEM.md §7 + apple-design §12; content scrolls underneath. */
+.bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: 2.75rem 1fr 2.75rem;
+  align-items: center;
+  min-height: 3.5rem;
+  padding: var(--space-1) var(--space-2);
+  background: color-mix(in srgb, var(--color-bg) 72%, transparent);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+}
+
+.back {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-ink);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.back:active:not(:disabled) {
+  background: var(--color-surface-muted);
+}
+.back:disabled {
+  color: var(--color-ink-muted);
+  cursor: not-allowed;
+}
+
+.backIcon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.wordmark {
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  .bar {
+    background: var(--color-bg);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border-bottom: 1px solid var(--color-border);
+  }
+}
