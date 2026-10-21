@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { allStrings, forbiddenHits } from "@/lib/validate/forbidden";
 import { numberTokens, numbersAppearIn } from "@/lib/validate/numbers";
 import { parityMismatch } from "@/lib/validate/parity";
-import { missingProtectedSpans, protectedSpansIntact } from "@/lib/validate/spans";
+import { missingProtectedSpans, missingProtectedSpansByField, protectedSpansIntact } from "@/lib/validate/spans";
 
 describe("number check", () => {
   it("extracts doses, decimals and dates", () => {
@@ -28,6 +28,12 @@ describe("protected spans (CLAUDE.md rule 6)", () => {
     expect(missingProtectedSpans(master, "Take Amlodipin 5 mg daily from 12/10/2026.", ["Amlodipine"])).toEqual(["Amlodipine"]);
     expect(protectedSpansIntact(master, "Take Amlodipine 10mg daily from 12/10/2026.", ["Amlodipine"])).toBe(false);
     expect(protectedSpansIntact(master, "Take Amlodipine 5mg daily from 10/12/2026.", ["Amlodipine"])).toBe(false);
+  });
+  it("counts repeated medicine names", () => {
+    expect(missingProtectedSpans("Amlodipine, then Amlodipine", "Amlodipine, then Amlodipin", ["Amlodipine"])).toEqual(["Amlodipine"]);
+  });
+  it("checks field by field, so a name kept elsewhere cannot mask a changed field", () => {
+    expect(missingProtectedSpansByField(["Take Amlodipine", "Amlodipine 5mg"], ["Take Amlodipin", "Amlodipine 5mg"], ["Amlodipine"])).toEqual(["Amlodipine"]);
   });
   it("counts repeated numbers", () => {
     expect(protectedSpansIntact("1 tablet, then 1 more", "1 tablet, then more", [])).toBe(false);
