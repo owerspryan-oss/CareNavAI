@@ -13,7 +13,8 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "test:urgency": "vitest run --config vitest.urgency.config.ts"
   },
   "dependencies": {
     "better-sqlite3": "^13.0.3",
