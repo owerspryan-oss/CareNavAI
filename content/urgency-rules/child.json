@@ -1,0 +1,129 @@
+{
+  "$comment": "DRAFT child and infant patterns (FR-05, FR-09, PRD 9.4). NOT CLINICALLY APPROVED; the clinical adviser sets the real list and age cut-offs. The Patois and Pidgin variants are NOT YET REVIEWED BY A NATIVE SPEAKER. These rules only apply when the subject is a child: either the request carries a child ageBand, or the text itself mentions a baby or young child (subjectPatterns), in which case the youngest band wins. 'levelByAgeBand' lists the bands a rule applies to and the level it routes to. Any child rule hit for under_1 or 1_to_4 routes to at least 'urgent' (PRD 9.4). Matching rules are the same as en.json (normalised text, whole words).",
+  "language": "*",
+  "kind": "child",
+  "status": "DRAFT_NOT_CLINICALLY_APPROVED",
+  "reviewed": false,
+  "subjectPatterns": {
+    "under_1": [
+      "baby|babys|babies|newborn|new born|infant",
+      "[0-9]+ (day|days|week|weeks|month|months) old",
+      "pickney baby|likkle baby|small baby|pikin baby"
+    ],
+    "1_to_4": [
+      "toddler|toddlers",
+      "pikin|pickney|pickni",
+      "[1-4] (year|years|yr|yrs) old"
+    ]
+  },
+  "rules": [
+    {
+      "id": "child.not_feeding",
+      "category": "child_concern",
+      "levelByAgeBand": { "under_1": "urgent", "1_to_4": "urgent" },
+      "patterns": [
+        "(wont|will not|not|isnt|is not|hasnt|has not|stopped|refusing to|refuses to|cant|cannot|doesnt|does not) (feed|feeding|fed|eat|eating|drink|drinking|take (the |her |his |a |any )?(bottle|breast|milk|feed|feeds))",
+        "(off|refusing) (her |his |their )?(feeds|food|milk|bottle)",
+        "(nah|nuh|cyaan|caan|wah nuh) (feed|eat|nyam|drink|tek (di )?(bottle|breast|milk))",
+        "no (dey |gree |wan |fit )?(chop|eat|suck|drink|feed|take (di |the )?(breast|bottle|milk))"
+      ]
+    },
+    {
+      "id": "child.fever_infant",
+      "category": "child_concern",
+      "levelByAgeBand": { "under_1": "urgent" },
+      "patterns": [
+        "hot",
+        "burning up",
+        "(high )?(temperature|temp|fever|feverish)",
+        "(bun|burn) up",
+        "body (a )?(hot|feel hot)",
+        "body dey hot",
+        "dey hot"
+      ]
+    },
+    {
+      "id": "child.floppy_or_unresponsive",
+      "category": "child_concern",
+      "levelByAgeBand": { "under_1": "emergency", "1_to_4": "emergency", "5_to_11": "emergency", "12_to_17": "emergency" },
+      "patterns": [
+        "floppy",
+        "limp",
+        "unresponsive",
+        "(hard|difficult) to wake",
+        "(wont|will not|cant|can not|cannot|not|isnt) (wake|waking)( up)?",
+        "(nah|nuh|cyaan|caan) wake( up)?",
+        "(weak weak|soft soft)",
+        "(body )?don soft",
+        "no dey (wake|respond)"
+      ]
+    },
+    {
+      "id": "child.drowsy",
+      "category": "child_concern",
+      "levelByAgeBand": { "under_1": "urgent", "1_to_4": "urgent" },
+      "patterns": [
+        "drowsy",
+        "lethargic",
+        "(very|really|unusually|so|too) sleepy"
+      ]
+    },
+    {
+      "id": "child.breathing",
+      "category": "breathing",
+      "levelByAgeBand": { "under_1": "emergency", "1_to_4": "emergency", "5_to_11": "urgent", "12_to_17": "urgent" },
+      "patterns": [
+        "grunting",
+        "(breathing|breathes|breath) .{0,15}(fast|quick|quickly|hard|noisy|noisily|funny|strange|struggl[a-z]*|difficult)",
+        "(ribs|tummy|chest|skin between (the |her |his )?ribs) .{0,15}(sucking|sucked|pulling|pulls) in",
+        "(struggling|working hard|fighting) (to|for) (breathe|breath)",
+        "wheez[a-z]*",
+        "(cyaan|caan) (breathe|breed|ketch (him|her|im) breath)",
+        "no (dey |fit )?breathe (well|proper|properly)",
+        "breath dey (cut|catch|hard)"
+      ]
+    },
+    {
+      "id": "child.blue_or_mottled",
+      "category": "child_concern",
+      "levelByAgeBand": { "under_1": "emergency", "1_to_4": "emergency", "5_to_11": "emergency", "12_to_17": "emergency" },
+      "patterns": [
+        "(lips|lip|tongue|skin|face|mouth) .{0,12}(blue|grey|gray|bluish|blotchy|mottled)",
+        "(blue|bluish|grey|gray) (lips|tongue|skin|face)",
+        "blotchy",
+        "mottled",
+        "lip (dem )?(a )?(tun )?blue",
+        "(lips|lip|mouth) don (blue|change colour|change color)"
+      ]
+    },
+    {
+      "id": "child.dehydration",
+      "category": "child_concern",
+      "levelByAgeBand": { "under_1": "urgent", "1_to_4": "urgent" },
+      "patterns": [
+        "(no|not had a|not had any|hasnt had a|hasnt had any|has not had a|has not had any) wet napp(y|ies)",
+        "dry napp(y|ies)",
+        "sunken (soft spot|fontanelle|eyes)",
+        "no tears"
+      ]
+    },
+    {
+      "id": "child.infant_cry_or_fontanelle",
+      "category": "child_concern",
+      "levelByAgeBand": { "under_1": "urgent" },
+      "patterns": [
+        "(high pitched|weak|unusual|strange|constant|non stop|inconsolable) (cry|crying|scream|screaming)",
+        "(soft spot|fontanelle) .{0,15}(bulging|bulge|swollen|sunken)"
+      ]
+    },
+    {
+      "id": "child.green_vomit",
+      "category": "child_concern",
+      "levelByAgeBand": { "under_1": "urgent", "1_to_4": "urgent" },
+      "patterns": [
+        "(green|bile|bilious) (vomit|sick)",
+        "(vomit|vomiting|sick|being sick) .{0,10}green"
+      ]
+    }
+  ]
+}
