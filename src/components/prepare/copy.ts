@@ -122,6 +122,39 @@ export const prepareCopy = {
     getSummary: "Get my summary",
   },
 
+  /** Step 7, dynamic follow-ups (FR-22). The questions themselves come from the server. */
+  followUps: {
+    title: "A few quick questions",
+    lead: "These help your doctor understand you. You can skip any of them.",
+    placeholder: "Type here, in any language.",
+    skip: "Skip",
+    skipped: "Skipped",
+    undoSkip: "Answer this",
+    continue: "Continue",
+  },
+
+  /** Loading and error states for the summary call. Static copy only, never server text. */
+  summaryStatus: {
+    makingTitle: "Making your summary",
+    makingLead: "This can take up to a minute. Please keep this page open.",
+    errors: {
+      too_long: {
+        title: "Some of your answers are too long",
+        body: "Please go back and make your answers a little shorter, then try again.",
+      },
+      busy: {
+        title: "We're busy right now",
+        body: "Too many people are using CareNav AI at the moment. Please try again in a few minutes.",
+      },
+      failed: {
+        title: "Something went wrong",
+        body: "We couldn't make your summary this time. Your answers are still here. Please try again.",
+      },
+    },
+    tryAgain: "Try again",
+    backToAnswers: "Back to my answers",
+  },
+
   actions: {
     back: "Back",
     backToStart: "Back to start",

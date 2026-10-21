@@ -4,12 +4,15 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useReducer, useRef, useState, type ReactNode } from "react";
 import { flushSync } from "react-dom";
 import type { GateResult, SafetyLevel } from "@/lib/ai/schemas";
+import { fetchFollowUps, fetchSummary, type CallError, type FollowUpQuestion, type SummaryResult } from "@/lib/client/prepare";
 import { mostCautious, screenText } from "@/lib/client/screen";
+import { toPrepareAnswers, type AnsweredFollowUp } from "@/lib/prepare/answers";
 import {
   REVIEW_INDEX,
   STEP_IDS,
   currentStep,
   effectiveAgeBand,
+  fieldMax,
   initialPrepareState,
   isSkippable,
   prepareReducer,
@@ -27,9 +30,14 @@ import { Button } from "@/components/ui/Button";
 import { ProgressStepper } from "@/components/ui/ProgressStepper";
 import { TopBar } from "@/components/ui/TopBar";
 import { UrgentGate } from "@/components/safety/UrgentGate";
+import { ResultView } from "@/components/result/ResultView";
+import type { LanguageNames } from "@/lib/result/view";
 import type { UrgentContent } from "@/lib/safety/urgent-content";
 import { prepareCopy as c } from "./copy";
+import { FollowUpsStep } from "./FollowUpsStep";
+import { ownWords } from "./ownWords";
 import { ReviewStep } from "./ReviewStep";
+import { SummaryStatus } from "./SummaryStatus";
 import {
   ChangesStep,
   ConcernStep,
@@ -46,6 +54,8 @@ export interface PrepareFlowProps {
   maxChars: number;
   /** Static urgent-message content and URGENT_MODE, built on the server (getUrgentContent). */
   urgentContent: UrgentContent;
+  /** Language names and direction from config/languages.json, for the result view (T-13). */
+  languages: LanguageNames;
 }
 
 type Direction = "forward" | "back";
@@ -59,7 +69,28 @@ const BODIES: Record<Exclude<StepId, "review">, (p: StepBodyProps) => ReactNode>
   worries: WorriesStep,
 };
 
-type PendingGate = { result: GateResult; level: Exclude<SafetyLevel, "clear">; screened: Partial<Record<TextField, string>> };
+/** What to carry on with after an urgent message raised after review is acknowledged. */
+type Resume = { to: "followups" } | { to: "summary"; followUps: AnsweredFollowUp[] };
+
+type PendingGate = {
+  result: GateResult;
+  level: Exclude<SafetyLevel, "clear">;
+  screened: Partial<Record<TextField, string>>;
+  resume?: Resume;
+};
+
+/** Steps 7-9, after review (FR-22, FR-01, FR-03). `steps` = the guided steps and review. */
+type Stage =
+  | { name: "steps" }
+  | { name: "followups"; questions: FollowUpQuestion[]; busy: boolean }
+  | { name: "loading" }
+  | { name: "error"; error: CallError; followUps: AnsweredFollowUp[] }
+  | { name: "result"; result: SummaryResult; followUps: AnsweredFollowUp[] };
+
+/** A gate result that stopped the journey. A `clear` here would be a server bug: route it up anyway. */
+function urgentLevel(g: GateResult): Exclude<SafetyLevel, "clear"> {
+  return g.level === "clear" ? "uncertain" : g.level;
+}
 
 /** First step (in journey order) whose answers fail validation, across the whole journey. */
 function firstInvalidStep(state: PrepareState, maxChars: number): { step: StepId; errors: StepErrors } | null {
@@ -75,12 +106,13 @@ function firstInvalidStep(state: PrepareState, maxChars: number): { step: StepId
  * All answers live in React state only (guest = stateless). Every free-text answer is screened by the
  * urgency gate before the journey moves on; anything but `clear` hands over to <UrgentGate>.
  */
-export function PrepareFlow({ maxChars, urgentContent }: PrepareFlowProps) {
+export function PrepareFlow({ maxChars, urgentContent, languages }: PrepareFlowProps) {
   const router = useRouter();
   const [state, dispatch] = useReducer(prepareReducer, undefined, initialPrepareState);
   const [errors, setErrors] = useState<StepErrors>({});
   const [screening, setScreening] = useState(false);
   const [gate, setGate] = useState<PendingGate | null>(null);
+  const [stage, setStage] = useState<Stage>({ name: "steps" });
   const headingRef = useRef<HTMLHeadingElement>(null);
   const transitionToken = useRef(0);
   const firstRender = useRef(true);
@@ -97,7 +129,7 @@ export function PrepareFlow({ maxChars, urgentContent }: PrepareFlowProps) {
     if (gate) return;
     window.scrollTo({ top: 0 });
     headingRef.current?.focus({ preventScroll: true });
-  }, [state.stepIndex, gate]);
+  }, [state.stepIndex, gate, stage.name]);
 
   /** Step change with a symmetric horizontal slide (DESIGN_SYSTEM.md §8), via the View Transitions API. */
   const navigate = useCallback((action: PrepareAction, direction: Direction) => {
@@ -147,7 +179,7 @@ export function PrepareFlow({ maxChars, urgentContent }: PrepareFlowProps) {
    * Over-limit text is left for its own step's validation rather than sent to the gate.
    */
   async function screenPending(): Promise<{ clear: boolean; screened: Partial<Record<TextField, string>> }> {
-    const fields = unscreenedFields(state).filter((f) => state.text[f].length <= maxChars);
+    const fields = unscreenedFields(state).filter((f) => state.text[f].length <= fieldMax(f, maxChars));
     const screened = Object.fromEntries(fields.map((f) => [f, state.text[f]])) as Partial<Record<TextField, string>>;
     if (fields.length === 0) return { clear: true, screened };
 
@@ -186,7 +218,65 @@ export function PrepareFlow({ maxChars, urgentContent }: PrepareFlowProps) {
     const { clear, screened } = await screenPending();
     if (!clear) return;
     dispatch({ type: "advance", screened });
-    // TODO(T-11/T-13): POST the answers to /api/summary (which re-screens the combined input) and show the result.
+    await startFollowUps(state.urgentAcknowledged !== null);
+  }
+
+  /** Step 7 (FR-22): ask for follow-ups. None, or any failure, goes straight on to the summary. */
+  async function startFollowUps(acknowledged: boolean) {
+    setScreening(true);
+    const out = await fetchFollowUps(toPrepareAnswers(state), acknowledged);
+    setScreening(false);
+    if (out.kind === "urgent") {
+      setGate({ result: out.gate, level: urgentLevel(out.gate), screened: {}, resume: { to: "followups" } });
+    } else if (out.kind === "followups" && out.questions.length > 0) {
+      setStage({ name: "followups", questions: out.questions, busy: false });
+    } else {
+      await requestSummary([], acknowledged);
+    }
+  }
+
+  /** Every follow-up answer passes the gate before the journey continues (AC-22.5). */
+  async function submitFollowUps(followUps: AnsweredFollowUp[]) {
+    if (stage.name !== "followups" || stage.busy) return;
+    setStage({ ...stage, busy: true });
+    const ageBand = effectiveAgeBand(state);
+    const answers = followUps.map((f) => f.answer).filter((a): a is string => a !== null);
+    const worst = mostCautious(await Promise.all(answers.map((a) => screenText(a, "followup_answer", ageBand))));
+    if (worst) {
+      setStage({ ...stage, busy: false });
+      setGate({ result: worst, level: urgentLevel(worst), screened: {}, resume: { to: "summary", followUps } });
+      return;
+    }
+    await requestSummary(followUps, state.urgentAcknowledged !== null);
+  }
+
+  /** Steps 8-9: the summary call (the server re-screens the combined input first). */
+  async function requestSummary(followUps: AnsweredFollowUp[], acknowledged: boolean) {
+    setStage({ name: "loading" });
+    const out = await fetchSummary(toPrepareAnswers(state, followUps), acknowledged);
+    if (out.kind === "urgent") {
+      setGate({ result: out.gate, level: urgentLevel(out.gate), screened: {}, resume: { to: "summary", followUps } });
+    } else if (out.kind === "error") {
+      setStage({ name: "error", error: out.error, followUps });
+    } else {
+      setStage({ name: "result", result: out, followUps });
+    }
+  }
+
+  function backToReview() {
+    setErrors({});
+    setStage({ name: "steps" });
+  }
+
+  function onUrgentAcknowledged(pending: PendingGate) {
+    setGate(null);
+    if (!pending.resume) {
+      dispatch({ type: "advanceAfterUrgent", screened: pending.screened, level: pending.level });
+      return;
+    }
+    dispatch({ type: "acknowledgeUrgent", level: pending.level });
+    if (pending.resume.to === "followups") void startFollowUps(true);
+    else void requestSummary(pending.resume.followUps, true);
   }
 
   function onBack() {
@@ -207,11 +297,44 @@ export function PrepareFlow({ maxChars, urgentContent }: PrepareFlowProps) {
           dispatch({ type: "reset" });
           setErrors({});
           setGate(null);
+          setStage({ name: "steps" });
         }}
-        onAcknowledge={() => {
-          dispatch({ type: "advanceAfterUrgent", screened: gate.screened, level: gate.level });
-          setGate(null);
-        }}
+        onAcknowledge={() => onUrgentAcknowledged(gate)}
+      />
+    );
+  }
+
+  if (stage.name === "followups") {
+    return (
+      <FollowUpsStep
+        questions={stage.questions}
+        maxChars={maxChars}
+        busy={stage.busy}
+        onContinue={(answers) => void submitFollowUps(answers)}
+        onBack={backToReview}
+      />
+    );
+  }
+  if (stage.name === "loading") return <SummaryStatus kind="loading" />;
+  if (stage.name === "error") {
+    const { followUps } = stage;
+    return (
+      <SummaryStatus
+        kind="error"
+        error={stage.error}
+        onRetry={() => void requestSummary(followUps, state.urgentAcknowledged !== null)}
+        onBackToAnswers={backToReview}
+      />
+    );
+  }
+  if (stage.name === "result") {
+    return (
+      <ResultView
+        result={stage.result}
+        ownWords={ownWords(state, stage.followUps)}
+        urgentContent={urgentContent}
+        languages={languages}
+        onNotQuite={backToReview}
       />
     );
   }

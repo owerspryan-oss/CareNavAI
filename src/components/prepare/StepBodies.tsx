@@ -4,6 +4,7 @@ import { AGE_BANDS, RELATIONSHIPS } from "@/lib/ai/schemas";
 import {
   PATTERN_OPTIONS,
   STARTED_OPTIONS,
+  fieldMax,
   type PrepareState,
   type StepErrors,
   type StructuredAnswers,
@@ -84,7 +85,7 @@ export function WhoStep(p: StepBodyProps) {
         />
       )}
       {(s.relationship === "carer" || s.relationship === "other") && (
-        <Field {...p} field="whoLabel" label={c.who.labelLabel} hint={c.who.labelHint} rows={2} />
+        <Field {...p} maxChars={fieldMax("whoLabel", p.maxChars)} field="whoLabel" label={c.who.labelLabel} hint={c.who.labelHint} rows={2} />
       )}
     </div>
   );
