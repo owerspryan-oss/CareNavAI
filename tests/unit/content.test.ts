@@ -30,7 +30,8 @@ const en = urgentFiles.find(([lang]) => lang === "en")![1];
 /** Every digit run (allowing single spaces inside, e.g. "116 123") in all user-visible text of a message. */
 function phoneNumbersIn(file: UrgentMessagesFile, key: (typeof urgentMessageKeySchema.options)[number]) {
   const m = file.messages[key];
-  const text = [m.title, ...m.body, m.banner, ...m.actions.map((a) => a.label)].join("\n");
+  const check = m.continueCheck ? [m.continueCheck.link, m.continueCheck.title, ...m.continueCheck.body, m.continueCheck.confirm, m.continueCheck.button] : [];
+  const text = [m.title, ...m.body, m.banner, ...m.actions.map((a) => a.label), ...check].join("\n");
   return (text.match(/\d+(?: \d+)*/g) ?? []).sort();
 }
 
@@ -65,6 +66,18 @@ describe("static content files (T-05)", () => {
       const actions = (f: UrgentMessagesFile) => f.messages[key].actions.map((a) => [a.id, a.href]);
       expect(actions(file), key).toEqual(actions(en));
     }
+  });
+
+  it.each(urgentFiles)("%s: crisis carries the 'continue' check with Samaritans; other levels don't", (_lang, file) => {
+    expect(file.messages.crisis.continueCheck?.body.join(" ")).toContain("116 123");
+    expect(file.messages.emergency.continueCheck).toBeUndefined();
+    expect(file.messages.urgent.continueCheck).toBeUndefined();
+  });
+
+  it("rejects a file whose crisis message has no 'continue' check", () => {
+    const raw = readJson("urgent-messages", "en.json") as { messages: { crisis: Record<string, unknown> } };
+    const { continueCheck: _dropped, ...crisis } = raw.messages.crisis;
+    expect(urgentMessagesFileSchema.safeParse({ ...raw, messages: { ...raw.messages, crisis } }).success).toBe(false);
   });
 
   it("English messages carry the PRD 9.2 numbers", () => {

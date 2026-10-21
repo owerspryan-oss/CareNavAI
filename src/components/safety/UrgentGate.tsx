@@ -1,9 +1,11 @@
 "use client";
 
-import { useEffect, useId, useRef, type ReactNode } from "react";
+import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import type { GateResult } from "@/lib/ai/schemas";
+import type { UrgentMessage } from "@/lib/content/schemas";
 import { canContinueAfterUrgent, urgentMessageFor, type UrgentContent } from "@/lib/safety/urgent-content";
 import { Button } from "@/components/ui/Button";
+import { Checkbox } from "@/components/ui/Checkbox";
 import { AlertTriangleIcon } from "@/components/ui/icons";
 import { DraftLabel } from "./DraftLabel";
 import { UrgentActions } from "./UrgentActions";
@@ -77,16 +79,59 @@ export function UrgentGate({ result, content, onStartAgain, onAcknowledge, sourc
         {sourceText}
 
         <div className={styles.secondary}>
-          {canContinue && (
-            <Button variant="tertiary" fullWidth trailingChevron onClick={onAcknowledge} data-action="acknowledge">
-              {content.labels.acknowledge}
-            </Button>
-          )}
+          {canContinue &&
+            (message.continueCheck ? (
+              <ContinueCheck check={message.continueCheck} onAcknowledge={onAcknowledge} />
+            ) : (
+              <Button variant="tertiary" fullWidth trailingChevron onClick={onAcknowledge} data-action="acknowledge">
+                {content.labels.acknowledge}
+              </Button>
+            ))}
           <Button variant="link" onClick={onStartAgain} data-action="start-again">
             {content.labels.startAgain}
           </Button>
         </div>
       </main>
     </div>
+  );
+}
+
+/**
+ * Crisis only: continuing takes two deliberate steps instead of one tap (product owner, 2026-10-21).
+ * A quiet link opens a short static check; its button stays off until the person ticks that they are
+ * not in danger. Static content only, like the rest of this screen.
+ */
+function ContinueCheck({ check, onAcknowledge }: { check: NonNullable<UrgentMessage["continueCheck"]>; onAcknowledge: () => void }) {
+  const [open, setOpen] = useState(false);
+  const [confirmed, setConfirmed] = useState(false);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const titleId = useId();
+  const checkboxId = useId();
+
+  useEffect(() => {
+    if (open) titleRef.current?.focus();
+  }, [open]);
+
+  if (!open) {
+    return (
+      <Button variant="link" onClick={() => setOpen(true)} data-action="open-continue-check">
+        {check.link}
+      </Button>
+    );
+  }
+
+  return (
+    <section className={styles.continueCheck} aria-labelledby={titleId} data-continue-check>
+      <h2 id={titleId} ref={titleRef} tabIndex={-1} className={styles.continueTitle}>
+        {check.title}
+      </h2>
+      {check.body.map((line, i) => (
+        <p key={i}>{line}</p>
+      ))}
+      <Checkbox id={checkboxId} label={check.confirm} checked={confirmed} onChange={setConfirmed} />
+      <Button variant="tertiary" fullWidth trailingChevron disabled={!confirmed} onClick={onAcknowledge} data-action="acknowledge">
+        {check.button}
+      </Button>
+    </section>
   );
 }

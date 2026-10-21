@@ -93,3 +93,10 @@ Suggested format per entry:
 **Affects:** <files/FRs/ACs touched>
 **Alternatives considered:** ...
 ```
+
+## Product-owner answers: age band, crisis continue, logo, copy — 2026-10-21
+
+**Decision:** (1) Copy in prompts, `content/` and `copy.ts` files is approved as it stands; native-speaker review of Tier A content is deferred. (2) Step 1 asks "How old are they?" (same DRAFT bands, required) for "Someone else", as well as for "My child", and that band feeds the gate's child thresholds. "Someone I look after" is unchanged. (3) Crisis keeps `continue_after_ack`, "but make it hard to": on the crisis screen the one-tap "I understand, continue" is replaced by a quiet link that opens a static check ("Before you carry on", Samaritans 116 123 repeated, a required "I am not in danger right now" tick, then "Carry on"). Emergency and urgent stay one tap. The check text is static content in every urgent-messages file, and the schema rejects a file whose crisis message lacks it. (4) The supplied logo PNG is already transparent; the real icon replaces the hand-drawn SVG stand-in.
+**Why:** product owner's answers, 2026-10-21.
+**Affects:** FR-09, FR-05, `src/lib/prepare/state.ts`, `src/components/prepare/*`, `src/components/safety/UrgentGate.*`, `src/lib/content/schemas.ts`, `content/urgent-messages/*`, `src/components/ui/LogoMark.tsx`.
+**Alternatives considered:** a timed delay before the crisis button enables (friction without meaning, and hard for screen-reader users); a hold-to-confirm gesture (motor-accessibility cost).

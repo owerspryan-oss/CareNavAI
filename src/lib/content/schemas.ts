@@ -24,18 +24,36 @@ export const urgentActionSchema = z.object({
   href: hrefSchema,
 });
 
+/**
+ * The extra step before continuing past a crisis message (product owner, 2026-10-21: "yes, but make it
+ * hard to"): a quiet link opens it, and the button stays off until the person ticks `confirm`.
+ */
+const continueCheckSchema = z.object({
+  link: z.string().min(1),
+  title: z.string().min(1),
+  body: z.array(z.string().min(1)).min(1),
+  confirm: z.string().min(1),
+  button: z.string().min(1),
+});
+
 export const urgentMessageSchema = z.object({
   title: z.string().min(1),
   body: z.array(z.string().min(1)).min(1),
   /** Persistent notice on the result and PDF after acknowledgement (v0.3 A2). */
   banner: z.string().min(1),
   actions: z.array(urgentActionSchema).min(1),
+  continueCheck: continueCheckSchema.optional(),
 });
 export type UrgentMessage = z.infer<typeof urgentMessageSchema>;
 
-const messagesShape = Object.fromEntries(
-  urgentMessageKeySchema.options.map((k) => [k, urgentMessageSchema]),
-) as Record<z.infer<typeof urgentMessageKeySchema>, typeof urgentMessageSchema>;
+const messagesShape = {
+  ...(Object.fromEntries(urgentMessageKeySchema.options.map((k) => [k, urgentMessageSchema])) as Record<
+    z.infer<typeof urgentMessageKeySchema>,
+    typeof urgentMessageSchema
+  >),
+  /** Every language must carry the crisis check, so no language can continue past crisis in one tap. */
+  crisis: urgentMessageSchema.required({ continueCheck: true }),
+};
 
 export const urgentMessagesFileSchema = z
   .object({

@@ -121,6 +121,23 @@
   border-top: 1px solid var(--color-border);
 }
 
+/* Crisis only: the check before continuing, kept plain so it never competes with the help actions above. */
+.continueCheck {
+  display: grid;
+  gap: var(--space-3);
+  line-height: var(--text-body-leading);
+  overflow-wrap: anywhere;
+}
+
+.continueTitle {
+  font-size: 1.0625rem;
+  font-weight: 700;
+}
+
+.continueTitle:focus {
+  outline: none;
+}
+
 @keyframes urgent-materialize {
   from {
     opacity: 0;
