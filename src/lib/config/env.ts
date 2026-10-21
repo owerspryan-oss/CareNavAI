@@ -23,6 +23,10 @@ export const envSchema = z.object({
   CHILD_AGE_BANDS_STRICT: bool.default(true),
   SHOW_DRAFT_LABEL: bool.default(true),
   DATABASE_PATH: z.string().min(1).default("data/carenav.sqlite"),
+  /** Chromium for the PDF renderer (ADR-008). Unset = Playwright's own browser lookup (PLAYWRIGHT_BROWSERS_PATH). */
+  CHROMIUM_PATH: z.string().min(1).optional(),
+  /** Largest /api/pdf request body: the result the client already holds (FR-10). */
+  MAX_PDF_REQUEST_KB: z.coerce.number().int().positive().default(256),
   LOG_LEVEL: z.enum(["debug", "info", "warn", "error", "silent"]).default("info"),
 });
 
