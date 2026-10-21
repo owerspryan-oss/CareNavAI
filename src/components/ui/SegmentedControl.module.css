@@ -30,8 +30,12 @@
   position: relative; /* above the thumb */
   flex: 1 1 auto;
   min-height: 2.75rem;
-  padding: var(--space-2) var(--space-4);
+  padding: var(--space-2) var(--space-3);
   border: 0;
+  white-space: nowrap;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
   border-radius: var(--radius-pill);
   background: transparent;
   color: var(--color-ink);

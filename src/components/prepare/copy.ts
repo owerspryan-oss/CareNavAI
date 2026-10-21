@@ -130,7 +130,7 @@ export const prepareCopy = {
     skip: "Skip",
     skipped: "Skipped",
     undoSkip: "Answer this",
-    continue: "Make my summary",
+    continue: "Continue",
   },
 
   /** Loading and error states for the summary call. Static copy only, never server text. */

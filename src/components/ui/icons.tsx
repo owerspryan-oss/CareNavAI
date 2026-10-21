@@ -128,12 +128,6 @@ export const BagIcon = (p: IconProps) => (
   </Icon>
 );
 
-export const DownloadIcon = (p: IconProps) => (
-  <Icon {...p}>
-    <path d="M12 4v11M7 10l5 5 5-5M5 20h14" />
-  </Icon>
-);
-
 export const DocumentIcon = (p: IconProps) => (
   <Icon {...p}>
     <path d="M7 3h7l5 5v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" />

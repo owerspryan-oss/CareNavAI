@@ -25,7 +25,6 @@ import {
   ChevronDownIcon,
   ClockIcon,
   DocumentIcon,
-  DownloadIcon,
   HeartIcon,
   PersonIcon,
   PillIcon,
@@ -361,10 +360,10 @@ export function ResultView({ result, ownWords, urgentContent, languages, onNotQu
 
       <footer className={styles.footer}>
         {/* Placeholders: PDF (FR-10) and feedback (FR-16) are separate tasks. */}
-        <Button variant="tertiary" disabled title={c.actions.comingSoon} leadingIcon={<DownloadIcon />}>
+        <Button variant="tertiary" disabled title={c.actions.comingSoon}>
           {c.actions.savePdf}
         </Button>
-        <Button variant="tertiary" disabled title={c.actions.comingSoon} leadingIcon={<ChatIcon />}>
+        <Button variant="tertiary" disabled title={c.actions.comingSoon}>
           {c.actions.feedback}
         </Button>
       </footer>

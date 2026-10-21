@@ -13,8 +13,8 @@ export function ownWords(state: PrepareState, followUps: readonly AnsweredFollow
 
   let who: string[] = [];
   if (s.relationship === "parent") who = [c.review.childAge(s.ageBand ? c.who.ageBands[s.ageBand] : "")];
-  else if (s.relationship === "self") who = [c.who.options.self];
-  else if (s.relationship) who = typed(c.who.options[s.relationship], t.whoLabel);
+  // "Me" needs no "what you told us" disclosure: the summary row already says it.
+  else if (s.relationship && s.relationship !== "self") who = typed(c.who.options[s.relationship], t.whoLabel);
 
   return {
     sections: {
