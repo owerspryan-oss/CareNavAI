@@ -17,7 +17,8 @@
 
 .card {
   grid-area: 1 / 1;
-  /* Cards stretch to the tallest card (they share one grid cell), capped so long ones scroll inside. */
+  /* The top card fits its content (capped, so long ones scroll inside); see .card:not([data-current]). */
+  align-self: start;
   max-height: min(62svh, 34rem);
   min-height: 0;
   display: flex;
@@ -34,6 +35,9 @@
 
 .card:not([data-current]) {
   pointer-events: none;
+  /* Cards underneath match the top card's height, so they only peek out by the stack offset. */
+  height: var(--deck-card-height, auto);
+  overflow: hidden;
 }
 
 .viewport[data-dragging] .body {

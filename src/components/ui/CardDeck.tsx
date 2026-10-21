@@ -103,6 +103,19 @@ export function CardDeck({ cards, label, labels }: CardDeckProps) {
     if (frame.current !== null) cancelAnimationFrame(frame.current);
   }, []);
 
+  // The top card fits its own content; the cards underneath take its height, so the stack stays tidy
+  // and the controls sit right below it (no empty space padded out to the tallest card).
+  const observer = useRef<ResizeObserver | null>(null);
+  const measureCurrent = useCallback((el: HTMLElement | null) => {
+    observer.current?.disconnect();
+    if (!el) return;
+    const apply = () => viewport.current?.style.setProperty("--deck-card-height", `${el.offsetHeight}px`);
+    apply();
+    observer.current = new ResizeObserver(apply);
+    observer.current.observe(el);
+  }, []);
+  useEffect(() => () => observer.current?.disconnect(), []);
+
   function width(): number {
     return viewport.current?.clientWidth || 1;
   }
@@ -205,6 +218,7 @@ export function CardDeck({ cards, label, labels }: CardDeckProps) {
           return (
             <article
               key={card.id}
+              ref={current ? measureCurrent : undefined}
               className={styles.card}
               style={style}
               data-current={current || undefined}
