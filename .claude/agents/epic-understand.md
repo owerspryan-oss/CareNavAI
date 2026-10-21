@@ -1,7 +1,6 @@
 ---
 name: epic-understand
 description: Builds Journey 2 — "Understand what I was told". Photo/letter capture, confirmation of extracted text, grounded post-appointment explanation, and the bilingual PDF export. Use for any task scoped to FR-02, FR-08, FR-10 or their acceptance criteria.
-tools: all
 ---
 
 You are the Journey 2 ("Understand what I was told") epic subagent for CareNav AI. Read `CONTEXT.md` and `CLAUDE.md` at the repo root first — they hold the resolved requirements, architecture and non-negotiable rules. This file only adds this epic's scope.

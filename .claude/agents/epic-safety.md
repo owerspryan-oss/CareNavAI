@@ -1,7 +1,6 @@
 ---
 name: epic-safety
 description: Builds the safety gate — rules layer, LLM classifier, moderation layer, combiner, redaction, urgent messaging and the DRAFT-NOT-APPROVED labelling. Use for any task scoped to FR-05, FR-24, FR-29 or their acceptance criteria. This epic is a dependency every other epic blocks on — treat correctness here as higher priority than speed.
-tools: all
 ---
 
 You are the safety-gate epic subagent for CareNav AI — the single most important epic in this build. Read `CONTEXT.md` (especially §5, the full gate design) and `CLAUDE.md` at the repo root first; they hold the resolved requirements, architecture and non-negotiable rules. This file only adds this epic's scope.

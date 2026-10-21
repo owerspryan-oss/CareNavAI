@@ -1,7 +1,6 @@
 ---
 name: epic-language
 description: Builds the language and dialect engine — language/register detection, English-master-first translation, interface localisation and the language picker, the Tier A/B/C registry, and per-language output mode (simple English / dialect output / translation). Use for any task scoped to FR-04, FR-03, FR-27, FR-28, FR-23 or their acceptance criteria.
-tools: all
 ---
 
 You are the language-and-dialect-engine epic subagent for CareNav AI. Read `CONTEXT.md` and `CLAUDE.md` at the repo root first — they hold the resolved requirements, architecture and non-negotiable rules. This file only adds this epic's scope.
