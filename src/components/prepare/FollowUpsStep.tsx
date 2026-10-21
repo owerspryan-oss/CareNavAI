@@ -1,29 +1,40 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { FollowUpQuestion } from "@/lib/client/prepare";
-import type { AnsweredFollowUp } from "@/lib/prepare/answers";
 import { Button } from "@/components/ui/Button";
 import { TextArea } from "@/components/ui/TextArea";
 import { TopBar } from "@/components/ui/TopBar";
 import { prepareCopy as c } from "./copy";
 import styles from "./PrepareFlow.module.css";
 
-export interface FollowUpsStepProps {
+/** A question and its answer, for either journey's intent list. Skipped or empty answers are `null`. */
+export type FollowUpAnswer<I extends string> = { intent: I; question: string; answer: string | null };
+
+export interface FollowUpsStepProps<I extends string> {
   /** Up to 3 server-validated, clarity-only questions (FR-22, AC-22.3, AC-22.4). Rendered as text only. */
-  questions: FollowUpQuestion[];
+  questions: { intent: I; question: string }[];
   /** Earlier answers when coming back from review to change them; empty on the first pass. */
-  initial?: AnsweredFollowUp[];
+  initial?: FollowUpAnswer<I>[];
+  /** Journey-specific lead line under the title. Defaults to Journey 1's. */
+  lead?: string;
   maxChars: number;
   /** True while the answers are being screened or the summary is starting. Fields go read-only. */
   busy: boolean;
   /** Called with every question; skipped or empty answers are `null` (AC-22.2). The caller screens them. */
-  onContinue: (answers: AnsweredFollowUp[]) => void;
+  onContinue: (answers: FollowUpAnswer<I>[]) => void;
   onBack: () => void;
 }
 
-/** Journey 1 step 7, before review: dynamic follow-up questions. Each can be answered or skipped. */
-export function FollowUpsStep({ questions, initial = [], maxChars, busy, onContinue, onBack }: FollowUpsStepProps) {
+/** Dynamic follow-up questions (Journey 1 step 7 before review; Journey 2 after confirming). Each can be answered or skipped. */
+export function FollowUpsStep<I extends string>({
+  questions,
+  initial = [],
+  lead = c.followUps.lead,
+  maxChars,
+  busy,
+  onContinue,
+  onBack,
+}: FollowUpsStepProps<I>) {
   const [values, setValues] = useState<string[]>(() => questions.map((_, i) => initial[i]?.answer ?? ""));
   const [skipped, setSkipped] = useState<boolean[]>(() => questions.map((_, i) => initial.length > 0 && initial[i]?.answer === null));
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -65,7 +76,7 @@ export function FollowUpsStep({ questions, initial = [], maxChars, busy, onConti
             <h1 ref={headingRef} tabIndex={-1} className={styles.title}>
               {c.followUps.title}
             </h1>
-            <p className={styles.lead}>{c.followUps.lead}</p>
+            <p className={styles.lead}>{lead}</p>
           </div>
 
           <ol className={styles.followUpList}>

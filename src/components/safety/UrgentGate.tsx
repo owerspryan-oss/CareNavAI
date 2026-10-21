@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useRef } from "react";
+import { useEffect, useId, useRef, type ReactNode } from "react";
 import type { GateResult } from "@/lib/ai/schemas";
 import { canContinueAfterUrgent, urgentMessageFor, type UrgentContent } from "@/lib/safety/urgent-content";
 import { Button } from "@/components/ui/Button";
@@ -18,6 +18,11 @@ export interface UrgentGateProps {
   onStartAgain: () => void;
   /** Continue after "I understand". Offered only when content.mode is continue_after_ack (v0.3 A2). */
   onAcknowledge: () => void;
+  /**
+   * AC-05.9: the person's own source text (e.g. a "From your letter" card), shown after the static
+   * message and its actions, outside the message block. Never AI-generated text (CLAUDE.md rule 3).
+   */
+  sourceText?: ReactNode;
 }
 
 /**
@@ -25,7 +30,7 @@ export interface UrgentGateProps {
  * gate level: no user text and no AI-generated text, ever (CLAUDE.md rule 3). `uncertain` (and anything
  * unexpected) shows the urgent message. The DRAFT label is on unless config switches it off.
  */
-export function UrgentGate({ result, content, onStartAgain, onAcknowledge }: UrgentGateProps) {
+export function UrgentGate({ result, content, onStartAgain, onAcknowledge, sourceText }: UrgentGateProps) {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const titleId = useId();
   const bodyId = useId();
@@ -68,6 +73,8 @@ export function UrgentGate({ result, content, onStartAgain, onAcknowledge }: Urg
         </div>
 
         <UrgentActions actions={message.actions} className={styles.actions} />
+
+        {sourceText}
 
         <div className={styles.secondary}>
           {canContinue && (
