@@ -15,7 +15,10 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:urgency": "vitest run --config vitest.urgency.config.ts",
-    "test:a11y": "node scripts/a11y.mjs"
+    "test:a11y": "node scripts/a11y.mjs",
+    "ui:translate": "node scripts/translate-ui.mjs",
+    "ui:review:export": "node scripts/ui-review-export.mjs",
+    "ui:review:import": "node scripts/ui-review-import.mjs"
   },
   "dependencies": {
     "better-sqlite3": "^13.0.3",

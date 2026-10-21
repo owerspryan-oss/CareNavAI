@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import { languagesConfig } from "@/lib/config";
@@ -10,7 +11,31 @@ import { mergeOverMaster, type UiDir, type UiLocale, type UiMessages } from "./m
 export const UI_COOKIE = "carenav_lang";
 const DIR = path.join(process.cwd(), "content", "ui");
 
-type LocaleFile = { language: string; derivedFrom: string | null; reviewed: boolean; messages: unknown };
+type LocaleFile = {
+  language: string;
+  derivedFrom: string | null;
+  reviewed: boolean;
+  /** Per string: a hash of the English it was translated from (scripts/translate-ui.mjs). */
+  sourceHashes?: Record<string, string>;
+  messages: unknown;
+};
+
+/** Must match sourceHash() in scripts/lib/ui-locales.mjs. */
+export const sourceHash = (text: string) => createHash("sha256").update(text).digest("hex").slice(0, 10);
+
+/**
+ * Drop every translated string whose English has changed since it was translated (or that has no
+ * recorded source), so it shows in English until it is translated and reviewed again.
+ */
+function withoutStale(master: unknown, translated: unknown, hashes: Record<string, string>, prefix = ""): unknown {
+  if (typeof master === "string") return typeof translated === "string" && hashes[prefix] === sourceHash(master) ? translated : undefined;
+  if (!translated || typeof translated !== "object") return undefined;
+  const m = master as Record<string, unknown>;
+  const t = translated as Record<string, unknown>;
+  const out: Record<string, unknown> | unknown[] = Array.isArray(m) ? [] : {};
+  for (const k of Object.keys(m)) (out as Record<string, unknown>)[k] = withoutStale(m[k], t[k], hashes, prefix ? `${prefix}.${k}` : k);
+  return out;
+}
 
 const read = (code: string) => JSON.parse(fs.readFileSync(path.join(DIR, `${code}.json`), "utf8")) as LocaleFile;
 
@@ -37,7 +62,8 @@ export function getUiLocale(code: string): UiLocale {
     } catch {
       file = null; // unreadable file: whole interface in English rather than a broken page
     }
-    const { merged, fallbacks } = file ? mergeOverMaster(master, file.messages) : { merged: master, fallbacks: [] };
+    const current = file ? withoutStale(master, file.messages, file.sourceHashes ?? {}) : null;
+    const { merged, fallbacks } = file ? mergeOverMaster(master, current) : { merged: master, fallbacks: [] };
     const dir: UiDir = languagesConfig.languages.find((l) => l.code === language)?.dir === "rtl" ? "rtl" : "ltr";
     // English fallbacks on a right-to-left page are isolated as left-to-right, so their full stops
     // and brackets stay at the right end ("You've got this.", not ".You've got this").

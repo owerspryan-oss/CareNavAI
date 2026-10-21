@@ -4,6 +4,8 @@ import { describe, expect, it } from "vitest";
 import { languagesConfig } from "@/lib/config";
 import { getUiLocale, matchUiLanguage, resolveUiLanguage, uiLanguages } from "@/lib/i18n/locale";
 import { format, formatList, formatNumber, mergeOverMaster, placeholders } from "@/lib/i18n/messages";
+// @ts-expect-error plain .mjs script helpers, no type declarations
+import { problem } from "../../scripts/lib/ui-locales.mjs";
 
 // FR-27 / T-31, T-32: interface locale files, English master, picker resolution.
 
@@ -99,6 +101,9 @@ describe("locale files", () => {
       expect(master.has(path), `${f}: unknown key ${path}`).toBe(true);
       expect(typeof v, `${f}: ${path}`).toBe("string");
       expect(placeholders(v as string), `${f}: ${path}`).toEqual(placeholders(master.get(path) as string));
+      // Same checks the translate and import scripts apply: numbers and product names unchanged.
+      expect(problem(master.get(path), v), `${f}: ${path}`).toBeNull();
+      expect(typeof file.sourceHashes?.[path], `${f}: no source hash for ${path}`).toBe("string");
     }
   });
 });
