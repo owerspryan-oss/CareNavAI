@@ -43,6 +43,8 @@ export const urgentMessageSchema = z.object({
   banner: z.string().min(1),
   actions: z.array(urgentActionSchema).min(1),
   continueCheck: continueCheckSchema.optional(),
+  /** Emergency only: the Samaritans line shown when self-harm was detected alongside an emergency. */
+  selfHarmLine: z.string().min(1).optional(),
 });
 export type UrgentMessage = z.infer<typeof urgentMessageSchema>;
 
@@ -53,6 +55,7 @@ const messagesShape = {
   >),
   /** Every language must carry the crisis check, so no language can continue past crisis in one tap. */
   crisis: urgentMessageSchema.required({ continueCheck: true }),
+  emergency: urgentMessageSchema.required({ selfHarmLine: true }),
 };
 
 export const urgentMessagesFileSchema = z

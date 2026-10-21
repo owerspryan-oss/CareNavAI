@@ -44,15 +44,15 @@ Running log of what's happened in this repo, for quick orientation at the start 
 - T-35 is effectively done inside the gate (PRD 9.8 second pass).
 
 **Waiting on the product owner:**
-- Copy approved 2026-10-21. New since then, needs a look: crisis continue check text (`content/urgent-messages/*`), breathing rules, `gate-classifier.v2.md`.
+- Copy approved 2026-10-21, including the crisis check and breathing wording. New since: the self-harm line on emergency and the 111 interpreter line on crisis.
 - Native-speaker review of the Tier A content. Least confidence: Twi, Krio, Guyanese.
 - ~~A transparent logo export.~~ Not needed: the supplied PNG is already transparent; the real icon is now used (public/brand/logo-mark.png).
-- Open clinical questions: emergency vs crisis (explained the current split; proposed a Samaritans line on the emergency screen when self-harm is detected, awaiting yes/no); child thresholds and unknown-age default (suggestion sent, awaiting approval); a language-line note for Samaritans. Answered 2026-10-21: crisis continue made harder; breathing split (see DECISIONS.md).
+- Open clinical questions: child thresholds and unknown-age default (suggestion sent: keep as built, plus an optional age for "Someone I look after"; awaiting answer). Everything else answered 2026-10-21 (see DECISIONS.md).
 
 **Gotchas:**
 - There is no `OPENAI_API_KEY` in the cloud container. Model calls are tested with fakes, and the gate fails closed to `uncertain`. Real-model checks need a local `.env.local` with `OPENAI_API_KEY`.
 - Playwright: use `require("/opt/node22/lib/node_modules/playwright")` with `executablePath: "/opt/pw-browsers/chromium-1194/chrome-linux/chrome"`. Its screenshot caret-hiding causes a harmless "1 Issue" hydration notice in the Next dev overlay.
-- When stopping dev servers by matching command lines in `/proc`, skip your own shell's PID (`$$`), or the kill loop takes down the shell.
+- When stopping dev servers by matching command lines in `/proc`, skip your own shell's PID (`$$`), or the kill loop takes down the shell. Same for `pkill -f`: run it as its own command, never chained.
 - Subagents run in `isolation: "worktree"` may start from `master`. Tell them to `git reset --hard build/layer-1` first.
 
 ## 2026-10-21 — Workspace set up

@@ -99,4 +99,12 @@ describe("mostCautious", () => {
     expect(mostCautious([r("urgent"), r("crisis")])?.level).toBe("crisis");
     expect(mostCautious([r("clear"), r("uncertain")])?.level).toBe("uncertain");
   });
+
+  it("keeps the categories of every non-clear result", () => {
+    const chest = { ...r("emergency"), categories: ["chest_pain" as const] };
+    const selfHarm = { ...r("crisis"), categories: ["self_harm_or_suicide" as const] };
+    const worst = mostCautious([chest, { ...clear, categories: [] }, selfHarm]);
+    expect(worst?.level).toBe("emergency");
+    expect(worst?.categories.sort()).toEqual(["chest_pain", "self_harm_or_suicide"]);
+  });
 });

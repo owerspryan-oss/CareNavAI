@@ -31,7 +31,7 @@ const en = urgentFiles.find(([lang]) => lang === "en")![1];
 function phoneNumbersIn(file: UrgentMessagesFile, key: (typeof urgentMessageKeySchema.options)[number]) {
   const m = file.messages[key];
   const check = m.continueCheck ? [m.continueCheck.link, m.continueCheck.title, ...m.continueCheck.body, m.continueCheck.confirm, m.continueCheck.button] : [];
-  const text = [m.title, ...m.body, m.banner, ...m.actions.map((a) => a.label), ...check].join("\n");
+  const text = [m.title, ...m.body, m.banner, ...m.actions.map((a) => a.label), ...check, m.selfHarmLine ?? ""].join("\n");
   return (text.match(/\d+(?: \d+)*/g) ?? []).sort();
 }
 
@@ -72,6 +72,18 @@ describe("static content files (T-05)", () => {
     expect(file.messages.crisis.continueCheck?.body.join(" ")).toContain("116 123");
     expect(file.messages.emergency.continueCheck).toBeUndefined();
     expect(file.messages.urgent.continueCheck).toBeUndefined();
+  });
+
+  it.each(urgentFiles)("%s: emergency carries the self-harm Samaritans line; crisis the 111 interpreter line", (_lang, file) => {
+    expect(file.messages.emergency.selfHarmLine).toContain("116 123");
+    expect(file.messages.crisis.body.at(-1)).toContain("111");
+  });
+
+  it("rejects a file whose emergency message has no self-harm line", () => {
+    const raw = readJson("urgent-messages", "en.json") as { messages: { emergency: Record<string, unknown> } };
+    const emergency = { ...raw.messages.emergency };
+    delete emergency.selfHarmLine;
+    expect(urgentMessagesFileSchema.safeParse({ ...raw, messages: { ...raw.messages, emergency } }).success).toBe(false);
   });
 
   it("rejects a file whose crisis message has no 'continue' check", () => {

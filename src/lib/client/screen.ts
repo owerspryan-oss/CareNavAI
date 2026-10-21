@@ -58,7 +58,8 @@ export async function screenText(
 }
 
 /**
- * Pick the result to act on when one step screened several fields.
+ * Pick the result to act on when one step screened several fields, carrying the categories of every
+ * non-clear result (so e.g. self-harm in one field still shows on an emergency from another).
  * Returns null only when every result is `clear` (and there was at least one).
  */
 export function mostCautious(results: readonly GateResult[]): GateResult | null {
@@ -67,5 +68,7 @@ export function mostCautious(results: readonly GateResult[]): GateResult | null 
     if (r.level === "clear") continue;
     if (!worst || LEVEL_RANK[r.level] > LEVEL_RANK[worst.level]) worst = r;
   }
-  return worst;
+  if (!worst) return null;
+  const categories = [...new Set(results.filter((r) => r.level !== "clear").flatMap((r) => r.categories))];
+  return { ...worst, categories };
 }

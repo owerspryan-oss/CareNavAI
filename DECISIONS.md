@@ -107,3 +107,10 @@ Suggested format per entry:
 **Why:** product-owner answer to the open clinical question.
 **Affects:** `content/urgency-rules/*`, `src/lib/ai/prompts/gate-classifier.v2.md`, `tests/urgency/rules.test.ts`.
 **Alternatives considered:** treating gasping / fighting for breath as urgent (they describe barely getting air, so kept with "can't breathe" — flagged to the product owner).
+
+## Self-harm on the emergency screen; interpreter line on crisis — 2026-10-21
+
+**Decision:** (1) When self-harm is detected alongside an emergency (e.g. "I took an overdose"), the emergency screen keeps "Call 999" first and adds a static line ("When you are safe, Samaritans are there any time, day or night. Call 116 123.") and the Samaritans call button. Continuing past it takes the same two-step check as the crisis screen. (2) The crisis message adds "If you would rather talk in your own language, call NHS 111 and ask for an interpreter." Source: 111.nhs.uk/Help/OtherWays ("Call 111 and ask for an interpreter"). Nothing claims Samaritans offers interpreters; we couldn't find that stated officially. (3) When one step screens several fields, the client now keeps the categories of every non-clear result, so self-harm typed in one box still shows on an emergency from another. (4) Product owner approved the crisis check text and the breathing wording.
+**Why:** product-owner answers, 2026-10-21. Item (1)'s two-step check is Claude's extension of "make it hard to" to the overdose case, flagged to the product owner.
+**Affects:** `content/urgent-messages/*`, `src/lib/content/schemas.ts`, `src/lib/safety/urgent-content.ts`, `src/components/safety/UrgentGate.tsx`, `src/lib/client/screen.ts`.
+**Alternatives considered:** switching to the crisis message when self-harm and an emergency coincide (would drop "call 999 now" from the top); saying Samaritans has interpreters (unverified).

@@ -5,6 +5,7 @@ import { SAFETY_LEVELS } from "@/lib/ai/schemas";
 import { getUrgentContent, getUrgentMessage } from "@/lib/content";
 import {
   canContinueAfterUrgent,
+  selfHarmExtras,
   urgentMessageFor,
   urgentMessageKeyFor,
   urgentScreenKey,
@@ -36,6 +37,16 @@ describe("urgent-content client helpers", () => {
     expect(canContinueAfterUrgent("locked")).toBe(false);
     expect(canContinueAfterUrgent("")).toBe(false);
     expect(canContinueAfterUrgent("CONTINUE_AFTER_ACK")).toBe(false);
+  });
+
+  it("adds the Samaritans line and call only to an emergency that also has self-harm", () => {
+    const content = { messages: { emergency: getUrgentMessage("emergency", "en").message, urgent: getUrgentMessage("urgent", "en").message, crisis: getUrgentMessage("crisis", "en").message } };
+    const extras = selfHarmExtras(content, { level: "emergency", categories: ["self_harm_or_suicide"] });
+    expect(extras?.line).toContain("116 123");
+    expect(extras?.action).toMatchObject({ id: "call_samaritans", href: "tel:116123" });
+    expect(selfHarmExtras(content, { level: "emergency", categories: ["chest_pain"] })).toBeNull();
+    expect(selfHarmExtras(content, { level: "crisis", categories: ["self_harm_or_suicide"] })).toBeNull();
+    expect(selfHarmExtras(content, { level: "urgent", categories: ["self_harm_or_suicide"] })).toBeNull();
   });
 
   it("the client-safe module never imports server config", () => {

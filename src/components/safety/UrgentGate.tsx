@@ -3,7 +3,7 @@
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import type { GateResult } from "@/lib/ai/schemas";
 import type { UrgentMessage } from "@/lib/content/schemas";
-import { canContinueAfterUrgent, urgentMessageFor, type UrgentContent } from "@/lib/safety/urgent-content";
+import { canContinueAfterUrgent, selfHarmExtras, urgentMessageFor, type UrgentContent } from "@/lib/safety/urgent-content";
 import { Button } from "@/components/ui/Button";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { AlertTriangleIcon } from "@/components/ui/icons";
@@ -12,7 +12,7 @@ import { UrgentActions } from "./UrgentActions";
 import styles from "./UrgentGate.module.css";
 
 export interface UrgentGateProps {
-  /** A non-clear gate result. Only `result.level` is read; it carries no user or model text. */
+  /** A non-clear gate result. Only `level` and `categories` are read; it carries no user or model text. */
   result: GateResult;
   /** Static, server-built content for the interface language (getUrgentContent in @/lib/content). */
   content: UrgentContent;
@@ -38,6 +38,10 @@ export function UrgentGate({ result, content, onStartAgain, onAcknowledge, sourc
   const bodyId = useId();
   const message = urgentMessageFor(content, result.level);
   const canContinue = canContinueAfterUrgent(content.mode);
+  const selfHarm = selfHarmExtras(content, result);
+  const actions = selfHarm?.action ? [...message.actions, selfHarm.action] : message.actions;
+  // Self-harm makes continuing as deliberate as on the crisis screen, even when the level is emergency.
+  const continueCheck = message.continueCheck ?? (selfHarm ? content.messages.crisis.continueCheck : undefined);
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
@@ -71,17 +75,18 @@ export function UrgentGate({ result, content, onStartAgain, onAcknowledge, sourc
             {message.body.map((line, i) => (
               <p key={i}>{line}</p>
             ))}
+            {selfHarm && <p data-self-harm-line>{selfHarm.line}</p>}
           </div>
         </div>
 
-        <UrgentActions actions={message.actions} className={styles.actions} />
+        <UrgentActions actions={actions} className={styles.actions} />
 
         {sourceText}
 
         <div className={styles.secondary}>
           {canContinue &&
-            (message.continueCheck ? (
-              <ContinueCheck check={message.continueCheck} onAcknowledge={onAcknowledge} />
+            (continueCheck ? (
+              <ContinueCheck check={continueCheck} onAcknowledge={onAcknowledge} />
             ) : (
               <Button variant="tertiary" fullWidth trailingChevron onClick={onAcknowledge} data-action="acknowledge">
                 {content.labels.acknowledge}
@@ -97,7 +102,8 @@ export function UrgentGate({ result, content, onStartAgain, onAcknowledge, sourc
 }
 
 /**
- * Crisis only: continuing takes two deliberate steps instead of one tap (product owner, 2026-10-21).
+ * Crisis, or emergency with self-harm: continuing takes two deliberate steps instead of one tap
+ * (product owner, 2026-10-21).
  * A quiet link opens a short static check; its button stays off until the person ticks that they are
  * not in danger. Static content only, like the rest of this screen.
  */

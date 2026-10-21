@@ -1,4 +1,4 @@
-import type { SafetyLevel, UrgentMessageKey } from "@/lib/ai/schemas";
+import type { GateResult, SafetyLevel, UrgentMessageKey } from "@/lib/ai/schemas";
 import type { UrgentMessage, UrgentMessagesFile } from "@/lib/content/schemas";
 
 // Client-safe: no `env` import, no content-file imports. The server builds an `UrgentContent`
@@ -41,6 +41,20 @@ export function urgentScreenKey(level: string): UrgentMessageKey {
 /** The static message for a level, from server-built content. */
 export function urgentMessageFor(content: Pick<UrgentContent, "messages">, level: string): UrgentMessage {
   return content.messages[urgentScreenKey(level)];
+}
+
+/**
+ * Emergency with self-harm (e.g. an overdose taken): the emergency message stays, plus the static
+ * Samaritans line and the crisis message's Samaritans call action (product owner, 2026-10-21).
+ */
+export function selfHarmExtras(
+  content: Pick<UrgentContent, "messages">,
+  result: Pick<GateResult, "level" | "categories">,
+): { line: string; action: UrgentMessage["actions"][number] | null } | null {
+  if (urgentScreenKey(result.level) !== "emergency" || !result.categories.includes("self_harm_or_suicide")) return null;
+  const line = content.messages.emergency.selfHarmLine;
+  if (!line) return null;
+  return { line, action: content.messages.crisis.actions.find((a) => a.id === "call_samaritans") ?? null };
 }
 
 /** "I understand, continue" is offered only in continue_after_ack; any other value behaves as `locked`. */
