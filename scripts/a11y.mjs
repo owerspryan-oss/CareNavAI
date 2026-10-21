@@ -4,6 +4,9 @@
 // checks the same screens at 200% text size for sideways scrolling. The API is faked from the test
 // fixtures so every screen is reachable without OPENAI_API_KEY. That is a UI test only: the real
 // gate is covered by `npm test` and `npm run test:urgency`. Exits 1 on any violation.
+//
+// A11Y_LANGS=en,ur (default "en") runs the whole set once per interface language, finding buttons by
+// their text in content/ui/<lang>.json, so right-to-left and long-text languages are checked too.
 
 import { readFileSync } from "node:fs";
 import { createRequire } from "node:module";
@@ -56,7 +59,23 @@ async function fakeApi(page) {
   });
 }
 
+/** Interface text for the language being checked, by flat key; English where the locale has none. */
+const flatten = (tree, prefix = "", out = {}) => {
+  for (const [k, v] of Object.entries(tree)) {
+    if (v && typeof v === "object") flatten(v, prefix ? `${prefix}.${k}` : k, out);
+    else out[prefix ? `${prefix}.${k}` : k] = v;
+  }
+  return out;
+};
+const readLocale = (code) => flatten(JSON.parse(readFileSync(new URL(`../content/ui/${code}.json`, import.meta.url), "utf8")).messages);
+const EN = readLocale("en");
+let strings = EN;
+const T = (key) => strings[key] ?? EN[key];
+const escape = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+const anyOf = (...keys) => new RegExp(`^(${keys.map((k) => escape(T(k))).join("|")})$`);
+
 const results = [];
+let lang = "en";
 let current = null; // the page being driven, for a screenshot if a step fails
 
 async function check(page, name) {
@@ -84,9 +103,9 @@ async function check(page, name) {
     root.style.fontSize = before;
     return culprits.length ? culprits : root.scrollWidth > W + 1 ? ["(unknown element)"] : null;
   });
-  const lang = await page.evaluate(() => document.documentElement.lang);
+  const htmlLang = await page.evaluate(() => document.documentElement.lang);
   const heading = await page.evaluate(() => document.querySelector("h1")?.textContent?.trim() ?? "");
-  results.push({ name, axe, overflow, lang, heading });
+  results.push({ name: `[${lang}] ${name}`, axe, overflow, lang: htmlLang, heading });
 }
 
 /** Press a button, then let the step transition finish before touching the next screen. */
@@ -94,64 +113,66 @@ async function press(page, locator) {
   await locator.click();
   await page.waitForTimeout(700);
 }
-const next = (page) => press(page, page.getByRole("button", { name: "Next", exact: true }));
+const next = (page) => press(page, page.getByRole("button", { name: T("prepare.actions.next"), exact: true }));
 
-async function journeyPrepare(browser) {
-  const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+let newPage;
+
+async function journeyPrepare() {
+  const page = await newPage();
   await fakeApi(page);
   await page.goto(`${BASE}/`);
   await check(page, "landing");
 
   await page.goto(`${BASE}/prepare`);
-  await page.getByText("Someone else", { exact: true }).click();
+  await page.getByText(T("prepare.who.options.other"), { exact: true }).click();
   await check(page, "J1 step 1 (someone else + age)");
   await next(page);
   await check(page, "J1 step 1 (errors shown)");
-  await page.getByText("18 or over").click();
+  await page.getByText(T("prepare.who.ageBands.adult"), { exact: true }).click();
   await next(page);
   await page.locator("textarea").first().fill("My knees hurt when I walk up the stairs.");
   await check(page, "J1 step 2 concern");
   await next(page);
-  await page.getByText("1 to 6 months ago").click();
-  await page.getByText("It comes and goes").click();
+  await page.getByText(T("prepare.timing.started.months"), { exact: true }).click();
+  await page.getByText(T("prepare.timing.pattern.comes_and_goes"), { exact: true }).click();
   await check(page, "J1 step 3 timing");
   await next(page);
   await page.locator("textarea").first().fill("Worse in the morning.");
   await check(page, "J1 step 4 changes");
   await next(page);
   await check(page, "J1 step 5 medicines");
-  await press(page, page.getByRole("button", { name: /Skip this step|Next/ }).first());
+  await press(page, page.getByRole("button", { name: anyOf("prepare.actions.skip", "prepare.actions.next") }).first());
   await check(page, "J1 step 6 worries");
-  await press(page, page.getByRole("button", { name: /Skip this step|Next/ }).first());
+  await press(page, page.getByRole("button", { name: anyOf("prepare.actions.skip", "prepare.actions.next") }).first());
   await check(page, "J1 follow-ups");
   await page.locator("textarea").first().fill("About an hour.");
-  await press(page, page.getByRole("button", { name: /Continue|Next/ }).first());
+  await press(page, page.getByRole("button", { name: T("prepare.followUps.continue"), exact: true }));
   await check(page, "J1 review");
-  await page.getByRole("button", { name: "Get my summary" }).click();
-  await page.getByRole("heading", { name: "Here's your summary" }).waitFor({ timeout: 15000 });
+  await page.getByRole("button", { name: T("prepare.review.getSummary"), exact: true }).click();
+  await page.getByRole("heading", { name: T("result.title"), exact: true }).waitFor({ timeout: 15000 });
   await check(page, "J1 result (list)");
-  await page.getByRole("button", { name: "Show my words" }).click();
-  await page.getByRole("button", { name: "Hide my words" }).waitFor();
+  await page.getByRole("button", { name: T("result.showOwnWords"), exact: true }).click();
+  await page.getByRole("button", { name: T("result.hideOwnWords"), exact: true }).waitFor();
   await check(page, "J1 result (own words shown)");
   await page.getByRole("tab").last().click();
   await page.getByRole("tab", { selected: true }).last().waitFor();
   await check(page, "J1 result (clinician tab)");
   await page.getByRole("tab").first().click();
-  await page.getByRole("button", { name: "One card at a time" }).click();
-  await page.getByRole("button", { name: "Show as a list" }).waitFor();
+  await page.getByRole("button", { name: T("result.layout.toDeck"), exact: true }).click();
+  await page.getByRole("button", { name: T("result.layout.toList"), exact: true }).waitFor();
   await check(page, "J1 result (card deck)");
   await page.close();
 }
 
-async function urgentScreens(browser) {
+async function urgentScreens() {
   for (const [name, text] of [
     ["urgent: crisis", "I don't want to be here anymore"],
     ["urgent: emergency + self-harm", "I took an overdose"],
   ]) {
-    const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+    const page = await newPage();
     await fakeApi(page);
     await page.goto(`${BASE}/prepare`);
-    await page.getByText("Me", { exact: true }).click();
+    await page.getByText(T("prepare.who.options.self"), { exact: true }).click();
     await next(page);
     await page.locator("textarea").first().fill(text);
     await next(page);
@@ -163,8 +184,8 @@ async function urgentScreens(browser) {
   }
 }
 
-async function journeyUnderstand(browser) {
-  const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+async function journeyUnderstand() {
+  const page = await newPage();
   await fakeApi(page);
   await page.goto(`${BASE}/understand`);
   await check(page, "J2 choose");
@@ -173,22 +194,31 @@ async function journeyUnderstand(browser) {
   await page.locator('input[type="file"]').first().setInputFiles(LETTER_PNG);
   await page.waitForSelector("textarea", { timeout: 15000 });
   await check(page, "J2 confirm words");
-  await press(page, page.getByRole("button", { name: "This is right, explain it" }));
+  await press(page, page.getByRole("button", { name: T("understand.confirm.confirm"), exact: true }));
   await check(page, "J2 follow-ups");
-  await press(page, page.getByRole("button", { name: "Continue", exact: true }));
+  await press(page, page.getByRole("button", { name: T("prepare.followUps.continue"), exact: true }));
   await page.waitForTimeout(800);
   await check(page, "J2 result");
-  await page.getByRole("button", { name: "Show letter's words" }).click();
-  await page.getByRole("button", { name: /Hide letter/ }).waitFor();
+  await page.getByRole("button", { name: T("explain.showSources"), exact: true }).click();
+  await page.getByRole("button", { name: T("explain.hideSources"), exact: true }).waitFor();
   await check(page, "J2 result (letter's words shown)");
   await page.close();
 }
 
 const browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
 try {
-  await journeyPrepare(browser);
-  await urgentScreens(browser);
-  await journeyUnderstand(browser);
+  for (const code of (process.env.A11Y_LANGS ?? "en").split(",").map((c) => c.trim()).filter(Boolean)) {
+    lang = code;
+    strings = { ...EN, ...readLocale(code) };
+    await browser.contexts().at(-1)?.close();
+    current = null;
+    const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
+    await context.addCookies([{ name: "carenav_lang", value: code, url: BASE }]);
+    newPage = () => context.newPage();
+    await journeyPrepare();
+    await urgentScreens();
+    await journeyUnderstand();
+  }
 } catch (e) {
   const shot = process.env.A11Y_FAIL_SCREENSHOT ?? "a11y-failure.png";
   await current?.screenshot({ path: shot }).catch(() => {});
