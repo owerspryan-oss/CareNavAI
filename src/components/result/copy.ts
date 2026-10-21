@@ -5,8 +5,7 @@
 
 export const resultCopy = {
   title: "Here's your summary",
-  lead: "Check it says what you meant, then show it to your doctor or nurse.",
-  draftNotice: "This is a draft to help you prepare. It is not medical advice.",
+  draftNotice: "A draft to help you prepare. Not medical advice.",
   weReadThisAs: (language: string) => `We read this as: ${language}`,
 
   tabsLabel: "Choose a version",
@@ -35,10 +34,11 @@ export const resultCopy = {
     serviceRoutes: "Where to get help",
     disclaimer: "About this summary",
   },
-  notMentionedLead: "Your doctor may ask about these.",
-  didNotMention: "You didn't mention this.",
+  youDidntMention: (sections: string[]) => `You didn't mention: ${sections.map((s) => s.toLowerCase()).join(", ")}.`,
+  nothingMissing: "Nothing important seems to be missing.",
 
-  showOwnWords: "What you told us",
+  showOwnWords: "Show my words",
+  hideOwnWords: "Hide my words",
   ownWordsHeading: "What you told us",
   skippedQuestion: "You skipped this question.",
 
@@ -54,12 +54,11 @@ export const resultCopy = {
     savePdf: "Save as PDF",
     savingPdf: "Making your PDF",
     pdfFailed: "Sorry, we couldn't make the PDF. Please try again.",
-    feedback: "Give feedback",
     comingSoon: "Coming soon",
   },
   layout: {
-    toDeck: "Go through it one card at a time",
-    toList: "Show it all as a list",
+    toDeck: "One card at a time",
+    toList: "Show as a list",
     deckLabel: "Your result, one card at a time",
     next: "Next",
     back: "Back",
@@ -74,9 +73,8 @@ export const resultCopy = {
  */
 export const explainCopy = {
   title: "Here's what your letter means",
-  lead: "In plainer words. Check it against your letter, and ask if anything is unclear.",
   /** Mockup screen 3: "Draft — please check with a pharmacist or GP." */
-  draftNotice: "This is a draft to help you understand. Please check it with a pharmacist or GP. It is not medical advice.",
+  draftNotice: "A draft, not medical advice. Please check it with a pharmacist or GP.",
   /** Shown when there is no user version (`user` is null). */
   englishOnlyNotice:
     "We couldn't make a reliable version in your language this time, so this explanation is in English only. Nothing is missing from it.",
@@ -89,13 +87,7 @@ export const explainCopy = {
     unclear: "Unclear or missing",
     disclaimer: "About this explanation",
   },
-  empty: {
-    told: "We couldn't pick out the main points. Please check the letter itself.",
-    means: "There were no medical words to explain.",
-    steps: "Your letter doesn't mention anything for you to do.",
-    medicines: "Your letter doesn't mention any medicines.",
-    unclear: "Nothing looked unclear or missing.",
-  },
+  nothingFound: "We couldn't pick out the main points. Please check the letter itself.",
 
   byWhen: (when: string) => `When: ${when}`,
   medicine: {
@@ -114,16 +106,18 @@ export const explainCopy = {
     gp_surgery: "Ask your GP surgery",
   },
 
-  showSource: "Show source",
+  showSources: "Show letter's words",
+  hideSources: "Hide letter's words",
   fromLetter: "From your letter",
 
   /** CLAUDE.md rule 7: items whose quote is not in the letter. Never shown as fact. */
   notFound: {
     heading: "We couldn't find this in your letter",
-    lead: "We left these out because we couldn't find them in the words you gave us. Don't rely on them. If they matter to you, ask the person who wrote your letter.",
+    lead: "We couldn't find these in your letter, so don't rely on them.",
   },
 
   languagePicker: {
+    toggle: "Change language",
     label: "Show me this in",
     defaultOption: "Simple English",
     updating: "Updating…",

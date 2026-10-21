@@ -15,7 +15,8 @@ export const understandCopy = {
     photoHint: "We'll read the words for you to check.",
     type: "Type or paste it",
     typeHint: "Any language is fine.",
-    noticeHeading: "Before you start",
+    noticeSummary: "We send your words to an AI service (OpenAI) to explain them. As a guest, nothing is saved.",
+    noticeMore: "More about privacy",
   },
 
   /** AC-08.2: shown before the camera opens. */

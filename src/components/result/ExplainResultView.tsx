@@ -26,7 +26,6 @@ import {
   DocumentIcon,
   PillIcon,
   QuestionIcon,
-  QuoteIcon,
 } from "@/components/ui/icons";
 import { LetterPhoto } from "@/components/understand/LetterPhoto";
 import { explainCopy as c, resultCopy as rc } from "./copy";
@@ -73,24 +72,20 @@ function Hl({ text, terms }: { text: string; terms: string[] }) {
   );
 }
 
-/** "Show source ⌄": the exact words from the confirmed letter (DESIGN_SYSTEM.md §7). */
-function Source({ quote }: { quote: string }) {
+/**
+ * The exact words from the confirmed letter behind one point (DESIGN_SYSTEM.md §7, rule 7). Shown under
+ * every point at once when the person turns on "Show letter's words", rather than a chip on each point.
+ */
+function Source({ quote, show }: { quote: string; show: boolean }) {
+  if (!show) return null;
   return (
-    <details className={styles.disclosure}>
-      <summary className={styles.chip}>
-        <DocumentIcon className={styles.chipIcon} />
-        {c.showSource}
-        <ChevronDownIcon className={styles.chipChevron} />
-      </summary>
-      <figure className={styles.quote}>
-        <QuoteIcon className={styles.quoteIcon} />
-        <figcaption className={styles.quoteHeading}>{c.fromLetter}</figcaption>
-        {/* The letter's own words, not translated: no lang/dir override from the version on screen. */}
-        <blockquote className={styles.quoteText} dir="auto">
-          <p>{quote}</p>
-        </blockquote>
-      </figure>
-    </details>
+    <figure className={styles.quote}>
+      <figcaption className={styles.quoteHeading}>{c.fromLetter}</figcaption>
+      {/* The letter's own words, not translated: no lang/dir override from the version on screen. */}
+      <blockquote className={styles.quoteText} dir="auto">
+        <p>{quote}</p>
+      </blockquote>
+    </figure>
   );
 }
 
@@ -105,17 +100,15 @@ function Item({ icon, tint = "teal", children }: { icon: ReactNode; tint?: "teal
   );
 }
 
-function Section({ id, heading, empty, children }: { id: string; heading: string; empty: string; children: ReactNode[] }) {
+/** A section with nothing in it is left out entirely, rather than shown as an empty box. */
+function Section({ id, heading, children }: { id: string; heading: string; children: ReactNode[] }) {
+  if (children.length === 0) return null;
   return (
     <section className={styles.block} aria-labelledby={`explain-${id}`}>
       <h2 id={`explain-${id}`} className={styles.blockHeading}>
         {heading}
       </h2>
-      {children.length > 0 ? (
-        <ul className={`${styles.card} ${own.items}`}>{children}</ul>
-      ) : (
-        <p className={`${styles.plainCard} ${styles.notMentioned}`}>{empty}</p>
-      )}
+      <ul className={`${styles.card} ${own.items}`}>{children}</ul>
     </section>
   );
 }
@@ -124,22 +117,22 @@ function Section({ id, heading, empty, children }: { id: string; heading: string
  * The explanation's sections. `deckable` can be shown one card at a time; `unclear` is always shown
  * in full, never only at the back of a deck (DECISIONS.md, 2026-10-21).
  */
-function explanationSections(view: UnderstandView): { deckable: { id: string; heading: string; node: ReactNode }[]; unclear: ReactNode } {
+function explanationSections(view: UnderstandView, showSources: boolean): { deckable: { id: string; heading: string; node: ReactNode }[]; unclear: ReactNode } {
   const t = view.terms;
   const told = (
-    <Section key="told" id="told" heading={c.sections.told} empty={c.empty.told}>
+    <Section key="told" id="told" heading={c.sections.told}>
       {view.told.map((item, i) => (
         <Item key={i} icon={<ChatIcon />}>
           <p>
             <Hl text={item.text} terms={t} />
           </p>
-          <Source quote={item.sourceQuote} />
+          <Source quote={item.sourceQuote} show={showSources} />
         </Item>
       ))}
     </Section>
   );
   const means = (
-    <Section key="means" id="means" heading={c.sections.means} empty={c.empty.means}>
+    <Section key="means" id="means" heading={c.sections.means}>
       {view.means.map((item, i) => (
         <Item key={i} icon={<DocumentIcon />}>
           {/* The clinician's own words, quoted from the letter. */}
@@ -152,7 +145,7 @@ function explanationSections(view: UnderstandView): { deckable: { id: string; he
     </Section>
   );
   const steps = (
-    <Section key="steps" id="steps" heading={c.sections.steps} empty={c.empty.steps}>
+    <Section key="steps" id="steps" heading={c.sections.steps}>
       {view.steps.map((item, i) => (
         <Item key={i} icon={<CalendarIcon />}>
           <p>
@@ -163,47 +156,41 @@ function explanationSections(view: UnderstandView): { deckable: { id: string; he
               <Hl text={c.byWhen(item.byWhen)} terms={t} />
             </p>
           )}
-          <Source quote={item.sourceQuote} />
+          <Source quote={item.sourceQuote} show={showSources} />
         </Item>
       ))}
     </Section>
   );
-  const medicines = (
+  const medicines = view.medicines.length === 0 ? null : (
     <section key="medicines" className={styles.block} aria-labelledby="explain-medicines">
       <h2 id="explain-medicines" className={styles.blockHeading}>
         {c.sections.medicines}
       </h2>
-      {view.medicines.length > 0 ? (
-        <>
-          {/* AC-02.5 */}
-          <p className={own.check}>
-            <CautionIcon className={own.checkIcon} />
-            {c.checkThese}
-          </p>
-          <ul className={`${styles.card} ${own.items}`}>
-            {view.medicines.map((m, i) => (
-              <Item key={i} icon={<PillIcon />} tint="coral">
-                <p className={own.medicineName}>
-                  <Hl text={m.dose ? `${m.name} ${m.dose}` : m.name} terms={t} />
-                </p>
-                <dl className={own.facts}>
-                  {m.dose === null && <Fact label={c.medicine.dose} value={null} terms={t} />}
-                  <Fact label={c.medicine.frequency} value={m.frequency} terms={t} />
-                  <Fact label={c.medicine.duration} value={m.duration} terms={t} />
-                  <Fact label={c.medicine.instructions} value={m.instructions} terms={t} />
-                </dl>
-                <Source quote={m.sourceQuote} />
-              </Item>
-            ))}
-          </ul>
-        </>
-      ) : (
-        <p className={`${styles.plainCard} ${styles.notMentioned}`}>{c.empty.medicines}</p>
-      )}
+      {/* AC-02.5 */}
+      <p className={own.check}>
+        <CautionIcon className={own.checkIcon} />
+        {c.checkThese}
+      </p>
+      <ul className={`${styles.card} ${own.items}`}>
+        {view.medicines.map((m, i) => (
+          <Item key={i} icon={<PillIcon />} tint="coral">
+            <p className={own.medicineName}>
+              <Hl text={m.dose ? `${m.name} ${m.dose}` : m.name} terms={t} />
+            </p>
+            <dl className={own.facts}>
+              {m.dose === null && <Fact label={c.medicine.dose} value={null} terms={t} />}
+              <Fact label={c.medicine.frequency} value={m.frequency} terms={t} />
+              <Fact label={c.medicine.duration} value={m.duration} terms={t} />
+              <Fact label={c.medicine.instructions} value={m.instructions} terms={t} />
+            </dl>
+            <Source quote={m.sourceQuote} show={showSources} />
+          </Item>
+        ))}
+      </ul>
     </section>
   );
   const unclear = (
-    <Section id="unclear" heading={c.sections.unclear} empty={c.empty.unclear}>
+    <Section id="unclear" heading={c.sections.unclear}>
       {view.unclear.map((item, i) => (
         <Item key={i} icon={<QuestionIcon />}>
           <p>
@@ -216,11 +203,13 @@ function explanationSections(view: UnderstandView): { deckable: { id: string; he
   );
   return {
     deckable: [
-      { id: "told", heading: c.sections.told, node: told },
-      { id: "means", heading: c.sections.means, node: means },
-      { id: "steps", heading: c.sections.steps, node: steps },
-      { id: "medicines", heading: c.sections.medicines, node: medicines },
-    ],
+      { id: "told", heading: c.sections.told, node: told, count: view.told.length },
+      { id: "means", heading: c.sections.means, node: means, count: view.means.length },
+      { id: "steps", heading: c.sections.steps, node: steps, count: view.steps.length },
+      { id: "medicines", heading: c.sections.medicines, node: medicines, count: view.medicines.length },
+    ]
+      .filter((x) => x.count > 0)
+      .map(({ id, heading, node }) => ({ id, heading, node })),
     unclear,
   };
 }
@@ -254,6 +243,8 @@ export function ExplainResultView({
   const { english, user } = result;
   const [tab, setTab] = useState<Tab>(user ? "user" : "english");
   const [layout, setLayout] = useResultLayout();
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const [showSources, setShowSources] = useState(false);
   // A new result (another language) opens on its user version again.
   const [shownResult, setShownResult] = useState(result);
   if (shownResult !== result) {
@@ -274,7 +265,7 @@ export function ExplainResultView({
   const dir = versionDir(shown.meta, languages);
   const lang = shown.meta.outputMode === "translation" ? shown.meta.outputLanguage : "en";
   const view = buildUnderstandView(shown, english, confirmedText);
-  const sections = explanationSections(view);
+  const sections = explanationSections(view, showSources);
 
   return (
     <div className={`${styles.page} ${photoUrl ? own.withPhoto : ""}`}>
@@ -312,11 +303,25 @@ export function ExplainResultView({
           <h1 ref={headingRef} tabIndex={-1} className={styles.title}>
             {c.title}
           </h1>
-          <p className={styles.lead}>{c.lead}</p>
           {detected && <p className={styles.caption}>{rc.weReadThisAs(detected)}</p>}
         </div>
 
-        <div className={own.picker}>
+        {/* One quiet row of view options; the language picker only opens when asked for. */}
+        <div className={styles.viewOptions}>
+          <Button variant="link" onClick={() => setShowSources(!showSources)} aria-pressed={showSources}>
+            {showSources ? c.hideSources : c.showSources}
+          </Button>
+          <Button variant="link" onClick={() => setPickerOpen(!pickerOpen)} aria-expanded={pickerOpen} aria-controls="explain-picker">
+            {c.languagePicker.toggle}
+          </Button>
+          {isUser && (
+            <Button variant="link" onClick={() => setLayout(layout === "deck" ? "list" : "deck")}>
+              {layout === "deck" ? rc.layout.toList : rc.layout.toDeck}
+            </Button>
+          )}
+        </div>
+
+        <div className={own.picker} id="explain-picker" hidden={!pickerOpen}>
           <label htmlFor="explain-language" className={own.pickerLabel}>
             {c.languagePicker.label}
           </label>
@@ -351,20 +356,18 @@ export function ExplainResultView({
           dir={dir}
           lang={lang}
         >
-          {isUser && (
-            <Button variant="link" className={styles.layoutToggle} onClick={() => setLayout(layout === "deck" ? "list" : "deck")}>
-              {layout === "deck" ? rc.layout.toList : rc.layout.toDeck}
-            </Button>
-          )}
           {/* The deck is only for the person's own version; the doctor's English version is always a list. */}
-          {isUser && layout === "deck" ? (
+          {isUser && layout === "deck" && sections.deckable.length > 0 ? (
             <CardDeck
               label={rc.layout.deckLabel}
               labels={rc.layout}
               cards={sections.deckable.map(({ id, heading, node }) => ({ id, title: heading, titleInBody: true, body: node }))}
             />
-          ) : (
+          ) : sections.deckable.length > 0 ? (
             sections.deckable.map((x) => x.node)
+          ) : (
+            // Nothing could be grounded: say so plainly rather than show an empty explanation.
+            <p className={`${styles.plainCard} ${styles.notMentioned}`}>{c.nothingFound}</p>
           )}
           {sections.unclear}
         </div>
@@ -391,24 +394,23 @@ export function ExplainResultView({
           </section>
         )}
 
-        <section className={styles.block} aria-labelledby="explain-disclaimer" dir={dir} lang={lang}>
-          <h2 id="explain-disclaimer" className={styles.blockHeading}>
-            {c.sections.disclaimer}
-          </h2>
-          <div className={styles.disclaimer}>
-            {shown.disclaimer.map((d, i) => (
-              <p key={i}>{d}</p>
-            ))}
-          </div>
-        </section>
+        <div className={styles.moreInfo} dir={dir} lang={lang}>
+          <details className={styles.moreItem}>
+            <summary className={styles.moreSummary}>
+              {c.sections.disclaimer}
+              <ChevronDownIcon className={styles.moreChevron} />
+            </summary>
+            <div className={styles.disclaimer}>
+              {shown.disclaimer.map((d, i) => (
+                <p key={i}>{d}</p>
+              ))}
+            </div>
+          </details>
+        </div>
       </main>
 
       <footer className={styles.footer}>
         <SavePdfButton body={{ flow: "understand", english, user }} />
-        {/* Placeholder: feedback (FR-16) is a later task. */}
-        <Button variant="tertiary" disabled title={rc.actions.comingSoon}>
-          {rc.actions.feedback}
-        </Button>
       </footer>
     </div>
   );

@@ -375,15 +375,18 @@ export function UnderstandFlow({
             {/* Voice slot: "Say it" (FR-07, epic-prepare's recorder) joins these options in a later task. */}
           </div>
 
-          <section className={styles.notice} aria-labelledby="provider-notice">
-            <h2 id="provider-notice" className={styles.noticeHeading}>
+          {/* Provider processing is disclosed before first use in one plain sentence; the full notice is a tap away. */}
+          <details className={styles.notice}>
+            <summary className={styles.noticeHeading}>
               <LockIcon className={styles.noticeIcon} />
-              {c.choose.noticeHeading}
-            </h2>
+              <span>
+                {c.choose.noticeSummary} <span className={styles.noticeMore}>{c.choose.noticeMore}</span>
+              </span>
+            </summary>
             {providerNotice.map((line, i) => (
               <p key={i}>{line}</p>
             ))}
-          </section>
+          </details>
         </main>
       </div>
     );

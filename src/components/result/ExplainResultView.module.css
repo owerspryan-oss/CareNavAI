@@ -78,6 +78,10 @@
   gap: var(--space-1);
 }
 
+.picker[hidden] {
+  display: none;
+}
+
 .pickerLabel {
   font-weight: 600;
 }

@@ -27,12 +27,10 @@ import {
   ChatIcon,
   ChevronDownIcon,
   ClockIcon,
-  DocumentIcon,
   HeartIcon,
   PersonIcon,
   PillIcon,
   QuestionIcon,
-  QuoteIcon,
   RepeatIcon,
 } from "@/components/ui/icons";
 import { resultCopy as c } from "./copy";
@@ -83,26 +81,18 @@ function Hl({ text, terms }: { text: string; terms: string[] }) {
   );
 }
 
-function OwnWordsDisclosure({ words }: { words: string[] }) {
+function OwnWordsQuote({ words }: { words: string[] }) {
   if (words.length === 0) return null;
   return (
-    <details className={styles.disclosure}>
-      <summary className={styles.chip}>
-        <DocumentIcon className={styles.chipIcon} />
-        {c.showOwnWords}
-        <ChevronDownIcon className={styles.chipChevron} />
-      </summary>
-      <figure className={styles.quote}>
-        <QuoteIcon className={styles.quoteIcon} />
-        <figcaption className={styles.quoteHeading}>{c.ownWordsHeading}</figcaption>
-        {/* Exactly as the user typed it, in their language: no lang/dir override from the result. */}
-        <blockquote className={styles.quoteText} dir="auto">
-          {words.map((w, i) => (
-            <p key={i}>{w}</p>
-          ))}
-        </blockquote>
-      </figure>
-    </details>
+    <figure className={styles.quote}>
+      <figcaption className={styles.quoteHeading}>{c.ownWordsHeading}</figcaption>
+      {/* Exactly as the user typed it, in their language: no lang/dir override from the result. */}
+      <blockquote className={styles.quoteText} dir="auto">
+        {words.map((w, i) => (
+          <p key={i}>{w}</p>
+        ))}
+      </blockquote>
+    </figure>
   );
 }
 
@@ -127,14 +117,13 @@ function Row({
       <div className={styles.rowBody}>
         <h2 className={styles.rowHeading}>{heading}</h2>
         <div className={styles.rowContent}>{children}</div>
-        {own && <OwnWordsDisclosure words={own} />}
+        {own && <OwnWordsQuote words={own} />}
       </div>
     </section>
   );
 }
 
 function List({ items, terms, ordered }: { items: string[]; terms: string[]; ordered?: boolean }) {
-  if (items.length === 0) return <p className={styles.notMentioned}>{c.didNotMention}</p>;
   const Tag = ordered ? "ol" : "ul";
   return (
     <Tag className={styles.list}>
@@ -147,33 +136,50 @@ function List({ items, terms, ordered }: { items: string[]; terms: string[]; ord
   );
 }
 
-function Text({ text, terms }: { text: string; terms: string[] }) {
-  return text.trim() ? (
-    <p>
-      <Hl text={text} terms={terms} />
-    </p>
-  ) : (
-    <p className={styles.notMentioned}>{c.didNotMention}</p>
-  );
-}
+type SummaryRow = { id: string; heading: string; row: ReactNode };
 
-/** The summary sections, in order, so the same rows can render as a list or as a card deck. */
-function summaryRows(v: PreAppointmentResult, own: OwnWords["sections"]): { id: string; heading: string; row: ReactNode }[] {
+/**
+ * The summary sections that have something in them, in order, so the same rows can render as a list
+ * or a card deck. Sections the person didn't fill are not shown as empty rows: their names are listed
+ * once under "Not mentioned" instead (AC-01.1, without a wall of "You didn't mention this").
+ */
+function summaryRows(v: PreAppointmentResult, own: OwnWords["sections"] | null): { rows: SummaryRow[]; empty: string[] } {
   const terms = medicineTerms(v);
   const m = v.medicationAndSupport;
-  const rows: [string, string, ReactNode][] = [
-    ["forWhom", c.sections.forWhom, <Row key="forWhom" icon={<PersonIcon />} heading={c.sections.forWhom} own={own.forWhom}><Text text={v.forWhom.label} terms={terms} /></Row>],
-    ["mainConcern", c.sections.mainConcern, <Row key="mainConcern" icon={<ChatIcon />} heading={c.sections.mainConcern} own={own.mainConcern}><Text text={v.mainConcern} terms={terms} /></Row>],
-    ["duration", c.sections.duration, <Row key="duration" icon={<ClockIcon />} heading={c.sections.duration} own={own.duration}><Text text={v.duration.stated ? v.duration.text : ""} terms={terms} /></Row>],
-    ["frequency", c.sections.frequency, <Row key="frequency" icon={<RepeatIcon />} heading={c.sections.frequency} own={own.frequency}><Text text={v.frequencyAndPattern} terms={terms} /></Row>],
-    ["changes", c.sections.changes, <Row key="changes" icon={<RepeatIcon />} heading={c.sections.changes} own={own.changes}><List items={v.changesAndTriggers} terms={terms} /></Row>],
-    ["medicines", c.sections.medicines, <Row key="medicines" icon={<PillIcon />} tint="coral" heading={c.sections.medicines} own={own.medicines}><List items={m.provided ? m.medicines.map(medicineLine) : []} terms={terms} /></Row>],
-    ["previousSupport", c.sections.previousSupport, <Row key="previousSupport" icon={<HeartIcon />} tint="coral" heading={c.sections.previousSupport} own={own.previousSupport}><List items={m.previousSupport} terms={terms} /></Row>],
-    ["worries", c.sections.worries, <Row key="worries" icon={<HeartIcon />} tint="coral" heading={c.sections.worries} own={own.worries}><List items={v.worriesAndBarriers} terms={terms} /></Row>],
-    ["questions", c.sections.questions, <Row key="questions" icon={<QuestionIcon />} heading={c.sections.questions}><List items={v.questionsToAsk} terms={terms} ordered /></Row>],
-    ["whatToBring", c.sections.whatToBring, <Row key="whatToBring" icon={<BagIcon />} heading={c.sections.whatToBring}><List items={v.whatToBring} terms={terms} /></Row>],
+  const ownFor = (k: OwnWordsSection) => (own ? own[k] : undefined);
+  const text = (t: string) => (t.trim() ? <p><Hl text={t} terms={terms} /></p> : null);
+  const list = (items: string[], ordered = false) => (items.length ? <List items={items} terms={terms} ordered={ordered} /> : null);
+  const sections: [string, string, ReactNode, ReactNode, OwnWordsSection | null, "teal" | "coral"][] = [
+    ["forWhom", c.sections.forWhom, <PersonIcon key="i" />, text(v.forWhom.label), "forWhom", "teal"],
+    ["mainConcern", c.sections.mainConcern, <ChatIcon key="i" />, text(v.mainConcern), "mainConcern", "teal"],
+    ["duration", c.sections.duration, <ClockIcon key="i" />, v.duration.stated ? text(v.duration.text) : null, "duration", "teal"],
+    ["frequency", c.sections.frequency, <RepeatIcon key="i" />, text(v.frequencyAndPattern), "frequency", "teal"],
+    ["changes", c.sections.changes, <RepeatIcon key="i" />, list(v.changesAndTriggers), "changes", "teal"],
+    ["medicines", c.sections.medicines, <PillIcon key="i" />, m.provided ? list(m.medicines.map(medicineLine)) : null, "medicines", "coral"],
+    ["previousSupport", c.sections.previousSupport, <HeartIcon key="i" />, list(m.previousSupport), "previousSupport", "coral"],
+    ["worries", c.sections.worries, <HeartIcon key="i" />, list(v.worriesAndBarriers), "worries", "coral"],
+    ["questions", c.sections.questions, <QuestionIcon key="i" />, list(v.questionsToAsk, true), null, "teal"],
+    ["whatToBring", c.sections.whatToBring, <BagIcon key="i" />, list(v.whatToBring), null, "teal"],
   ];
-  return rows.map(([id, heading, row]) => ({ id, heading, row }));
+  const rows: SummaryRow[] = [];
+  const empty: string[] = [];
+  for (const [id, heading, icon, content, ownKey, tint] of sections) {
+    if (content === null) {
+      // Suggested questions and things to bring are ours, not the person's: an empty one is just left out.
+      if (ownKey) empty.push(heading);
+      continue;
+    }
+    rows.push({
+      id,
+      heading,
+      row: (
+        <Row key={id} icon={icon} tint={tint} heading={heading} own={ownKey ? ownFor(ownKey) : undefined}>
+          {content}
+        </Row>
+      ),
+    });
+  }
+  return { rows, empty };
 }
 
 /**
@@ -185,6 +191,7 @@ export function ResultView({ result, ownWords, urgentContent, languages, onNotQu
   const [tab, setTab] = useState<Tab>(user ? "user" : "english");
   const [matched, setMatched] = useState(false);
   const [layout, setLayout] = useResultLayout();
+  const [showOwn, setShowOwn] = useState(false);
   const headingRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
@@ -200,6 +207,7 @@ export function ResultView({ result, ownWords, urgentContent, languages, onNotQu
   const lang = shown.meta.outputMode === "translation" ? shown.meta.outputLanguage : "en";
   const terms = medicineTerms(shown);
   const answeredFollowUps = ownWords.followUps;
+  const { rows, empty } = summaryRows(shown, showOwn ? ownWords.sections : null);
 
   return (
     <div className={styles.page}>
@@ -238,8 +246,19 @@ export function ResultView({ result, ownWords, urgentContent, languages, onNotQu
           <h1 ref={headingRef} tabIndex={-1} className={styles.title}>
             {c.title}
           </h1>
-          <p className={styles.lead}>{c.lead}</p>
           {detected && <p className={styles.caption}>{c.weReadThisAs(detected)}</p>}
+        </div>
+
+        {/* One quiet row of view options instead of controls scattered through the page. */}
+        <div className={styles.viewOptions}>
+          <Button variant="link" onClick={() => setShowOwn(!showOwn)} aria-pressed={showOwn}>
+            {showOwn ? c.hideOwnWords : c.showOwnWords}
+          </Button>
+          {isUser && (
+            <Button variant="link" onClick={() => setLayout(layout === "deck" ? "list" : "deck")}>
+              {layout === "deck" ? c.layout.toList : c.layout.toDeck}
+            </Button>
+          )}
         </div>
 
         <div
@@ -251,23 +270,18 @@ export function ResultView({ result, ownWords, urgentContent, languages, onNotQu
           dir={dir}
           lang={lang}
         >
-          {isUser && (
-            <Button variant="link" className={styles.layoutToggle} onClick={() => setLayout(layout === "deck" ? "list" : "deck")}>
-              {layout === "deck" ? c.layout.toList : c.layout.toDeck}
-            </Button>
-          )}
           {/* The deck is only for the person's own version; the doctor's English version is always a list. */}
           {isUser && layout === "deck" ? (
             <CardDeck
               label={c.layout.deckLabel}
               labels={c.layout}
-              cards={summaryRows(shown, ownWords.sections).map(({ id, heading, row }) => ({ id, title: heading, titleInBody: true, body: row }))}
+              cards={rows.map(({ id, heading, row }) => ({ id, title: heading, titleInBody: true, body: row }))}
             />
           ) : (
-            <div className={styles.card}>{summaryRows(shown, ownWords.sections).map((r) => r.row)}</div>
+            <div className={styles.card}>{rows.map((r) => r.row)}</div>
           )}
 
-          {answeredFollowUps.length > 0 && (
+          {showOwn && answeredFollowUps.length > 0 && (
             <section className={styles.block} aria-labelledby="result-followups" dir="ltr" lang="en">
               <h2 id="result-followups" className={styles.blockHeading}>
                 {c.sections.followUps}
@@ -291,9 +305,10 @@ export function ResultView({ result, ownWords, urgentContent, languages, onNotQu
             <h2 id="result-not-mentioned" className={styles.blockHeading}>
               {c.sections.notMentioned}
             </h2>
-            {shown.notMentioned.length > 0 && <p className={styles.lead}>{c.notMentionedLead}</p>}
             <div className={styles.plainCard}>
-              <List items={shown.notMentioned} terms={terms} />
+              {empty.length > 0 && <p>{c.youDidntMention(empty)}</p>}
+              {shown.notMentioned.length > 0 && <List items={shown.notMentioned} terms={terms} />}
+              {empty.length === 0 && shown.notMentioned.length === 0 && <p>{c.nothingMissing}</p>}
             </div>
           </section>
         </div>
@@ -318,50 +333,49 @@ export function ResultView({ result, ownWords, urgentContent, languages, onNotQu
           )}
         </section>
 
-        <section className={styles.block} aria-labelledby="result-routes" dir={dir} lang={lang}>
-          <h2 id="result-routes" className={styles.blockHeading}>
-            {c.sections.serviceRoutes}
-          </h2>
-          <ul className={styles.routes}>
-            {shown.serviceRoutes.map((r) => (
-              <li key={r.id} className={styles.route}>
-                <p className={styles.routeName}>{r.name}</p>
-                <p className={styles.routeText}>{r.description}</p>
-                {r.contacts.length > 0 && (
-                  <div className={styles.routeContacts}>
-                    {r.contacts.map((ct) => {
-                      const href = safeHref(ct.href);
-                      return href ? (
-                        <a key={ct.href} href={href} className={styles.routeLink}>
-                          {ct.label}
-                        </a>
-                      ) : null;
-                    })}
-                  </div>
-                )}
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        <section className={styles.block} aria-labelledby="result-disclaimer" dir={dir} lang={lang}>
-          <h2 id="result-disclaimer" className={styles.blockHeading}>
-            {c.sections.disclaimer}
-          </h2>
-          <div className={styles.disclaimer}>
-            {shown.disclaimer.map((d, i) => (
-              <p key={i}>{d}</p>
-            ))}
-          </div>
-        </section>
+        <div className={styles.moreInfo} dir={dir} lang={lang}>
+          <details className={styles.moreItem}>
+            <summary className={styles.moreSummary}>
+              {c.sections.serviceRoutes}
+              <ChevronDownIcon className={styles.moreChevron} />
+            </summary>
+            <ul className={styles.routes}>
+              {shown.serviceRoutes.map((r) => (
+                <li key={r.id} className={styles.route}>
+                  <p className={styles.routeName}>{r.name}</p>
+                  <p className={styles.routeText}>{r.description}</p>
+                  {r.contacts.length > 0 && (
+                    <div className={styles.routeContacts}>
+                      {r.contacts.map((ct) => {
+                        const href = safeHref(ct.href);
+                        return href ? (
+                          <a key={ct.href} href={href} className={styles.routeLink}>
+                            {ct.label}
+                          </a>
+                        ) : null;
+                      })}
+                    </div>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </details>
+          <details className={styles.moreItem}>
+            <summary className={styles.moreSummary}>
+              {c.sections.disclaimer}
+              <ChevronDownIcon className={styles.moreChevron} />
+            </summary>
+            <div className={styles.disclaimer}>
+              {shown.disclaimer.map((d, i) => (
+                <p key={i}>{d}</p>
+              ))}
+            </div>
+          </details>
+        </div>
       </main>
 
       <footer className={styles.footer}>
         <SavePdfButton body={{ flow: "prepare", english, user }} />
-        {/* Placeholder: feedback (FR-16) is a separate task. */}
-        <Button variant="tertiary" disabled title={c.actions.comingSoon}>
-          {c.actions.feedback}
-        </Button>
       </footer>
     </div>
   );

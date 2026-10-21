@@ -385,7 +385,8 @@ export function PrepareFlow({ maxChars, urgentContent, languages }: PrepareFlowP
       />
       <main className={styles.main}>
         <ProgressStepper current={state.stepIndex + 1} total={total} label={c.stepLabel(state.stepIndex + 1, total)} />
-        <Banner tone="info">{c.draftNotice}</Banner>
+        {/* Said once, at the start: repeating it on every step was noise. The result says it again. */}
+        {state.stepIndex === 0 && <Banner tone="info">{c.draftNotice}</Banner>}
 
         <form
           id="prepare-step"

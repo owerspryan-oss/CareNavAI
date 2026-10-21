@@ -68,6 +68,19 @@ Running decisions log for the CareNav AI workspace and build. Newest at the bott
 **Affects:** `src/components/ui/CardDeck.*`, `src/lib/ui/spring.ts`, both result views (wired once the Journey 2 result lands).
 **Alternatives considered:** deck as default (rejected for the reasons above); deck default on the user tab only (offered as a middle ground, not chosen).
 
+## Simplify the result and journey screens — 2026-10-21
+
+**Decision:** Product owner: "the UI is quite noisy… make it as simple as possible." Every requirement stays, but each thing is said once, quietly, and secondary detail is folded away:
+- **Results (both journeys):** one-line draft banner; lead sentence removed; one row of quiet text options under the title ("Show my words" / "Show letter's words", "One card at a time", Journey 2 "Change language") replacing a chip on every section, a big language select and a separate deck link. The user's words (AC-01.5) and the letter's words (rule 7 grounding) appear inline under each point when turned on.
+- **Empty sections:** not shown as "You skipped this" rows. Journey 1 lists them once under "Not mentioned" ("You didn't mention: medicines, worries."), which still meets AC-01.1. Journey 2 leaves empty sections out, but says plainly when nothing could be grounded.
+- **Folded away:** service routes and the full disclaimer fold into two rows at the end (AC-01.3/01.6 content unchanged; the banner carries "not medical advice"). The disabled "Give feedback" placeholder is removed until FR-16 is built.
+- **Guided steps:** the draft notice shows on step 1 only. The character counter stays, because AC-06.1 requires it.
+- **Journey 2 start:** the provider notice is one visible sentence, with the full static notice one tap away under "More about privacy".
+- **Unchanged:** the urgent screen and banner, "Unclear or missing", "We couldn't find this in your letter", the medicine "check these" line, the clinician tab and the PDF.
+**Why:** product-owner request. Fewer competing elements helps the target users (low health literacy, second-language readers).
+**Affects:** `src/components/result/*`, `src/components/prepare/PrepareFlow.tsx`, `src/components/understand/*`; copy for review in `src/components/result/copy.ts` and `src/components/understand/copy.ts`.
+**Alternatives considered:** hiding the character counter until near the limit (contradicts AC-06.1); removing grounding quotes from the UI entirely (rule 7 needs them viewable).
+
 *(Populate further entries as the build progresses. Log anything that changes or narrows a requirement, picks between two valid architectural approaches, or resolves one of the open items in CONTEXT.md §15.)*
 
 Suggested format per entry:

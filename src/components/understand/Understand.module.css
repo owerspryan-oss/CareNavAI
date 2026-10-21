@@ -93,13 +93,30 @@
 
 .noticeHeading {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--space-2);
-  font-size: var(--text-body-size);
-  font-weight: 700;
+  font-size: 0.9375rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.noticeHeading::-webkit-details-marker {
+  display: none;
+}
+
+.noticeMore {
+  color: var(--color-teal-500);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.notice[open] .noticeMore {
+  display: none;
 }
 
 .noticeIcon {
+  flex: none;
+  margin-top: 0.15em;
   width: 1.125rem;
   height: 1.125rem;
   color: var(--color-teal-500);
