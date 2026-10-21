@@ -61,6 +61,13 @@ Running decisions log for the CareNav AI workspace and build. Newest at the bott
 **Affects:** `src/components/prepare/*`, `src/components/ui/SegmentedControl.module.css`, `design/tokens.css`, `DESIGN_SYSTEM.md`, `src/components/result/copy.ts`.
 **Alternatives considered:** larger/bolder tab text to meet the 3:1 large-text threshold (would crowd the tab labels at 390px).
 
+## Result layout: list by default, card deck as an option — 2026-10-21
+
+**Decision:** Results stay a scrolling list by default. A toggle ("Go through it one card at a time") switches the user's own version to a swipeable card deck (`src/components/ui/CardDeck.tsx`): spring physics, 1:1 tracking, interruptible, rubber-band ends, flick projection, plus Next/Back buttons, arrow keys and a "2 of 6" counter as equal alternatives; cards scroll internally at large text sizes; cross-fade under reduced motion. The urgent banner and DRAFT label stay pinned outside the deck; "Unclear or missing" and "We couldn't find this" are never only at the back of the deck; the clinician (English) tab and the PDF are always a list. The toggle remembers the choice on that device.
+**Why:** product owner accepted the recommendation: a deck helps calm one-at-a-time reading, but as a default it hides safety-relevant sections, slows a clinician scanning the result, and is harder for screen-reader, low-dexterity and large-text users.
+**Affects:** `src/components/ui/CardDeck.*`, `src/lib/ui/spring.ts`, both result views (wired once the Journey 2 result lands).
+**Alternatives considered:** deck as default (rejected for the reasons above); deck default on the user tab only (offered as a middle ground, not chosen).
+
 *(Populate further entries as the build progresses. Log anything that changes or narrows a requirement, picks between two valid architectural approaches, or resolves one of the open items in CONTEXT.md §15.)*
 
 Suggested format per entry:
