@@ -25,6 +25,7 @@
 }
 
 .facts {
+  container-type: inline-size;
   display: grid;
   gap: var(--space-1);
   margin: var(--space-1) 0 0;
@@ -43,6 +44,15 @@
 
 .fact dd {
   margin: 0;
+  overflow-wrap: anywhere;
+}
+
+/* Very large text: each label sits above its value instead of beside it. */
+@container (max-width: 18em) {
+  .fact {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
 }
 
 /* AC-02.5: ink text on the caution tint (caution-icon colour is never used for text, §2). */

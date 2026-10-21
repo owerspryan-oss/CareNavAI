@@ -44,11 +44,15 @@
   gap: var(--space-5);
 }
 
+/*
+ * Back and the primary action share a row; at large text sizes, when both no longer fit, they wrap onto
+ * two full-width rows (in reading order) instead of running off the screen.
+ */
 .footer {
   position: sticky;
   bottom: 0;
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   gap: var(--space-3);
   padding: var(--space-3) var(--space-4) calc(var(--space-4) + env(safe-area-inset-bottom));
   background: color-mix(in srgb, var(--color-bg) 72%, transparent);
@@ -57,7 +61,13 @@
 }
 
 .backButton {
+  flex: 1 1 auto;
   min-width: 6.5rem;
+}
+
+.footer > :last-child {
+  flex: 999 1 10rem;
+  min-width: 0;
 }
 
 @media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {

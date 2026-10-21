@@ -121,3 +121,10 @@ Suggested format per entry:
 **Why:** a repeatable recording without weakening the gate (CLAUDE.md rule 1).
 **Affects:** FR-26, `src/lib/demo/presets.ts`, `src/components/demo/*`, `src/components/prepare/PrepareFlow.tsx`, `src/components/understand/UnderstandFlow.tsx`, `src/lib/prepare/{state,answers}.ts`, `src/lib/config/env.ts`, `.env.example`, `demo/script.md`.
 **Alternatives considered:** a `?demo=` URL that auto-loads (not hidden; easy to leave in a recording); a demo path that skips screening (breaks rule 1).
+
+## T-18 accessibility check — 2026-10-21
+
+**Decision:** `npm run test:a11y` (`scripts/a11y.mjs`, `axe-core` dev dependency, existing `playwright-core`) drives both journeys at 390px against a running dev server, with every `/api/*` call faked from `tests/fixtures`, so all 24 screens (steps, follow-ups, review, results incl. own words / clinician tab / card deck, crisis and emergency+self-harm screens with the continue check, Journey 2 photo path) are reachable without an API key. Each screen must have zero axe WCAG 2.1 A/AA violations, a `lang` on `<html>`, and no sideways scrolling at 200% root text size. Fixes it drove: big headings may break long words; button labels can shrink and wrap; full-width buttons drop their decorative leading icon at very large text; the footer's Back/primary pair wraps onto two rows; the privacy "More" link and the medicine facts table reflow. Normal-size layout unchanged. The manual screen-reader walk-through (PRD §14) is still to do.
+**Why:** T-18 done-criterion "axe clean on both journeys", plus NFR large-text support.
+**Affects:** `scripts/a11y.mjs`, `package.json`, `src/app/globals.css`, `src/components/ui/Button.module.css`, `src/components/prepare/PrepareFlow.module.css`, `src/components/understand/Understand.module.css`, `src/components/result/ExplainResultView.module.css`.
+**Alternatives considered:** a Vitest + jsdom axe run (no real layout, so no reflow check); requiring a live API key for the check (not runnable in CI or this container).

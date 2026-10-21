@@ -14,7 +14,8 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:urgency": "vitest run --config vitest.urgency.config.ts"
+    "test:urgency": "vitest run --config vitest.urgency.config.ts",
+    "test:a11y": "node scripts/a11y.mjs"
   },
   "dependencies": {
     "better-sqlite3": "^13.0.3",
@@ -33,6 +34,7 @@
     "@types/qrcode": "^1.5.6",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "axe-core": "^4.14.0",
     "eslint": "^9.39.5",
     "eslint-config-next": "^16.4.2",
     "typescript": "~6.0.3",

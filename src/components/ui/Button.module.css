@@ -39,6 +39,7 @@
 
 .label {
   flex: 1 1 auto;
+  min-width: 0; /* lets a long label wrap inside the pill at large text sizes */
   text-align: center;
 }
 
@@ -54,6 +55,18 @@
 
 .fullWidth {
   width: 100%;
+  container-type: inline-size; /* safe here: the width comes from the parent, not the label */
+}
+
+/*
+ * Very large text (the em follows the button's own text size): a full-width button drops its
+ * decorative leading icon so the label keeps whole words, as the urgent screen does. Three classes, to
+ * beat `.large .leadingIcon` below.
+ */
+@container (max-width: 12em) {
+  .button.fullWidth .leadingIcon {
+    display: none;
+  }
 }
 
 /*

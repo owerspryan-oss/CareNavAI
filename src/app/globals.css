@@ -26,6 +26,14 @@ p {
   margin: 0;
 }
 
+/* Large text (T-18): a long word in a big heading breaks rather than pushing the page sideways. */
+h1,
+h2,
+h3 {
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}
+
 button,
 input,
 textarea,

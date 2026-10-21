@@ -22,6 +22,7 @@ Running log of what's happened in this repo, for quick orientation at the start 
 - T-25 (part): per-device rate limits.
 - T-29: demo assets.
 - T-17: demo mode (`DEMO_MODE=true`, Alt+Shift+D menu; see `demo/script.md`).
+- T-18 (automated): `npm run test:a11y`, 24 screens axe-clean and no sideways scroll at 200% text.
 
 **Product-owner decisions this session (all logged in DECISIONS.md):**
 - Follow-up questions come before review.
@@ -30,7 +31,7 @@ Running log of what's happened in this repo, for quick orientation at the start 
 - A simplification pass on all screens: one quiet options row, empty sections collapsed, routes and disclaimer folded away, draft notice on step 1 only.
 
 **Next, roughly in priority order (CONTEXT.md §14; cut order v0.3 A8):**
-- T-18 accessibility pass (axe).
+- T-18 manual screen-reader walk-through of both journeys (automated part done).
 - T-31/T-32 language picker and interface localisation.
 - T-20 voice (cut 2nd).
 - T-21 on-behalf-of child thresholds UI. Age band for "someone else" done 2026-10-21.
