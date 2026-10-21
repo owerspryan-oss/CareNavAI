@@ -1,6 +1,7 @@
 import type { z } from "zod";
 import type { SafetyLevel, UrgentMessageKey } from "@/lib/ai/schemas";
 import { env } from "@/lib/config/env";
+import { urgentMessageKeyFor, type UrgentContent } from "@/lib/safety/urgent-content";
 import disclaimersEn from "../../../content/disclaimers/en.json";
 import serviceRoutesEn from "../../../content/service-routes/en.json";
 import urgentEn from "../../../content/urgent-messages/en.json";
@@ -19,6 +20,7 @@ import {
 } from "./schemas";
 
 export * from "./schemas";
+export { urgentMessageKeyFor };
 
 // Static, pre-approved content (ADR-004). Files are bundled at build time and
 // validated on first use. English is the master and the fallback for any
@@ -64,16 +66,6 @@ function load<K extends Kind>(kind: K, lang: string | null | undefined): Served<
   return { content: cache.get(key) as Parsed[K], servedLanguage, fellBack: servedLanguage !== requested };
 }
 
-/**
- * Which static message a gate level shows. `uncertain` uses the `urgent` message
- * (PRD 9.2). `clear` has no message.
- */
-export function urgentMessageKeyFor(level: SafetyLevel): UrgentMessageKey | null {
-  if (level === "clear") return null;
-  if (level === "emergency" || level === "crisis") return level;
-  return "urgent";
-}
-
 export interface ServedUrgentMessage {
   key: UrgentMessageKey;
   servedLanguage: string;
@@ -115,4 +107,21 @@ export function getDisclaimers(lang: string | null | undefined): Served<Disclaim
 /** FR-29 / v0.3 A10: the DRAFT label is on unless SHOW_DRAFT_LABEL=false. */
 export function draftLabelEnabled(): boolean {
   return env().SHOW_DRAFT_LABEL;
+}
+
+/**
+ * Serialisable urgent-screen content for one interface language (FR-05, FR-24, FR-29), built on the
+ * server so client components never import server config. Pass it down as a prop.
+ * Language seam: callers pass the interface language; unknown languages fall back to English.
+ */
+export function getUrgentContent(lang: string | null | undefined): UrgentContent {
+  const { content, servedLanguage } = load("urgentMessages", lang);
+  return {
+    mode: env().URGENT_MODE,
+    showDraftLabel: draftLabelEnabled(),
+    draftLabel: getDisclaimers(lang).content.draftLabel,
+    language: servedLanguage,
+    messages: content.messages,
+    labels: content.labels,
+  };
 }

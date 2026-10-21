@@ -1,0 +1,141 @@
+/* Urgent message screen — DESIGN_SYSTEM.md §2 (urgent colours), §7 (banners), §8 (materialise in place). */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  max-width: 32rem;
+  margin: 0 auto;
+}
+
+/* Plain wordmark bar: no back chevron here, the only ways on are the actions below. */
+.header {
+  display: grid;
+  place-items: center;
+  min-height: 3.5rem;
+  padding: var(--space-1) var(--space-4);
+}
+
+.wordmark {
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+
+.main {
+  flex: 1 0 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding: var(--space-6) var(--space-4) calc(var(--space-6) + env(safe-area-inset-bottom));
+  /*
+   * Materialise in place: opacity + scale 0.98 -> 1, critically damped (damping 1.0, response 0.4).
+   * The token curve is sampled at response 0.35s over 0.45s; stretched to 0.52s it matches response 0.4.
+   * The draft label sits outside this block so it is never faded.
+   */
+  animation: urgent-materialize 0.52s var(--ease-spring-default) both;
+  transform-origin: 50% 0;
+}
+
+.message {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-4);
+  text-align: center;
+}
+
+.badge {
+  display: grid;
+  place-items: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: var(--radius-badge);
+  background: var(--color-urgent-bg);
+  color: var(--color-urgent-icon);
+}
+
+.badgeIcon {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.title {
+  font-size: var(--text-display-size);
+  line-height: var(--text-display-leading);
+  letter-spacing: var(--text-display-tracking);
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.body {
+  display: grid;
+  gap: var(--space-2);
+  font-size: 1.0625rem;
+  line-height: var(--text-body-leading);
+  overflow-wrap: anywhere;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr); /* never wider than the screen, even at 200% text */
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Long labels wrap inside the pill (whole words first) instead of widening the page. */
+.actions a,
+.secondary button {
+  padding-inline: var(--space-4);
+  overflow-wrap: break-word;
+}
+
+.actions svg,
+.secondary svg {
+  display: block;
+}
+
+/*
+ * Very large text (the em here follows the user's text size): the icons give way so the safety-critical
+ * labels keep whole words. The words themselves already say "Call".
+ */
+.actions,
+.secondary {
+  container-type: inline-size;
+}
+@container (max-width: 20em) {
+  /* The icon's wrapper too, so its gap doesn't push the label off-centre. */
+  .actions span:has(> svg),
+  .secondary svg {
+    display: none;
+  }
+}
+
+.secondary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: stretch;
+  gap: var(--space-2);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-border);
+}
+
+@keyframes urgent-materialize {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+}
+
+@keyframes urgent-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .main {
+    animation: urgent-fade 0.2s linear both;
+  }
+}
