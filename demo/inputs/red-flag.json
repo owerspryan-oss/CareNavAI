@@ -1,0 +1,10 @@
+{
+  "$comment": "FICTIONAL demo input (T-29). Must route to the static emergency message (U-15 style). Never generate a summary from this.",
+  "forWhom": { "relationship": "self", "label": null, "ageBand": null },
+  "mainConcern": "Mi chest feel tight tight from dis morning and mi left arm a go numb. Mi a sweat.",
+  "timing": { "started": "today", "pattern": "constant", "note": null },
+  "changes": null,
+  "medicines": null,
+  "worries": null,
+  "followUps": []
+}
