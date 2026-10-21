@@ -3,6 +3,7 @@ import { AiError } from "@/lib/ai/client";
 import { ALLOWED_IMAGE_TYPES, extractFromImage } from "@/lib/ai/pipeline/extract";
 import { json } from "@/lib/api/route";
 import { env } from "@/lib/config/env";
+import { checkRate } from "@/lib/limits/rate";
 import { log } from "@/lib/log/logger";
 
 export const runtime = "nodejs";
@@ -14,6 +15,10 @@ export async function POST(req: Request): Promise<Response> {
   const started = Date.now();
   let status = 500;
   try {
+    if (!checkRate(req).ok) {
+      status = 429;
+      return json({ error: "rate_limited" }, 429);
+    }
     let form: FormData;
     try {
       form = await req.formData();

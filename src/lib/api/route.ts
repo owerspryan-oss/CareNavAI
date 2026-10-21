@@ -3,6 +3,7 @@ import type { z } from "zod";
 import { env } from "@/lib/config/env";
 import { log } from "@/lib/log/logger";
 import { AiError } from "@/lib/ai/client";
+import { checkRate } from "@/lib/limits/rate";
 
 /**
  * Shared route wrapper: request id, JSON + Zod validation, free-text length limit, and
@@ -33,7 +34,15 @@ export function handler<S extends z.ZodType>(route: string, schema: S, fn: (body
     const requestId = randomUUID();
     const started = Date.now();
     let status = 500;
+    let setCookie: string | null = null;
+    const withCookie = (res: Response) => {
+      if (setCookie) res.headers.append("Set-Cookie", setCookie);
+      return res;
+    };
     try {
+      const rate = checkRate(req);
+      setCookie = rate.setCookie;
+      if (!rate.ok) throw new HttpError(429, "rate_limited");
       let raw: unknown;
       try {
         raw = await req.json();
@@ -44,19 +53,19 @@ export function handler<S extends z.ZodType>(route: string, schema: S, fn: (body
       if (!parsed.success) throw new HttpError(400, "invalid_request");
       const res = await fn(parsed.data, { requestId });
       status = res.status;
-      return res;
+      return withCookie(res);
     } catch (err) {
       if (err instanceof HttpError) {
         status = err.status;
-        return json({ error: err.code }, err.status);
+        return withCookie(json({ error: err.code }, err.status));
       }
       if (err instanceof AiError && err.type === "cap_reached") {
         status = 503;
-        return json({ error: "service_busy" }, 503);
+        return withCookie(json({ error: "service_busy" }, 503));
       }
       status = 502;
       log.error({ requestId, route, errorType: err instanceof AiError ? err.type : "unhandled" });
-      return json({ error: "generation_failed" }, 502);
+      return withCookie(json({ error: "generation_failed" }, 502));
     } finally {
       log.info({ requestId, route, status, durationMs: Date.now() - started });
     }
