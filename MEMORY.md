@@ -33,7 +33,7 @@ Running log of what's happened in this repo, for quick orientation at the start 
 - T-18 accessibility pass (axe).
 - T-31/T-32 language picker and interface localisation.
 - T-20 voice (cut 2nd).
-- T-21 on-behalf-of child thresholds UI. Ask the product owner whether to show an age band for "someone else".
+- T-21 on-behalf-of child thresholds UI. Age band for "someone else" done 2026-10-21.
 - T-22 Tier A review.
 - T-23/T-24 accounts and saved history (cut 3rd).
 - T-25 cap alerts and admin usage page.
@@ -44,10 +44,10 @@ Running log of what's happened in this repo, for quick orientation at the start 
 - T-35 is effectively done inside the gate (PRD 9.8 second pass).
 
 **Waiting on the product owner:**
-- Copy review: all prompts in `src/lib/ai/prompts/`, everything under `content/`, and the `copy.ts` files under `src/components/*` and `src/lib/pdf/`.
+- Copy approved 2026-10-21. New since then, needs a look: crisis continue check text (`content/urgent-messages/*`), breathing rules, `gate-classifier.v2.md`.
 - Native-speaker review of the Tier A content. Least confidence: Twi, Krio, Guyanese.
 - ~~A transparent logo export.~~ Not needed: the supplied PNG is already transparent; the real icon is now used (public/brand/logo-mark.png).
-- Open clinical questions for the adviser: emergency vs crisis precedence; `continue_after_ack` for crisis; child thresholds and the unknown-age default; breathing difficulty as urgent or emergency; a language-line note for Samaritans.
+- Open clinical questions: emergency vs crisis (explained the current split; proposed a Samaritans line on the emergency screen when self-harm is detected, awaiting yes/no); child thresholds and unknown-age default (suggestion sent, awaiting approval); a language-line note for Samaritans. Answered 2026-10-21: crisis continue made harder; breathing split (see DECISIONS.md).
 
 **Gotchas:**
 - There is no `OPENAI_API_KEY` in the cloud container. Model calls are tested with fakes, and the gate fails closed to `uncertain`. Real-model checks need a local `.env.local` with `OPENAI_API_KEY`.

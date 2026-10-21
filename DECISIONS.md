@@ -100,3 +100,10 @@ Suggested format per entry:
 **Why:** product owner's answers, 2026-10-21.
 **Affects:** FR-09, FR-05, `src/lib/prepare/state.ts`, `src/components/prepare/*`, `src/components/safety/UrgentGate.*`, `src/lib/content/schemas.ts`, `content/urgent-messages/*`, `src/components/ui/LogoMark.tsx`.
 **Alternatives considered:** a timed delay before the crisis button enables (friction without meaning, and hard for screen-reader users); a hold-to-confirm gesture (motor-accessibility cost).
+
+## Breathing: can't breathe = emergency, difficulty = urgent — 2026-10-21
+
+**Decision:** Product owner: "inability to breathe is an emergency, breathing difficult is urgent." Emergency keeps: can't breathe / can't catch breath, not breathing, choking, gasping or fighting for breath, blue or grey lips. Urgent (new `*.breathing.difficult` rules, en/jam/gyn/trf/ht/pcm; hi and tw already had them): struggling to breathe, difficulty or trouble breathing, hard to breathe, short of breath, breathless. Negated letter wording ("denies shortness of breath") doesn't fire. Unchanged: chest pain with breathlessness (emergency via the chest-pain rule), and child rules (a baby or child under 5 struggling to breathe is still emergency). Gate classifier prompt bumped to v2 to match.
+**Why:** product-owner answer to the open clinical question.
+**Affects:** `content/urgency-rules/*`, `src/lib/ai/prompts/gate-classifier.v2.md`, `tests/urgency/rules.test.ts`.
+**Alternatives considered:** treating gasping / fighting for breath as urgent (they describe barely getting air, so kept with "can't breathe" — flagged to the product owner).
