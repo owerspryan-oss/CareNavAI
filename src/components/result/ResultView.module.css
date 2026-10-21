@@ -1,0 +1,381 @@
+/* Result view (DESIGN_SYSTEM.md §7, mockup screen 3). */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  max-width: 32rem;
+  margin: 0 auto;
+}
+
+.main {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding: var(--space-2) var(--space-4) var(--space-6);
+}
+
+.intro {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.title {
+  font-size: var(--text-display-size);
+  line-height: var(--text-display-leading);
+  letter-spacing: var(--text-display-tracking);
+  font-weight: 700;
+  scroll-margin-top: 4rem;
+}
+
+.lead {
+  color: var(--color-ink-muted);
+}
+
+.caption {
+  font-size: var(--text-caption-size);
+  line-height: var(--text-caption-leading);
+  letter-spacing: var(--text-caption-tracking);
+  color: var(--color-ink-muted);
+  font-weight: 600;
+}
+
+.bannerLine {
+  display: block;
+}
+.bannerLine + .bannerLine {
+  margin-top: var(--space-1);
+  font-weight: 600;
+}
+
+/* The panel swaps on tab change: a short materialize so the switch reads as the same card, new text. */
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  animation: panel-in 0.25s ease-out both;
+}
+
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+/* Summary card: one surface, divided rows (mockup). */
+
+.card {
+  display: grid;
+  padding: var(--space-1) var(--space-4);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  box-shadow:
+    inset 0 0 0 1px var(--color-border),
+    var(--shadow-card);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr);
+  gap: var(--space-3);
+  padding: var(--space-4) 0;
+}
+
+.row + .row {
+  border-top: 1px solid var(--color-border);
+}
+
+.badge {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radius-badge);
+  background: var(--color-teal-100);
+  color: var(--color-teal-500);
+}
+.badge[data-tint="coral"] {
+  background: var(--color-coral-100);
+  color: var(--color-coral-600);
+}
+
+.rowBody {
+  display: grid;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.rowHeading,
+.blockHeading {
+  font-size: var(--text-caption-size);
+  line-height: var(--text-caption-leading);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--color-ink-muted);
+}
+
+.rowContent {
+  overflow-wrap: anywhere;
+}
+
+.list {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0;
+  padding-inline-start: 1.25rem;
+}
+
+.notMentioned {
+  color: var(--color-ink-muted);
+  font-style: italic;
+}
+
+.hl {
+  background: var(--color-highlight-bg);
+  color: inherit;
+  border-radius: 0.25rem;
+  padding: 0 0.125rem;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* "What you told us" disclosure chip + quote card (AC-01.5). */
+
+.disclosure {
+  margin-top: var(--space-2);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 2.75rem;
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-muted);
+  box-shadow: inset 0 0 0 1px var(--color-border);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--spring-default-duration) var(--ease-spring-default);
+}
+.chip::-webkit-details-marker {
+  display: none;
+}
+.chip:active {
+  transform: scale(0.97);
+  transition-duration: 0.1s;
+}
+
+.chipIcon {
+  width: 1.125rem;
+  height: 1.125rem;
+  color: var(--color-ink-muted);
+}
+
+.chipChevron {
+  width: 1rem;
+  height: 1rem;
+  transition: transform var(--spring-default-duration) var(--ease-spring-default);
+}
+.disclosure[open] .chipChevron {
+  transform: rotate(180deg);
+}
+
+.disclosure[open] .quote {
+  margin-top: var(--space-3);
+  animation: materialize var(--spring-default-duration) var(--ease-spring-default) both;
+}
+
+.quote {
+  display: grid;
+  grid-template-columns: 1.75rem minmax(0, 1fr);
+  column-gap: var(--space-3);
+  row-gap: var(--space-1);
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-card);
+  background: var(--color-surface-muted);
+}
+
+.quoteIcon {
+  grid-row: span 2;
+  width: 1.75rem;
+  height: 1.75rem;
+  color: var(--color-ink-muted);
+  opacity: 0.55;
+}
+
+.quoteHeading {
+  grid-column: 2;
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+
+.quoteText {
+  grid-column: 2;
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 0.9375rem;
+  color: var(--color-ink);
+}
+
+/* Quote cards without an icon (follow-up answers) use the full width. */
+.block > .quote {
+  grid-template-columns: minmax(0, 1fr);
+}
+.block > .quote > * {
+  grid-column: 1;
+}
+
+.block {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.plainCard {
+  padding: var(--space-4);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  box-shadow:
+    inset 0 0 0 1px var(--color-border),
+    var(--shadow-card);
+}
+
+/* "Does this match what you meant?" (AC-03.5) */
+
+.matchCard {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-card);
+  background: var(--color-teal-100);
+}
+
+.matchQuestion {
+  font-size: var(--text-title-size);
+  line-height: var(--text-title-leading);
+  letter-spacing: var(--text-title-tracking);
+  font-weight: 700;
+}
+
+.matchActions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.matchThanks {
+  font-weight: 600;
+}
+
+/* Service routes: static content, contact links as pills. */
+
+.routes {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.route {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  box-shadow: inset 0 0 0 1px var(--color-border);
+}
+
+.routeName {
+  font-weight: 700;
+}
+
+.routeText {
+  color: var(--color-ink-muted);
+  font-size: 0.9375rem;
+}
+
+.routeContacts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.routeLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-muted);
+  box-shadow: inset 0 0 0 1px var(--color-border);
+  color: var(--color-teal-500);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.disclaimer {
+  display: grid;
+  gap: var(--space-2);
+  font-size: var(--text-caption-size);
+  line-height: var(--text-caption-leading);
+  letter-spacing: var(--text-caption-tracking);
+  color: var(--color-ink-muted);
+}
+
+.footer {
+  position: sticky;
+  bottom: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4) calc(var(--space-4) + env(safe-area-inset-bottom));
+  background: color-mix(in srgb, var(--color-bg) 72%, transparent);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+}
+
+@keyframes materialize {
+  from {
+    opacity: 0;
+    filter: blur(4px);
+    transform: scale(0.98);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel,
+  .disclosure[open] .quote {
+    animation: fade 0.2s linear both;
+  }
+  .chip:active {
+    transform: none;
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  .footer {
+    background: var(--color-bg);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border-top: 1px solid var(--color-border);
+  }
+}

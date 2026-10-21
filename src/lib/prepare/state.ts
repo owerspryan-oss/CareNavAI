@@ -4,7 +4,8 @@ import { RELATIONSHIPS } from "@/lib/ai/schemas";
 /*
  * Journey 1 guided-step state (FR-21, PRD §3.2 steps 1–6 + 8).
  * Browser memory only: guests are stateless (CLAUDE.md rule 9), so nothing here is persisted.
- * Step 7 (dynamic follow-ups, FR-22 / T-10) slots in between "worries" and "review" when built.
+ * Follow-ups (FR-22), the summary call and the result (T-13) run after "review" and are held in
+ * PrepareFlow's local state; this reducer stays on the review step meanwhile, so "Not quite" returns there.
  */
 
 export const STEP_IDS = ["who", "concern", "timing", "changes", "medicines", "worries", "review"] as const;
@@ -91,6 +92,8 @@ export type PrepareAction =
   | { type: "advance"; screened: Partial<Record<TextField, string>> }
   /** Move on after the user acknowledged an urgent message (continue_after_ack). */
   | { type: "advanceAfterUrgent"; screened: Partial<Record<TextField, string>>; level: Exclude<SafetyLevel, "clear"> }
+  /** The user acknowledged an urgent message after review (follow-ups or summary re-screen). Stays set. */
+  | { type: "acknowledgeUrgent"; level: Exclude<SafetyLevel, "clear"> }
   | { type: "back" }
   | { type: "editFromReview"; step: StepId }
   | { type: "reset" };
@@ -125,6 +128,8 @@ export function prepareReducer(state: PrepareState, action: PrepareAction): Prep
       const advanced = prepareReducer(state, { type: "advance", screened: action.screened });
       return { ...advanced, urgentAcknowledged: state.urgentAcknowledged ?? action.level };
     }
+    case "acknowledgeUrgent":
+      return { ...state, urgentAcknowledged: state.urgentAcknowledged ?? action.level };
     case "back":
       return { ...state, stepIndex: Math.max(state.stepIndex - 1, 0) };
     case "editFromReview":
@@ -159,6 +164,14 @@ export function unscreenedFields(state: PrepareState): TextField[] {
   );
 }
 
+/** `PrepareAnswers.forWhom.label` is capped at 60 characters by the request schema. */
+export const WHO_LABEL_MAX = 60;
+
+/** Per-field character limit: MAX_TEXT_CHARS, or less where the request schema is stricter. */
+export function fieldMax(field: TextField, maxChars: number): number {
+  return field === "whoLabel" ? Math.min(maxChars, WHO_LABEL_MAX) : maxChars;
+}
+
 export type StepErrors = Partial<Record<TextField | keyof StructuredAnswers, string>>;
 
 export interface ValidationMessages {
@@ -181,8 +194,9 @@ export function validateStep(
   const t = state.text;
 
   for (const field of TEXT_FIELDS) {
-    if (FIELD_STEP[field] === step && isFieldActive(state, field) && t[field].length > maxChars) {
-      errors[field] = msg.tooLong(maxChars, t[field].length);
+    const max = fieldMax(field, maxChars);
+    if (FIELD_STEP[field] === step && isFieldActive(state, field) && t[field].length > max) {
+      errors[field] = msg.tooLong(max, t[field].length);
     }
   }
 

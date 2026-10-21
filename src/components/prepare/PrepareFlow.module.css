@@ -128,3 +128,78 @@
   color: var(--color-ink-muted);
   font-style: italic;
 }
+
+/* Follow-ups (step 7) */
+
+.followUpList {
+  display: grid;
+  gap: var(--space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.followUpItem {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.followUpQuestion {
+  font-weight: 600;
+}
+
+.followUpRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.followUpRow[data-align="end"] {
+  justify-content: flex-end;
+}
+
+/* Summary loading and error states */
+
+.status {
+  display: grid;
+  gap: var(--space-3);
+  padding-top: var(--space-6);
+  text-align: center;
+  justify-items: center;
+}
+
+.statusSpinner {
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-bottom: var(--space-3);
+  border-radius: 50%;
+  border: 3px solid var(--color-coral-100);
+  border-top-color: var(--color-coral-500);
+  animation: status-spin 0.9s linear infinite;
+}
+
+@keyframes status-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes status-pulse {
+  50% {
+    opacity: 0.4;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .statusSpinner {
+    animation: status-pulse 1.6s ease-in-out infinite;
+  }
+}
+
+.statusActions {
+  display: grid;
+  gap: var(--space-3);
+  width: 100%;
+  margin-top: var(--space-4);
+}
