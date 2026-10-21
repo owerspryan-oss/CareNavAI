@@ -1,14 +1,10 @@
+import fs from "node:fs";
+import path from "node:path";
 import type { z } from "zod";
 import type { SafetyLevel, UrgentMessageKey } from "@/lib/ai/schemas";
 import { env } from "@/lib/config/env";
+import { log } from "@/lib/log/logger";
 import { urgentMessageKeyFor, type UrgentContent } from "@/lib/safety/urgent-content";
-import disclaimersEn from "../../../content/disclaimers/en.json";
-import serviceRoutesEn from "../../../content/service-routes/en.json";
-import urgentEn from "../../../content/urgent-messages/en.json";
-import urgentHi from "../../../content/urgent-messages/hi.json";
-import urgentJam from "../../../content/urgent-messages/jam.json";
-import urgentPcm from "../../../content/urgent-messages/pcm.json";
-import urgentTw from "../../../content/urgent-messages/tw.json";
 import {
   disclaimersFileSchema,
   serviceRoutesFileSchema,
@@ -22,18 +18,38 @@ import {
 export * from "./schemas";
 export { urgentMessageKeyFor };
 
-// Static, pre-approved content (ADR-004). Files are bundled at build time and
-// validated on first use. English is the master and the fallback for any
-// language without its own file (AC-05.8).
+// Static, pre-approved content (ADR-004). Files are read from content/<kind>/<lang>.json
+// at run time and validated on first use, so adding a language needs only a content file,
+// no code change (AC-28.4). English is the master and the fallback for any language
+// without its own file (AC-05.8). Server-only: this module reads the file system; client
+// components get urgent content as props built by getUrgentContent.
 
-/** Raw file registry, keyed by language code. Add a language by adding its import here. */
-export const CONTENT_FILES = {
-  urgentMessages: { en: urgentEn, jam: urgentJam, pcm: urgentPcm, tw: urgentTw, hi: urgentHi },
-  serviceRoutes: { en: serviceRoutesEn },
-  disclaimers: { en: disclaimersEn },
-} as const satisfies Record<string, { en: unknown } & Record<string, unknown>>;
+/** Content directory per kind, under <project root>/content. */
+const CONTENT_DIRS = {
+  urgentMessages: "urgent-messages",
+  serviceRoutes: "service-routes",
+  disclaimers: "disclaimers",
+} as const;
 
-type Kind = keyof typeof CONTENT_FILES;
+type Kind = keyof typeof CONTENT_DIRS;
+const contentDir = (kind: Kind) => path.join(process.cwd(), "content", CONTENT_DIRS[kind]);
+
+const languagesCache = new Map<Kind, readonly string[]>();
+
+/** Language codes that have a file of this kind (the <lang> in content/<kind>/<lang>.json). */
+export function contentLanguages(kind: Kind): readonly string[] {
+  let langs = languagesCache.get(kind);
+  if (!langs) {
+    langs = fs
+      .readdirSync(contentDir(kind))
+      .filter((f) => f.endsWith(".json"))
+      .map((f) => f.slice(0, -".json".length))
+      .sort();
+    languagesCache.set(kind, langs);
+  }
+  return langs;
+}
+
 const SCHEMAS = {
   urgentMessages: urgentMessagesFileSchema,
   serviceRoutes: serviceRoutesFileSchema,
@@ -57,12 +73,31 @@ export interface Served<T> {
   fellBack: boolean;
 }
 
+/** Read and validate one file. Throws if it is unreadable, malformed, or names another language. */
+function parseFile<K extends Kind>(kind: K, lang: string): Parsed[K] {
+  const raw: unknown = JSON.parse(fs.readFileSync(path.join(contentDir(kind), `${lang}.json`), "utf8"));
+  const parsed = SCHEMAS[kind].parse(raw) as Parsed[K];
+  if (parsed.language !== lang) throw new Error(`content file ${CONTENT_DIRS[kind]}/${lang}.json names language ${parsed.language}`);
+  return parsed;
+}
+
 function load<K extends Kind>(kind: K, lang: string | null | undefined): Served<Parsed[K]> {
   const requested = contentLanguage(lang);
-  const files: Record<string, unknown> = CONTENT_FILES[kind];
-  const servedLanguage = Object.hasOwn(files, requested) ? requested : "en";
+  const servedLanguage = contentLanguages(kind).includes(requested) ? requested : "en";
   const key = `${kind}:${servedLanguage}`;
-  if (!cache.has(key)) cache.set(key, SCHEMAS[kind].parse(files[servedLanguage]));
+  if (!cache.has(key)) {
+    try {
+      cache.set(key, parseFile(kind, servedLanguage));
+    } catch (err) {
+      // The English master must load: a broken master is a deploy bug, so it throws.
+      if (servedLanguage === "en") throw err;
+      // A broken translation must never stop the static message being shown: serve English
+      // and say so (fellBack), and record it without any file content.
+      log.error({ route: "content", step: kind, status: "invalid_content_file", languageCode: servedLanguage, errorType: "content_invalid" });
+      cache.set(key, null);
+    }
+  }
+  if (cache.get(key) === null) return { ...load(kind, "en"), fellBack: true };
   return { content: cache.get(key) as Parsed[K], servedLanguage, fellBack: servedLanguage !== requested };
 }
 

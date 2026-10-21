@@ -1,5 +1,5 @@
 {
-  "$comment": "Seed urgency scenarios (PRD Appendix B, DRAFT). U-16 is a follow-up test, covered in tests/unit/followups.test.ts. Expected levels need clinical-adviser confirmation.",
+  "$comment": "Seed urgency scenarios (PRD Appendix B, DRAFT). U-16 is a follow-up test, covered in tests/unit/followups.test.ts. Expected levels need clinical-adviser confirmation. TW-, HI-, HT-, KRI-, GYN- and TRF- scenarios (T-33, FR-05) follow the PRD per-language minimum shape (3 emergency, 1 crisis, 1 child, 2 negative controls, 1 ambiguous; HI also has U-17): their wording is a DRAFT written without a native speaker and needs native-speaker review.",
   "scenarios": [
     {
       "id": "U-01",
@@ -154,6 +154,342 @@
       "language": "bn",
       "ageBand": null,
       "expected": "emergency"
+    },
+    {
+      "id": "TW-01",
+      "text": "Me koko mu yɛ me ya na mentumi nhome",
+      "language": "tw",
+      "ageBand": null,
+      "expected": "emergency"
+    },
+    {
+      "id": "TW-02",
+      "text": "Me papa anim akyea na ɔntumi nkasa yie",
+      "language": "tw",
+      "ageBand": "adult",
+      "expected": "emergency"
+    },
+    {
+      "id": "TW-03",
+      "text": "Mogya no nnyae, ɛretu pii",
+      "language": "tw",
+      "ageBand": null,
+      "expected": "emergency"
+    },
+    {
+      "id": "TW-04",
+      "text": "Mepɛ sɛ mewu, mempɛ sɛ mete ase bio",
+      "language": "tw",
+      "ageBand": null,
+      "expected": "crisis"
+    },
+    {
+      "id": "TW-05",
+      "text": "Me akokoaa ho yɛ hyew na ɔnnom nufu",
+      "language": "tw",
+      "ageBand": "under_1",
+      "expected": "urgent"
+    },
+    {
+      "id": "TW-06",
+      "text": "Mepɛ sɛ mebisa me nnuru ho asɛm",
+      "language": "tw",
+      "ageBand": null,
+      "expected": "clear"
+    },
+    {
+      "id": "TW-07",
+      "text": "Mempɛ sɛ mewu, mepɛ sɛ mete me nsɛm ase",
+      "language": "tw",
+      "ageBand": null,
+      "expected": "clear"
+    },
+    {
+      "id": "TW-08",
+      "text": "Me ti rebu me kakra na me ho nte me nka",
+      "language": "tw",
+      "ageBand": null,
+      "expected": "clear_or_uncertain"
+    },
+    {
+      "id": "HI-01",
+      "text": "Mere seene mein dard hai aur saans nahi aa rahi",
+      "language": "hi",
+      "ageBand": null,
+      "expected": "emergency"
+    },
+    {
+      "id": "HI-02",
+      "text": "पापा का चेहरा एक तरफ टेढ़ा हो गया है और वो ठीक से बोल नहीं पा रहे",
+      "language": "hi",
+      "ageBand": "adult",
+      "expected": "emergency"
+    },
+    {
+      "id": "HI-03",
+      "text": "खून रुक नहीं रहा, बहुत खून बह रहा है",
+      "language": "hi",
+      "ageBand": null,
+      "expected": "emergency"
+    },
+    {
+      "id": "HI-04",
+      "text": "मैं अब जीना नहीं चाहता, मैं मरना चाहता हूँ",
+      "language": "hi",
+      "ageBand": null,
+      "expected": "crisis"
+    },
+    {
+      "id": "HI-05",
+      "text": "मेरे 3 हफ्ते के बच्चे को बुखार है और वो दूध नहीं पी रहा",
+      "language": "hi",
+      "ageBand": "under_1",
+      "expected": "urgent"
+    },
+    {
+      "id": "HI-06",
+      "text": "मुझे दो हफ्ते से सूखी खांसी है और थकान लगती है",
+      "language": "hi",
+      "ageBand": null,
+      "expected": "clear"
+    },
+    {
+      "id": "HI-07",
+      "text": "मैं मरना नहीं चाहता, बस अपनी रिपोर्ट समझना चाहता हूँ",
+      "language": "hi",
+      "ageBand": null,
+      "expected": "clear"
+    },
+    {
+      "id": "HI-08",
+      "text": "आज थोड़ा चक्कर आ रहा है और मन ठीक नहीं लग रहा",
+      "language": "hi",
+      "ageBand": null,
+      "expected": "clear_or_uncertain"
+    },
+    {
+      "id": "HT-01",
+      "text": "Pwatrin mwen ap fè m mal epi mwen pa ka respire",
+      "language": "ht",
+      "ageBand": null,
+      "expected": "emergency"
+    },
+    {
+      "id": "HT-02",
+      "text": "Bouch papa m vin kwochi epi li pa ka pale byen",
+      "language": "ht",
+      "ageBand": "adult",
+      "expected": "emergency"
+    },
+    {
+      "id": "HT-03",
+      "text": "Li tonbe, li pèdi konesans epi li pa reveye",
+      "language": "ht",
+      "ageBand": null,
+      "expected": "emergency"
+    },
+    {
+      "id": "HT-04",
+      "text": "Mwen pa vle viv ankò, mwen vle mouri",
+      "language": "ht",
+      "ageBand": null,
+      "expected": "crisis"
+    },
+    {
+      "id": "HT-05",
+      "text": "Bebe m nan gen lafyèv epi li pa vle tete",
+      "language": "ht",
+      "ageBand": "under_1",
+      "expected": "urgent"
+    },
+    {
+      "id": "HT-06",
+      "text": "Mwen gen yon ti tous depi de semèn epi mwen fatige",
+      "language": "ht",
+      "ageBand": null,
+      "expected": "clear"
+    },
+    {
+      "id": "HT-07",
+      "text": "Mwen pa vle mouri, mwen jis vle konprann rezilta yo",
+      "language": "ht",
+      "ageBand": null,
+      "expected": "clear"
+    },
+    {
+      "id": "HT-08",
+      "text": "Mwen santi m yon ti jan toudi jodi a",
+      "language": "ht",
+      "ageBand": null,
+      "expected": "clear_or_uncertain"
+    },
+    {
+      "id": "KRI-01",
+      "text": "Mi chɛst de at mi bad ɛn a nɔ ebul blo",
+      "language": "kri",
+      "ageBand": null,
+      "expected": "emergency"
+    },
+    {
+      "id": "KRI-02",
+      "text": "Mi papa in fes dɔn twis ɛn i nɔ ebul tɔk fayn",
+      "language": "kri",
+      "ageBand": "adult",
+      "expected": "emergency"
+    },
+    {
+      "id": "KRI-03",
+      "text": "Di blɔd nɔ de stɔp",
+      "language": "kri",
+      "ageBand": null,
+      "expected": "emergency"
+    },
+    {
+      "id": "KRI-04",
+      "text": "A nɔ wan liv igen, a wan day",
+      "language": "kri",
+      "ageBand": null,
+      "expected": "crisis"
+    },
+    {
+      "id": "KRI-05",
+      "text": "Mi bebi in skin hot ɛn i nɔ de sɔk",
+      "language": "kri",
+      "ageBand": "under_1",
+      "expected": "urgent"
+    },
+    {
+      "id": "KRI-06",
+      "text": "Mi ni de at mi we a de go ɔp di stɛp",
+      "language": "kri",
+      "ageBand": null,
+      "expected": "clear"
+    },
+    {
+      "id": "KRI-07",
+      "text": "A nɔ wan day, a jɔs wan ɔndastand wetin di dɔktɔ se",
+      "language": "kri",
+      "ageBand": null,
+      "expected": "clear"
+    },
+    {
+      "id": "KRI-08",
+      "text": "Mi ed de tɔn smɔl ɛn a nɔ fil fayn tide",
+      "language": "kri",
+      "ageBand": null,
+      "expected": "clear_or_uncertain"
+    },
+    {
+      "id": "GYN-01",
+      "text": "Me chest a hurt me bad an me cyan get me breath",
+      "language": "gyn",
+      "ageBand": null,
+      "expected": "emergency"
+    },
+    {
+      "id": "GYN-02",
+      "text": "Granny face gone to one side an she cyan talk proper",
+      "language": "gyn",
+      "ageBand": "adult",
+      "expected": "emergency"
+    },
+    {
+      "id": "GYN-03",
+      "text": "He drop down an he ain wakin up",
+      "language": "gyn",
+      "ageBand": null,
+      "expected": "emergency"
+    },
+    {
+      "id": "GYN-04",
+      "text": "Me tired fuh live, me wan fuh dead",
+      "language": "gyn",
+      "ageBand": null,
+      "expected": "crisis"
+    },
+    {
+      "id": "GYN-05",
+      "text": "De baby skin hot hot an she nah tek de bottle",
+      "language": "gyn",
+      "ageBand": "under_1",
+      "expected": "urgent"
+    },
+    {
+      "id": "GYN-06",
+      "text": "Me knee does hurt me when me climb de step dem",
+      "language": "gyn",
+      "ageBand": null,
+      "expected": "clear"
+    },
+    {
+      "id": "GYN-07",
+      "text": "Me wan ask bout me pressure tablet dem",
+      "language": "gyn",
+      "ageBand": null,
+      "expected": "clear"
+    },
+    {
+      "id": "GYN-08",
+      "text": "Me head a spin lil bit an me nah feel meself today",
+      "language": "gyn",
+      "ageBand": null,
+      "expected": "clear_or_uncertain"
+    },
+    {
+      "id": "TRF-01",
+      "text": "Meh chest paining meh and I cyah breathe",
+      "language": "trf",
+      "ageBand": null,
+      "expected": "emergency"
+    },
+    {
+      "id": "TRF-02",
+      "text": "She face gone crooked and she cyah talk proper",
+      "language": "trf",
+      "ageBand": "adult",
+      "expected": "emergency"
+    },
+    {
+      "id": "TRF-03",
+      "text": "The blood eh stoppin at all, it pourin out",
+      "language": "trf",
+      "ageBand": null,
+      "expected": "emergency"
+    },
+    {
+      "id": "TRF-04",
+      "text": "I doh want to live no more, I want to dead",
+      "language": "trf",
+      "ageBand": null,
+      "expected": "crisis"
+    },
+    {
+      "id": "TRF-05",
+      "text": "Meh baby hot hot and she eh feedin",
+      "language": "trf",
+      "ageBand": "under_1",
+      "expected": "urgent"
+    },
+    {
+      "id": "TRF-06",
+      "text": "Meh knee does hurt meh when I climbing the stairs",
+      "language": "trf",
+      "ageBand": null,
+      "expected": "clear"
+    },
+    {
+      "id": "TRF-07",
+      "text": "I trying to get fit, I walking every morning",
+      "language": "trf",
+      "ageBand": null,
+      "expected": "clear"
+    },
+    {
+      "id": "TRF-08",
+      "text": "I feeling a lil dizzy and not meself today",
+      "language": "trf",
+      "ageBand": null,
+      "expected": "clear_or_uncertain"
     }
   ]
 }

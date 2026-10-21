@@ -20,7 +20,7 @@ const db = openDb(":memory:");
 const rows: string[] = [];
 afterAll(() => {
   const live = process.env.OPENAI_API_KEY ? "live models" : "NO API KEY: classifier/moderation fail closed";
-  process.stdout.write(`\nUrgency matrix (${live})\n${"id".padEnd(6)}${"lang".padEnd(9)}${"expected".padEnd(20)}${"got".padEnd(11)}result  failed layers\n${rows.join("\n")}\n\n`);
+  process.stdout.write(`\nUrgency matrix (${live})\n${"id".padEnd(8)}${"lang".padEnd(9)}${"expected".padEnd(20)}${"got".padEnd(11)}result  failed layers\n${rows.join("\n")}\n\n`);
   db.close();
 });
 
@@ -36,7 +36,7 @@ describe("urgency matrix (T-16)", () => {
   it.each(scenarios)("$id ($language) expects $expected", async (s) => {
     const r = await screen(s.text, { step: "step_text", ageBand: s.ageBand === "adult" ? null : s.ageBand, languageHint: null, endpoint: "urgency-runner" }, { db, capGbp: Number.POSITIVE_INFINITY });
     const v = verdict(s.expected, r.level);
-    rows.push(`${s.id.padEnd(6)}${s.language.padEnd(9)}${s.expected.padEnd(20)}${r.level.padEnd(11)}${v.padEnd(8)}${r.failedLayers.join(",")}`);
+    rows.push(`${s.id.padEnd(8)}${s.language.padEnd(9)}${s.expected.padEnd(20)}${r.level.padEnd(11)}${v.padEnd(8)}${r.failedLayers.join(",")}`);
     // Over-caution is recorded, not failed; a miss is never acceptable.
     expect(v).not.toBe("MISS");
   }, 60_000);

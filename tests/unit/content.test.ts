@@ -2,9 +2,10 @@ import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { SAFETY_LEVELS, urgentMessageKeySchema } from "@/lib/ai/schemas";
+import { languagesConfig } from "@/lib/config";
 import {
-  CONTENT_FILES,
   contentLanguage,
+  contentLanguages,
   disclaimersFileSchema,
   draftLabelEnabled,
   getDisclaimers,
@@ -34,12 +35,17 @@ function phoneNumbersIn(file: UrgentMessagesFile, key: (typeof urgentMessageKeyS
 }
 
 describe("static content files (T-05)", () => {
-  it("ships the English master plus jam, pcm, tw and hi urgent messages", () => {
-    expect(urgentFiles.map(([l]) => l).sort()).toEqual(["en", "hi", "jam", "pcm", "tw"]);
+  it("ships the English master plus an urgent-message file for every Tier A target (v0.3 A4)", () => {
+    expect(urgentFiles.map(([l]) => l).sort()).toEqual(["en", "gyn", "hi", "ht", "jam", "kri", "pcm", "trf", "tw"]);
+    const tierATargets = languagesConfig.languages.filter((l) => l.tierATarget).map((l) => l.code);
+    for (const code of tierATargets) expect(urgentFiles.map(([l]) => l), code).toContain(code);
   });
 
-  it("registers every urgent-message file on disk in the loader", () => {
-    expect(Object.keys(CONTENT_FILES.urgentMessages).sort()).toEqual(urgentFiles.map(([l]) => l).sort());
+  it("discovers every urgent-message file on disk without a code change (AC-28.4)", () => {
+    expect(contentLanguages("urgentMessages")).toEqual(urgentFiles.map(([l]) => l).sort());
+    for (const [lang] of urgentFiles) {
+      expect(getUrgentMessage("emergency", lang)).toMatchObject({ servedLanguage: lang, fellBack: false });
+    }
   });
 
   it.each(urgentFiles)("%s: parses, names its own language, and has all three messages", (lang, file) => {

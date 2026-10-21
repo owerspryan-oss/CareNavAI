@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import path from "node:path";
 import { z } from "zod";
 import {
   AGE_BANDS,
@@ -7,27 +9,49 @@ import {
   type SafetyLevel,
 } from "@/lib/ai/schemas";
 import { contentLanguage } from "@/lib/content";
-import childRulesJson from "../../../content/urgency-rules/child.json";
-import enRulesJson from "../../../content/urgency-rules/en.json";
-import jamRulesJson from "../../../content/urgency-rules/jam.json";
-import pcmRulesJson from "../../../content/urgency-rules/pcm.json";
-import strokeRulesJson from "../../../content/urgency-rules/stroke.json";
 import { mostCautious } from "./levels";
 
 // Gate layer 1: deterministic red-flag rules (FR-05, PRD 9.1, 9.4). Pure, offline,
 // and never throws: any internal error returns `uncertain` (fail closed).
 // Input must already be redacted (see redact.ts).
+//
+// Rule lists are read from content/urgency-rules/*.json at run time, so adding a language
+// needs only a content file, no code change (AC-28.4). <lang>.json is that language's list;
+// child.json and stroke.json are shared lists. Server-only: this module reads the file system.
 
-/** Language rule lists. A language is "with a rules list" (PRD 9.8) only if it is here. */
-const LANGUAGE_RULE_FILES = { en: enRulesJson, jam: jamRulesJson, pcm: pcmRulesJson } as const;
-export const RULES_LANGUAGES = Object.keys(LANGUAGE_RULE_FILES) as (keyof typeof LANGUAGE_RULE_FILES)[];
+const RULES_DIR = path.join(process.cwd(), "content", "urgency-rules");
+const SHARED_RULE_FILES: readonly string[] = ["child", "stroke"];
+const REQUIRED_RULE_FILES: readonly string[] = ["en", ...SHARED_RULE_FILES];
+
+/** Stems of the *.json files in content/urgency-rules, sorted. Throws if the directory cannot be read. */
+function ruleFileStems(): string[] {
+  return fs
+    .readdirSync(RULES_DIR)
+    .filter((f) => f.endsWith(".json"))
+    .map((f) => f.slice(0, -".json".length))
+    .sort();
+}
+
+function listRuleLanguages(): string[] {
+  try {
+    return ruleFileStems().filter((s) => !SHARED_RULE_FILES.includes(s));
+  } catch {
+    // No directory: no language counts as having a list (PRD 9.8 extra caution everywhere),
+    // and runRules fails closed when it tries to load the lists.
+    return [];
+  }
+}
+
+/** Languages with their own rules list (PRD 9.8): one per content/urgency-rules/<lang>.json. */
+export const RULES_LANGUAGES: readonly string[] = listRuleLanguages();
 
 const RULE_LEVELS = ["emergency", "urgent", "crisis"] as const;
 const ruleLevelSchema = z.enum(RULE_LEVELS);
 
 /** Whole-word match on normalised text: letters, combining marks and digits count as word characters. */
 export function compilePattern(pattern: string): RegExp {
-  return new RegExp(`(?<![\\p{L}\\p{M}\\p{N}])(?:${pattern})(?![\\p{L}\\p{M}\\p{N}])`, "u");
+  // NFKC like normaliseForRules, so e.g. Devanagari nukta letters match however they were typed.
+  return new RegExp(`(?<![\\p{L}\\p{M}\\p{N}])(?:${pattern.normalize("NFKC")})(?![\\p{L}\\p{M}\\p{N}])`, "u");
 }
 
 const patternSchema = z.string().min(1).refine((p) => {
@@ -105,12 +129,32 @@ function compileRule<T extends z.infer<typeof languageRulesFileSchema>["rules"][
   };
 }
 
+const readRuleFile = (stem: string): unknown =>
+  JSON.parse(fs.readFileSync(path.join(RULES_DIR, `${stem}.json`), "utf8"));
+
+/**
+ * Read, validate and compile every rules file. A missing required file, an unreadable or
+ * malformed file, or a file whose language/kind does not match its name throws, so runRules
+ * fails closed to `uncertain` instead of silently running without that list. Only a
+ * successful load is cached.
+ */
 function getCompiled(): Compiled {
   if (compiled) return compiled;
-  const languageFiles = [...Object.values(LANGUAGE_RULE_FILES), strokeRulesJson].map((f) =>
-    languageRulesFileSchema.parse(f),
-  );
-  const childFile = childRulesFileSchema.parse(childRulesJson);
+  const stems = ruleFileStems();
+  for (const required of REQUIRED_RULE_FILES) {
+    if (!stems.includes(required)) throw new Error(`missing rules file ${required}.json`);
+  }
+  const languageFiles = stems
+    .filter((stem) => stem !== "child")
+    .map((stem) => {
+      const file = languageRulesFileSchema.parse(readRuleFile(stem));
+      const [language, kind] = stem === "stroke" ? ["*", "stroke"] : [stem, "language"];
+      if (file.language !== language || file.kind !== kind) {
+        throw new Error(`rules file ${stem}.json must have language "${language}" and kind "${kind}"`);
+      }
+      return file;
+    });
+  const childFile = childRulesFileSchema.parse(readRuleFile("child"));
   compiled = {
     general: languageFiles.flatMap((f) => f.rules.map(compileRule)),
     child: childFile.rules.map(compileRule),
@@ -142,7 +186,7 @@ function matches(rule: CompiledRule, text: string): boolean {
 /** True when `lang` has its own hand-written rules list (PRD 9.8 / ADR-014). */
 export function hasRulesListFor(lang: string | null | undefined): boolean {
   if (!lang || !lang.trim()) return false;
-  return Object.hasOwn(LANGUAGE_RULE_FILES, contentLanguage(lang));
+  return RULES_LANGUAGES.includes(contentLanguage(lang));
 }
 
 const BAND_ORDER: readonly AgeBand[] = AGE_BANDS; // youngest first
