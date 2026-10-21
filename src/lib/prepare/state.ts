@@ -139,9 +139,17 @@ export function prepareReducer(state: PrepareState, action: PrepareAction): Prep
   }
 }
 
-/** Child thresholds only apply when the user said this is for their child (AC-09.3). */
+/**
+ * Step 1 asks an age band for "My child" (AC-09.3) and "Someone else" (product owner, 2026-10-21),
+ * so child thresholds also apply when someone else's child is described.
+ */
+export function asksAgeBand(relationship: Relationship | null): boolean {
+  return relationship === "parent" || relationship === "other";
+}
+
+/** The age band that counts for the current answers: only when step 1 asked for one. */
 export function effectiveAgeBand(state: PrepareState): AgeBand | null {
-  return state.structured.relationship === "parent" ? state.structured.ageBand : null;
+  return asksAgeBand(state.structured.relationship) ? state.structured.ageBand : null;
 }
 
 /** Fields that count for the current answers (e.g. the "who" label only when it's someone else). */
@@ -203,7 +211,7 @@ export function validateStep(
   switch (step) {
     case "who":
       if (!s.relationship) errors.relationship = msg.chooseOne;
-      else if (s.relationship === "parent" && !s.ageBand) errors.ageBand = msg.chooseAge;
+      else if (asksAgeBand(s.relationship) && !s.ageBand) errors.ageBand = msg.chooseAge;
       break;
     case "concern":
       if (!t.concern.trim()) errors.concern = msg.required;

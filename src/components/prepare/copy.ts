@@ -51,6 +51,7 @@ export const prepareCopy = {
       other: "Someone else",
     } satisfies Record<Relationship, string>,
     ageLegend: "How old is your child?",
+    ageLegendOther: "How old are they?",
     ageBands: {
       under_1: "Under 1",
       "1_to_4": "1 to 4",
@@ -120,6 +121,7 @@ export const prepareCopy = {
     startedPrefix: "Started:",
     patternPrefix: "How often:",
     childAge: (band: string) => `My child, aged ${band}`,
+    otherAge: (band: string) => `aged ${band}`,
     getSummary: "Get my summary",
   },
 

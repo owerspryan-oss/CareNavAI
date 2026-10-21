@@ -58,7 +58,8 @@ function whoText(state: PrepareState): string {
   const base = c.who.options[relationship];
   if (relationship === "self") return base;
   const label = state.text.whoLabel.trim();
-  return label ? `${base}: ${label}` : base;
+  const age = relationship === "other" && ageBand ? c.review.otherAge(c.who.ageBands[ageBand]) : "";
+  return [label ? `${base}: ${label}` : base, age].filter(Boolean).join(", ");
 }
 
 export function ReviewStep({ state, onEdit, locked }: ReviewStepProps) {

@@ -90,6 +90,9 @@ describe("toPrepareAnswers", () => {
 
     const carer = stateWith({ structured: { relationship: "carer" }, text: { concern: "x", whoLabel: " my mum " } });
     expect(toPrepareAnswers(carer).forWhom).toEqual({ relationship: "carer", label: "my mum", ageBand: null });
+
+    const other = stateWith({ structured: { relationship: "other", ageBand: "under_1" }, text: { concern: "x", whoLabel: "my niece" } });
+    expect(toPrepareAnswers(other).forWhom).toEqual({ relationship: "other", label: "my niece", ageBand: "under_1" });
   });
 
   it("includes follow-ups, with skipped or blank answers as null", () => {
@@ -110,7 +113,7 @@ describe("toPrepareAnswers", () => {
 
 describe("who-label limit", () => {
   it("rejects (never truncates) a who-label longer than the request schema allows", () => {
-    const s = stateWith({ structured: { relationship: "other" }, text: { whoLabel: "x".repeat(WHO_LABEL_MAX + 1) } });
+    const s = stateWith({ structured: { relationship: "other", ageBand: "adult" }, text: { whoLabel: "x".repeat(WHO_LABEL_MAX + 1) } });
     expect(validateStep(s, "who", 2000, msg).whoLabel).toBe(`long ${WHO_LABEL_MAX + 1}/${WHO_LABEL_MAX}`);
     expect(validateStep({ ...s, text: { ...s.text, whoLabel: "x".repeat(WHO_LABEL_MAX) } }, "who", 2000, msg)).toEqual({});
   });

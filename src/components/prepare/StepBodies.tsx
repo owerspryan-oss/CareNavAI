@@ -4,6 +4,7 @@ import { AGE_BANDS, RELATIONSHIPS } from "@/lib/ai/schemas";
 import {
   PATTERN_OPTIONS,
   STARTED_OPTIONS,
+  asksAgeBand,
   fieldMax,
   type PrepareState,
   type StepErrors,
@@ -73,10 +74,10 @@ export function WhoStep(p: StepBodyProps) {
         onChange={(relationship) => p.setStructured({ relationship })}
         error={p.errors.relationship}
       />
-      {s.relationship === "parent" && (
+      {asksAgeBand(s.relationship) && (
         <ChoiceGroup
           name="ageBand"
-          legend={c.who.ageLegend}
+          legend={s.relationship === "parent" ? c.who.ageLegend : c.who.ageLegendOther}
           columns={2}
           options={AGE_BANDS.map((b) => ({ value: b, label: c.who.ageBands[b] }))}
           value={s.ageBand}

@@ -123,10 +123,12 @@ describe("unscreenedFields", () => {
 });
 
 describe("effectiveAgeBand", () => {
-  it("applies only for 'my child' (AC-09.3)", () => {
+  it("applies for 'my child' (AC-09.3) and 'someone else', not for me or someone I look after", () => {
     const s = run([{ type: "setStructured", patch: { relationship: "parent", ageBand: "5_to_11" } }]);
     expect(effectiveAgeBand(s)).toBe("5_to_11");
+    expect(effectiveAgeBand(prepareReducer(s, { type: "setStructured", patch: { relationship: "other" } }))).toBe("5_to_11");
     expect(effectiveAgeBand(prepareReducer(s, { type: "setStructured", patch: { relationship: "self" } }))).toBeNull();
+    expect(effectiveAgeBand(prepareReducer(s, { type: "setStructured", patch: { relationship: "carer" } }))).toBeNull();
   });
 });
 
@@ -137,6 +139,8 @@ describe("validateStep", () => {
     expect(validateStep(base, "who", 2000, msg)).toEqual({ relationship: "choose" });
     const child = run([{ type: "setStructured", patch: { relationship: "parent" } }]);
     expect(validateStep(child, "who", 2000, msg)).toEqual({ ageBand: "age" });
+    const other = run([{ type: "setStructured", patch: { relationship: "other" } }]);
+    expect(validateStep(other, "who", 2000, msg)).toEqual({ ageBand: "age" });
     const self = run([{ type: "setStructured", patch: { relationship: "self" } }]);
     expect(validateStep(self, "who", 2000, msg)).toEqual({});
   });
