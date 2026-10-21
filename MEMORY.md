@@ -46,7 +46,7 @@ Running log of what's happened in this repo, for quick orientation at the start 
 **Waiting on the product owner:**
 - Copy review: all prompts in `src/lib/ai/prompts/`, everything under `content/`, and the `copy.ts` files under `src/components/*` and `src/lib/pdf/`.
 - Native-speaker review of the Tier A content. Least confidence: Twi, Krio, Guyanese.
-- A transparent logo export.
+- ~~A transparent logo export.~~ Not needed: the supplied PNG is already transparent; the real icon is now used (public/brand/logo-mark.png).
 - Open clinical questions for the adviser: emergency vs crisis precedence; `continue_after_ack` for crisis; child thresholds and the unknown-age default; breathing difficulty as urgent or emergency; a language-line note for Samaritans.
 
 **Gotchas:**
