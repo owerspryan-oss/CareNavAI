@@ -40,6 +40,13 @@ Running decisions log for the CareNav AI workspace and build. Newest at the bott
 **Affects:** `src/lib/db/*`, FR-14/15/16 storage.
 **Alternatives considered:** Drizzle (CONTEXT.md §4.4 default). Rejected for now as extra surface for no gain at this size; revisit if queries grow.
 
+## T-09 guided-step UI choices — 2026-10-21
+
+**Decision:** (1) Step 4 "Changes and patterns" isn't optional (AC-21.2 names only steps 5 and 6), so it accepts text *or* an "I haven't noticed any pattern" tick rather than forcing the user to invent something. (2) Step 1 asks for an age band only for "My child" (AC-09.3); "Someone I look after"/"Someone else" get an optional free-text "who are they to you?" label, which is screened like any other free text. (3) Step 3 makes both pickers required, each with an "I'm not sure" option. (4) Optional steps relabel the primary button "Skip this step" while empty instead of adding a second button. (5) Every submit screens *all* unscreened free text in state, not just the current step's, so text edited and then left via Back can't reach Review unscreened. (6) Filled coral/teal button labels are 19px bold (not the 16px/600 `--text-button`) so white-on-coral meets the large-text contrast threshold. (7) Step transitions use the View Transitions API with a `linear()` spring curve (new `--ease-spring-default` token), so no animation library is added.
+**Why:** keeps to the AC wording without forcing false answers; keeps the "no unscreened text proceeds" invariant simple; satisfies DESIGN_SYSTEM.md §2's contrast note; avoids a new dependency.
+**Affects:** FR-21, FR-09, FR-06, `src/lib/prepare/state.ts`, `src/components/prepare/*`, `src/components/ui/Button.module.css`, `design/tokens.css`.
+**Alternatives considered:** making step 4 optional (contradicts AC-21.2); asking an age band for every "someone else" (more friction, not in AC-09.3, flagged to the product owner instead); Motion/Framer Motion for springs (new dependency for one transition).
+
 *(Populate further entries as the build progresses. Log anything that changes or narrows a requirement, picks between two valid architectural approaches, or resolves one of the open items in CONTEXT.md §15.)*
 
 Suggested format per entry:
