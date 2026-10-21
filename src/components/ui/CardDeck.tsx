@@ -59,7 +59,8 @@ export function CardDeck({ cards, label, labels }: CardDeckProps) {
   const params = useRef<SpringParams>(SPRING_DEFAULT);
   const frame = useRef<number | null>(null);
   // Right-to-left (AC-27.3): the deck travels the other way, so every x is mirrored by `s`.
-  const s = useUi().dir === "rtl" ? -1 : 1;
+  const ui = useUi();
+  const s = ui.dir === "rtl" ? -1 : 1;
   const viewport = useRef<HTMLDivElement>(null);
   const drag = useRef<{ id: number; startX: number; startY: number; startPos: number; startIndex: number; axis: "x" | "y" | null; samples: { t: number; x: number }[] } | null>(null);
   const liveId = useId();
@@ -235,7 +236,7 @@ export function CardDeck({ cards, label, labels }: CardDeckProps) {
         })}
       </div>
 
-      <div className={styles.controls}>
+      <div className={styles.controls} lang={ui.language} dir={ui.dir}>
         <Button variant="tertiary" onClick={() => goTo(index - 1)} disabled={index === 0} leadingIcon={<ChevronLeftIcon />}>
           {labels.back}
         </Button>

@@ -66,9 +66,9 @@ export function UrgentGate({ result, content, onStartAgain, onAcknowledge, sourc
           <LanguagePicker />
         </div>
       </header>
-      {content.showDraftLabel && <DraftLabel text={content.draftLabel} />}
+      {content.showDraftLabel && <DraftLabel text={content.draftLabel} lang={content.draftLabelLanguage} dir={content.draftLabelDir} />}
 
-      <main className={styles.main} lang={content.language}>
+      <main className={styles.main} lang={content.language} dir={content.dir}>
         <div className={styles.message}>
           <span className={styles.badge}>
             <AlertTriangleIcon className={styles.badgeIcon} />

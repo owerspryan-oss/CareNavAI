@@ -13,19 +13,24 @@ export interface UrgentBannerProps {
    * (it maps `uncertain` to the urgent message). Never model text.
    */
   content: Pick<UrgentMessage, "banner" | "actions">;
+  /** Language and direction of the static content actually served (from UrgentContent). */
+  lang: string;
+  dir: "ltr" | "rtl";
   showDraftLabel: boolean;
   draftLabel: string;
+  draftLabelLanguage: string;
+  draftLabelDir: "ltr" | "rtl";
 }
 
 /**
  * Persistent urgent banner (v0.3 A2), pinned at the top of a result after the user acknowledged the
  * urgent message and continued. Static, pre-approved content only; not dismissible.
  */
-export function UrgentBanner({ level, content, showDraftLabel, draftLabel }: UrgentBannerProps) {
+export function UrgentBanner({ level, content, lang, dir, showDraftLabel, draftLabel, draftLabelLanguage, draftLabelDir }: UrgentBannerProps) {
   return (
     <section className={styles.banner} role="note" data-level={level}>
-      {showDraftLabel && <DraftLabel text={draftLabel} className={styles.draft} />}
-      <div className={styles.inner}>
+      {showDraftLabel && <DraftLabel text={draftLabel} lang={draftLabelLanguage} dir={draftLabelDir} className={styles.draft} />}
+      <div className={styles.inner} lang={lang} dir={dir}>
         <div className={styles.lead}>
           <AlertTriangleIcon className={styles.icon} />
           <p className={styles.text}>{content.banner}</p>

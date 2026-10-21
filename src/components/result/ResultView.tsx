@@ -33,6 +33,7 @@ import {
   QuestionIcon,
   RepeatIcon,
 } from "@/components/ui/icons";
+import { useUiLang } from "@/components/i18n/UiProvider";
 import { useResultCopy, type ResultCopy } from "./copy";
 import styles from "./ResultView.module.css";
 
@@ -83,10 +84,13 @@ function Hl({ text, terms }: { text: string; terms: string[] }) {
 
 function OwnWordsQuote({ words }: { words: string[] }) {
   const c = useResultCopy();
+  const ui = useUiLang();
   if (words.length === 0) return null;
   return (
     <figure className={styles.quote}>
-      <figcaption className={styles.quoteHeading}>{c.ownWordsHeading}</figcaption>
+      <figcaption className={styles.quoteHeading} {...ui}>
+        {c.ownWordsHeading}
+      </figcaption>
       {/* Exactly as the user typed it, in their language: no lang/dir override from the result. */}
       <blockquote className={styles.quoteText} dir="auto">
         {words.map((w, i) => (
@@ -110,13 +114,16 @@ function Row({
   own?: string[];
   children: ReactNode;
 }) {
+  const ui = useUiLang();
   return (
     <section className={styles.row} aria-label={heading}>
       <span className={styles.badge} data-tint={tint} aria-hidden="true">
         {icon}
       </span>
       <div className={styles.rowBody}>
-        <h2 className={styles.rowHeading}>{heading}</h2>
+        <h2 className={styles.rowHeading} {...ui}>
+          {heading}
+        </h2>
         <div className={styles.rowContent}>{children}</div>
         {own && <OwnWordsQuote words={own} />}
       </div>
@@ -189,6 +196,7 @@ function summaryRows(v: PreAppointmentResult, own: OwnWords["sections"] | null, 
  */
 export function ResultView({ result, ownWords, urgentContent, languages, onNotQuite }: ResultViewProps) {
   const c = useResultCopy();
+  const ui = useUiLang();
   const { english, user } = result;
   const [tab, setTab] = useState<Tab>(user ? "user" : "english");
   const [matched, setMatched] = useState(false);
@@ -221,6 +229,10 @@ export function ResultView({ result, ownWords, urgentContent, languages, onNotQu
             content={urgentMessageFor(urgentContent, urgentLevel)}
             showDraftLabel={urgentContent.showDraftLabel}
             draftLabel={urgentContent.draftLabel}
+            draftLabelLanguage={urgentContent.draftLabelLanguage}
+            draftLabelDir={urgentContent.draftLabelDir}
+            lang={urgentContent.language}
+            dir={urgentContent.dir}
           />
         )}
 
@@ -284,19 +296,23 @@ export function ResultView({ result, ownWords, urgentContent, languages, onNotQu
           )}
 
           {showOwn && answeredFollowUps.length > 0 && (
-            <section className={styles.block} aria-labelledby="result-followups" dir="ltr" lang="en">
-              <h2 id="result-followups" className={styles.blockHeading}>
+            <section className={styles.block} aria-labelledby="result-followups">
+              <h2 id="result-followups" className={styles.blockHeading} {...ui}>
                 {c.sections.followUps}
               </h2>
               {answeredFollowUps.map((f, i) => (
                 <figure key={i} className={styles.quote}>
-                  <figcaption className={styles.quoteHeading}>{f.question}</figcaption>
+                  <figcaption className={styles.quoteHeading} dir="auto">
+                    {f.question}
+                  </figcaption>
                   {f.answer ? (
                     <blockquote className={styles.quoteText} dir="auto">
                       <p>{f.answer}</p>
                     </blockquote>
                   ) : (
-                    <p className={styles.notMentioned}>{c.skippedQuestion}</p>
+                    <p className={styles.notMentioned} {...ui}>
+                      {c.skippedQuestion}
+                    </p>
                   )}
                 </figure>
               ))}
@@ -304,13 +320,13 @@ export function ResultView({ result, ownWords, urgentContent, languages, onNotQu
           )}
 
           <section className={styles.block} aria-labelledby="result-not-mentioned">
-            <h2 id="result-not-mentioned" className={styles.blockHeading}>
+            <h2 id="result-not-mentioned" className={styles.blockHeading} {...ui}>
               {c.sections.notMentioned}
             </h2>
             <div className={styles.plainCard}>
-              {empty.length > 0 && <p>{c.youDidntMention(empty)}</p>}
+              {empty.length > 0 && <p {...ui}>{c.youDidntMention(empty)}</p>}
               {shown.notMentioned.length > 0 && <List items={shown.notMentioned} terms={terms} />}
-              {empty.length === 0 && shown.notMentioned.length === 0 && <p>{c.nothingMissing}</p>}
+              {empty.length === 0 && shown.notMentioned.length === 0 && <p {...ui}>{c.nothingMissing}</p>}
             </div>
           </section>
         </div>
@@ -337,7 +353,7 @@ export function ResultView({ result, ownWords, urgentContent, languages, onNotQu
 
         <div className={styles.moreInfo} dir={dir} lang={lang}>
           <details className={styles.moreItem}>
-            <summary className={styles.moreSummary}>
+            <summary className={styles.moreSummary} {...ui}>
               {c.sections.serviceRoutes}
               <ChevronDownIcon className={styles.moreChevron} />
             </summary>
@@ -363,7 +379,7 @@ export function ResultView({ result, ownWords, urgentContent, languages, onNotQu
             </ul>
           </details>
           <details className={styles.moreItem}>
-            <summary className={styles.moreSummary}>
+            <summary className={styles.moreSummary} {...ui}>
               {c.sections.disclaimer}
               <ChevronDownIcon className={styles.moreChevron} />
             </summary>

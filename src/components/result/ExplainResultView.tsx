@@ -28,6 +28,7 @@ import {
   QuestionIcon,
 } from "@/components/ui/icons";
 import { LetterPhoto } from "@/components/understand/LetterPhoto";
+import { useUiLang } from "@/components/i18n/UiProvider";
 import { useExplainCopy, useResultCopy, type ExplainCopy } from "./copy";
 import styles from "./ResultView.module.css";
 import own from "./ExplainResultView.module.css";
@@ -78,10 +79,13 @@ function Hl({ text, terms }: { text: string; terms: string[] }) {
  */
 function Source({ quote, show }: { quote: string; show: boolean }) {
   const c = useExplainCopy();
+  const ui = useUiLang();
   if (!show) return null;
   return (
     <figure className={styles.quote}>
-      <figcaption className={styles.quoteHeading}>{c.fromLetter}</figcaption>
+      <figcaption className={styles.quoteHeading} {...ui}>
+        {c.fromLetter}
+      </figcaption>
       {/* The letter's own words, not translated: no lang/dir override from the version on screen. */}
       <blockquote className={styles.quoteText} dir="auto">
         <p>{quote}</p>
@@ -103,10 +107,11 @@ function Item({ icon, tint = "teal", children }: { icon: ReactNode; tint?: "teal
 
 /** A section with nothing in it is left out entirely, rather than shown as an empty box. */
 function Section({ id, heading, children }: { id: string; heading: string; children: ReactNode[] }) {
+  const ui = useUiLang();
   if (children.length === 0) return null;
   return (
     <section className={styles.block} aria-labelledby={`explain-${id}`}>
-      <h2 id={`explain-${id}`} className={styles.blockHeading}>
+      <h2 id={`explain-${id}`} className={styles.blockHeading} {...ui}>
         {heading}
       </h2>
       <ul className={`${styles.card} ${own.items}`}>{children}</ul>
@@ -118,7 +123,12 @@ function Section({ id, heading, children }: { id: string; heading: string; child
  * The explanation's sections. `deckable` can be shown one card at a time; `unclear` is always shown
  * in full, never only at the back of a deck (DECISIONS.md, 2026-10-21).
  */
-function explanationSections(view: UnderstandView, showSources: boolean, c: ExplainCopy): { deckable: { id: string; heading: string; node: ReactNode }[]; unclear: ReactNode } {
+function explanationSections(
+  view: UnderstandView,
+  showSources: boolean,
+  c: ExplainCopy,
+  ui: { lang: string; dir: "ltr" | "rtl" },
+): { deckable: { id: string; heading: string; node: ReactNode }[]; unclear: ReactNode } {
   const t = view.terms;
   const told = (
     <Section key="told" id="told" heading={c.sections.told}>
@@ -164,11 +174,11 @@ function explanationSections(view: UnderstandView, showSources: boolean, c: Expl
   );
   const medicines = view.medicines.length === 0 ? null : (
     <section key="medicines" className={styles.block} aria-labelledby="explain-medicines">
-      <h2 id="explain-medicines" className={styles.blockHeading}>
+      <h2 id="explain-medicines" className={styles.blockHeading} {...ui}>
         {c.sections.medicines}
       </h2>
       {/* AC-02.5 */}
-      <p className={own.check}>
+      <p className={own.check} {...ui}>
         <CautionIcon className={own.checkIcon} />
         {c.checkThese}
       </p>
@@ -197,7 +207,9 @@ function explanationSections(view: UnderstandView, showSources: boolean, c: Expl
           <p>
             <Hl text={item.item} terms={t} />
           </p>
-          <p className={own.ask}>{c.whoToAsk[item.whoToAsk]}</p>
+          <p className={own.ask} {...ui}>
+            {c.whoToAsk[item.whoToAsk]}
+          </p>
         </Item>
       ))}
     </Section>
@@ -217,10 +229,19 @@ function explanationSections(view: UnderstandView, showSources: boolean, c: Expl
 
 function Fact({ label, value, terms }: { label: string; value: string | null; terms: string[] }) {
   const c = useExplainCopy();
+  const ui = useUiLang();
   return (
     <div className={own.fact}>
-      <dt>{label}</dt>
-      <dd>{value ? <Hl text={value} terms={terms} /> : <span className={styles.notMentioned}>{c.medicine.notStated}</span>}</dd>
+      <dt {...ui}>{label}</dt>
+      <dd>
+        {value ? (
+          <Hl text={value} terms={terms} />
+        ) : (
+          <span className={styles.notMentioned} {...ui}>
+            {c.medicine.notStated}
+          </span>
+        )}
+      </dd>
     </div>
   );
 }
@@ -244,6 +265,7 @@ export function ExplainResultView({
 }: ExplainResultViewProps) {
   const c = useExplainCopy();
   const rc = useResultCopy();
+  const ui = useUiLang();
   const { english, user } = result;
   const [tab, setTab] = useState<Tab>(user ? "user" : "english");
   const [layout, setLayout] = useResultLayout();
@@ -269,7 +291,7 @@ export function ExplainResultView({
   const dir = versionDir(shown.meta, languages);
   const lang = shown.meta.outputMode === "translation" ? shown.meta.outputLanguage : "en";
   const view = buildUnderstandView(shown, english, confirmedText);
-  const sections = explanationSections(view, showSources, c);
+  const sections = explanationSections(view, showSources, c, ui);
 
   return (
     <div className={`${styles.page} ${photoUrl ? own.withPhoto : ""}`}>
@@ -281,6 +303,10 @@ export function ExplainResultView({
             content={urgentMessageFor(urgentContent, urgentLevel)}
             showDraftLabel={urgentContent.showDraftLabel}
             draftLabel={urgentContent.draftLabel}
+            draftLabelLanguage={urgentContent.draftLabelLanguage}
+            draftLabelDir={urgentContent.draftLabelDir}
+            lang={urgentContent.language}
+            dir={urgentContent.dir}
           />
         )}
 
@@ -385,12 +411,14 @@ export function ExplainResultView({
 
         {view.notFound.length > 0 && (
           // Never styled as fact: no badges, no highlights, no source chips, always the English master's words.
-          <section className={own.notFound} aria-labelledby="explain-not-found" dir="ltr" lang="en">
-            <h2 id="explain-not-found" className={own.notFoundHeading}>
+          <section className={own.notFound} aria-labelledby="explain-not-found">
+            <h2 id="explain-not-found" className={own.notFoundHeading} {...ui}>
               {c.notFound.heading}
             </h2>
-            <p className={own.notFoundLead}>{c.notFound.lead}</p>
-            <ul className={own.notFoundList}>
+            <p className={own.notFoundLead} {...ui}>
+              {c.notFound.lead}
+            </p>
+            <ul className={own.notFoundList} dir="ltr" lang="en">
               {view.notFound.map((n, i) => (
                 <li key={i}>{n.text}</li>
               ))}
@@ -400,7 +428,7 @@ export function ExplainResultView({
 
         <div className={styles.moreInfo} dir={dir} lang={lang}>
           <details className={styles.moreItem}>
-            <summary className={styles.moreSummary}>
+            <summary className={styles.moreSummary} {...ui}>
               {c.sections.disclaimer}
               <ChevronDownIcon className={styles.moreChevron} />
             </summary>

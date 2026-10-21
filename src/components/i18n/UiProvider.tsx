@@ -21,6 +21,15 @@ export function UiProvider({ locale, options, children }: { locale: UiLocale; op
   return <UiContext.Provider value={{ ...locale, options }}>{children}</UiContext.Provider>;
 }
 
+/**
+ * `lang`/`dir` for an interface string sitting inside content in another language (e.g. an Urdu heading
+ * over a Simple English summary), so screen readers voice it and the browser lays it out correctly.
+ */
+export function useUiLang(): { lang: string; dir: "ltr" | "rtl" } {
+  const { language, dir } = useUi();
+  return { lang: language, dir };
+}
+
 export function useUi(): UiContextValue {
   const ui = useContext(UiContext);
   if (!ui) throw new Error("useUi outside <UiProvider>");

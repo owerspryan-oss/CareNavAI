@@ -16,6 +16,11 @@ export interface UrgentContent {
   draftLabel: string;
   /** The language actually served ("en" when the requested language has no file). */
   language: string;
+  /** Its direction, so English served on a right-to-left page still reads left to right. */
+  dir: "ltr" | "rtl";
+  /** The DRAFT label comes from the disclaimers file, which may be served in a different language. */
+  draftLabelLanguage: string;
+  draftLabelDir: "ltr" | "rtl";
   messages: Record<UrgentMessageKey, UrgentMessage>;
   labels: UrgentMessagesFile["labels"];
 }

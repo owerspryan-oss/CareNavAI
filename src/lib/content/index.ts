@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import type { z } from "zod";
 import type { SafetyLevel, UrgentMessageKey } from "@/lib/ai/schemas";
+import { languagesConfig } from "@/lib/config";
 import { env } from "@/lib/config/env";
 import { log } from "@/lib/log/logger";
 import { urgentMessageKeyFor, type UrgentContent } from "@/lib/safety/urgent-content";
@@ -139,6 +140,11 @@ export function getDisclaimers(lang: string | null | undefined): Served<Disclaim
   return load("disclaimers", lang);
 }
 
+/** Text direction of a content language, from config/languages.json. */
+function languageDir(code: string): "ltr" | "rtl" {
+  return languagesConfig.languages.find((l) => l.code === code)?.dir === "rtl" ? "rtl" : "ltr";
+}
+
 /** FR-29 / v0.3 A10: the DRAFT label is on unless SHOW_DRAFT_LABEL=false. */
 export function draftLabelEnabled(): boolean {
   return env().SHOW_DRAFT_LABEL;
@@ -151,11 +157,15 @@ export function draftLabelEnabled(): boolean {
  */
 export function getUrgentContent(lang: string | null | undefined): UrgentContent {
   const { content, servedLanguage } = load("urgentMessages", lang);
+  const disclaimers = getDisclaimers(lang);
   return {
     mode: env().URGENT_MODE,
     showDraftLabel: draftLabelEnabled(),
-    draftLabel: getDisclaimers(lang).content.draftLabel,
+    draftLabel: disclaimers.content.draftLabel,
+    draftLabelLanguage: disclaimers.servedLanguage,
+    draftLabelDir: languageDir(disclaimers.servedLanguage),
     language: servedLanguage,
+    dir: languageDir(servedLanguage),
     messages: content.messages,
     labels: content.labels,
   };
