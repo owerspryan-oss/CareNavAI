@@ -50,7 +50,17 @@
         { "id": "call_samaritans", "label": "Frɛ Samaritans 116 123", "href": "tel:116123" },
         { "id": "call_999", "label": "Frɛ 999", "href": "tel:999" },
         { "id": "call_111", "label": "Frɛ NHS 111", "href": "tel:111" }
-      ]
+      ],
+      "continueCheck": {
+        "link": "Menni asiane mu, na mepɛ sɛ mekɔ so",
+        "title": "Ansa na wobɛkɔ so",
+        "body": [
+          "Kɔ so nko ara sɛ wonni asiane mu seesei a.",
+          "Samaritans wɔ hɔ bere biara, awia anaa anadwo. Frɛ 116 123."
+        ],
+        "confirm": "Menni asiane mu seesei",
+        "button": "Kɔ so"
+      }
     }
   }
 }

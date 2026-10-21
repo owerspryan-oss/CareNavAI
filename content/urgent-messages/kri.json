@@ -50,7 +50,17 @@
         { "id": "call_samaritans", "label": "Kɔl Samaritans 116 123", "href": "tel:116123" },
         { "id": "call_999", "label": "Kɔl 999", "href": "tel:999" },
         { "id": "call_111", "label": "Kɔl NHS 111", "href": "tel:111" }
-      ]
+      ],
+      "continueCheck": {
+        "link": "A nɔ de na denja, a want kɔntinyu",
+        "title": "Bifo yu kɔntinyu",
+        "body": [
+          "Kɔntinyu ɔnli if yu nɔ de na denja naw.",
+          "Samaritans de ɛnitɛm, de ɔ nɛt. Kɔl 116 123."
+        ],
+        "confirm": "A nɔ de na denja naw",
+        "button": "Kɔntinyu"
+      }
     }
   }
 }

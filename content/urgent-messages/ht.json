@@ -50,7 +50,17 @@
         { "id": "call_samaritans", "label": "Rele Samaritans 116 123", "href": "tel:116123" },
         { "id": "call_999", "label": "Rele 999", "href": "tel:999" },
         { "id": "call_111", "label": "Rele NHS 111", "href": "tel:111" }
-      ]
+      ],
+      "continueCheck": {
+        "link": "Mwen pa an danje, mwen vle kontinye",
+        "title": "Anvan ou kontinye",
+        "body": [
+          "Kontinye sèlman si ou pa an danje kounye a.",
+          "Samaritans la nenpòt ki lè, lajounen kou lannwit. Rele 116 123."
+        ],
+        "confirm": "Mwen pa an danje kounye a",
+        "button": "Kontinye"
+      }
     }
   }
 }
