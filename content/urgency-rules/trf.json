@@ -15,6 +15,14 @@
       ]
     },
     {
+      "id": "trf.breathing.difficult",
+      "level": "urgent",
+      "category": "breathing",
+      "patterns": [
+        "(meh|she|he|his|her) breath (short|tight)"
+      ]
+    },
+    {
       "id": "trf.chest.pain",
       "level": "urgent",
       "category": "chest_pain",

@@ -10,13 +10,25 @@
       "level": "emergency",
       "category": "breathing",
       "patterns": [
-        "(cant|can not|cannot|couldnt|could not|unable to|struggling to|struggles to|fighting to) (breathe|breath|get (my |a |his |her |their )?breath|catch (my |his |her |their )?breath)",
+        "(cant|can not|cannot|couldnt|could not|unable to|fighting to) (breathe|breath|get (my |a |his |her |their )?breath|catch (my |his |her |their )?breath)",
         "fighting for (breath|air)",
         "(not|stopped|isnt|is not|hes not|shes not|theyre not) breathing",
         "gasping( for (air|breath))?",
         "choking",
         "(lips|tongue) .{0,12}(blue|grey|gray|bluish)",
         "(blue|bluish|grey|gray) (lips|tongue)"
+      ]
+    },
+    {
+      "id": "en.breathing.difficult",
+      "level": "urgent",
+      "category": "breathing",
+      "patterns": [
+        "(struggling|struggles|struggled|struggle) (to|for) (breathe|breath|get (my |a |his |her |their )?breath)",
+        "(?<!(no|not|isnt|denies|denied|without|any|nor) )(difficulty|difficulties|trouble|problems?) (with )?breathing",
+        "(?<!(no|not|isnt|denies|denied|without|any|nor) )(hard|harder|difficult|painful) to breathe",
+        "(?<!(no|not|isnt|denies|denied|without|any|nor) )(short of breath|shortness of breath|breathless[a-z]*|out of breath)",
+        "breathing (is |has been |feels |got |gets )?(hard|harder|difficult|laboured|labored|a struggle)"
       ]
     },
     {

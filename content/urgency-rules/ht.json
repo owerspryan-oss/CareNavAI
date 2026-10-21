@@ -17,6 +17,17 @@
       ]
     },
     {
+      "id": "ht.breathing.difficult",
+      "level": "urgent",
+      "category": "breathing",
+      "patterns": [
+        "difikilte pou respire",
+        "(gen|genyen) pwobl(è|e)m pou respire",
+        "souf (m |mwen |li |l )?kout",
+        "kout souf"
+      ]
+    },
+    {
       "id": "ht.chest.pain_with_red_flags",
       "level": "emergency",
       "category": "chest_pain",

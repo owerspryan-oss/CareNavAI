@@ -11,8 +11,17 @@
       "category": "breathing",
       "patterns": [
         "no (fit |dey fit |fit dey )?(breathe|breath|draw breath|catch (my |im |her |his )?breath)",
-        "breath dey (cut|hold|tight|hard|stop)",
+        "breath dey (cut|hold|stop)",
         "breath no (dey )?(come|reach)"
+      ]
+    },
+    {
+      "id": "pcm.breathing.difficult",
+      "level": "urgent",
+      "category": "breathing",
+      "patterns": [
+        "breath dey (tight|hard|short)",
+        "breath (dey )?short"
       ]
     },
     {

@@ -16,6 +16,15 @@
       ]
     },
     {
+      "id": "gyn.breathing.difficult",
+      "level": "urgent",
+      "category": "breathing",
+      "patterns": [
+        "(hard|haad) fuh (breathe|breed|ketch (me|mi|he|she|him|her) breath)",
+        "(me|mi|he|she|him|her) breath (short|tight)"
+      ]
+    },
+    {
       "id": "gyn.chest.pain",
       "level": "urgent",
       "category": "chest_pain",

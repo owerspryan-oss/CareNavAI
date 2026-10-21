@@ -16,6 +16,15 @@
       ]
     },
     {
+      "id": "jam.breathing.difficult",
+      "level": "urgent",
+      "category": "breathing",
+      "patterns": [
+        "(hard|haad) fi (breathe|breed|ketch (mi|me|him|her|im) breath)",
+        "(mi|me|him|her|im|she) breath (a |did |deh )?(short|tight)"
+      ]
+    },
+    {
       "id": "jam.chest.pain",
       "level": "urgent",
       "category": "chest_pain",
