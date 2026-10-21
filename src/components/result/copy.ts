@@ -52,8 +52,18 @@ export const resultCopy = {
   actions: {
     backToAnswers: "Back to my answers",
     savePdf: "Save as PDF",
+    savingPdf: "Making your PDF",
+    pdfFailed: "Sorry, we couldn't make the PDF. Please try again.",
     feedback: "Give feedback",
     comingSoon: "Coming soon",
+  },
+  layout: {
+    toDeck: "Go through it one card at a time",
+    toList: "Show it all as a list",
+    deckLabel: "Your result, one card at a time",
+    next: "Next",
+    back: "Back",
+    position: "{n} of {total}",
   },
 } as const;
 

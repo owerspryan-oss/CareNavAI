@@ -20,6 +20,8 @@ export interface DeckCard {
   id: string;
   title: string;
   body: ReactNode;
+  /** Set when `body` already shows its own heading; `title` then only names the slide for assistive tech. */
+  titleInBody?: boolean;
 }
 
 export interface CardDeckProps {
@@ -212,7 +214,7 @@ export function CardDeck({ cards, label, labels }: CardDeckProps) {
               aria-hidden={!current}
               inert={!current}
             >
-              <h3 className={styles.title}>{card.title}</h3>
+              {!card.titleInBody && <h3 className={styles.title}>{card.title}</h3>}
               <div className={styles.body}>{card.body}</div>
             </article>
           );

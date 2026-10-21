@@ -17,6 +17,9 @@ import {
 import { UrgentBanner } from "@/components/safety/UrgentBanner";
 import { Banner } from "@/components/ui/Banner";
 import { Button } from "@/components/ui/Button";
+import { CardDeck } from "@/components/ui/CardDeck";
+import { SavePdfButton } from "./SavePdfButton";
+import { useResultLayout } from "./useResultLayout";
 import { SegmentedControl } from "@/components/ui/SegmentedControl";
 import { TopBar } from "@/components/ui/TopBar";
 import {
@@ -154,43 +157,23 @@ function Text({ text, terms }: { text: string; terms: string[] }) {
   );
 }
 
-function Summary({ v, own }: { v: PreAppointmentResult; own: OwnWords["sections"] }) {
+/** The summary sections, in order, so the same rows can render as a list or as a card deck. */
+function summaryRows(v: PreAppointmentResult, own: OwnWords["sections"]): { id: string; heading: string; row: ReactNode }[] {
   const terms = medicineTerms(v);
   const m = v.medicationAndSupport;
-  return (
-    <div className={styles.card}>
-      <Row icon={<PersonIcon />} heading={c.sections.forWhom} own={own.forWhom}>
-        <Text text={v.forWhom.label} terms={terms} />
-      </Row>
-      <Row icon={<ChatIcon />} heading={c.sections.mainConcern} own={own.mainConcern}>
-        <Text text={v.mainConcern} terms={terms} />
-      </Row>
-      <Row icon={<ClockIcon />} heading={c.sections.duration} own={own.duration}>
-        <Text text={v.duration.stated ? v.duration.text : ""} terms={terms} />
-      </Row>
-      <Row icon={<RepeatIcon />} heading={c.sections.frequency} own={own.frequency}>
-        <Text text={v.frequencyAndPattern} terms={terms} />
-      </Row>
-      <Row icon={<RepeatIcon />} heading={c.sections.changes} own={own.changes}>
-        <List items={v.changesAndTriggers} terms={terms} />
-      </Row>
-      <Row icon={<PillIcon />} tint="coral" heading={c.sections.medicines} own={own.medicines}>
-        <List items={m.provided ? m.medicines.map(medicineLine) : []} terms={terms} />
-      </Row>
-      <Row icon={<HeartIcon />} tint="coral" heading={c.sections.previousSupport} own={own.previousSupport}>
-        <List items={m.previousSupport} terms={terms} />
-      </Row>
-      <Row icon={<HeartIcon />} tint="coral" heading={c.sections.worries} own={own.worries}>
-        <List items={v.worriesAndBarriers} terms={terms} />
-      </Row>
-      <Row icon={<QuestionIcon />} heading={c.sections.questions}>
-        <List items={v.questionsToAsk} terms={terms} ordered />
-      </Row>
-      <Row icon={<BagIcon />} heading={c.sections.whatToBring}>
-        <List items={v.whatToBring} terms={terms} />
-      </Row>
-    </div>
-  );
+  const rows: [string, string, ReactNode][] = [
+    ["forWhom", c.sections.forWhom, <Row key="forWhom" icon={<PersonIcon />} heading={c.sections.forWhom} own={own.forWhom}><Text text={v.forWhom.label} terms={terms} /></Row>],
+    ["mainConcern", c.sections.mainConcern, <Row key="mainConcern" icon={<ChatIcon />} heading={c.sections.mainConcern} own={own.mainConcern}><Text text={v.mainConcern} terms={terms} /></Row>],
+    ["duration", c.sections.duration, <Row key="duration" icon={<ClockIcon />} heading={c.sections.duration} own={own.duration}><Text text={v.duration.stated ? v.duration.text : ""} terms={terms} /></Row>],
+    ["frequency", c.sections.frequency, <Row key="frequency" icon={<RepeatIcon />} heading={c.sections.frequency} own={own.frequency}><Text text={v.frequencyAndPattern} terms={terms} /></Row>],
+    ["changes", c.sections.changes, <Row key="changes" icon={<RepeatIcon />} heading={c.sections.changes} own={own.changes}><List items={v.changesAndTriggers} terms={terms} /></Row>],
+    ["medicines", c.sections.medicines, <Row key="medicines" icon={<PillIcon />} tint="coral" heading={c.sections.medicines} own={own.medicines}><List items={m.provided ? m.medicines.map(medicineLine) : []} terms={terms} /></Row>],
+    ["previousSupport", c.sections.previousSupport, <Row key="previousSupport" icon={<HeartIcon />} tint="coral" heading={c.sections.previousSupport} own={own.previousSupport}><List items={m.previousSupport} terms={terms} /></Row>],
+    ["worries", c.sections.worries, <Row key="worries" icon={<HeartIcon />} tint="coral" heading={c.sections.worries} own={own.worries}><List items={v.worriesAndBarriers} terms={terms} /></Row>],
+    ["questions", c.sections.questions, <Row key="questions" icon={<QuestionIcon />} heading={c.sections.questions}><List items={v.questionsToAsk} terms={terms} ordered /></Row>],
+    ["whatToBring", c.sections.whatToBring, <Row key="whatToBring" icon={<BagIcon />} heading={c.sections.whatToBring}><List items={v.whatToBring} terms={terms} /></Row>],
+  ];
+  return rows.map(([id, heading, row]) => ({ id, heading, row }));
 }
 
 /**
@@ -201,6 +184,7 @@ export function ResultView({ result, ownWords, urgentContent, languages, onNotQu
   const { english, user } = result;
   const [tab, setTab] = useState<Tab>(user ? "user" : "english");
   const [matched, setMatched] = useState(false);
+  const [layout, setLayout] = useResultLayout();
   const headingRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
@@ -267,7 +251,21 @@ export function ResultView({ result, ownWords, urgentContent, languages, onNotQu
           dir={dir}
           lang={lang}
         >
-          <Summary v={shown} own={ownWords.sections} />
+          {isUser && (
+            <Button variant="link" className={styles.layoutToggle} onClick={() => setLayout(layout === "deck" ? "list" : "deck")}>
+              {layout === "deck" ? c.layout.toList : c.layout.toDeck}
+            </Button>
+          )}
+          {/* The deck is only for the person's own version; the doctor's English version is always a list. */}
+          {isUser && layout === "deck" ? (
+            <CardDeck
+              label={c.layout.deckLabel}
+              labels={c.layout}
+              cards={summaryRows(shown, ownWords.sections).map(({ id, heading, row }) => ({ id, title: heading, titleInBody: true, body: row }))}
+            />
+          ) : (
+            <div className={styles.card}>{summaryRows(shown, ownWords.sections).map((r) => r.row)}</div>
+          )}
 
           {answeredFollowUps.length > 0 && (
             <section className={styles.block} aria-labelledby="result-followups" dir="ltr" lang="en">
@@ -359,10 +357,8 @@ export function ResultView({ result, ownWords, urgentContent, languages, onNotQu
       </main>
 
       <footer className={styles.footer}>
-        {/* Placeholders: PDF (FR-10) and feedback (FR-16) are separate tasks. */}
-        <Button variant="tertiary" disabled title={c.actions.comingSoon}>
-          {c.actions.savePdf}
-        </Button>
+        <SavePdfButton body={{ flow: "prepare", english, user }} />
+        {/* Placeholder: feedback (FR-16) is a separate task. */}
         <Button variant="tertiary" disabled title={c.actions.comingSoon}>
           {c.actions.feedback}
         </Button>

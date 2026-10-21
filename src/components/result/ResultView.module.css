@@ -379,3 +379,22 @@
     border-top: 1px solid var(--color-border);
   }
 }
+
+.pdfAction {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.pdfStatus {
+  margin: 0;
+  font-size: var(--text-caption-size);
+  color: var(--color-ink);
+}
+
+.pdfStatus:empty {
+  display: none;
+}
+
+.layoutToggle {
+  justify-self: start;
+}

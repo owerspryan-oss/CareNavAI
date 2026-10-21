@@ -15,6 +15,7 @@ import { buildUnderstandView, type UnderstandView } from "@/lib/understand/view"
 import { UrgentBanner } from "@/components/safety/UrgentBanner";
 import { Banner } from "@/components/ui/Banner";
 import { Button } from "@/components/ui/Button";
+import { CardDeck } from "@/components/ui/CardDeck";
 import { SegmentedControl } from "@/components/ui/SegmentedControl";
 import { TopBar } from "@/components/ui/TopBar";
 import {
@@ -31,6 +32,8 @@ import { LetterPhoto } from "@/components/understand/LetterPhoto";
 import { explainCopy as c, resultCopy as rc } from "./copy";
 import styles from "./ResultView.module.css";
 import own from "./ExplainResultView.module.css";
+import { SavePdfButton } from "./SavePdfButton";
+import { useResultLayout } from "./useResultLayout";
 
 export interface ExplainResultViewProps {
   result: ExplainResult;
@@ -117,94 +120,109 @@ function Section({ id, heading, empty, children }: { id: string; heading: string
   );
 }
 
-function Explanation({ view }: { view: UnderstandView }) {
+/**
+ * The explanation's sections. `deckable` can be shown one card at a time; `unclear` is always shown
+ * in full, never only at the back of a deck (DECISIONS.md, 2026-10-21).
+ */
+function explanationSections(view: UnderstandView): { deckable: { id: string; heading: string; node: ReactNode }[]; unclear: ReactNode } {
   const t = view.terms;
-  return (
-    <>
-      <Section id="told" heading={c.sections.told} empty={c.empty.told}>
-        {view.told.map((item, i) => (
-          <Item key={i} icon={<ChatIcon />}>
-            <p>
-              <Hl text={item.text} terms={t} />
-            </p>
-            <Source quote={item.sourceQuote} />
-          </Item>
-        ))}
-      </Section>
-
-      <Section id="means" heading={c.sections.means} empty={c.empty.means}>
-        {view.means.map((item, i) => (
-          <Item key={i} icon={<DocumentIcon />}>
-            {/* The clinician's own words, quoted from the letter. */}
-            <p className={own.term}>“{item.clinicianWords}”</p>
-            <p>
-              <Hl text={item.plainMeaning} terms={t} />
-            </p>
-          </Item>
-        ))}
-      </Section>
-
-      <Section id="steps" heading={c.sections.steps} empty={c.empty.steps}>
-        {view.steps.map((item, i) => (
-          <Item key={i} icon={<CalendarIcon />}>
-            <p>
-              <Hl text={item.action} terms={t} />
-            </p>
-            {item.byWhen && (
-              <p className={own.detail}>
-                <Hl text={c.byWhen(item.byWhen)} terms={t} />
-              </p>
-            )}
-            <Source quote={item.sourceQuote} />
-          </Item>
-        ))}
-      </Section>
-
-      <section className={styles.block} aria-labelledby="explain-medicines">
-        <h2 id="explain-medicines" className={styles.blockHeading}>
-          {c.sections.medicines}
-        </h2>
-        {view.medicines.length > 0 ? (
-          <>
-            {/* AC-02.5 */}
-            <p className={own.check}>
-              <CautionIcon className={own.checkIcon} />
-              {c.checkThese}
-            </p>
-            <ul className={`${styles.card} ${own.items}`}>
-              {view.medicines.map((m, i) => (
-                <Item key={i} icon={<PillIcon />} tint="coral">
-                  <p className={own.medicineName}>
-                    <Hl text={m.dose ? `${m.name} ${m.dose}` : m.name} terms={t} />
-                  </p>
-                  <dl className={own.facts}>
-                    {m.dose === null && <Fact label={c.medicine.dose} value={null} terms={t} />}
-                    <Fact label={c.medicine.frequency} value={m.frequency} terms={t} />
-                    <Fact label={c.medicine.duration} value={m.duration} terms={t} />
-                    <Fact label={c.medicine.instructions} value={m.instructions} terms={t} />
-                  </dl>
-                  <Source quote={m.sourceQuote} />
-                </Item>
-              ))}
-            </ul>
-          </>
-        ) : (
-          <p className={`${styles.plainCard} ${styles.notMentioned}`}>{c.empty.medicines}</p>
-        )}
-      </section>
-
-      <Section id="unclear" heading={c.sections.unclear} empty={c.empty.unclear}>
-        {view.unclear.map((item, i) => (
-          <Item key={i} icon={<QuestionIcon />}>
-            <p>
-              <Hl text={item.item} terms={t} />
-            </p>
-            <p className={own.ask}>{c.whoToAsk[item.whoToAsk]}</p>
-          </Item>
-        ))}
-      </Section>
-    </>
+  const told = (
+    <Section key="told" id="told" heading={c.sections.told} empty={c.empty.told}>
+      {view.told.map((item, i) => (
+        <Item key={i} icon={<ChatIcon />}>
+          <p>
+            <Hl text={item.text} terms={t} />
+          </p>
+          <Source quote={item.sourceQuote} />
+        </Item>
+      ))}
+    </Section>
   );
+  const means = (
+    <Section key="means" id="means" heading={c.sections.means} empty={c.empty.means}>
+      {view.means.map((item, i) => (
+        <Item key={i} icon={<DocumentIcon />}>
+          {/* The clinician's own words, quoted from the letter. */}
+          <p className={own.term}>“{item.clinicianWords}”</p>
+          <p>
+            <Hl text={item.plainMeaning} terms={t} />
+          </p>
+        </Item>
+      ))}
+    </Section>
+  );
+  const steps = (
+    <Section key="steps" id="steps" heading={c.sections.steps} empty={c.empty.steps}>
+      {view.steps.map((item, i) => (
+        <Item key={i} icon={<CalendarIcon />}>
+          <p>
+            <Hl text={item.action} terms={t} />
+          </p>
+          {item.byWhen && (
+            <p className={own.detail}>
+              <Hl text={c.byWhen(item.byWhen)} terms={t} />
+            </p>
+          )}
+          <Source quote={item.sourceQuote} />
+        </Item>
+      ))}
+    </Section>
+  );
+  const medicines = (
+    <section key="medicines" className={styles.block} aria-labelledby="explain-medicines">
+      <h2 id="explain-medicines" className={styles.blockHeading}>
+        {c.sections.medicines}
+      </h2>
+      {view.medicines.length > 0 ? (
+        <>
+          {/* AC-02.5 */}
+          <p className={own.check}>
+            <CautionIcon className={own.checkIcon} />
+            {c.checkThese}
+          </p>
+          <ul className={`${styles.card} ${own.items}`}>
+            {view.medicines.map((m, i) => (
+              <Item key={i} icon={<PillIcon />} tint="coral">
+                <p className={own.medicineName}>
+                  <Hl text={m.dose ? `${m.name} ${m.dose}` : m.name} terms={t} />
+                </p>
+                <dl className={own.facts}>
+                  {m.dose === null && <Fact label={c.medicine.dose} value={null} terms={t} />}
+                  <Fact label={c.medicine.frequency} value={m.frequency} terms={t} />
+                  <Fact label={c.medicine.duration} value={m.duration} terms={t} />
+                  <Fact label={c.medicine.instructions} value={m.instructions} terms={t} />
+                </dl>
+                <Source quote={m.sourceQuote} />
+              </Item>
+            ))}
+          </ul>
+        </>
+      ) : (
+        <p className={`${styles.plainCard} ${styles.notMentioned}`}>{c.empty.medicines}</p>
+      )}
+    </section>
+  );
+  const unclear = (
+    <Section id="unclear" heading={c.sections.unclear} empty={c.empty.unclear}>
+      {view.unclear.map((item, i) => (
+        <Item key={i} icon={<QuestionIcon />}>
+          <p>
+            <Hl text={item.item} terms={t} />
+          </p>
+          <p className={own.ask}>{c.whoToAsk[item.whoToAsk]}</p>
+        </Item>
+      ))}
+    </Section>
+  );
+  return {
+    deckable: [
+      { id: "told", heading: c.sections.told, node: told },
+      { id: "means", heading: c.sections.means, node: means },
+      { id: "steps", heading: c.sections.steps, node: steps },
+      { id: "medicines", heading: c.sections.medicines, node: medicines },
+    ],
+    unclear,
+  };
 }
 
 function Fact({ label, value, terms }: { label: string; value: string | null; terms: string[] }) {
@@ -235,6 +253,7 @@ export function ExplainResultView({
 }: ExplainResultViewProps) {
   const { english, user } = result;
   const [tab, setTab] = useState<Tab>(user ? "user" : "english");
+  const [layout, setLayout] = useResultLayout();
   // A new result (another language) opens on its user version again.
   const [shownResult, setShownResult] = useState(result);
   if (shownResult !== result) {
@@ -255,6 +274,7 @@ export function ExplainResultView({
   const dir = versionDir(shown.meta, languages);
   const lang = shown.meta.outputMode === "translation" ? shown.meta.outputLanguage : "en";
   const view = buildUnderstandView(shown, english, confirmedText);
+  const sections = explanationSections(view);
 
   return (
     <div className={`${styles.page} ${photoUrl ? own.withPhoto : ""}`}>
@@ -331,7 +351,22 @@ export function ExplainResultView({
           dir={dir}
           lang={lang}
         >
-          <Explanation view={view} />
+          {isUser && (
+            <Button variant="link" className={styles.layoutToggle} onClick={() => setLayout(layout === "deck" ? "list" : "deck")}>
+              {layout === "deck" ? rc.layout.toList : rc.layout.toDeck}
+            </Button>
+          )}
+          {/* The deck is only for the person's own version; the doctor's English version is always a list. */}
+          {isUser && layout === "deck" ? (
+            <CardDeck
+              label={rc.layout.deckLabel}
+              labels={rc.layout}
+              cards={sections.deckable.map(({ id, heading, node }) => ({ id, title: heading, titleInBody: true, body: node }))}
+            />
+          ) : (
+            sections.deckable.map((x) => x.node)
+          )}
+          {sections.unclear}
         </div>
 
         {/* AC-08.6: after the explanation on a phone (the mockup's "From your letter" spot); beside it on wide screens. */}
@@ -369,10 +404,8 @@ export function ExplainResultView({
       </main>
 
       <footer className={styles.footer}>
-        {/* Placeholders: PDF (FR-10) is being built separately; feedback (FR-16) is a later task. */}
-        <Button variant="tertiary" disabled title={rc.actions.comingSoon}>
-          {rc.actions.savePdf}
-        </Button>
+        <SavePdfButton body={{ flow: "understand", english, user }} />
+        {/* Placeholder: feedback (FR-16) is a later task. */}
         <Button variant="tertiary" disabled title={rc.actions.comingSoon}>
           {rc.actions.feedback}
         </Button>
