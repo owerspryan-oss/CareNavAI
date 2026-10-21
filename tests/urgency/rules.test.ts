@@ -21,8 +21,10 @@ const screen = (text: string, language: string, ageBand: AgeBand | null = null) 
   runRules(redact(text), { language, ageBand });
 
 describe("urgency rules content (T-06)", () => {
-  it("has en, jam and pcm lists plus shared stroke and child lists", () => {
-    expect(ruleFiles.sort()).toEqual(["child.json", "en.json", "jam.json", "pcm.json", "stroke.json"]);
+  it("has en plus every Tier A target list (v0.3 A4), and shared stroke and child lists", () => {
+    expect(ruleFiles.sort()).toEqual([
+      "child.json", "en.json", "gyn.json", "hi.json", "ht.json", "jam.json", "kri.json", "pcm.json", "stroke.json", "trf.json", "tw.json",
+    ]);
   });
 
   it.each(ruleFiles)("%s parses, compiles, and is marked DRAFT / not reviewed", (f) => {
@@ -179,17 +181,19 @@ describe("rules layer: robustness", () => {
   });
 
   it("reports hasRulesList per language (PRD 9.8)", () => {
-    for (const lang of ["en", "jam", "pcm", "en-GB"]) expect(hasRulesListFor(lang), lang).toBe(true);
-    for (const lang of ["hi", "pl", "so", "tw", "", null, undefined]) expect(hasRulesListFor(lang), String(lang)).toBe(false);
+    for (const lang of ["en", "jam", "pcm", "tw", "hi", "hi-IN", "ht", "kri", "gyn", "trf", "en-GB"]) {
+      expect(hasRulesListFor(lang), lang).toBe(true);
+    }
+    for (const lang of ["pl", "so", "bn", "child", "stroke", "", null, undefined]) expect(hasRulesListFor(lang), String(lang)).toBe(false);
     expect(screen("Boli mnie w klatce piersiowej i nie mogę oddychać", "pl")).toMatchObject({
       level: "clear",
       hasRulesList: false,
     });
-    expect(screen("मेरे सीने में दर्द है और मैं सांस नहीं ले पा रहा हूँ", "hi").hasRulesList).toBe(false);
+    expect(screen("मेरे सीने में दर्द है और मैं सांस नहीं ले पा रहा हूँ", "hi").hasRulesList).toBe(true);
   });
 
   it("still catches English red flags in a language without its own list (code-switching)", () => {
-    expect(screen("Mujhe chest pain hai aur I can't breathe", "hi")).toMatchObject({ level: "emergency", hasRulesList: false });
+    expect(screen("Amar chest pain hocche ar I can't breathe", "bn")).toMatchObject({ level: "emergency", hasRulesList: false });
   });
 
   it("never throws, and fails closed to uncertain on bad input", () => {

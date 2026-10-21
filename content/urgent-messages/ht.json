@@ -1,0 +1,56 @@
+{
+  "$comment": "Haitian Creole (Kreyòl ayisyen) urgent messages. DRAFT translation derived from en.json; needs native-speaker review and clinical adviser approval. Phone numbers and hrefs are byte-identical to en.json.",
+  "language": "ht",
+  "status": "DRAFT_NOT_CLINICALLY_APPROVED",
+  "reviewed": false,
+  "derivedFrom": "en",
+  "labels": {
+    "acknowledge": "Mwen konprann, kontinye",
+    "startAgain": "Rekòmanse"
+  },
+  "messages": {
+    "emergency": {
+      "title": "Sa ka yon ijans",
+      "body": [
+        "Sa ou dekri a ka grav.",
+        "Rele 999 kounye a.",
+        "Pa tann pou wè si l ap vin pi bon.",
+        "Aplikasyon sa a pa ka tcheke sentòm, ni li pa ka bay konsèy medikal."
+      ],
+      "banner": "Ou di nou yon bagay ki ka yon ijans. Si ou poko fè l, rele 999 kounye a.",
+      "actions": [
+        { "id": "call_999", "label": "Rele 999", "href": "tel:999" }
+      ]
+    },
+    "urgent": {
+      "title": "Tanpri, chèche èd byento",
+      "body": [
+        "Sa ou dekri a ka bezwen yon pwofesyonèl lasante gade l byento.",
+        "Kontakte NHS 111 kounye a, nan telefòn oswa sou entènèt, oswa rele kabinè GP ou a si li ouvè.",
+        "Si sa vin pi mal, oswa si ou panse se yon ijans, rele 999.",
+        "Aplikasyon sa a pa ka tcheke sentòm, ni li pa ka bay konsèy medikal."
+      ],
+      "banner": "Ou di nou yon bagay ki ka bezwen èd byento. Si ou poko fè l, kontakte NHS 111 oswa kabinè GP ou a.",
+      "actions": [
+        { "id": "call_111", "label": "Rele NHS 111", "href": "tel:111" },
+        { "id": "nhs_111_online", "label": "NHS 111 sou entènèt", "href": "https://111.nhs.uk" },
+        { "id": "call_999", "label": "Rele 999", "href": "tel:999" }
+      ]
+    },
+    "crisis": {
+      "title": "Ou pa oblije fè fas ak sa a pou kont ou",
+      "body": [
+        "Sanble w ap pase yon bagay ki difisil anpil kounye a.",
+        "Ou ka pale ak Samaritans gratis, nenpòt ki lè, lajounen kou lannwit. Rele 116 123.",
+        "Si ou an danje kounye a, oswa si ou ka aji sou panse sa yo, rele 999 kounye a.",
+        "Ou ka rele NHS 111 tou pou èd ijan pou sante mantal."
+      ],
+      "banner": "Ou di nou ou ka ap pase yon bagay ki difisil anpil. Samaritans la nenpòt ki lè nan 116 123. Si ou an danje kounye a, rele 999.",
+      "actions": [
+        { "id": "call_samaritans", "label": "Rele Samaritans 116 123", "href": "tel:116123" },
+        { "id": "call_999", "label": "Rele 999", "href": "tel:999" },
+        { "id": "call_111", "label": "Rele NHS 111", "href": "tel:111" }
+      ]
+    }
+  }
+}
