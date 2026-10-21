@@ -40,6 +40,13 @@ Running decisions log for the CareNav AI workspace and build. Newest at the bott
 **Affects:** `src/lib/db/*`, FR-14/15/16 storage.
 **Alternatives considered:** Drizzle (CONTEXT.md §4.4 default). Rejected for now as extra surface for no gain at this size; revisit if queries grow.
 
+## Gate and pipeline shape — 2026-10-21
+
+**Decision:** (1) Every rules list (en, jam, pcm, stroke) runs on every input regardless of language hint; child rules also trigger on text mentioning a baby/young child. (2) Gate level order emergency > crisis > urgent > uncertain > clear (emergency-vs-crisis precedence is an open clinical question). (3) Moderation maps flagged self-harm to `crisis` and self-harm score ≥ 0.2 to `uncertain` (DRAFT thresholds). (4) PRD 9.8 English second pass is skipped only when the level is already `emergency`. (5) Generate routes return `{kind:"urgent", gate}` with no AI text when not clear, unless `continue_after_ack` and the request says the user acknowledged; results carry `meta.urgentAcknowledged` for the persistent banner. (6) The derived user version is always produced (simple English even for English input, per AC-01.7); on parity/protected-span failure the result has `user: null` and the UI shows English only with a notice. (7) Grounding fuzziness only tolerates near-identical words and droppable short fillers — never digits, negations or swapped words. (8) New env `MAX_LETTER_CHARS` (6000) since letters are longer than typed answers.
+**Why:** fail-closed and "most cautious wins" per CLAUDE.md rules 1-3; code-switching makes per-language rule selection unsafe; fuzzy grounding must never let an invented dose through (rule 7).
+**Affects:** `src/lib/safety/*`, `src/lib/ai/pipeline/*`, `src/lib/validate/*`, `src/app/api/*`.
+**Alternatives considered:** selecting rule lists by detected language (misses code-switching); character-level fuzzy grounding (let changed doses through in long quotes — caught by tests).
+
 *(Populate further entries as the build progresses. Log anything that changes or narrows a requirement, picks between two valid architectural approaches, or resolves one of the open items in CONTEXT.md §15.)*
 
 Suggested format per entry:

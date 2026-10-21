@@ -4,6 +4,14 @@ Running log of what's happened in this repo, for quick orientation at the start 
 
 ---
 
+## 2026-10-21 — Build started (branch `build/layer-1`)
+
+- Done: T-01 scaffold/config/logger, T-02 SQLite, T-03 OpenAI wrapper, T-04 schemas, T-05 static content + T-06 redactor/rules (safety subagent), T-07 combiner, T-08 `/api/screen` + re-screen in `/api/summary|explain|followups`, T-10/11/12/14 generation logic, shared validators, T-29 demo assets.
+- In progress: T-09 guided step UI (prepare subagent).
+- Next: urgent-message UI (safety), result view T-13, Journey 2 UI, T-16 urgency runner, T-15 PDF.
+- No `OPENAI_API_KEY` in the cloud container: all model calls are tested with fakes; with no key the gate fails closed to `uncertain` (verified on a prod build). Real-model checks need a local run.
+- `.claude/agents/*.md` had an invalid `tools: all` line; removed so subagents start.
+
 ## 2026-10-21 — Workspace set up
 
 - Ingested `Context/` (PRD v0.2, Agreed Requirements v0.3, deck, architecture/pipeline diagrams) and created `CONTEXT.md`, `CLAUDE.md`, `DECISIONS.md`, `FEEDBACK.md`, this file, and `.claude/agents/` (orchestrator + 5 epic subagents).
