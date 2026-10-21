@@ -30,8 +30,8 @@ const SAFE_STRING = /^[A-Za-z0-9_.:\-/]{0,64}$/;
 export function sanitize(entry: Record<string, unknown>): LogEntry {
   const out: LogEntry = {};
   for (const key of LOG_FIELDS) {
-    if (!(key in entry)) continue;
     const v = entry[key];
+    if (v === undefined) continue;
     if (typeof v === "number" || typeof v === "boolean" || v === null) out[key] = v;
     else if (typeof v === "string" && SAFE_STRING.test(v)) out[key] = v;
     else out[key] = "[dropped]";

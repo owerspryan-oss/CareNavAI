@@ -25,6 +25,10 @@ describe("allow-list logger", () => {
     expect(out).toEqual({ route: "/api/screen", status: 200 });
   });
 
+  it("skips undefined values instead of marking them dropped", () => {
+    expect(sanitize({ requestId: undefined, route: "/x" })).toEqual({ route: "/x" });
+  });
+
   it("refuses free text smuggled into an allowed field", () => {
     const out = sanitize({ errorType: "I have crushing chest pain since this morning" });
     expect(out.errorType).toBe("[dropped]");
