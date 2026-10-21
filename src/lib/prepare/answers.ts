@@ -25,25 +25,12 @@ export const STARTED_TO_REQUEST: Record<Started, NonNullable<PrepareAnswers["tim
 export const ANSWER_LABELS = {
   /** Sent as `changes` when the user ticked "I haven't noticed any pattern" and typed nothing. */
   noPatternNoticed: "I haven't noticed any pattern.",
-  /**
-   * `PrepareAnswers` has no separate field for "help you've already had", so it is sent inside
-   * `medicines` under this label. The pre-master prompt already splits medicines from previous support.
-   */
-  previousSupport: "Help I've already had:",
 } as const;
 
 function text(state: PrepareState, field: TextField): string | null {
   if (!isFieldActive(state, field)) return null;
   const t = state.text[field].trim();
   return t === "" ? null : t;
-}
-
-function medicinesText(state: PrepareState): string | null {
-  const medicines = text(state, "medicines");
-  const support = text(state, "previousSupport");
-  if (!support) return medicines;
-  const supportPart = `${ANSWER_LABELS.previousSupport} ${support}`;
-  return medicines ? `${medicines}\n\n${supportPart}` : supportPart;
 }
 
 /**
@@ -65,7 +52,8 @@ export function toPrepareAnswers(state: PrepareState, followUps: readonly Answer
       note: text(state, "timingNotes"),
     },
     changes: text(state, "changes") ?? (noPatternNoticed ? ANSWER_LABELS.noPatternNoticed : null),
-    medicines: medicinesText(state),
+    medicines: text(state, "medicines"),
+    previousSupport: text(state, "previousSupport"),
     worries: text(state, "worries"),
     followUps: followUps.map((f) => ({ ...f, answer: f.answer?.trim() ? f.answer.trim() : null })),
   };

@@ -28,6 +28,7 @@ export const prepareAnswersSchema = z.object({
   }),
   changes: freeText.nullable(),
   medicines: freeText.nullable(),
+  previousSupport: freeText.nullable().default(null),
   worries: freeText.nullable(),
   followUps: z.array(answeredFollowUpSchema(PRE_INTENTS)).max(3),
 });
@@ -58,6 +59,7 @@ export function prepareFreeText(a: PrepareAnswers): { step: string; text: string
     { step: "timing_note", text: a.timing.note },
     { step: "changes", text: a.changes },
     { step: "medicines", text: a.medicines },
+    { step: "previous_support", text: a.previousSupport },
     { step: "worries", text: a.worries },
     ...a.followUps.map((f) => ({ step: `followup_${f.intent}`, text: f.answer })),
   ];

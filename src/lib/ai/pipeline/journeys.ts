@@ -47,6 +47,7 @@ function redactAnswers(a: PrepareAnswers): PrepareAnswers {
     timing: { ...a.timing, note: r(a.timing.note) },
     changes: r(a.changes),
     medicines: r(a.medicines),
+    previousSupport: r(a.previousSupport),
     worries: r(a.worries),
     followUps: a.followUps.map((f) => ({ ...f, answer: r(f.answer) })),
   };

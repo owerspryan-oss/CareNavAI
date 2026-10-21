@@ -8,7 +8,7 @@ const answers: PrepareAnswers = {
   mainConcern: "Mi foot dem swell up an hurt from mi start di new tablet",
   timing: { started: "1_to_4_weeks", pattern: "constant", note: null },
   changes: "worse inna di evening",
-  medicines: "amlodipine 5mg every morning",
+  medicines: "amlodipine 5mg every morning", previousSupport: null,
   worries: null,
   followUps: [],
 };

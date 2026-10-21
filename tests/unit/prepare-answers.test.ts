@@ -68,15 +68,11 @@ describe("toPrepareAnswers", () => {
     expect(prepareAnswersSchema.safeParse(answers).success).toBe(true);
   });
 
-  it("sends help already had inside medicines, under a static label", () => {
+  it("sends help already had in its own field, separate from medicines", () => {
     const both = toPrepareAnswers(
       stateWith({ structured: { relationship: "self" }, text: { concern: "x", medicines: "ibuprofen", previousSupport: "saw a pharmacist" } }),
     );
-    expect(both.medicines).toBe(`ibuprofen\n\n${ANSWER_LABELS.previousSupport} saw a pharmacist`);
-    const supportOnly = toPrepareAnswers(
-      stateWith({ structured: { relationship: "self" }, text: { concern: "x", previousSupport: "111" } }),
-    );
-    expect(supportOnly.medicines).toBe(`${ANSWER_LABELS.previousSupport} 111`);
+    expect(both).toMatchObject({ medicines: "ibuprofen", previousSupport: "saw a pharmacist" });
   });
 
   it("sends 'no pattern noticed' only when nothing was typed", () => {

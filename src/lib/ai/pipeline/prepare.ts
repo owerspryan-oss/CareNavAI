@@ -25,6 +25,7 @@ export function answersBlock(a: PrepareAnswers): string {
     `timing_note: ${a.timing.note ?? ""}`,
     `changes: ${a.changes ?? ""}`,
     `medicines: ${a.medicines ?? ""}`,
+    `previous_support: ${a.previousSupport ?? ""}`,
     `worries: ${a.worries ?? ""}`,
     ...a.followUps.map((f) => `follow_up (${f.intent}) Q: ${f.question} A: ${f.answer ?? "skipped"}`),
   ];
@@ -34,7 +35,7 @@ export function answersBlock(a: PrepareAnswers): string {
 /** Deterministic checks on the English master (PRD §11.4). Returns the first failure, or null. */
 export function checkPreDraft(draft: PreAppointmentDraft, answers: PrepareAnswers): ValidationFailed | null {
   if (allStrings(draft).some((s) => forbiddenHits(s).length > 0)) return new ValidationFailed("forbidden_content");
-  const said = [answers.mainConcern, answers.timing.note, answers.changes, answers.medicines, answers.worries, ...answers.followUps.map((f) => f.answer)]
+  const said = [answers.mainConcern, answers.timing.note, answers.changes, answers.medicines, answers.previousSupport, answers.worries, ...answers.followUps.map((f) => f.answer)]
     .filter(Boolean)
     .join("\n");
   const doses = draft.medicationAndSupport.medicines.map((m) => `${m.name} ${m.dose ?? ""}`).join("\n");

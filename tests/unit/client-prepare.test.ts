@@ -8,7 +8,7 @@ const answers: PrepareAnswers = {
   mainConcern: "my knees hurt",
   timing: { started: null, pattern: null, note: null },
   changes: null,
-  medicines: null,
+  medicines: null, previousSupport: null,
   worries: null,
   followUps: [],
 };
