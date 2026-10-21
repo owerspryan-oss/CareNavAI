@@ -4,6 +4,7 @@ import { PrepareFlow } from "@/components/prepare/PrepareFlow";
 import { languagesConfig } from "@/lib/config";
 import { env } from "@/lib/config/env";
 import { getUrgentContent } from "@/lib/content";
+import { demoPreparePresets } from "@/lib/demo/presets";
 import type { LanguageNames } from "@/lib/result/view";
 
 export const metadata: Metadata = {
@@ -23,5 +24,13 @@ export default async function PreparePage() {
   // Static urgent-screen content, built server-side so no server config reaches the client bundle.
   // TODO(epic-language): pass the interface language here once the picker sets it.
   const urgentContent = getUrgentContent("en");
-  return <PrepareFlow maxChars={env().MAX_TEXT_CHARS} urgentContent={urgentContent} languages={languageNames()} />;
+  const e = env();
+  return (
+    <PrepareFlow
+      maxChars={e.MAX_TEXT_CHARS}
+      urgentContent={urgentContent}
+      languages={languageNames()}
+      demo={e.DEMO_MODE ? demoPreparePresets() : undefined}
+    />
+  );
 }

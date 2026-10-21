@@ -1,5 +1,5 @@
 import type { PrepareAnswers } from "@/lib/ai/schemas";
-import { effectiveAgeBand, isFieldActive, type PrepareState, type Started, type TextField } from "./state";
+import { effectiveAgeBand, initialPrepareState, isFieldActive, type PrepareState, type Started, type TextField } from "./state";
 
 /*
  * Maps the Journey 1 UI state to the `PrepareAnswers` request body (src/lib/ai/schemas/requests.ts)
@@ -56,5 +56,35 @@ export function toPrepareAnswers(state: PrepareState, followUps: readonly Answer
     previousSupport: text(state, "previousSupport"),
     worries: text(state, "worries"),
     followUps: followUps.map((f) => ({ ...f, answer: f.answer?.trim() ? f.answer.trim() : null })),
+  };
+}
+
+/**
+ * The reverse of `toPrepareAnswers`, for demo mode (FR-26): turns a fictional demo input into UI state,
+ * so the presenter steps through it and every answer is screened as if typed.
+ */
+export function fromPrepareAnswers(a: PrepareAnswers): PrepareState {
+  const base = initialPrepareState();
+  const started = (Object.keys(STARTED_TO_REQUEST) as Started[]).find((k) => STARTED_TO_REQUEST[k] === a.timing.started) ?? null;
+  const noPatternNoticed = a.changes === ANSWER_LABELS.noPatternNoticed;
+  return {
+    ...base,
+    structured: {
+      relationship: a.forWhom.relationship,
+      ageBand: a.forWhom.ageBand,
+      started,
+      pattern: a.timing.pattern,
+      noPatternNoticed,
+    },
+    text: {
+      ...base.text,
+      whoLabel: a.forWhom.label ?? "",
+      concern: a.mainConcern,
+      timingNotes: a.timing.note ?? "",
+      changes: noPatternNoticed ? "" : (a.changes ?? ""),
+      medicines: a.medicines ?? "",
+      previousSupport: a.previousSupport ?? "",
+      worries: a.worries ?? "",
+    },
   };
 }

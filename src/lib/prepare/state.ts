@@ -96,6 +96,8 @@ export type PrepareAction =
   | { type: "acknowledgeUrgent"; level: Exclude<SafetyLevel, "clear"> }
   | { type: "back" }
   | { type: "editFromReview"; step: StepId }
+  /** Demo mode (FR-26): replace everything with a preset. Nothing in it counts as screened yet. */
+  | { type: "load"; state: PrepareState }
   | { type: "reset" };
 
 export const REVIEW_INDEX = STEP_IDS.indexOf("review");
@@ -134,6 +136,8 @@ export function prepareReducer(state: PrepareState, action: PrepareAction): Prep
       return { ...state, stepIndex: Math.max(state.stepIndex - 1, 0) };
     case "editFromReview":
       return { ...state, stepIndex: STEP_IDS.indexOf(action.step), returnToReview: true };
+    case "load":
+      return { ...action.state, stepIndex: 0, returnToReview: false, screened: {}, urgentAcknowledged: null };
     case "reset":
       return initialPrepareState();
   }

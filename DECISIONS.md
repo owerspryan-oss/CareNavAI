@@ -114,3 +114,10 @@ Suggested format per entry:
 **Why:** product-owner answers, 2026-10-21. Item (1)'s two-step check is Claude's extension of "make it hard to" to the overdose case, flagged to the product owner.
 **Affects:** `content/urgent-messages/*`, `src/lib/content/schemas.ts`, `src/lib/safety/urgent-content.ts`, `src/components/safety/UrgentGate.tsx`, `src/lib/client/screen.ts`.
 **Alternatives considered:** switching to the crisis message when self-harm and an emergency coincide (would drop "call 999 now" from the top); saying Samaritans has interpreters (unverified).
+
+## Child thresholds kept as built; T-17 demo mode — 2026-10-21
+
+**Decision:** (1) Product owner: child thresholds and the unknown-age default stay as built ("leave as is"); "Someone I look after" is not asked for an age. (2) T-17 / AC-26.1: demo mode is off unless `DEMO_MODE=true`. When on, the server reads `demo/inputs/*.json` (validated as request answers) and `demo/letter/*` and passes them as props; nothing is in the client bundle or HTML otherwise. A presenter-only menu opens with Alt+Shift+D on each journey's first screen. Journey 1 presets fill the UI state and start at step 1 with nothing counted as screened, so the gate checks every answer as if typed (the first Next screens all of it). The Journey 2 letter loads either as the PNG, through the real resize and extraction, or as typed text. AC-26.2 is the existing `npm run test:urgency`.
+**Why:** a repeatable recording without weakening the gate (CLAUDE.md rule 1).
+**Affects:** FR-26, `src/lib/demo/presets.ts`, `src/components/demo/*`, `src/components/prepare/PrepareFlow.tsx`, `src/components/understand/UnderstandFlow.tsx`, `src/lib/prepare/{state,answers}.ts`, `src/lib/config/env.ts`, `.env.example`, `demo/script.md`.
+**Alternatives considered:** a `?demo=` URL that auto-loads (not hidden; easy to leave in a recording); a demo path that skips screening (breaks rule 1).

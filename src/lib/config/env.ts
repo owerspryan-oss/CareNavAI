@@ -22,6 +22,8 @@ export const envSchema = z.object({
   PUBLIC_BASE_URL: z.url().default("http://localhost:3000"),
   CHILD_AGE_BANDS_STRICT: bool.default(true),
   SHOW_DRAFT_LABEL: bool.default(true),
+  /** FR-26: the hidden demo menu (Alt+Shift+D) that loads the fictional inputs in demo/. Off unless set. */
+  DEMO_MODE: bool.default(false),
   DATABASE_PATH: z.string().min(1).default("data/carenav.sqlite"),
   /** Chromium for the PDF renderer (ADR-008). Unset = Playwright's own browser lookup (PLAYWRIGHT_BROWSERS_PATH). */
   CHROMIUM_PATH: z.string().min(1).optional(),

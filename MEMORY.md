@@ -21,6 +21,7 @@ Running log of what's happened in this repo, for quick orientation at the start 
 - T-15 bilingual PDF + QR + clinician form `/c/[ref]`.
 - T-25 (part): per-device rate limits.
 - T-29: demo assets.
+- T-17: demo mode (`DEMO_MODE=true`, Alt+Shift+D menu; see `demo/script.md`).
 
 **Product-owner decisions this session (all logged in DECISIONS.md):**
 - Follow-up questions come before review.
@@ -29,7 +30,6 @@ Running log of what's happened in this repo, for quick orientation at the start 
 - A simplification pass on all screens: one quiet options row, empty sections collapsed, routes and disclaimer folded away, draft notice on step 1 only.
 
 **Next, roughly in priority order (CONTEXT.md §14; cut order v0.3 A8):**
-- T-17 demo mode (fixture loader).
 - T-18 accessibility pass (axe).
 - T-31/T-32 language picker and interface localisation.
 - T-20 voice (cut 2nd).
@@ -47,7 +47,7 @@ Running log of what's happened in this repo, for quick orientation at the start 
 - Copy approved 2026-10-21, including the crisis check and breathing wording. New since: the self-harm line on emergency and the 111 interpreter line on crisis.
 - Native-speaker review of the Tier A content. Least confidence: Twi, Krio, Guyanese.
 - ~~A transparent logo export.~~ Not needed: the supplied PNG is already transparent; the real icon is now used (public/brand/logo-mark.png).
-- Open clinical questions: child thresholds and unknown-age default (suggestion sent: keep as built, plus an optional age for "Someone I look after"; awaiting answer). Everything else answered 2026-10-21 (see DECISIONS.md).
+- Open clinical questions: none from the product owner; all answered 2026-10-21 (see DECISIONS.md). Clinical adviser sign-off is still outstanding for all DRAFT rules and messages.
 
 **Gotchas:**
 - There is no `OPENAI_API_KEY` in the cloud container. Model calls are tested with fakes, and the gate fails closed to `uncertain`. Real-model checks need a local `.env.local` with `OPENAI_API_KEY`.

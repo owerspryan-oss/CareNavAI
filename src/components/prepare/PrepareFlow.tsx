@@ -6,7 +6,9 @@ import { flushSync } from "react-dom";
 import type { GateResult, SafetyLevel } from "@/lib/ai/schemas";
 import { fetchFollowUps, fetchSummary, type CallError, type FollowUpQuestion, type SummaryResult } from "@/lib/client/prepare";
 import { mostCautious, screenText } from "@/lib/client/screen";
-import { toPrepareAnswers, type AnsweredFollowUp } from "@/lib/prepare/answers";
+import { fromPrepareAnswers, toPrepareAnswers, type AnsweredFollowUp } from "@/lib/prepare/answers";
+import type { DemoPreparePreset } from "@/lib/demo/presets";
+import { DemoMenu } from "@/components/demo/DemoMenu";
 import {
   REVIEW_INDEX,
   STEP_IDS,
@@ -56,6 +58,8 @@ export interface PrepareFlowProps {
   urgentContent: UrgentContent;
   /** Language names and direction from config/languages.json, for the result view (T-13). */
   languages: LanguageNames;
+  /** Fictional demo inputs, passed only when DEMO_MODE is on (FR-26). */
+  demo?: DemoPreparePreset[];
 }
 
 type Direction = "forward" | "back";
@@ -106,7 +110,7 @@ function firstInvalidStep(state: PrepareState, maxChars: number): { step: StepId
  * All answers live in React state only (guest = stateless). Every free-text answer is screened by the
  * urgency gate before the journey moves on; anything but `clear` hands over to <UrgentGate>.
  */
-export function PrepareFlow({ maxChars, urgentContent, languages }: PrepareFlowProps) {
+export function PrepareFlow({ maxChars, urgentContent, languages, demo }: PrepareFlowProps) {
   const router = useRouter();
   const [state, dispatch] = useReducer(prepareReducer, undefined, initialPrepareState);
   const [errors, setErrors] = useState<StepErrors>({});
@@ -308,19 +312,30 @@ export function PrepareFlow({ maxChars, urgentContent, languages }: PrepareFlowP
     navigate({ type: "back" }, "back");
   }
 
+  function startAgain() {
+    dispatch({ type: "reset" });
+    setErrors({});
+    setGate(null);
+    setStage({ name: "steps" });
+    setFollowUps([]);
+    setFollowUpsAsked(false);
+  }
+
+  const demoItems = (demo ?? []).map((preset) => ({
+    id: preset.id,
+    label: `Fill in: ${preset.id}`,
+    onSelect: () => {
+      startAgain();
+      dispatch({ type: "load", state: fromPrepareAnswers(preset.answers) });
+    },
+  }));
+
   if (gate) {
     return (
       <UrgentGate
         result={gate.result}
         content={urgentContent}
-        onStartAgain={() => {
-          dispatch({ type: "reset" });
-          setErrors({});
-          setGate(null);
-          setStage({ name: "steps" });
-          setFollowUps([]);
-          setFollowUpsAsked(false);
-        }}
+        onStartAgain={startAgain}
         onAcknowledge={() => onUrgentAcknowledged(gate)}
       />
     );
@@ -378,6 +393,7 @@ export function PrepareFlow({ maxChars, urgentContent, languages }: PrepareFlowP
 
   return (
     <div className={styles.page}>
+      {demoItems.length > 0 && <DemoMenu items={demoItems} />}
       <TopBar
         backLabel={state.stepIndex === 0 ? c.actions.backToStart : c.actions.back}
         onBack={onBack}

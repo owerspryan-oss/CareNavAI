@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState, type ChangeEvent } from "react";
 import type { GateResult } from "@/lib/ai/schemas";
 import type { CallError } from "@/lib/client/call";
+import type { DemoLetterPreset } from "@/lib/demo/presets";
 import { resizeToJpeg } from "@/lib/client/image";
 import { mostCautious, screenText } from "@/lib/client/screen";
 import {
@@ -19,6 +20,7 @@ import {
 import type { LanguageNames } from "@/lib/result/view";
 import type { UrgentContent } from "@/lib/safety/urgent-content";
 import { letterTerms } from "@/lib/understand/view";
+import { DemoMenu } from "@/components/demo/DemoMenu";
 import { FollowUpsStep } from "@/components/prepare/FollowUpsStep";
 import { SummaryStatus } from "@/components/prepare/SummaryStatus";
 import { ExplainResultView } from "@/components/result/ExplainResultView";
@@ -46,6 +48,8 @@ export interface UnderstandFlowProps {
   providerNotice: string[];
   /** Language names and direction from config/languages.json. */
   languages: LanguageNames;
+  /** Fictional demo letters, passed only when DEMO_MODE is on (FR-26). */
+  demo?: DemoLetterPreset[];
 }
 
 type Source = "typed" | "photo";
@@ -88,6 +92,7 @@ export function UnderstandFlow({
   urgentContent,
   providerNotice,
   languages,
+  demo,
 }: UnderstandFlowProps) {
   const router = useRouter();
   const [stage, setStage] = useState<Stage>({ name: "choose" });
@@ -154,7 +159,10 @@ export function UnderstandFlow({
   async function onPhotoChosen(e: ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     e.target.value = ""; // so the same photo can be chosen again after a retake
-    if (!file) return;
+    if (file) await readPhoto(file);
+  }
+
+  async function readPhoto(file: Blob) {
     setPhotoUrl(null);
     setStage({ name: "reading" });
 
@@ -339,9 +347,27 @@ export function UnderstandFlow({
     </>
   );
 
+  // Demo mode (FR-26): the demo photo goes through the same resize and extraction as a chosen photo.
+  const demoItems = (demo ?? []).map((preset) => ({
+    id: `${preset.id}-${preset.kind}`,
+    label: `Letter ${preset.kind}: ${preset.id}`,
+    onSelect: () => {
+      startAgain();
+      if (preset.kind === "text") {
+        setText(preset.text);
+        setStage({ name: "confirm" });
+      } else {
+        void fetch(preset.dataUrl)
+          .then((r) => r.blob())
+          .then(readPhoto);
+      }
+    },
+  }));
+
   if (stage.name === "choose") {
     return (
       <div className={p.page}>
+        {demoItems.length > 0 && <DemoMenu items={demoItems} />}
         <TopBar backLabel={c.actions.backToStart} onBack={() => router.push("/")} />
         <main className={`${p.main} ${styles.step}`} key="choose">
           <div className={p.intro}>

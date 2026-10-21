@@ -25,3 +25,12 @@ All people, inputs and the letter are **fictional** (T-29). The demo shows real 
 
 - Patois wording in `inputs/marcia-prepare.json` and `inputs/red-flag.json`: native speaker.
 - Every model output in the take: product owner. Pidgin output: native speaker.
+
+## Loading the inputs (demo mode, FR-26)
+
+1. Set `DEMO_MODE=true` in `.env.local` and restart `npm run dev`. With it off (the default), none of the demo inputs reach the browser.
+2. On the first screen of either journey, press **Alt+Shift+D** to open the hidden menu, then pick an input. Close it with Escape.
+   - Journey 1 (`/prepare`): "Fill in: marcia-prepare" or "Fill in: red-flag". The answers are filled in and you start at step 1.
+   - Journey 2 (`/understand`): "Letter photo: gp-letter" sends `letter/gp-letter.png` through the real photo extraction; "Letter text: gp-letter" is the typed fallback.
+3. The urgency gate still runs on every answer. The first **Next** screens everything that was filled in, so `red-flag` shows the emergency message straight after step 1.
+4. Run `npm run test:urgency` before the take for the pass/fail matrix (AC-26.2).

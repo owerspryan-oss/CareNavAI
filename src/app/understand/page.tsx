@@ -4,6 +4,7 @@ import { UnderstandFlow } from "@/components/understand/UnderstandFlow";
 import { languagesConfig } from "@/lib/config";
 import { env } from "@/lib/config/env";
 import { getDisclaimers, getUrgentContent } from "@/lib/content";
+import { demoLetterPresets } from "@/lib/demo/presets";
 import type { LanguageNames } from "@/lib/result/view";
 
 export const metadata: Metadata = {
@@ -31,6 +32,7 @@ export default async function UnderstandPage() {
       urgentContent={getUrgentContent("en")}
       providerNotice={getDisclaimers("en").content.guestProviderNotice}
       languages={languageNames()}
+      demo={e.DEMO_MODE ? demoLetterPresets() : undefined}
     />
   );
 }

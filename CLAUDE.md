@@ -71,5 +71,6 @@ UI work (mockups, components, motion) follows Apple's interface-design approach,
 - `npm run lint` — ESLint (next core-web-vitals + typescript)
 - `npm test` — all Vitest tests; single file: `npx vitest run tests/unit/logger.test.ts`
 - `npm run test:urgency` — urgency matrix (T-16): every seed scenario through the full gate, prints a pass/fail table. Uses live models when `OPENAI_API_KEY` is set; fails only on a MISS (a must-route-up case returned `clear`).
+- Demo mode (FR-26): `DEMO_MODE=true` in `.env.local`, then Alt+Shift+D on a journey's first screen loads the fictional inputs in `demo/` (see `demo/script.md`).
 - Copy `.env.example` to `.env.local` for local config. Playwright e2e will be recorded here when it exists.
 - Next.js 16 differs from older versions — check `node_modules/next/dist/docs/` before using an unfamiliar API (see `AGENTS.md`).
