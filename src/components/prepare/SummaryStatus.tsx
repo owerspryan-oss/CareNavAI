@@ -7,11 +7,21 @@ import { TopBar } from "@/components/ui/TopBar";
 import { prepareCopy as c } from "./copy";
 import styles from "./PrepareFlow.module.css";
 
-export type SummaryStatusProps =
-  | { kind: "loading" }
-  | { kind: "error"; error: CallError; onRetry: () => void; onBackToAnswers: () => void };
+/** The static copy for these states. Defaults to Journey 1's; Journey 2 passes its own. */
+export type StatusCopy = {
+  makingTitle: string;
+  makingLead: string;
+  errors: Record<CallError, { title: string; body: string }>;
+  tryAgain: string;
+  backToAnswers: string;
+};
 
-/** "Making your summary" and the friendly, static error states (413 / 503 / 502 or network). */
+export type SummaryStatusProps = { copy?: StatusCopy } & (
+  | { kind: "loading" }
+  | { kind: "error"; error: CallError; onRetry: () => void; onBackToAnswers: () => void }
+);
+
+/** "Making your summary" (or the journey's own wording) and the friendly, static error states (413 / 503 / 502 or network). */
 export function SummaryStatus(props: SummaryStatusProps) {
   const headingRef = useRef<HTMLHeadingElement>(null);
   useEffect(() => {
@@ -19,7 +29,7 @@ export function SummaryStatus(props: SummaryStatusProps) {
     headingRef.current?.focus({ preventScroll: true });
   }, [props.kind]);
 
-  const s = c.summaryStatus;
+  const s = props.copy ?? c.summaryStatus;
   if (props.kind === "loading") {
     return (
       <div className={styles.page}>

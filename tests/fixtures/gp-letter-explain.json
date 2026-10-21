@@ -1,0 +1,338 @@
+{
+  "letter": "Riverside Medical Practice\n14 Example Road, Anytown\n\n21 October 2026\n\nDear Mr Okafor,\n\nThank you for coming to see me on 14/10/2026 about your blood pressure readings.\n\nAs we discussed, I have started you on Amlodipine 5mg, to be taken once a day in the morning. The pharmacy will have your prescription ready from tomorrow.\n\nPlease book a blood test with the practice nurse in a few weeks' time, so we can check your kidney function.\n\nIf you notice swelling in your ankles, please let the surgery know.\n\nYours sincerely,\n\nDr A. Mensah\nGeneral Practitioner\n",
+  "extract": {
+    "kind": "extracted",
+    "text": "Riverside Medical Practice\n14 Example Road, Anytown\n\n21 October 2026\n\nDear Mr Okafor,\n\nThank you for coming to see me on 14/10/2026 about your blood pressure readings.\n\nAs we discussed, I have started you on Amlodipine 5mg, to be taken once a day in the morning. The pharmacy will have your prescription ready from tomorrow.\n\nPlease book a blood test with the practice nurse in a few weeks' time, so we can check your kidney function.\n\nIf you notice swelling in your ankles, please let the surgery know.\n\nYours sincerely,\n\nDr A. Mensah\nGeneral Practitioner\n",
+    "medicineCandidates": [
+      {
+        "name": "Amlodipine",
+        "dose": "5mg"
+      }
+    ]
+  },
+  "followups": {
+    "kind": "followups",
+    "questions": [
+      {
+        "intent": "clarify_who_to_contact",
+        "question": "Did anyone tell you who to call if you have questions?"
+      },
+      {
+        "intent": "clarify_unclear_term",
+        "question": "Is there a word in the letter you'd like explained?"
+      }
+    ]
+  },
+  "explainDefault": {
+    "kind": "result",
+    "english": {
+      "whatYouWereTold": [
+        {
+          "text": "Your doctor saw you on 14/10/2026 about your blood pressure readings.",
+          "sourceQuote": "Thank you for coming to see me on 14/10/2026 about your blood pressure readings"
+        },
+        {
+          "text": "Your doctor has started you on Amlodipine 5mg.",
+          "sourceQuote": "I have started you on Amlodipine 5mg"
+        }
+      ],
+      "whatItMeans": [
+        {
+          "clinicianWords": "blood pressure readings",
+          "plainMeaning": "The numbers from checking how hard your blood pushes as it moves round your body."
+        },
+        {
+          "clinicianWords": "kidney function",
+          "plainMeaning": "How well your kidneys are working."
+        }
+      ],
+      "nextSteps": [
+        {
+          "action": "Book a blood test with the practice nurse.",
+          "byWhen": "in a few weeks' time",
+          "sourceQuote": "Please book a blood test with the practice nurse in a few weeks' time"
+        },
+        {
+          "action": "Collect your prescription from the pharmacy.",
+          "byWhen": "from tomorrow",
+          "sourceQuote": "The pharmacy will have your prescription ready from tomorrow"
+        },
+        {
+          "action": "Tell the surgery if your ankles swell.",
+          "byWhen": null,
+          "sourceQuote": "If you notice swelling in your ankles, please let the surgery know"
+        }
+      ],
+      "medicines": [
+        {
+          "name": "Amlodipine",
+          "dose": "5mg",
+          "frequency": "once a day",
+          "duration": null,
+          "instructions": "in the morning",
+          "sourceQuote": "Amlodipine 5mg, to be taken once a day in the morning"
+        }
+      ],
+      "unclearOrMissing": [
+        {
+          "item": "How long to take Amlodipine for",
+          "whoToAsk": "pharmacist"
+        }
+      ],
+      "ungrounded": [
+        {
+          "section": "nextSteps",
+          "text": "Check your blood pressure at home every week.",
+          "sourceQuote": "check your blood pressure at home every week"
+        }
+      ],
+      "disclaimer": [
+        "This explains what you were told, or what your letter says, in plainer words. It is not medical advice.",
+        "Always follow what your doctor, nurse or pharmacist told you. If something here does not match, go with what they said.",
+        "If anything is unclear, ask the person who wrote it, your GP surgery or a pharmacist."
+      ],
+      "meta": {
+        "detectedLanguage": "en",
+        "register": "standard",
+        "outputLanguage": "en",
+        "outputMode": "simple_english",
+        "promptVersion": "v1+v1",
+        "confidenceNotice": false,
+        "urgentAcknowledged": null
+      }
+    },
+    "user": {
+      "whatYouWereTold": [
+        {
+          "text": "I saw my doctor on 14/10/2026 about my blood pressure readings.",
+          "sourceQuote": "Thank you for coming to see me on 14/10/2026 about your blood pressure readings"
+        },
+        {
+          "text": "My doctor started me on Amlodipine 5mg.",
+          "sourceQuote": "I have started you on Amlodipine 5mg"
+        }
+      ],
+      "whatItMeans": [
+        {
+          "clinicianWords": "blood pressure readings",
+          "plainMeaning": "The numbers from checking how hard my blood pushes as it moves round my body."
+        },
+        {
+          "clinicianWords": "kidney function",
+          "plainMeaning": "How well my kidneys are working."
+        }
+      ],
+      "nextSteps": [
+        {
+          "action": "I need to book a blood test with the practice nurse.",
+          "byWhen": "in a few weeks' time",
+          "sourceQuote": "Please book a blood test with the practice nurse in a few weeks' time"
+        },
+        {
+          "action": "I can collect my prescription from the pharmacy.",
+          "byWhen": "from tomorrow",
+          "sourceQuote": "The pharmacy will have your prescription ready from tomorrow"
+        },
+        {
+          "action": "I should tell the surgery if my ankles swell.",
+          "byWhen": null,
+          "sourceQuote": "If you notice swelling in your ankles, please let the surgery know"
+        }
+      ],
+      "medicines": [
+        {
+          "name": "Amlodipine",
+          "dose": "5mg",
+          "frequency": "once a day",
+          "duration": null,
+          "instructions": "in the morning",
+          "sourceQuote": "Amlodipine 5mg, to be taken once a day in the morning"
+        }
+      ],
+      "unclearOrMissing": [
+        {
+          "item": "How long I take Amlodipine for",
+          "whoToAsk": "pharmacist"
+        }
+      ],
+      "ungrounded": [
+        {
+          "section": "nextSteps",
+          "text": "Check your blood pressure at home every week.",
+          "sourceQuote": "check your blood pressure at home every week"
+        }
+      ],
+      "disclaimer": [
+        "This explains what you were told, or what your letter says, in plainer words. It is not medical advice.",
+        "Always follow what your doctor, nurse or pharmacist told you. If something here does not match, go with what they said.",
+        "If anything is unclear, ask the person who wrote it, your GP surgery or a pharmacist."
+      ],
+      "meta": {
+        "detectedLanguage": "en",
+        "register": "standard",
+        "outputLanguage": "en",
+        "outputMode": "simple_english",
+        "promptVersion": "v1+v1",
+        "confidenceNotice": false,
+        "urgentAcknowledged": null
+      }
+    },
+    "userFallback": null
+  },
+  "explainPcm": {
+    "kind": "result",
+    "english": {
+      "whatYouWereTold": [
+        {
+          "text": "Your doctor saw you on 14/10/2026 about your blood pressure readings.",
+          "sourceQuote": "Thank you for coming to see me on 14/10/2026 about your blood pressure readings"
+        },
+        {
+          "text": "Your doctor has started you on Amlodipine 5mg.",
+          "sourceQuote": "I have started you on Amlodipine 5mg"
+        }
+      ],
+      "whatItMeans": [
+        {
+          "clinicianWords": "blood pressure readings",
+          "plainMeaning": "The numbers from checking how hard your blood pushes as it moves round your body."
+        },
+        {
+          "clinicianWords": "kidney function",
+          "plainMeaning": "How well your kidneys are working."
+        }
+      ],
+      "nextSteps": [
+        {
+          "action": "Book a blood test with the practice nurse.",
+          "byWhen": "in a few weeks' time",
+          "sourceQuote": "Please book a blood test with the practice nurse in a few weeks' time"
+        },
+        {
+          "action": "Collect your prescription from the pharmacy.",
+          "byWhen": "from tomorrow",
+          "sourceQuote": "The pharmacy will have your prescription ready from tomorrow"
+        },
+        {
+          "action": "Tell the surgery if your ankles swell.",
+          "byWhen": null,
+          "sourceQuote": "If you notice swelling in your ankles, please let the surgery know"
+        }
+      ],
+      "medicines": [
+        {
+          "name": "Amlodipine",
+          "dose": "5mg",
+          "frequency": "once a day",
+          "duration": null,
+          "instructions": "in the morning",
+          "sourceQuote": "Amlodipine 5mg, to be taken once a day in the morning"
+        }
+      ],
+      "unclearOrMissing": [
+        {
+          "item": "How long to take Amlodipine for",
+          "whoToAsk": "pharmacist"
+        }
+      ],
+      "ungrounded": [
+        {
+          "section": "nextSteps",
+          "text": "Check your blood pressure at home every week.",
+          "sourceQuote": "check your blood pressure at home every week"
+        }
+      ],
+      "disclaimer": [
+        "This explains what you were told, or what your letter says, in plainer words. It is not medical advice.",
+        "Always follow what your doctor, nurse or pharmacist told you. If something here does not match, go with what they said.",
+        "If anything is unclear, ask the person who wrote it, your GP surgery or a pharmacist."
+      ],
+      "meta": {
+        "detectedLanguage": "en",
+        "register": "standard",
+        "outputLanguage": "en",
+        "outputMode": "simple_english",
+        "promptVersion": "v1+v1",
+        "confidenceNotice": false,
+        "urgentAcknowledged": null
+      }
+    },
+    "user": {
+      "whatYouWereTold": [
+        {
+          "text": "I see my doctor for 14/10/2026 about my blood pressure readings.",
+          "sourceQuote": "Thank you for coming to see me on 14/10/2026 about your blood pressure readings"
+        },
+        {
+          "text": "Doctor don start me on Amlodipine 5mg.",
+          "sourceQuote": "I have started you on Amlodipine 5mg"
+        }
+      ],
+      "whatItMeans": [
+        {
+          "clinicianWords": "blood pressure readings",
+          "plainMeaning": "Na the numbers wey show how hard my blood dey push as e dey waka for my body."
+        },
+        {
+          "clinicianWords": "kidney function",
+          "plainMeaning": "How well my kidney dey work."
+        }
+      ],
+      "nextSteps": [
+        {
+          "action": "I go book blood test with the practice nurse.",
+          "byWhen": "in a few weeks' time",
+          "sourceQuote": "Please book a blood test with the practice nurse in a few weeks' time"
+        },
+        {
+          "action": "I fit collect my medicine for pharmacy.",
+          "byWhen": "from tomorrow",
+          "sourceQuote": "The pharmacy will have your prescription ready from tomorrow"
+        },
+        {
+          "action": "I go tell the surgery if my leg for ankle begin swell.",
+          "byWhen": null,
+          "sourceQuote": "If you notice swelling in your ankles, please let the surgery know"
+        }
+      ],
+      "medicines": [
+        {
+          "name": "Amlodipine",
+          "dose": "5mg",
+          "frequency": "one time every day",
+          "duration": null,
+          "instructions": "for morning",
+          "sourceQuote": "Amlodipine 5mg, to be taken once a day in the morning"
+        }
+      ],
+      "unclearOrMissing": [
+        {
+          "item": "How long I go take Amlodipine",
+          "whoToAsk": "pharmacist"
+        }
+      ],
+      "ungrounded": [
+        {
+          "section": "nextSteps",
+          "text": "Check your blood pressure at home every week.",
+          "sourceQuote": "check your blood pressure at home every week"
+        }
+      ],
+      "disclaimer": [
+        "This explains what you were told, or what your letter says, in plainer words. It is not medical advice.",
+        "Always follow what your doctor, nurse or pharmacist told you. If something here does not match, go with what they said.",
+        "If anything is unclear, ask the person who wrote it, your GP surgery or a pharmacist."
+      ],
+      "meta": {
+        "detectedLanguage": "en",
+        "register": "standard",
+        "outputLanguage": "pcm",
+        "outputMode": "dialect_output",
+        "promptVersion": "v1+v1",
+        "confidenceNotice": true,
+        "urgentAcknowledged": null
+      }
+    },
+    "userFallback": null
+  }
+}

@@ -3,12 +3,13 @@ import type { SummaryResponse } from "@/lib/ai/pipeline/journeys";
 import {
   PRE_INTENTS,
   MAX_FOLLOWUPS,
-  gateResultSchema,
   preAppointmentResultSchema,
   type GateResult,
   type PrepareAnswers,
 } from "@/lib/ai/schemas";
-import { failClosedResult } from "./screen";
+import { isUrgent, post, urgentGate, type CallError } from "./call";
+
+export { urgentGate, type CallError };
 
 /*
  * Client calls for Journey 1 steps 7-9 (FR-22, FR-01, FR-03). Never throw.
@@ -18,9 +19,6 @@ import { failClosedResult } from "./screen";
 
 export type FollowUpQuestion = { intent: (typeof PRE_INTENTS)[number]; question: string };
 export type SummaryResult = Extract<SummaryResponse, { kind: "result" }>;
-
-/** Why a call produced nothing usable. Maps to static copy, never to server text. */
-export type CallError = "too_long" | "busy" | "failed";
 
 export type FollowUpsOutcome =
   | { kind: "followups"; questions: FollowUpQuestion[] }
@@ -44,40 +42,6 @@ const summaryBodySchema = z.object({
   user: preAppointmentResultSchema.nullable(),
   userFallback: z.enum(["parity", "protected_spans", "call_failed"]).nullable(),
 });
-
-function statusError(status: number): CallError {
-  if (status === 413) return "too_long";
-  if (status === 503) return "busy";
-  return "failed";
-}
-
-/** A gate result that routes up. Anything malformed, or a `clear` inside an urgent response, becomes `uncertain`. */
-export function urgentGate(raw: unknown): GateResult {
-  const parsed = gateResultSchema.safeParse(raw);
-  return parsed.success && parsed.data.level !== "clear" ? parsed.data : failClosedResult();
-}
-
-type Raw = { ok: true; body: unknown } | { ok: false; error: CallError };
-
-async function post(url: string, body: unknown, timeoutMs: number): Promise<Raw> {
-  try {
-    const res = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-      signal: AbortSignal.timeout(timeoutMs),
-      cache: "no-store",
-    });
-    if (!res.ok) return { ok: false, error: statusError(res.status) };
-    return { ok: true, body: await res.json() };
-  } catch {
-    return { ok: false, error: "failed" };
-  }
-}
-
-function isUrgent(body: unknown): body is { kind: "urgent"; gate: unknown } {
-  return typeof body === "object" && body !== null && (body as { kind?: unknown }).kind === "urgent";
-}
 
 export async function fetchFollowUps(answers: PrepareAnswers, acknowledgedUrgent: boolean): Promise<FollowUpsOutcome> {
   const raw = await post("/api/followups", { journey: "prepare", answers, acknowledgedUrgent }, FOLLOWUPS_TIMEOUT_MS);

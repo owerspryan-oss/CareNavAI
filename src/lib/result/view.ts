@@ -70,3 +70,25 @@ export function versionDir(meta: ResultMeta, languages: LanguageNames): "ltr" | 
 export function safeHref(href: string): string | null {
   return /^(tel:\d+|https:\/\/\S+)$/.test(href) ? href : null;
 }
+
+const MONTH = "(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|july?|aug(?:ust)?|sep(?:t(?:ember)?)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)";
+/** Doses ("5mg", "2.5 ml", "10 units") and dates ("14/10/2026", "21 October 2026", "October 21, 2026"). */
+const DOSE_OR_DATE = new RegExp(
+  [
+    String.raw`\d+(?:[.,]\d+)?\s?(?:mg|mcg|µg|micrograms?|milligrams?|g|ml|millilitres?|units?|iu)(?![\p{L}\d])`,
+    String.raw`\d{1,2}[/.-]\d{1,2}[/.-]\d{2,4}(?!\d)`,
+    String.raw`\d{1,2}(?:st|nd|rd|th)?\s+${MONTH}(?:\s+\d{4})?(?![\p{L}\d])`,
+    String.raw`${MONTH}\s+\d{1,2}(?:st|nd|rd|th)?(?:,?\s+\d{4})?(?![\p{L}\d])`,
+  ]
+    .map((p) => String.raw`(?<![\p{L}\d])(?:${p})`)
+    .join("|"),
+  "giu",
+);
+
+/**
+ * Doses and dates written in `text`, found by pattern (AC-02.5, AC-08.3), so they are highlighted
+ * even when the model did not list them. The spans are returned exactly as written.
+ */
+export function doseAndDateTerms(text: string): string[] {
+  return [...new Set(Array.from(text.matchAll(DOSE_OR_DATE), (m) => m[0]))];
+}
