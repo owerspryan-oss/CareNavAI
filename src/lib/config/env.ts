@@ -17,7 +17,11 @@ export const envSchema = z.object({
   MAX_AUDIO_SECONDS: z.coerce.number().int().positive().default(90),
   MAX_IMAGE_PX: z.coerce.number().int().positive().default(1600),
   MAX_IMAGE_MB: z.coerce.number().positive().default(8),
-  DATA_KEY: z.string().optional(),
+  /** AES-256-GCM key for saved summaries (FR-14): 32 bytes, base64. Unset = saving is off, never unencrypted. */
+  DATA_KEY: z
+    .string()
+    .refine((v) => /^[A-Za-z0-9+/]+={0,2}$/.test(v) && Buffer.from(v, "base64").length === 32, "DATA_KEY must be 32 bytes, base64")
+    .optional(),
   PILOT_INVITE_REQUIRED: bool.default(false),
   PUBLIC_BASE_URL: z.url().default("http://localhost:3000"),
   CHILD_AGE_BANDS_STRICT: bool.default(true),

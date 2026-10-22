@@ -4,12 +4,11 @@ import { notFound } from "next/navigation";
 import { usageReport, NON_CLEAR_LEVELS } from "@/lib/admin/usage";
 import { env } from "@/lib/config/env";
 import { db } from "@/lib/db";
+import { isLocalHost } from "@/lib/security/local";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = { title: "Usage · CareNav AI", robots: { index: false, follow: false } };
 
-/** Local-only (FR-25): served only to requests addressed to this machine. A guard, not authentication. */
-const LOCAL_HOSTS = /^(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$/;
 
 const gbp = (n: number) => `£${n.toLocaleString("en-GB", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 const LEVEL_LABEL: Record<(typeof NON_CLEAR_LEVELS)[number], string> = { emergency: "Emergency", crisis: "Crisis", urgent: "Urgent", uncertain: "Uncertain" };
@@ -21,7 +20,8 @@ function reportNow(capGbp: number) {
 
 /** Admin usage page (FR-25, AC-15.3): spend against the cap, sessions, urgent events. Counts only (AC-25.2). */
 export default async function UsagePage() {
-  if (!LOCAL_HOSTS.test((await headers()).get("host") ?? "")) notFound();
+  // Local-only (FR-25): served only to requests addressed to this machine. A guard, not authentication.
+  if (!isLocalHost((await headers()).get("host"))) notFound();
   const e = env();
   const r = reportNow(e.MONTHLY_CAP_GBP);
   const pct = Math.min(100, Math.round(r.month.share * 100));

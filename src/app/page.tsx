@@ -2,12 +2,16 @@ import { LanguagePicker, UnreviewedNotice } from "@/components/i18n/LanguagePick
 import { ButtonLink } from "@/components/ui/Button";
 import { CalendarIcon, DocumentIcon, LockIcon } from "@/components/ui/icons";
 import { LogoMark } from "@/components/ui/LogoMark";
+import Link from "next/link";
+import { pageUser } from "@/lib/auth/page";
 import { requestUiLocale } from "@/lib/i18n/request";
 import styles from "./page.module.css";
 
 /** Landing screen (agreed mockup, screen 1): the two journeys, the language picker, then the guest-mode caption. */
 export default async function Home() {
   const t = (await requestUiLocale()).messages.common.landing;
+  // Accounts are optional (PRD §3.5): one quiet link under the guest line, never in the way.
+  const signedIn = (await pageUser()) !== null;
   return (
     <main className={styles.landing}>
       <div className={styles.top}>
@@ -45,7 +49,12 @@ export default async function Home() {
 
         <p className={styles.guest}>
           <LockIcon className={styles.guestIcon} />
-          {t.guest}
+          <span>
+            {signedIn ? t.signedIn : t.guest}{" "}
+            <Link href="/account" className={styles.accountLink}>
+              {signedIn ? t.account : t.signIn}
+            </Link>
+          </span>
         </p>
       </div>
     </main>

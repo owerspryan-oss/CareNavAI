@@ -75,6 +75,18 @@
 }
 
 .guestIcon {
+  flex: none;
   width: 1rem;
   height: 1rem;
+}
+
+/* Quiet, but still a 44px target (DESIGN_SYSTEM.md §9). */
+.accountLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  color: var(--color-teal-500);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
 }

@@ -89,3 +89,14 @@
   border-radius: 0.75rem;
   background: var(--color-caution-bg);
 }
+
+/* The account offer under the feedback card (AccountPrompt): a quiet text link, 44px target. */
+.accountLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  color: var(--color-teal-500);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}

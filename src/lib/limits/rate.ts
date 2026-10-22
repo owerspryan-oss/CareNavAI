@@ -12,7 +12,7 @@ const DAY = 86_400_000;
 
 export type RateCheck = { ok: boolean; setCookie: string | null };
 
-function readCookie(req: Request, name: string): string | null {
+export function readCookie(req: Request, name: string): string | null {
   const header = req.headers.get("cookie") ?? "";
   for (const part of header.split(";")) {
     const [k, ...v] = part.trim().split("=");
@@ -48,4 +48,13 @@ export function checkRate(
   // Old windows are pruned opportunistically so the table stays small.
   if (Math.random() < 0.01) database.prepare("DELETE FROM rate_limits WHERE window_start < ?").run(now - 2 * DAY);
   return { ok: minuteCount <= perMinute && dayCount <= perDay, setCookie };
+}
+
+/**
+ * A fixed-window limit on any key (e.g. a hashed email on login and magic-link requests, PRD §12.3).
+ * Counts every attempt; true while this attempt is within `max` for the window.
+ */
+export function checkKeyLimit(key: string, max: number, windowMs: number, opts: { now?: number; db?: DB } = {}): boolean {
+  const now = opts.now ?? Date.now();
+  return bump(opts.db ?? defaultDb(), key, now - (now % windowMs)) <= max;
 }

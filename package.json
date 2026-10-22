@@ -18,9 +18,11 @@
     "test:a11y": "node scripts/a11y.mjs",
     "ui:translate": "node scripts/translate-ui.mjs",
     "ui:review:export": "node scripts/ui-review-export.mjs",
-    "ui:review:import": "node scripts/ui-review-import.mjs"
+    "ui:review:import": "node scripts/ui-review-import.mjs",
+    "invite:create": "node --env-file-if-exists=.env.local scripts/invite.mjs"
   },
   "dependencies": {
+    "@node-rs/argon2": "^2.2.2",
     "better-sqlite3": "^13.0.3",
     "next": "^16.4.2",
     "openai": "^7.41.0",

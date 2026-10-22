@@ -1,0 +1,54 @@
+/* Dev inbox (AC-13.1): plain, tokens only, like the admin usage page. */
+.page {
+  display: grid;
+  gap: var(--space-5);
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4);
+}
+
+.title {
+  font-size: var(--text-display-size);
+  line-height: var(--text-display-leading);
+  letter-spacing: var(--text-display-tracking);
+  font-weight: 700;
+}
+
+.lead,
+.muted {
+  color: var(--color-ink-muted);
+  font-size: var(--text-caption-size);
+  line-height: var(--text-caption-leading);
+}
+
+.list {
+  display: grid;
+  gap: var(--space-3);
+  list-style: none;
+  padding: 0;
+}
+
+.card {
+  display: grid;
+  gap: var(--space-2);
+  min-width: 0;
+  padding: var(--space-4);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+
+.to {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.link {
+  color: var(--color-teal-500);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  min-height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+}

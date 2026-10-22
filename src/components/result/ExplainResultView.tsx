@@ -32,6 +32,7 @@ import { useUiLang } from "@/components/i18n/UiProvider";
 import { useExplainCopy, useResultCopy, type ExplainCopy } from "./copy";
 import styles from "./ResultView.module.css";
 import own from "./ExplainResultView.module.css";
+import { AccountPrompt } from "./AccountPrompt";
 import { FeedbackPrompt } from "./FeedbackPrompt";
 import { SavePdfButton } from "./SavePdfButton";
 import { useResultLayout } from "./useResultLayout";
@@ -428,6 +429,7 @@ export function ExplainResultView({
         )}
 
         <FeedbackPrompt flow="understand" language={(user ?? english).meta.outputLanguage} />
+        <AccountPrompt />
 
         <div className={styles.moreInfo} dir={dir} lang={lang}>
           <details className={styles.moreItem}>

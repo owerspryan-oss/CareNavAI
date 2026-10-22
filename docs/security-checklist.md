@@ -15,6 +15,7 @@ Checked on 2026-10-22 against the local build on `build/layer-1`. "Test" names t
 | Logging allow-list | Done | Logger writes only allow-listed fields and drops free-text-looking values; every `log.*` call in `src/` uses allow-listed keys; no direct `console` writes | `logger.test.ts`, `log-audit.test.ts` |
 | Guest statelessness | Done | Guests write only counts: ledger, rate limits, safety-event levels, anonymous feedback answers, PDF refs. Audio and images stay in memory | `feedback-user.test.ts`, route tests |
 | Dependency audit | Done | `npm audit --omit=dev`: 0 vulnerabilities (2026-10-22). Repeat before the pilot | — |
+| Accounts (T-23) | Done | argon2id passwords (min 10), generic errors; session id and magic-link token 32 random bytes, sha256 stored only; cookie `cn_session` HttpOnly, SameSite=Lax, Secure off localhost; 24 h sliding; auth routes 403 unless HTTPS or localhost; login and magic-link requests limited per email (5 / 15 min) and per device; invite codes hash-only; magic links only in memory on the localhost `/dev/inbox` | `auth.test.ts` |
 | Admin page | Local-only guard | `/admin/usage` answers only requests addressed to localhost; aggregates only. **Not authentication**: before any shared deployment it needs real sign-in (T-23) | `usage-controls.test.ts` |
 
 ## Verified by hand (2026-10-22)
@@ -24,6 +25,7 @@ Checked on 2026-10-22 against the local build on `build/layer-1`. "Test" names t
 
 ## Open before the pilot
 
-- Real authentication for the admin page (T-23) and for registered users.
+- Real authentication for the admin page (accounts exist since T-23, but there are no admin roles; the page stays localhost-only).
+- Real email delivery for magic links (the local build shows them on `/dev/inbox`).
 - HTTPS and `Strict-Transport-Security` (the local build is plain http on localhost).
 - Provider data-retention terms check (no owner yet, CONTEXT.md §15).
