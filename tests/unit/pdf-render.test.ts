@@ -108,3 +108,39 @@ describe.skipIf(!hasBrowser)("PDF rendering with headless Chromium", () => {
     }
   }, 60_000);
 });
+
+// T-34 / AC-10.5: every script the interface offers renders with a bundled font, on any machine.
+const SCRIPT_SAMPLES: [code: string, text: string, family: string][] = [
+  ["tw", "Me kotodwe yɛ me ya, na ɛnnɛ ɔyɛ den", "NotoSans"],
+  ["hi", "मेरे घुटनों में दो महीने से दर्द है", "NotoSansDevanagari"],
+  ["ur", "میرے گھٹنوں میں دو مہینے سے درد ہے", "NotoNastaliqUrdu"],
+  ["ar", "أشعر بألم في ركبتي منذ شهرين", "NotoNaskhArabic"],
+  ["bn", "দুই মাস ধরে আমার হাঁটুতে ব্যথা", "NotoSansBengali"],
+  ["pa-Guru", "ਦੋ ਮਹੀਨਿਆਂ ਤੋਂ ਮੇਰੇ ਗੋਡਿਆਂ ਵਿੱਚ ਦਰਦ ਹੈ", "NotoSansGurmukhi"],
+  ["zh-Hans", "我的膝盖疼了两个月", "NotoSansSC"],
+  ["zh-Hant", "我的膝蓋痛了兩個月", "NotoSansTC"],
+  ["am", "ጉልበቴ ለሁለት ወር ያመኛል", "NotoSansEthiopic"],
+  ["ta", "இரண்டு மாதங்களாக என் முழங்காலில் வலி", "NotoSansTamil"],
+];
+
+describe.skipIf(!hasBrowser || !has("pdffonts"))("PDF fonts for every script (AC-10.5)", () => {
+  afterAll(() => closeBrowser());
+
+  it.each(SCRIPT_SAMPLES)("%s: embeds %s's bundled font", async (code, sample, family) => {
+    const base = fixture("marcia-summary.json");
+    const rtl = ["ur", "ar"].includes(code);
+    const user = { ...base.user, mainConcern: sample, meta: { ...base.user.meta, detectedLanguage: code, outputLanguage: code, outputMode: "translation" } };
+    const { file } = await render(`script-${code}`, pdfRequestSchema.parse({ flow: "prepare", english: base.english, user }));
+    const fonts = execFileSync("pdffonts", [file], { encoding: "utf8" });
+    expect(fonts, fonts).toContain(family);
+    expect(fonts).toMatch(/NotoSans-/); // the Latin clinician page
+    if (has("pdftotext")) expect(execFileSync("pdftotext", [file, "-"], { encoding: "utf8" }).replace(/\s+/g, "")).toContain(rtl ? sample.split(" ")[0] : sample.replace(/\s+/g, "").slice(0, 6));
+  }, 60_000);
+
+  it("embeds only what a Latin-only PDF needs", async () => {
+    const { file } = await render("script-latin-only", pdfRequestSchema.parse({ flow: "prepare", ...fixture("marcia-summary.json") }));
+    const fonts = execFileSync("pdffonts", [file], { encoding: "utf8" });
+    expect(fonts).toMatch(/NotoSans-/);
+    expect(fonts).not.toMatch(/Devanagari|Arabic|Urdu|NotoSansSC|NotoSansTC/);
+  }, 60_000);
+});

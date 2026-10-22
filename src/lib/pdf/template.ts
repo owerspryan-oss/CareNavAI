@@ -2,6 +2,7 @@ import type { PostAppointmentResult, PreAppointmentResult, ResultMeta } from "@/
 import { languagesConfig } from "@/lib/config";
 import { getDisclaimers, getUrgentMessage } from "@/lib/content";
 import { highlightSegments, userTabLabel, versionDir, type LanguageNames } from "@/lib/result/view";
+import { fontFaceCss } from "./fonts";
 import { pdfCopy as c } from "./copy";
 import type { PdfRequest } from "./schema";
 
@@ -37,28 +38,41 @@ const marked = (text: string, terms: readonly (string | null)[]) =>
     .map((s) => (s.mark ? `<mark>${esc(s.text)}</mark>` : esc(s.text)))
     .join("");
 
-const section = (title: string, body: string) => (body ? `<section><h2>${esc(title)}</h2>${body}</section>` : "");
+/**
+ * English template text (pdfCopy). Isolated left to right, so on a right-to-left page it stays
+ * right-aligned with the page but its full stops and colons stay at the end (an HTML element with
+ * `dir` is bidi-isolated).
+ */
+const en = (text: string) => `<span lang="en" dir="ltr">${esc(text)}</span>`;
+/** Static content served from a content file: tagged with the language and direction actually served. */
+const served = (text: string, language: string) => `<span lang="${esc(language)}" dir="${LANGUAGE_NAMES[language]?.dir ?? "ltr"}">${esc(text)}</span>`;
+
+const section = (title: string, body: string) => (body ? `<section><h2>${en(title)}</h2>${body}</section>` : "");
 const para = (text: string, terms: readonly (string | null)[] = []) => (text.trim() ? `<p>${marked(text, terms)}</p>` : "");
 const list = (items: readonly string[], terms: readonly (string | null)[] = []) =>
   items.length ? `<ul>${items.map((i) => `<li>${marked(i, terms)}</li>`).join("")}</ul>` : "";
-const quote = (q: string) => `<blockquote><span class="q-label">${esc(c.understand.fromSource)}</span> “${esc(q)}”</blockquote>`;
+const quote = (q: string) => `<blockquote><span class="q-label">${en(c.understand.fromSource)}</span> <bdi>“${esc(q)}”</bdi></blockquote>`;
 
 // ---- Journey 1 --------------------------------------------------------------
 
 function preBody(r: PreAppointmentResult, clinician: boolean): string {
   const s = c.prepare.sections;
   const terms = r.medicationAndSupport.medicines.flatMap((m) => [m.name, m.dose]);
-  const who = [r.forWhom.label, c.relationship[r.forWhom.relationship], r.forWhom.ageBand ? c.ageBand[r.forWhom.ageBand] : null]
+  const who = [
+    r.forWhom.label ? `<bdi>${esc(r.forWhom.label)}</bdi>` : null,
+    en(c.relationship[r.forWhom.relationship]),
+    r.forWhom.ageBand ? en(c.ageBand[r.forWhom.ageBand]) : null,
+  ]
     .filter(Boolean)
     .join(" · ");
   const meds = r.medicationAndSupport.medicines.map((m) => (m.dose ? `${m.name}, ${m.dose}` : m.name));
   return [
-    section(s.forWhom, para(who)),
+    section(s.forWhom, `<p>${who}</p>`),
     section(s.mainConcern, para(r.mainConcern, terms)),
-    section(s.duration, para(r.duration.stated ? r.duration.text : c.prepare.durationNotStated)),
+    section(s.duration, r.duration.stated ? para(r.duration.text) : `<p>${en(c.prepare.durationNotStated)}</p>`),
     section(s.frequency, para(r.frequencyAndPattern, terms)),
     section(s.changes, list(r.changesAndTriggers, terms)),
-    section(s.medicines, meds.length ? list(meds, terms) : r.medicationAndSupport.provided ? "" : para(c.prepare.noMedicines)),
+    section(s.medicines, meds.length ? list(meds, terms) : r.medicationAndSupport.provided ? "" : `<p>${en(c.prepare.noMedicines)}</p>`),
     section(s.previousSupport, list(r.medicationAndSupport.previousSupport, terms)),
     section(s.worries, list(r.worriesAndBarriers, terms)),
     section(s.questions, r.questionsToAsk.length ? `<ol>${r.questionsToAsk.map((q) => `<li>${marked(q, terms)}</li>`).join("")}</ol>` : ""),
@@ -85,7 +99,7 @@ function postBody(r: PostAppointmentResult): string {
   const u = c.understand;
   const s = u.sections;
   const terms = r.medicines.flatMap((m) => [m.name, m.dose]);
-  const field = (label: string, v: string | null) => (v ? `<div class="kv"><span>${esc(label)}</span> ${marked(v, terms)}</div>` : "");
+  const field = (label: string, v: string | null) => (v ? `<div class="kv"><span lang="en" dir="ltr">${esc(label)}</span> ${marked(v, terms)}</div>` : "");
 
   const told = r.whatYouWereTold.map((i) => `<li>${marked(i.text, terms)}${quote(i.sourceQuote)}</li>`).join("");
   const means = r.whatItMeans.map((i) => `<li><strong>${esc(i.clinicianWords)}</strong>: ${marked(i.plainMeaning, terms)}</li>`).join("");
@@ -98,10 +112,10 @@ function postBody(r: PostAppointmentResult): string {
         `<li class="medicine"><strong><mark>${esc(m.name)}</mark></strong>${field(u.dose, m.dose)}${field(u.frequency, m.frequency)}${field(u.duration, m.duration)}${field(u.instructions, m.instructions)}${quote(m.sourceQuote)}</li>`,
     )
     .join("");
-  const unclear = r.unclearOrMissing.map((i) => `<li>${esc(i.item)} <span class="who">${esc(u.whoToAsk[i.whoToAsk])}</span></li>`).join("");
+  const unclear = r.unclearOrMissing.map((i) => `<li>${esc(i.item)} <span class="who">${en(u.whoToAsk[i.whoToAsk])}</span></li>`).join("");
   // Rule 7: ungrounded items appear only here, labelled, never as fact.
   const ungrounded = r.ungrounded.length
-    ? `<section class="ungrounded"><h2>${esc(u.ungroundedTitle)}</h2><p class="lead">${esc(u.ungroundedLead)}</p><ul>${r.ungrounded
+    ? `<section class="ungrounded"><h2>${en(u.ungroundedTitle)}</h2><p class="lead">${en(u.ungroundedLead)}</p><ul>${r.ungrounded
         .map((i) => `<li>${esc(i.text)}</li>`)
         .join("")}</ul></section>`
     : "";
@@ -110,7 +124,7 @@ function postBody(r: PostAppointmentResult): string {
     section(s.whatYouWereTold, told && `<ul class="items">${told}</ul>`),
     section(s.whatItMeans, means && `<ul>${means}</ul>`),
     section(s.nextSteps, steps && `<ul class="items">${steps}</ul>`),
-    section(s.medicines, meds && `<p class="check">${esc(u.checkMedicines)}</p><ul class="items">${meds}</ul>`),
+    section(s.medicines, meds && `<p class="check">${en(u.checkMedicines)}</p><ul class="items">${meds}</ul>`),
     section(s.unclearOrMissing, unclear && `<ul>${unclear}</ul>`),
     ungrounded,
   ].join("");
@@ -128,12 +142,14 @@ function versionPage(req: PdfRequest, v: Version, opts: TemplateOptions, urgentL
   const lang = v.clinician ? "en" : meta.outputLanguage;
   const dir = v.clinician ? "ltr" : versionDir(meta, LANGUAGE_NAMES);
   const copy = req.flow === "prepare" ? c.prepare : c.understand;
-  const title = v.clinician ? copy.clinicianTitle : `${copy.userTitle}: ${userTabLabel(meta, LANGUAGE_NAMES, "Simple English")}`;
+  const title = v.clinician ? en(copy.clinicianTitle) : `${en(`${copy.userTitle}:`)} <bdi>${esc(userTabLabel(meta, LANGUAGE_NAMES, "Simple English"))}</bdi>`;
 
-  const draft = opts.showDraftLabel ? `<div class="draft">${esc(getDisclaimers(lang).content.draftLabel)}</div>` : "";
+  const disclaimers = getDisclaimers(lang);
+  const draft = opts.showDraftLabel ? `<div class="draft">${served(disclaimers.content.draftLabel, disclaimers.servedLanguage)}</div>` : "";
   // v0.3 A2: static banner, never model text, in the page's language where a file exists.
-  const banner = urgentLevel ? `<div class="urgent" role="alert">${WARNING_ICON}<p>${esc(getUrgentMessage(urgentLevel, lang).message.banner)}</p></div>` : "";
-  const confidence = !v.clinician && meta.confidenceNotice ? `<p class="notice">${esc(c.confidenceNotice)}</p>` : "";
+  const urgent = urgentLevel ? getUrgentMessage(urgentLevel, lang) : null;
+  const banner = urgent ? `<div class="urgent" role="alert">${WARNING_ICON}<p>${served(urgent.message.banner, urgent.servedLanguage)}</p></div>` : "";
+  const confidence = !v.clinician && meta.confidenceNotice ? `<p class="notice">${en(c.confidenceNotice)}</p>` : "";
   const body = req.flow === "prepare" ? preBody(v.result as PreAppointmentResult, v.clinician) : postBody(v.result as PostAppointmentResult);
   // On page 1, under the lead: a busy clinician may only read the first page.
   const qr = v.clinician
@@ -141,13 +157,13 @@ function versionPage(req: PdfRequest, v: Version, opts: TemplateOptions, urgentL
     : "";
 
   return `<article class="version" lang="${esc(lang)}" dir="${dir}">
-<header class="top"><div class="wordmark">CareNav <span>AI</span></div><div class="date">${esc(c.madeOn(formatDate(opts.now)))}</div></header>
+<header class="top"><div class="wordmark">CareNav <span>AI</span></div><div class="date">${en(c.madeOn(formatDate(opts.now)))}</div></header>
 ${draft}${banner}
-<h1>${esc(title)}</h1>
+<h1>${title}</h1>
 ${v.clinician ? `<p class="lead">${esc(copy.clinicianLead)}</p>` : ""}${confidence}
 ${qr}
 <div class="body">${body}</div>
-<section class="about"><h2>${esc(c.aboutThis)}</h2>${list(v.result.disclaimer)}</section>
+<section class="about"><h2>${en(c.aboutThis)}</h2>${list(v.result.disclaimer)}</section>
 </article>`;
 }
 
@@ -156,26 +172,32 @@ export function buildPdfHtml(req: PdfRequest, opts: TemplateOptions): string {
   const urgentLevel = req.english.meta.urgentAcknowledged ?? req.user?.meta.urgentAcknowledged ?? null;
   const versions: Version[] = [{ result: req.english, clinician: true }];
   if (req.user) versions.push({ result: req.user, clinician: false });
+  const body = versions.map((v) => versionPage(req, v, opts, urgentLevel)).join("\n");
+  // AC-10.5: bundled fonts for exactly the scripts in this document (fonts.ts).
   return `<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; style-src 'unsafe-inline'">
-<title>${esc(c.brand)}</title><style>${CSS}</style></head>
-<body>${versions.map((v) => versionPage(req, v, opts, urgentLevel)).join("\n")}</body></html>`;
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; font-src data:; style-src 'unsafe-inline'">
+<title>${esc(c.brand)}</title><style>${fontFaceCss(body)}\n${CSS}</style></head>
+<body>${body}</body></html>`;
 }
 
 /** Playwright footer template (its own isolated document, so styles are inline). */
 export function footerHtml(now: Date): string {
-  return `<div style="width:100%;font-family:Inter,'DejaVu Sans',Arial,sans-serif;font-size:8px;color:#5B6670;padding:0 16mm;display:flex;justify-content:space-between">
+  return `<div style="width:100%;font-family:'Noto Sans','DejaVu Sans',Arial,sans-serif;font-size:8px;color:#5B6670;padding:0 16mm;display:flex;justify-content:space-between">
 <span>${esc(c.brand)} · ${esc(formatDate(now))}</span><span>${esc(c.pageOf)} <span class="pageNumber"></span> / <span class="totalPages"></span></span></div>`;
 }
 
 // Values mirror design/tokens.css (DESIGN_SYSTEM.md). Print sizes are in pt; the PDF has no
-// user text-size setting. Latin fonts only for now; other scripts are T-34.
+// user text-size setting. Fonts are the bundled Noto set (fonts.ts): Noto Sans first, then each
+// script's own family, so every character finds a glyph; Urdu and Traditional Chinese put their
+// preferred family first.
 const CSS = `
 @page { size: A4; margin: 16mm 16mm 18mm; }
 * { box-sizing: border-box; }
 html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-body { margin: 0; font-family: Inter, "Segoe UI", "DejaVu Sans", Arial, sans-serif; font-size: 10.5pt; line-height: 1.45; color: #0B1216; }
+body { margin: 0; font-family: "Noto Sans", "Noto Sans Devanagari", "Noto Sans Bengali", "Noto Sans Gurmukhi", "Noto Sans Gujarati", "Noto Sans Tamil", "Noto Sans Telugu", "Noto Sans Malayalam", "Noto Sans Ethiopic", "Noto Naskh Arabic", "Noto Sans SC", "Noto Sans TC", sans-serif; font-size: 10.5pt; line-height: 1.45; color: #0B1216; }
+.version:lang(ur) { font-family: "Noto Nastaliq Urdu", "Noto Naskh Arabic", "Noto Sans", sans-serif; line-height: 1.9; }
+.version:lang(zh-Hant) { font-family: "Noto Sans", "Noto Sans TC", "Noto Sans SC", sans-serif; }
 h1, h2, p, ul, ol, blockquote { margin: 0; }
 .version + .version { break-before: page; }
 .top { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 8pt; border-bottom: 1px solid #E4DED3; margin-bottom: 12pt; }

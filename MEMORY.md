@@ -21,6 +21,7 @@ Running log of what's happened in this repo, for quick orientation at the start 
 - T-15 bilingual PDF + QR + clinician form `/c/[ref]`.
 - T-25 (part): per-device rate limits.
 - T-29: demo assets.
+- T-34: bundled Noto fonts for every interface script in the PDF, RTL-safe template (`assets/fonts`).
 - T-20: voice input (`/api/transcribe`, recorder on guided free-text steps). Hidden until a language has `signoff.sttTested: true`; none do yet. To try: set it for `en`/`jam` locally with a key.
 - T-17: demo mode (`DEMO_MODE=true`, Alt+Shift+D menu; see `demo/script.md`).
 - T-18 (automated): `npm run test:a11y`, 24 screens axe-clean and no sideways scroll at 200% text (`A11Y_LANGS=en,ur` for 48).
@@ -42,7 +43,6 @@ Running log of what's happened in this repo, for quick orientation at the start 
 - T-26 feedback prompt. The "Give feedback" button was removed until this is built.
 - T-27 playful mode. Tag restyled output so `/api/pdf` can reject it.
 - T-28 security pass.
-- T-34 PDF fonts and RTL.
 - T-35 is effectively done inside the gate (PRD 9.8 second pass).
 
 **Waiting on the product owner:**
