@@ -16,6 +16,13 @@ export function costGbp(model: string, usage: Usage): number {
   return usd * pricingConfig.gbpPerUsd;
 }
 
+/** GBP cost of a speech-to-text call, priced per audio minute. Unknown models throw, as above. */
+export function audioCostGbp(model: string, seconds: number): number {
+  const p = pricingConfig.models[model];
+  if (p?.perAudioMinute === undefined) throw new Error(`no audio price for model ${model}`);
+  return ((p.perAudioMinute * seconds) / 60) * pricingConfig.gbpPerUsd;
+}
+
 /** Pessimistic pre-call estimate: ~3 chars per token (non-Latin scripts run higher) plus the full output budget. */
 export function estimateCostGbp(model: string, inputChars: number, maxOutputTokens: number): number {
   return costGbp(model, { inputTokens: Math.ceil(inputChars / 3), outputTokens: maxOutputTokens });

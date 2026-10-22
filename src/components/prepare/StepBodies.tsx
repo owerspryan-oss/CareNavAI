@@ -15,6 +15,7 @@ import { Checkbox } from "@/components/ui/Checkbox";
 import { ChoiceGroup } from "@/components/ui/ChoiceGroup";
 import { TextArea } from "@/components/ui/TextArea";
 import { usePrepareCopy } from "./copy";
+import { VoiceInput } from "./VoiceInput";
 import styles from "./PrepareFlow.module.css";
 
 export interface StepBodyProps {
@@ -25,6 +26,8 @@ export interface StepBodyProps {
   locked: boolean;
   setText: (field: TextField, value: string) => void;
   setStructured: (patch: Partial<StructuredAnswers>) => void;
+  /** MAX_AUDIO_SECONDS when voice input is on for this interface language (AC-07.5), else null. */
+  voiceMaxSeconds: number | null;
 }
 
 function Field({
@@ -58,6 +61,19 @@ function Field({
       tooLongMessage={c.errors.tooLong}
       error={p.errors[field]}
       readOnly={p.locked}
+      accessory={
+        p.voiceMaxSeconds !== null && field !== "whoLabel" ? (
+          <VoiceInput
+            maxSeconds={p.voiceMaxSeconds}
+            disabled={p.locked}
+            // Added to what's there, never replacing it; the person edits it like typed text (AC-07.2).
+            onText={(heard) => {
+              const current = p.state.text[field].trimEnd();
+              p.setText(field, current ? `${current}\n${heard}` : heard);
+            }}
+          />
+        ) : undefined
+      }
     />
   );
 }

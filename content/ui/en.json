@@ -175,6 +175,21 @@
         "required": "Please write a few words. Any language is fine.",
         "changesRequired": "Please write what you've noticed, or tick “I haven't noticed any pattern”.",
         "tooLong": "This is {over} characters too long. Please shorten it to {max} characters or fewer."
+      },
+      "voice": {
+        "start": "Say it",
+        "startLabel": "Say it instead of typing",
+        "privacy": "Your recording is sent to OpenAI to write it down, then deleted. It is never saved.",
+        "begin": "Start recording",
+        "cancel": "Not now",
+        "stop": "Stop",
+        "remaining": "{time} left",
+        "transcribing": "Writing down what you said…",
+        "heard": "Check the words we heard, and change anything that's wrong.",
+        "empty": "We didn't catch any words. Please try again, or type it.",
+        "failed": "We couldn't write that down this time. Please type it instead.",
+        "noMic": "We couldn't use your microphone. Please type it instead.",
+        "busy": "We're busy right now. Please type it instead."
       }
     },
     "understand": {

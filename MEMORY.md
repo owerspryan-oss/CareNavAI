@@ -21,6 +21,7 @@ Running log of what's happened in this repo, for quick orientation at the start 
 - T-15 bilingual PDF + QR + clinician form `/c/[ref]`.
 - T-25 (part): per-device rate limits.
 - T-29: demo assets.
+- T-20: voice input (`/api/transcribe`, recorder on guided free-text steps). Hidden until a language has `signoff.sttTested: true`; none do yet. To try: set it for `en`/`jam` locally with a key.
 - T-17: demo mode (`DEMO_MODE=true`, Alt+Shift+D menu; see `demo/script.md`).
 - T-18 (automated): `npm run test:a11y`, 24 screens axe-clean and no sideways scroll at 200% text (`A11Y_LANGS=en,ur` for 48).
 - T-31/T-32: interface localisation. `content/ui/en.json` master plus DRAFT files for all 43 Tier A/B languages, picker in every header, RTL, review-sheet scripts.
@@ -34,7 +35,6 @@ Running log of what's happened in this repo, for quick orientation at the start 
 **Next, roughly in priority order (CONTEXT.md §14; cut order v0.3 A8):**
 - T-18 manual screen-reader walk-through of both journeys (automated part done).
 - Native-speaker review of the 43 interface drafts (`npm run ui:review:export -- <code>`). Agents flagged: Bengali vs Sylheti, gender slashes (ur, pa, hi, es, it, ro, ru, uk, bg, lt, sq), polite vs informal "you" per language, Arabic number agreement in "too long", Twi/Igbo/Yoruba/Tigrinya/Amharic least certain.
-- T-20 voice (cut 2nd).
 - T-21 on-behalf-of child thresholds UI. Age band for "someone else" done 2026-10-21.
 - T-22 Tier A review.
 - T-23/T-24 accounts and saved history (cut 3rd).

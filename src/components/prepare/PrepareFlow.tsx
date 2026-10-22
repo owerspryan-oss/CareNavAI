@@ -59,6 +59,8 @@ export interface PrepareFlowProps {
   urgentContent: UrgentContent;
   /** Language names and direction from config/languages.json, for the result view (T-13). */
   languages: LanguageNames;
+  /** MAX_AUDIO_SECONDS when speech-to-text is tested for the interface language (AC-07.5), else null. */
+  voiceMaxSeconds: number | null;
   /** Fictional demo inputs, passed only when DEMO_MODE is on (FR-26). */
   demo?: DemoPreparePreset[];
 }
@@ -111,7 +113,7 @@ function firstInvalidStep(state: PrepareState, maxChars: number, c: PrepareCopy)
  * All answers live in React state only (guest = stateless). Every free-text answer is screened by the
  * urgency gate before the journey moves on; anything but `clear` hands over to <UrgentGate>.
  */
-export function PrepareFlow({ maxChars, urgentContent, languages, demo }: PrepareFlowProps) {
+export function PrepareFlow({ maxChars, urgentContent, languages, voiceMaxSeconds, demo }: PrepareFlowProps) {
   const c = usePrepareCopy();
   const router = useRouter();
   const [state, dispatch] = useReducer(prepareReducer, undefined, initialPrepareState);
@@ -430,6 +432,7 @@ export function PrepareFlow({ maxChars, urgentContent, languages, demo }: Prepar
               locked={screening}
               setText={setText}
               setStructured={setStructured}
+              voiceMaxSeconds={voiceMaxSeconds}
             />
           ) : (
             <>

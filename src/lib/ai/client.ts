@@ -1,11 +1,11 @@
-import OpenAI from "openai";
+import OpenAI, { toFile } from "openai";
 import { zodTextFormat } from "openai/helpers/zod";
 import type { z } from "zod";
 import { modelFor, type ModelRole } from "@/lib/config";
 import { env } from "@/lib/config/env";
 import { db as defaultDb, type DB } from "@/lib/db";
 import { log } from "@/lib/log/logger";
-import { costGbp, estimateCostGbp, monthToDateGbp, writeLedger } from "./cost";
+import { audioCostGbp, costGbp, estimateCostGbp, monthToDateGbp, writeLedger } from "./cost";
 
 /**
  * The one wrapper every AI call goes through (PRD §10.3, §10.6):
@@ -25,7 +25,7 @@ export class AiError extends Error {
 // The gate and moderation are never stopped by the cap (PRD §10.6, T-25).
 const CAP_EXEMPT: ReadonlySet<ModelRole> = new Set(["GATE", "MODERATION"]);
 
-type OpenAILike = Pick<OpenAI, "responses" | "moderations">;
+type OpenAILike = Pick<OpenAI, "responses" | "moderations"> & Partial<Pick<OpenAI, "audio">>;
 
 export type AiDeps = {
   openai?: OpenAILike;
@@ -161,6 +161,52 @@ export async function moderate(text: string, opts: { endpoint: string; requestId
   } catch (err) {
     const e = classify(err);
     log.warn({ requestId: opts.requestId, route: opts.endpoint, modelRole: "MODERATION", status: "error", errorType: e.type });
+    throw e;
+  }
+}
+
+/**
+ * Speech to text (FR-07). The audio stays in memory: it goes to the provider as a buffer and is never
+ * written anywhere (AC-07.3). The cap is checked against the longest allowed recording before the call;
+ * the ledger records the recording's own length. Returns the transcript, trimmed (may be empty).
+ */
+export async function transcribe(
+  audio: { bytes: Uint8Array; mimeType: string; seconds: number; maxSeconds: number },
+  opts: { endpoint: string; requestId?: string },
+  deps: AiDeps = {},
+): Promise<string> {
+  const { model, timeoutMs } = modelFor("STT");
+  const now = deps.now ?? Date.now;
+  const database = deps.db ?? defaultDb();
+  const started = now();
+  const meta = { requestId: opts.requestId, route: opts.endpoint, modelRole: "STT" as const };
+  try {
+    const cap = deps.capGbp ?? env().MONTHLY_CAP_GBP;
+    if (monthToDateGbp(database, now()) + audioCostGbp(model, audio.maxSeconds) > cap) throw new AiError("cap_reached");
+    const client = openaiClient(deps);
+    if (!client.audio) throw new AiError("provider_error");
+    const audioApi = client.audio;
+    const ext = audio.mimeType.split("/")[1]?.split(";")[0] ?? "webm";
+    const res = await withOneRetry(async () => {
+      const file = await toFile(audio.bytes, `recording.${ext}`, { type: audio.mimeType });
+      const out = await audioApi.transcriptions.create({ model, file }, { timeout: timeoutMs });
+      writeLedger(database, {
+        ts: now(),
+        endpoint: opts.endpoint,
+        role: "STT",
+        model,
+        tokensIn: 0,
+        tokensOut: 0,
+        estCostGbp: audioCostGbp(model, Math.min(audio.seconds, audio.maxSeconds)),
+        requestId: opts.requestId ?? null,
+      });
+      return out;
+    });
+    log.info({ ...meta, status: "ok", durationMs: now() - started });
+    return (res.text ?? "").trim();
+  } catch (err) {
+    const e = classify(err);
+    log.warn({ ...meta, status: "error", errorType: e.type, durationMs: now() - started });
     throw e;
   }
 }
