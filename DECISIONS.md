@@ -186,3 +186,10 @@ Suggested format per entry:
 **Why:** FR-14 / T-24, PRD §12.4, §12.5.
 **Affects:** `src/lib/crypto/aead.ts`, `src/lib/summaries/*`, `src/app/api/summary/route.ts`, `src/app/api/explain/route.ts`, `src/app/api/summaries/*`, `src/app/api/account/*`, `src/app/account/*`, `src/components/account/*`, `src/components/result/*`, `src/lib/client/{prepare,understand}.ts`, `src/lib/understand/view.ts`, `src/lib/config/index.ts`, `src/app/{prepare,understand}/page.tsx`, `content/ui/en.json`.
 **Alternatives considered:** saving the confirmed letter text so the reopened view can re-ground against it (the brief and AC-14.2 keep inputs out of storage); a client `POST /api/summaries` to save after the fact (would store whatever a client sends; auto-save on the server stores only what the server produced); replacing the earlier save when Journey 2's output language is changed or Journey 1 is regenerated after "Not quite" (each is a new generated result, so each is saved; the list's language and time tell them apart — flag for the product owner).
+
+## Account copy approved — 2026-10-22
+
+**Decision:** Product owner: "The content looks good" — the T-23/T-24 English copy (`account.*`, `result.account.*`, `result.savedView.back`, `common.landing.{signIn,signedIn,account}`, `common.meta.accountTitle`) is approved as written and translated into the 43 locales as DRAFT (`reviewed: false`), the same way as the rest of the interface. Still open: whether a regenerated result or a changed output language should replace the earlier saved entry (currently saves a new one).
+**Why:** product-owner answer, 2026-10-22.
+**Affects:** `content/ui/*.json`.
+**Alternatives considered:** none.
