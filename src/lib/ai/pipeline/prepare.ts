@@ -4,7 +4,7 @@ import { preAppointmentDraftSchema, type PreAppointmentDraft, type PrepareAnswer
 import { allStrings, forbiddenHits } from "@/lib/validate/forbidden";
 import { numbersAppearIn } from "@/lib/validate/numbers";
 
-export const PRE_MASTER_PROMPT = { name: "pre-master", version: "v1" } as const;
+export const PRE_MASTER_PROMPT = { name: "pre-master", version: "v2" } as const;
 
 export class ValidationFailed extends Error {
   constructor(readonly check: "forbidden_content" | "numbers") {

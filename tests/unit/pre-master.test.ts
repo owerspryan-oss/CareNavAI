@@ -43,7 +43,7 @@ describe("generatePreMaster (T-11)", () => {
   it("returns a validated draft and records the prompt version", async () => {
     const openai = openaiReturning(draft());
     const r = await generatePreMaster(answers, {}, { openai: openai as never, db, capGbp: 50 });
-    expect(r.promptVersion).toBe("pre-master@v1");
+    expect(r.promptVersion).toBe("pre-master@v2");
     expect(r.draft.medicationAndSupport.medicines[0].dose).toBe("5mg");
     const input = (openai.responses.parse.mock.calls[0][0] as { input: string }).input;
     expect(input.startsWith("<answers>")).toBe(true);
