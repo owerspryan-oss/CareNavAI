@@ -2,25 +2,25 @@
   "$comment": "Model per role (CONTEXT.md §9). Placeholders until each role is tested against real inputs; record date + result in `selection` when chosen (PRD §10.1).",
   "roles": {
     "GATE": {
-      "model": "gpt-5",
+      "model": "gpt-5.5",
       "timeoutMs": 12000,
       "maxOutputTokens": 600,
       "selection": { "testedOn": null, "result": "untested placeholder" }
     },
     "DRAFT": {
-      "model": "gpt-5-mini",
+      "model": "gpt-5.4-mini",
       "timeoutMs": 30000,
       "maxOutputTokens": 4000,
       "selection": { "testedOn": null, "result": "untested placeholder" }
     },
     "TRANSLATE": {
-      "model": "gpt-5",
+      "model": "gpt-5.5",
       "timeoutMs": 30000,
       "maxOutputTokens": 4000,
       "selection": { "testedOn": null, "result": "untested placeholder" }
     },
     "STYLE": {
-      "model": "gpt-5-mini",
+      "model": "gpt-5.4-mini",
       "timeoutMs": 20000,
       "maxOutputTokens": 2000,
       "selection": { "testedOn": null, "result": "untested placeholder" }
@@ -32,7 +32,7 @@
       "selection": { "testedOn": null, "result": "untested placeholder" }
     },
     "VISION": {
-      "model": "gpt-5",
+      "model": "gpt-5.5",
       "timeoutMs": 40000,
       "maxOutputTokens": 3000,
       "selection": { "testedOn": null, "result": "untested placeholder" }

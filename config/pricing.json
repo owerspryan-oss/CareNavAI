@@ -4,8 +4,8 @@
   "verified": false,
   "gbpPerUsd": 0.75,
   "models": {
-    "gpt-5": { "inputPer1M": 1.25, "cachedInputPer1M": 0.125, "outputPer1M": 10.0 },
-    "gpt-5-mini": { "inputPer1M": 0.25, "cachedInputPer1M": 0.025, "outputPer1M": 2.0 },
+    "gpt-5.5": { "inputPer1M": 5.0, "cachedInputPer1M": 0.5, "outputPer1M": 30.0 },
+    "gpt-5.4-mini": { "inputPer1M": 0.75, "cachedInputPer1M": 0.075, "outputPer1M": 4.5 },
     "gpt-4o-transcribe": { "perAudioMinute": 0.006 },
     "omni-moderation-latest": { "inputPer1M": 0, "outputPer1M": 0 }
   }
