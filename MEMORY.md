@@ -16,6 +16,8 @@ Running log of what's happened in this repo, for quick orientation at the start 
 - Translator doubts on the voice and feedback strings: all of Twi; gendered "confident" in it/es/fr/ro/lt/sq/bg; "anonymous" rendered as "no name" in several languages; the voice privacy line in ar, ps, te, ml, pl, es, ru and uk.
 - Translator doubts on the account strings: Twi's "saving isn't set up"; "characters" in kri/yo/ig/sw/so; "once, for 15 minutes" in am/ti; masculine "signed in" in pl/fr; mixed button and sentence register in ta/bg/am/ti/tr.
 
+**Local Windows setup (2026-10-22):** the product owner now works in VS Code on Windows at `C:\CareNavAI`. `.env.local` holds the live `OPENAI_API_KEY` and `DATA_KEY` (never put secrets in `.env.example`, which is tracked). Install with `npm ci --ignore-scripts`. Playwright's Chromium 1194 is installed, so PDF tests run; `pdffonts` isn't, so the 11 font tests skip. Vitest doesn't read `.env.local`: for live runs use `node --env-file=.env.local node_modules/vitest/vitest.mjs run --config vitest.urgency.config.ts`. The org isn't verified for `gpt-5`, so the models are `gpt-5.5` / `gpt-5.4-mini` (see DECISIONS.md).
+
 **Gotcha:** set `DATA_KEY` in `.env.local` or saving stays off. Create invite codes with `npm run invite:create`. Restyle is always refused without a key, because the gate fails closed.
 
 ## 2026-10-22 — Session handoff (end of build session 2, branch `build/layer-1`)
