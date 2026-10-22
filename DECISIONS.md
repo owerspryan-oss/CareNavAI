@@ -165,3 +165,10 @@ Suggested format per entry:
 **Why:** FR-15, FR-25 / T-25.
 **Affects:** `src/lib/ai/cost`, `src/lib/ai/client.ts`, `src/lib/limits/sessions.ts`, `src/lib/ai/pipeline/journeys.ts`, `src/lib/admin/usage.ts`, `src/app/admin/usage/*`.
 **Alternatives considered:** counting sessions by device cookie (would tie usage to a device id; the ledger already has what's needed).
+
+## T-28 security pass — 2026-10-22
+
+**Decision:** `src/proxy.ts` adds security headers to every response, a per-request nonce CSP on pages (scripts need the nonce; inline styles allowed for React style attributes; `blob:` for photo previews and recordings; no `eval` in production), and a same-origin check on every non-GET `/api/*` call, which closes cross-site multipart posts that browsers send without a preflight. Zod is set to `jitless` so it never probes `eval` under the CSP. A static log-audit test keeps every `log.*` call on the allow-list. The app gets an icon (the logo mark). Full checklist and what remains for the pilot: `docs/security-checklist.md`.
+**Why:** T-28, CONTEXT.md §13.
+**Affects:** `src/proxy.ts`, `src/lib/security/policy.ts`, `src/lib/ai/schemas/common.ts`, `src/app/icon.png`, `tests/unit/security-policy.test.ts`, `tests/unit/log-audit.test.ts`, `docs/security-checklist.md`.
+**Alternatives considered:** a nonce for styles too (React style attributes would need `style-src-attr 'unsafe-inline'` anyway, and inline style injection is low risk here); requiring `Content-Type: application/json` instead of an Origin check (doesn't cover the multipart routes).

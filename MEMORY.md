@@ -21,6 +21,7 @@ Running log of what's happened in this repo, for quick orientation at the start 
 - T-15 bilingual PDF + QR + clinician form `/c/[ref]`.
 - T-25 (part): per-device rate limits.
 - T-29: demo assets.
+- T-28: security pass (`src/proxy.ts` CSP + CSRF + headers; `docs/security-checklist.md`).
 - T-25: daily session cap (after the gate), cap alerts in the log, `/admin/usage` (localhost only).
 - T-26: anonymous two-question feedback after both results (`/api/feedback`).
 - T-34: bundled Noto fonts for every interface script in the PDF, RTL-safe template (`assets/fonts`).
@@ -42,7 +43,6 @@ Running log of what's happened in this repo, for quick orientation at the start 
 - T-22 Tier A review.
 - T-23/T-24 accounts and saved history (cut 3rd).
 - T-27 playful mode. Tag restyled output so `/api/pdf` can reject it.
-- T-28 security pass.
 - T-35 is effectively done inside the gate (PRD 9.8 second pass).
 
 **Waiting on the product owner:**
@@ -54,7 +54,7 @@ Running log of what's happened in this repo, for quick orientation at the start 
 **Gotchas:**
 - There is no `OPENAI_API_KEY` in the cloud container. Model calls are tested with fakes, and the gate fails closed to `uncertain`. Real-model checks need a local `.env.local` with `OPENAI_API_KEY`.
 - Playwright: use `require("/opt/node22/lib/node_modules/playwright")` with `executablePath: "/opt/pw-browsers/chromium-1194/chrome-linux/chrome"`. Its screenshot caret-hiding causes a harmless "1 Issue" hydration notice in the Next dev overlay.
-- When stopping dev servers by matching command lines in `/proc`, skip your own shell's PID (`$$`), or the kill loop takes down the shell. Same for `pkill -f`: run it as its own command, never chained.
+- When stopping dev servers by matching command lines in `/proc`, skip your own shell's PID (`$$`), or the kill loop takes down the shell. Same for `pkill -f`: run it as its own command, never chained. `next start` runs as `next-server` (kill by /proc cmdline, not `pkill -f "next start"`).
 - Subagents run in `isolation: "worktree"` may start from `master`. Tell them to `git reset --hard build/layer-1` first.
 
 ## 2026-10-21 — Workspace set up

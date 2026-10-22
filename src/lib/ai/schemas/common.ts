@@ -1,5 +1,9 @@
 import { z } from "zod";
 
+// Our CSP forbids eval (T-28). Without this, Zod probes for it with `Function("")` on first use, which
+// the browser reports as a CSP violation (harmless, but noise in every page's reports).
+z.config({ jitless: true });
+
 // Shared enums (CONTEXT.md §5, §6). Model-output schemas use `.nullable()`
 // rather than `.optional()` so they stay valid for strict structured outputs.
 
