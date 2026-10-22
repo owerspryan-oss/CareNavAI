@@ -128,6 +128,19 @@
     "prepare.timing.started.today": "2b065c7c9c",
     "prepare.timing.started.weeks": "edbbe584b9",
     "prepare.timing.startedLegend": "fa5c931819",
+    "prepare.voice.begin": "30756af013",
+    "prepare.voice.busy": "9ee71aa25e",
+    "prepare.voice.cancel": "a0e63d7c71",
+    "prepare.voice.empty": "fdb4bd0042",
+    "prepare.voice.failed": "362fdf36d9",
+    "prepare.voice.heard": "22f755690d",
+    "prepare.voice.noMic": "b9e0eab717",
+    "prepare.voice.privacy": "88e60ed542",
+    "prepare.voice.remaining": "230d17409a",
+    "prepare.voice.start": "d08ee90704",
+    "prepare.voice.startLabel": "9f760e9ba2",
+    "prepare.voice.stop": "cae7d57bc0",
+    "prepare.voice.transcribing": "5edf9871ce",
     "prepare.who.ageBands.12_to_17": "91d93f330d",
     "prepare.who.ageBands.1_to_4": "8fa72306f4",
     "prepare.who.ageBands.5_to_11": "cfd2bbca85",
@@ -152,6 +165,17 @@
     "result.confidenceNotice": "75e5b0c6d5",
     "result.draftNotice": "982ad08f6d",
     "result.englishOnlyNotice": "cdc32a8e13",
+    "result.feedback.answers.a_bit": "9fec4e8d32",
+    "result.feedback.answers.no": "1ea442a134",
+    "result.feedback.answers.yes": "85a39ab345",
+    "result.feedback.confident": "6073fcdbe8",
+    "result.feedback.failed": "7a5db3cbe6",
+    "result.feedback.lead": "21367c437e",
+    "result.feedback.send": "f6f4688ff2",
+    "result.feedback.sending": "e595f17fac",
+    "result.feedback.thanks": "ac9e62a6ce",
+    "result.feedback.title": "906797b423",
+    "result.feedback.understandNext": "c7603b0c70",
     "result.forDoctor": "60091ce4c9",
     "result.hideOwnWords": "f9a010b89a",
     "result.layout.back": "76900f1bfd",
@@ -429,6 +453,21 @@
         "required": "እባክዎ ጥቂት ቃላት ይጻፉ። ማንኛውም ቋንቋ ችግር የለውም።",
         "changesRequired": "እባክዎ ያስተዋሉትን ይጻፉ፣ ወይም «ምንም የሚደጋገም ሁኔታ አላስተዋልኩም» የሚለውን ምልክት ያድርጉ።",
         "tooLong": "ይህ ከሚፈቀደው በ{over} ፊደላት ይረዝማል። እባክዎ ወደ {max} ፊደላት ወይም ከዚያ ያነሰ ያሳጥሩት።"
+      },
+      "voice": {
+        "start": "በድምጽ ይናገሩ",
+        "startLabel": "ከመተየብ ይልቅ በድምጽ ይናገሩ",
+        "privacy": "ቅጂዎ ወደ ጽሑፍ እንዲቀየር ወደ OpenAI ይላካል፣ ከዚያም ይሰረዛል። በፍጹም አይቀመጥም።",
+        "begin": "መቅዳት ይጀምሩ",
+        "cancel": "አሁን አይደለም",
+        "stop": "ያቁሙ",
+        "remaining": "{time} ቀርቷል",
+        "transcribing": "የተናገሩትን እየጻፍን ነው…",
+        "heard": "የሰማናቸውን ቃላት ይፈትሹ፣ የተሳሳተ ነገር ካለ ያስተካክሉ።",
+        "empty": "ምንም ቃል አልሰማንም። እባክዎ እንደገና ይሞክሩ፣ ወይም ይተይቡት።",
+        "failed": "በዚህ ጊዜ ልንጽፈው አልቻልንም። እባክዎ በምትኩ ይተይቡት።",
+        "noMic": "ማይክሮፎንዎን መጠቀም አልቻልንም። እባክዎ በምትኩ ይተይቡት።",
+        "busy": "አሁን በጣም ተጨናንቀናል። እባክዎ በምትኩ ይተይቡት።"
       }
     },
     "understand": {
@@ -597,6 +636,21 @@
         "next": "ቀጣይ",
         "back": "ተመለስ",
         "position": "{n} ከ{total}"
+      },
+      "feedback": {
+        "title": "ሁለት ፈጣን ጥያቄዎች",
+        "lead": "ስም-አልባ፦ የምናስቀምጠው እነዚህን ሁለት መልሶች ብቻ ነው።",
+        "confident": "ስለ ቀጠሮዬ የበለጠ በራስ መተማመን ይሰማኛል",
+        "understandNext": "ቀጥሎ ምን ማድረግ እንዳለብኝ ገብቶኛል",
+        "answers": {
+          "yes": "አዎ",
+          "a_bit": "ትንሽ",
+          "no": "አይ"
+        },
+        "send": "ይላኩ",
+        "sending": "በመላክ ላይ",
+        "thanks": "እናመሰግናለን። ይህ CareNav AIን የተሻለ እንድናደርግ ይረዳናል።",
+        "failed": "ይቅርታ፣ ያንን መላክ አልቻልንም። እባክዎ እንደገና ይሞክሩ።"
       }
     },
     "explain": {

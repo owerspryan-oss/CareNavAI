@@ -128,6 +128,19 @@
     "prepare.timing.started.today": "2b065c7c9c",
     "prepare.timing.started.weeks": "edbbe584b9",
     "prepare.timing.startedLegend": "fa5c931819",
+    "prepare.voice.begin": "30756af013",
+    "prepare.voice.busy": "9ee71aa25e",
+    "prepare.voice.cancel": "a0e63d7c71",
+    "prepare.voice.empty": "fdb4bd0042",
+    "prepare.voice.failed": "362fdf36d9",
+    "prepare.voice.heard": "22f755690d",
+    "prepare.voice.noMic": "b9e0eab717",
+    "prepare.voice.privacy": "88e60ed542",
+    "prepare.voice.remaining": "230d17409a",
+    "prepare.voice.start": "d08ee90704",
+    "prepare.voice.startLabel": "9f760e9ba2",
+    "prepare.voice.stop": "cae7d57bc0",
+    "prepare.voice.transcribing": "5edf9871ce",
     "prepare.who.ageBands.12_to_17": "91d93f330d",
     "prepare.who.ageBands.1_to_4": "8fa72306f4",
     "prepare.who.ageBands.5_to_11": "cfd2bbca85",
@@ -152,6 +165,17 @@
     "result.confidenceNotice": "75e5b0c6d5",
     "result.draftNotice": "982ad08f6d",
     "result.englishOnlyNotice": "cdc32a8e13",
+    "result.feedback.answers.a_bit": "9fec4e8d32",
+    "result.feedback.answers.no": "1ea442a134",
+    "result.feedback.answers.yes": "85a39ab345",
+    "result.feedback.confident": "6073fcdbe8",
+    "result.feedback.failed": "7a5db3cbe6",
+    "result.feedback.lead": "21367c437e",
+    "result.feedback.send": "f6f4688ff2",
+    "result.feedback.sending": "e595f17fac",
+    "result.feedback.thanks": "ac9e62a6ce",
+    "result.feedback.title": "906797b423",
+    "result.feedback.understandNext": "c7603b0c70",
     "result.forDoctor": "60091ce4c9",
     "result.hideOwnWords": "f9a010b89a",
     "result.layout.back": "76900f1bfd",
@@ -429,6 +453,21 @@
         "required": "Vui lòng viết vài chữ. Ngôn ngữ nào cũng được.",
         "changesRequired": "Vui lòng viết những gì bạn đã nhận thấy, hoặc đánh dấu “Tôi chưa nhận thấy quy luật nào”.",
         "tooLong": "Phần này dài quá {over} ký tự. Vui lòng rút ngắn còn {max} ký tự trở xuống."
+      },
+      "voice": {
+        "start": "Nói",
+        "startLabel": "Nói thay vì gõ",
+        "privacy": "Bản ghi âm của bạn được gửi đến OpenAI để chuyển thành chữ, rồi bị xóa. Nó không bao giờ được lưu lại.",
+        "begin": "Bắt đầu ghi âm",
+        "cancel": "Để sau",
+        "stop": "Dừng",
+        "remaining": "Còn {time}",
+        "transcribing": "Đang viết lại những gì bạn nói…",
+        "heard": "Hãy kiểm tra những chữ chúng tôi nghe được, và sửa bất cứ chỗ nào sai.",
+        "empty": "Chúng tôi không nghe được chữ nào. Vui lòng thử lại, hoặc gõ vào.",
+        "failed": "Lần này chúng tôi không viết lại được. Vui lòng gõ vào thay thế.",
+        "noMic": "Chúng tôi không dùng được micrô của bạn. Vui lòng gõ vào thay thế.",
+        "busy": "Hiện chúng tôi đang bận. Vui lòng gõ vào thay thế."
       }
     },
     "understand": {
@@ -597,6 +636,21 @@
         "next": "Tiếp",
         "back": "Quay lại",
         "position": "{n} trên {total}"
+      },
+      "feedback": {
+        "title": "Hai câu hỏi nhanh",
+        "lead": "Ẩn danh: chúng tôi chỉ giữ lại hai câu trả lời này.",
+        "confident": "Tôi thấy tự tin hơn về buổi hẹn khám của mình",
+        "understandNext": "Tôi hiểu mình cần làm gì tiếp theo",
+        "answers": {
+          "yes": "Có",
+          "a_bit": "Một chút",
+          "no": "Không"
+        },
+        "send": "Gửi",
+        "sending": "Đang gửi",
+        "thanks": "Cảm ơn bạn. Điều đó giúp chúng tôi làm CareNav AI tốt hơn.",
+        "failed": "Xin lỗi, chúng tôi không gửi được. Vui lòng thử lại."
       }
     },
     "explain": {

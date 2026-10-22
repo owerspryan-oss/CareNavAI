@@ -128,6 +128,19 @@
     "prepare.timing.started.today": "2b065c7c9c",
     "prepare.timing.started.weeks": "edbbe584b9",
     "prepare.timing.startedLegend": "fa5c931819",
+    "prepare.voice.begin": "30756af013",
+    "prepare.voice.busy": "9ee71aa25e",
+    "prepare.voice.cancel": "a0e63d7c71",
+    "prepare.voice.empty": "fdb4bd0042",
+    "prepare.voice.failed": "362fdf36d9",
+    "prepare.voice.heard": "22f755690d",
+    "prepare.voice.noMic": "b9e0eab717",
+    "prepare.voice.privacy": "88e60ed542",
+    "prepare.voice.remaining": "230d17409a",
+    "prepare.voice.start": "d08ee90704",
+    "prepare.voice.startLabel": "9f760e9ba2",
+    "prepare.voice.stop": "cae7d57bc0",
+    "prepare.voice.transcribing": "5edf9871ce",
     "prepare.who.ageBands.12_to_17": "91d93f330d",
     "prepare.who.ageBands.1_to_4": "8fa72306f4",
     "prepare.who.ageBands.5_to_11": "cfd2bbca85",
@@ -152,6 +165,17 @@
     "result.confidenceNotice": "75e5b0c6d5",
     "result.draftNotice": "982ad08f6d",
     "result.englishOnlyNotice": "cdc32a8e13",
+    "result.feedback.answers.a_bit": "9fec4e8d32",
+    "result.feedback.answers.no": "1ea442a134",
+    "result.feedback.answers.yes": "85a39ab345",
+    "result.feedback.confident": "6073fcdbe8",
+    "result.feedback.failed": "7a5db3cbe6",
+    "result.feedback.lead": "21367c437e",
+    "result.feedback.send": "f6f4688ff2",
+    "result.feedback.sending": "e595f17fac",
+    "result.feedback.thanks": "ac9e62a6ce",
+    "result.feedback.title": "906797b423",
+    "result.feedback.understandNext": "c7603b0c70",
     "result.forDoctor": "60091ce4c9",
     "result.hideOwnWords": "f9a010b89a",
     "result.layout.back": "76900f1bfd",
@@ -429,6 +453,21 @@
         "required": "Pakisulat ng ilang salita. Ayos lang ang kahit anong wika.",
         "changesRequired": "Pakisulat ang napansin mo, o i-tick ang “Wala akong napansing pattern”.",
         "tooLong": "Sobra ito nang {over} na character. Pakipaikliin ito sa {max} na character o mas kaunti."
+      },
+      "voice": {
+        "start": "Sabihin",
+        "startLabel": "Sabihin sa halip na i-type",
+        "privacy": "Ipinapadala sa OpenAI ang recording mo para maisulat ito, saka ito binubura. Hindi ito kailanman sine-save.",
+        "begin": "Simulan ang pag-record",
+        "cancel": "Hindi muna ngayon",
+        "stop": "Itigil",
+        "remaining": "{time} na lang ang natitira",
+        "transcribing": "Isinusulat ang sinabi mo…",
+        "heard": "Tingnan ang mga salitang narinig namin, at baguhin ang anumang mali.",
+        "empty": "Wala kaming narinig na salita. Pakisubukan ulit, o i-type ito.",
+        "failed": "Hindi namin ito naisulat sa pagkakataong ito. I-type na lang ito.",
+        "noMic": "Hindi namin magamit ang mikropono mo. I-type na lang ito.",
+        "busy": "Abala kami ngayon. I-type na lang ito."
       }
     },
     "understand": {
@@ -597,6 +636,21 @@
         "next": "Susunod",
         "back": "Bumalik",
         "position": "{n} sa {total}"
+      },
+      "feedback": {
+        "title": "Dalawang mabilis na tanong",
+        "lead": "Anonymous: ang dalawang sagot lang na ito ang itinatago namin.",
+        "confident": "Mas kumpiyansa na ako tungkol sa aking appointment",
+        "understandNext": "Naiintindihan ko kung ano ang susunod kong gagawin",
+        "answers": {
+          "yes": "Oo",
+          "a_bit": "Medyo",
+          "no": "Hindi"
+        },
+        "send": "Ipadala",
+        "sending": "Ipinapadala",
+        "thanks": "Salamat. Nakakatulong iyan para mapabuti namin ang CareNav AI.",
+        "failed": "Paumanhin, hindi namin iyon naipadala. Pakisubukan ulit."
       }
     },
     "explain": {

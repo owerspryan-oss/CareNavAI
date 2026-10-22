@@ -128,6 +128,19 @@
     "prepare.timing.started.today": "2b065c7c9c",
     "prepare.timing.started.weeks": "edbbe584b9",
     "prepare.timing.startedLegend": "fa5c931819",
+    "prepare.voice.begin": "30756af013",
+    "prepare.voice.busy": "9ee71aa25e",
+    "prepare.voice.cancel": "a0e63d7c71",
+    "prepare.voice.empty": "fdb4bd0042",
+    "prepare.voice.failed": "362fdf36d9",
+    "prepare.voice.heard": "22f755690d",
+    "prepare.voice.noMic": "b9e0eab717",
+    "prepare.voice.privacy": "88e60ed542",
+    "prepare.voice.remaining": "230d17409a",
+    "prepare.voice.start": "d08ee90704",
+    "prepare.voice.startLabel": "9f760e9ba2",
+    "prepare.voice.stop": "cae7d57bc0",
+    "prepare.voice.transcribing": "5edf9871ce",
     "prepare.who.ageBands.12_to_17": "91d93f330d",
     "prepare.who.ageBands.1_to_4": "8fa72306f4",
     "prepare.who.ageBands.5_to_11": "cfd2bbca85",
@@ -152,6 +165,17 @@
     "result.confidenceNotice": "75e5b0c6d5",
     "result.draftNotice": "982ad08f6d",
     "result.englishOnlyNotice": "cdc32a8e13",
+    "result.feedback.answers.a_bit": "9fec4e8d32",
+    "result.feedback.answers.no": "1ea442a134",
+    "result.feedback.answers.yes": "85a39ab345",
+    "result.feedback.confident": "6073fcdbe8",
+    "result.feedback.failed": "7a5db3cbe6",
+    "result.feedback.lead": "21367c437e",
+    "result.feedback.send": "f6f4688ff2",
+    "result.feedback.sending": "e595f17fac",
+    "result.feedback.thanks": "ac9e62a6ce",
+    "result.feedback.title": "906797b423",
+    "result.feedback.understandNext": "c7603b0c70",
     "result.forDoctor": "60091ce4c9",
     "result.hideOwnWords": "f9a010b89a",
     "result.layout.back": "76900f1bfd",
@@ -429,6 +453,21 @@
         "required": "Будь ласка, напишіть кілька слів. Підійде будь-яка мова.",
         "changesRequired": "Будь ласка, напишіть, що ви помітили, або позначте «Я не помітив(ла) жодної закономірності».",
         "tooLong": "Тут на {over} символів більше, ніж можна. Будь ласка, скоротіть текст до {max} символів або менше."
+      },
+      "voice": {
+        "start": "Сказати голосом",
+        "startLabel": "Сказати голосом замість того, щоб друкувати",
+        "privacy": "Ваш запис надсилається до OpenAI, щоб перетворити його на текст, а потім видаляється. Він ніколи не зберігається.",
+        "begin": "Почати запис",
+        "cancel": "Не зараз",
+        "stop": "Зупинити",
+        "remaining": "Залишилося {time}",
+        "transcribing": "Записуємо те, що ви сказали…",
+        "heard": "Перевірте слова, які ми почули, і виправте все, що неправильно.",
+        "empty": "Ми не почули жодного слова. Будь ласка, спробуйте ще раз або надрукуйте текст.",
+        "failed": "Цього разу нам не вдалося записати сказане. Будь ласка, краще надрукуйте текст.",
+        "noMic": "Нам не вдалося використати ваш мікрофон. Будь ласка, краще надрукуйте текст.",
+        "busy": "Зараз ми дуже зайняті. Будь ласка, краще надрукуйте текст."
       }
     },
     "understand": {
@@ -597,6 +636,21 @@
         "next": "Далі",
         "back": "Назад",
         "position": "{n} з {total}"
+      },
+      "feedback": {
+        "title": "Два коротких запитання",
+        "lead": "Анонімно: ми зберігаємо лише ці дві відповіді.",
+        "confident": "Я почуваюся впевненіше щодо свого прийому",
+        "understandNext": "Я розумію, що робити далі",
+        "answers": {
+          "yes": "Так",
+          "a_bit": "Трохи",
+          "no": "Ні"
+        },
+        "send": "Надіслати",
+        "sending": "Надсилаємо",
+        "thanks": "Дякуємо. Це допомагає нам робити CareNav AI кращим.",
+        "failed": "Вибачте, нам не вдалося це надіслати. Будь ласка, спробуйте ще раз."
       }
     },
     "explain": {

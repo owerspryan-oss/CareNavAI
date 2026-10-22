@@ -128,6 +128,19 @@
     "prepare.timing.started.today": "2b065c7c9c",
     "prepare.timing.started.weeks": "edbbe584b9",
     "prepare.timing.startedLegend": "fa5c931819",
+    "prepare.voice.begin": "30756af013",
+    "prepare.voice.busy": "9ee71aa25e",
+    "prepare.voice.cancel": "a0e63d7c71",
+    "prepare.voice.empty": "fdb4bd0042",
+    "prepare.voice.failed": "362fdf36d9",
+    "prepare.voice.heard": "22f755690d",
+    "prepare.voice.noMic": "b9e0eab717",
+    "prepare.voice.privacy": "88e60ed542",
+    "prepare.voice.remaining": "230d17409a",
+    "prepare.voice.start": "d08ee90704",
+    "prepare.voice.startLabel": "9f760e9ba2",
+    "prepare.voice.stop": "cae7d57bc0",
+    "prepare.voice.transcribing": "5edf9871ce",
     "prepare.who.ageBands.12_to_17": "91d93f330d",
     "prepare.who.ageBands.1_to_4": "8fa72306f4",
     "prepare.who.ageBands.5_to_11": "cfd2bbca85",
@@ -152,6 +165,17 @@
     "result.confidenceNotice": "75e5b0c6d5",
     "result.draftNotice": "982ad08f6d",
     "result.englishOnlyNotice": "cdc32a8e13",
+    "result.feedback.answers.a_bit": "9fec4e8d32",
+    "result.feedback.answers.no": "1ea442a134",
+    "result.feedback.answers.yes": "85a39ab345",
+    "result.feedback.confident": "6073fcdbe8",
+    "result.feedback.failed": "7a5db3cbe6",
+    "result.feedback.lead": "21367c437e",
+    "result.feedback.send": "f6f4688ff2",
+    "result.feedback.sending": "e595f17fac",
+    "result.feedback.thanks": "ac9e62a6ce",
+    "result.feedback.title": "906797b423",
+    "result.feedback.understandNext": "c7603b0c70",
     "result.forDoctor": "60091ce4c9",
     "result.hideOwnWords": "f9a010b89a",
     "result.layout.back": "76900f1bfd",
@@ -429,6 +453,21 @@
         "required": "தயவுசெய்து சில வார்த்தைகள் எழுதுங்கள். எந்த மொழியும் பரவாயில்லை.",
         "changesRequired": "நீங்கள் கவனித்ததை எழுதுங்கள், அல்லது “நான் எந்த முறையையும் கவனிக்கவில்லை” என்பதைத் தேர்வு செய்யுங்கள்.",
         "tooLong": "இது {over} எழுத்துகள் அதிகமாக உள்ளது. தயவுசெய்து {max} எழுத்துகள் அல்லது அதற்குக் குறைவாகச் சுருக்குங்கள்."
+      },
+      "voice": {
+        "start": "பேசிச் சொல்லுங்கள்",
+        "startLabel": "தட்டச்சு செய்வதற்குப் பதிலாகப் பேசிச் சொல்லுங்கள்",
+        "privacy": "உங்கள் பதிவு எழுத்தாக மாற்றுவதற்காக OpenAI-க்கு அனுப்பப்படும், பிறகு அழிக்கப்படும். அது ஒருபோதும் சேமிக்கப்படாது.",
+        "begin": "பதிவைத் தொடங்குங்கள்",
+        "cancel": "இப்போது வேண்டாம்",
+        "stop": "நிறுத்து",
+        "remaining": "{time} மீதம்",
+        "transcribing": "நீங்கள் சொன்னதை எழுதுகிறோம்…",
+        "heard": "நாங்கள் கேட்ட சொற்களைச் சரிபாருங்கள், தவறாக உள்ளதை மாற்றுங்கள்.",
+        "empty": "எந்தச் சொல்லும் எங்களுக்குக் கேட்கவில்லை. மீண்டும் முயலுங்கள், அல்லது தட்டச்சு செய்யுங்கள்.",
+        "failed": "இந்த முறை அதை எழுத முடியவில்லை. அதற்குப் பதிலாகத் தட்டச்சு செய்யுங்கள்.",
+        "noMic": "உங்கள் மைக்ரோஃபோனைப் பயன்படுத்த முடியவில்லை. அதற்குப் பதிலாகத் தட்டச்சு செய்யுங்கள்.",
+        "busy": "இப்போது நாங்கள் மிகவும் பரபரப்பாக இருக்கிறோம். அதற்குப் பதிலாகத் தட்டச்சு செய்யுங்கள்."
       }
     },
     "understand": {
@@ -597,6 +636,21 @@
         "next": "அடுத்து",
         "back": "பின்செல்",
         "position": "{n} / {total}"
+      },
+      "feedback": {
+        "title": "இரண்டு சிறிய கேள்விகள்",
+        "lead": "பெயர் தெரியாது: இந்த இரண்டு பதில்களை மட்டுமே நாங்கள் வைத்திருப்போம்.",
+        "confident": "என் சந்திப்பைப் பற்றி இப்போது எனக்கு அதிக நம்பிக்கை இருக்கிறது",
+        "understandNext": "அடுத்து என்ன செய்ய வேண்டும் என்று எனக்குப் புரிகிறது",
+        "answers": {
+          "yes": "ஆம்",
+          "a_bit": "கொஞ்சம்",
+          "no": "இல்லை"
+        },
+        "send": "அனுப்பு",
+        "sending": "அனுப்புகிறோம்",
+        "thanks": "நன்றி. இது CareNav AI-ஐ மேம்படுத்த எங்களுக்கு உதவும்.",
+        "failed": "மன்னிக்கவும், அதை அனுப்ப முடியவில்லை. மீண்டும் முயலுங்கள்."
       }
     },
     "explain": {

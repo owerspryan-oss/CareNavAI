@@ -128,6 +128,19 @@
     "prepare.timing.started.today": "2b065c7c9c",
     "prepare.timing.started.weeks": "edbbe584b9",
     "prepare.timing.startedLegend": "fa5c931819",
+    "prepare.voice.begin": "30756af013",
+    "prepare.voice.busy": "9ee71aa25e",
+    "prepare.voice.cancel": "a0e63d7c71",
+    "prepare.voice.empty": "fdb4bd0042",
+    "prepare.voice.failed": "362fdf36d9",
+    "prepare.voice.heard": "22f755690d",
+    "prepare.voice.noMic": "b9e0eab717",
+    "prepare.voice.privacy": "88e60ed542",
+    "prepare.voice.remaining": "230d17409a",
+    "prepare.voice.start": "d08ee90704",
+    "prepare.voice.startLabel": "9f760e9ba2",
+    "prepare.voice.stop": "cae7d57bc0",
+    "prepare.voice.transcribing": "5edf9871ce",
     "prepare.who.ageBands.12_to_17": "91d93f330d",
     "prepare.who.ageBands.1_to_4": "8fa72306f4",
     "prepare.who.ageBands.5_to_11": "cfd2bbca85",
@@ -152,6 +165,17 @@
     "result.confidenceNotice": "75e5b0c6d5",
     "result.draftNotice": "982ad08f6d",
     "result.englishOnlyNotice": "cdc32a8e13",
+    "result.feedback.answers.a_bit": "9fec4e8d32",
+    "result.feedback.answers.no": "1ea442a134",
+    "result.feedback.answers.yes": "85a39ab345",
+    "result.feedback.confident": "6073fcdbe8",
+    "result.feedback.failed": "7a5db3cbe6",
+    "result.feedback.lead": "21367c437e",
+    "result.feedback.send": "f6f4688ff2",
+    "result.feedback.sending": "e595f17fac",
+    "result.feedback.thanks": "ac9e62a6ce",
+    "result.feedback.title": "906797b423",
+    "result.feedback.understandNext": "c7603b0c70",
     "result.forDoctor": "60091ce4c9",
     "result.hideOwnWords": "f9a010b89a",
     "result.layout.back": "76900f1bfd",
@@ -429,6 +453,21 @@
         "required": "Ju lutemi shkruani disa fjalë. Çdo gjuhë është në rregull.",
         "changesRequired": "Ju lutemi shkruani çfarë keni vënë re, ose shënoni „Nuk kam vënë re ndonjë model“.",
         "tooLong": "Ky tekst është {over} shenja më i gjatë se sa lejohet. Ju lutemi shkurtojeni në {max} shenja ose më pak."
+      },
+      "voice": {
+        "start": "Thojeni me zë",
+        "startLabel": "Thojeni me zë në vend që ta shkruani",
+        "privacy": "Regjistrimi juaj dërgohet te OpenAI që të shkruhet, pastaj fshihet. Nuk ruhet kurrë.",
+        "begin": "Fillo regjistrimin",
+        "cancel": "Jo tani",
+        "stop": "Ndalo",
+        "remaining": "Kanë mbetur {time}",
+        "transcribing": "Po shkruajmë atë që thatë…",
+        "heard": "Kontrolloni fjalët që dëgjuam dhe ndryshoni çdo gjë që është gabim.",
+        "empty": "Nuk dëgjuam asnjë fjalë. Ju lutemi provoni përsëri ose shkruajeni.",
+        "failed": "Këtë herë nuk mundëm ta shkruanim. Ju lutemi shkruajeni më mirë vetë.",
+        "noMic": "Nuk mundëm të përdornim mikrofonin tuaj. Ju lutemi shkruajeni më mirë vetë.",
+        "busy": "Jemi shumë të zënë tani. Ju lutemi shkruajeni më mirë vetë."
       }
     },
     "understand": {
@@ -597,6 +636,21 @@
         "next": "Tjetër",
         "back": "Mbrapa",
         "position": "{n} nga {total}"
+      },
+      "feedback": {
+        "title": "Dy pyetje të shpejta",
+        "lead": "Anonim: ruajmë vetëm këto dy përgjigje.",
+        "confident": "Ndihem më i sigurt për takimin tim",
+        "understandNext": "E kuptoj çfarë duhet të bëj më pas",
+        "answers": {
+          "yes": "Po",
+          "a_bit": "Pak",
+          "no": "Jo"
+        },
+        "send": "Dërgo",
+        "sending": "Po dërgohet",
+        "thanks": "Faleminderit. Kjo na ndihmon ta bëjmë CareNav AI më të mirë.",
+        "failed": "Na vjen keq, nuk mundëm ta dërgonim. Ju lutemi provoni përsëri."
       }
     },
     "explain": {

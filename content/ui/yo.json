@@ -128,6 +128,19 @@
     "prepare.timing.started.today": "2b065c7c9c",
     "prepare.timing.started.weeks": "edbbe584b9",
     "prepare.timing.startedLegend": "fa5c931819",
+    "prepare.voice.begin": "30756af013",
+    "prepare.voice.busy": "9ee71aa25e",
+    "prepare.voice.cancel": "a0e63d7c71",
+    "prepare.voice.empty": "fdb4bd0042",
+    "prepare.voice.failed": "362fdf36d9",
+    "prepare.voice.heard": "22f755690d",
+    "prepare.voice.noMic": "b9e0eab717",
+    "prepare.voice.privacy": "88e60ed542",
+    "prepare.voice.remaining": "230d17409a",
+    "prepare.voice.start": "d08ee90704",
+    "prepare.voice.startLabel": "9f760e9ba2",
+    "prepare.voice.stop": "cae7d57bc0",
+    "prepare.voice.transcribing": "5edf9871ce",
     "prepare.who.ageBands.12_to_17": "91d93f330d",
     "prepare.who.ageBands.1_to_4": "8fa72306f4",
     "prepare.who.ageBands.5_to_11": "cfd2bbca85",
@@ -152,6 +165,17 @@
     "result.confidenceNotice": "75e5b0c6d5",
     "result.draftNotice": "982ad08f6d",
     "result.englishOnlyNotice": "cdc32a8e13",
+    "result.feedback.answers.a_bit": "9fec4e8d32",
+    "result.feedback.answers.no": "1ea442a134",
+    "result.feedback.answers.yes": "85a39ab345",
+    "result.feedback.confident": "6073fcdbe8",
+    "result.feedback.failed": "7a5db3cbe6",
+    "result.feedback.lead": "21367c437e",
+    "result.feedback.send": "f6f4688ff2",
+    "result.feedback.sending": "e595f17fac",
+    "result.feedback.thanks": "ac9e62a6ce",
+    "result.feedback.title": "906797b423",
+    "result.feedback.understandNext": "c7603b0c70",
     "result.forDoctor": "60091ce4c9",
     "result.hideOwnWords": "f9a010b89a",
     "result.layout.back": "76900f1bfd",
@@ -429,6 +453,21 @@
         "required": "Jọ̀wọ́ kọ ọ̀rọ̀ díẹ̀. Èdè èyíkéyìí dára.",
         "changesRequired": "Jọ̀wọ́ kọ ohun tí o ti ṣàkíyèsí, tàbí fi àmì sí “Mi ò ṣàkíyèsí bí ó ṣe máa ń wáyé kankan”.",
         "tooLong": "Èyí fi lẹ́tà {over} gùn jù. Jọ̀wọ́ ké e kúrú sí lẹ́tà {max} tàbí kéré sí i."
+      },
+      "voice": {
+        "start": "Sọ ọ́",
+        "startLabel": "Sọ ọ́ dípò kí o tẹ̀ ẹ́",
+        "privacy": "A máa fi ohùn tí o gbà sílẹ̀ ránṣẹ́ sí OpenAI kí wọ́n kọ ọ́ sílẹ̀, lẹ́yìn náà a ó pa á rẹ́. A kò ní fi í pamọ́ láé.",
+        "begin": "Bẹ̀rẹ̀ sí gbà sílẹ̀",
+        "cancel": "Kì í ṣe báyìí",
+        "stop": "Dúró",
+        "remaining": "Ó ku {time}",
+        "transcribing": "À ń kọ ohun tí o sọ sílẹ̀…",
+        "heard": "Ṣàyẹ̀wò àwọn ọ̀rọ̀ tí a gbọ́, kí o sì yí ohunkóhun tí kò tọ̀nà padà.",
+        "empty": "A kò gbọ́ ọ̀rọ̀ kankan. Jọ̀ọ́ gbìyànjú lẹ́ẹ̀kan sí i, tàbí tẹ̀ ẹ́.",
+        "failed": "A kò lè kọ ìyẹn sílẹ̀ lọ́tẹ̀ yìí. Jọ̀ọ́ tẹ̀ ẹ́ dípò rẹ̀.",
+        "noMic": "A kò lè lo makirofóònù rẹ. Jọ̀ọ́ tẹ̀ ẹ́ dípò rẹ̀.",
+        "busy": "Ọwọ́ wa dí báyìí. Jọ̀ọ́ tẹ̀ ẹ́ dípò rẹ̀."
       }
     },
     "understand": {
@@ -597,6 +636,21 @@
         "next": "Èyí tó kàn",
         "back": "Padà",
         "position": "{n} nínú {total}"
+      },
+      "feedback": {
+        "title": "Ìbéèrè kúkúrú méjì",
+        "lead": "Láìdárúkọ: ìdáhùn méjì yìí nìkan ni a máa ń tọ́jú.",
+        "confident": "Ọkàn mi balẹ̀ jù nípa àdéhùn mi",
+        "understandNext": "Mo yé ohun tí màá ṣe tẹ̀lé e",
+        "answers": {
+          "yes": "Bẹ́ẹ̀ ni",
+          "a_bit": "Díẹ̀",
+          "no": "Rárá"
+        },
+        "send": "Fi ránṣẹ́",
+        "sending": "À ń fi ránṣẹ́",
+        "thanks": "Ẹ ṣé. Ìyẹn ń ràn wá lọ́wọ́ láti mú CareNav AI dára sí i.",
+        "failed": "Má bínú, a kò lè fi ìyẹn ránṣẹ́. Jọ̀ọ́ gbìyànjú lẹ́ẹ̀kan sí i."
       }
     },
     "explain": {

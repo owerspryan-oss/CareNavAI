@@ -128,6 +128,19 @@
     "prepare.timing.started.today": "2b065c7c9c",
     "prepare.timing.started.weeks": "edbbe584b9",
     "prepare.timing.startedLegend": "fa5c931819",
+    "prepare.voice.begin": "30756af013",
+    "prepare.voice.busy": "9ee71aa25e",
+    "prepare.voice.cancel": "a0e63d7c71",
+    "prepare.voice.empty": "fdb4bd0042",
+    "prepare.voice.failed": "362fdf36d9",
+    "prepare.voice.heard": "22f755690d",
+    "prepare.voice.noMic": "b9e0eab717",
+    "prepare.voice.privacy": "88e60ed542",
+    "prepare.voice.remaining": "230d17409a",
+    "prepare.voice.start": "d08ee90704",
+    "prepare.voice.startLabel": "9f760e9ba2",
+    "prepare.voice.stop": "cae7d57bc0",
+    "prepare.voice.transcribing": "5edf9871ce",
     "prepare.who.ageBands.12_to_17": "91d93f330d",
     "prepare.who.ageBands.1_to_4": "8fa72306f4",
     "prepare.who.ageBands.5_to_11": "cfd2bbca85",
@@ -152,6 +165,17 @@
     "result.confidenceNotice": "75e5b0c6d5",
     "result.draftNotice": "982ad08f6d",
     "result.englishOnlyNotice": "cdc32a8e13",
+    "result.feedback.answers.a_bit": "9fec4e8d32",
+    "result.feedback.answers.no": "1ea442a134",
+    "result.feedback.answers.yes": "85a39ab345",
+    "result.feedback.confident": "6073fcdbe8",
+    "result.feedback.failed": "7a5db3cbe6",
+    "result.feedback.lead": "21367c437e",
+    "result.feedback.send": "f6f4688ff2",
+    "result.feedback.sending": "e595f17fac",
+    "result.feedback.thanks": "ac9e62a6ce",
+    "result.feedback.title": "906797b423",
+    "result.feedback.understandNext": "c7603b0c70",
     "result.forDoctor": "60091ce4c9",
     "result.hideOwnWords": "f9a010b89a",
     "result.layout.back": "76900f1bfd",
@@ -429,6 +453,21 @@
         "required": "براہِ کرم چند الفاظ لکھیں۔ کوئی بھی زبان ٹھیک ہے۔",
         "changesRequired": "براہِ کرم لکھیں کہ آپ نے کیا محسوس کیا، یا “میں نے کوئی خاص انداز محسوس نہیں کیا” پر نشان لگائیں۔",
         "tooLong": "یہ {over} حروف زیادہ لمبا ہے۔ براہِ کرم اسے {max} حروف یا اس سے کم کریں۔"
+      },
+      "voice": {
+        "start": "بول کر بتائیں",
+        "startLabel": "لکھنے کے بجائے بول کر بتائیں",
+        "privacy": "آپ کی ریکارڈنگ OpenAI کو بھیجی جاتی ہے تاکہ اسے لکھا جا سکے، پھر اسے مٹا دیا جاتا ہے۔ اسے کبھی محفوظ نہیں کیا جاتا۔",
+        "begin": "ریکارڈنگ شروع کریں",
+        "cancel": "ابھی نہیں",
+        "stop": "روکیں",
+        "remaining": "{time} باقی",
+        "transcribing": "آپ نے جو کہا، اسے لکھا جا رہا ہے…",
+        "heard": "ہم نے جو الفاظ سنے، انہیں دیکھ لیں، اور جو غلط ہو اسے بدل دیں۔",
+        "empty": "ہمیں کوئی الفاظ سنائی نہیں دیے۔ براہِ کرم دوبارہ کوشش کریں، یا لکھ کر بتائیں۔",
+        "failed": "ہم اس بار اسے لکھ نہیں سکے۔ براہِ کرم اس کے بجائے لکھ کر بتائیں۔",
+        "noMic": "ہم آپ کا مائیکروفون استعمال نہیں کر سکے۔ براہِ کرم اس کے بجائے لکھ کر بتائیں۔",
+        "busy": "اس وقت ہم بہت مصروف ہیں۔ براہِ کرم اس کے بجائے لکھ کر بتائیں۔"
       }
     },
     "understand": {
@@ -597,6 +636,21 @@
         "next": "اگلا",
         "back": "واپس",
         "position": "{n} از {total}"
+      },
+      "feedback": {
+        "title": "دو مختصر سوال",
+        "lead": "گمنام: ہم صرف یہ دو جواب رکھتے ہیں۔",
+        "confident": "مجھے اپنی اپائنٹمنٹ کے بارے میں پہلے سے زیادہ اعتماد محسوس ہوتا ہے",
+        "understandNext": "مجھے سمجھ آ گیا ہے کہ آگے کیا کرنا ہے",
+        "answers": {
+          "yes": "ہاں",
+          "a_bit": "تھوڑا سا",
+          "no": "نہیں"
+        },
+        "send": "بھیجیں",
+        "sending": "بھیجا جا رہا ہے",
+        "thanks": "شکریہ۔ اس سے ہمیں CareNav AI کو بہتر بنانے میں مدد ملتی ہے۔",
+        "failed": "معاف کیجیے، ہم اسے بھیج نہیں سکے۔ براہِ کرم دوبارہ کوشش کریں۔"
       }
     },
     "explain": {

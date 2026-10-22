@@ -128,6 +128,19 @@
     "prepare.timing.started.today": "2b065c7c9c",
     "prepare.timing.started.weeks": "edbbe584b9",
     "prepare.timing.startedLegend": "fa5c931819",
+    "prepare.voice.begin": "30756af013",
+    "prepare.voice.busy": "9ee71aa25e",
+    "prepare.voice.cancel": "a0e63d7c71",
+    "prepare.voice.empty": "fdb4bd0042",
+    "prepare.voice.failed": "362fdf36d9",
+    "prepare.voice.heard": "22f755690d",
+    "prepare.voice.noMic": "b9e0eab717",
+    "prepare.voice.privacy": "88e60ed542",
+    "prepare.voice.remaining": "230d17409a",
+    "prepare.voice.start": "d08ee90704",
+    "prepare.voice.startLabel": "9f760e9ba2",
+    "prepare.voice.stop": "cae7d57bc0",
+    "prepare.voice.transcribing": "5edf9871ce",
     "prepare.who.ageBands.12_to_17": "91d93f330d",
     "prepare.who.ageBands.1_to_4": "8fa72306f4",
     "prepare.who.ageBands.5_to_11": "cfd2bbca85",
@@ -152,6 +165,17 @@
     "result.confidenceNotice": "75e5b0c6d5",
     "result.draftNotice": "982ad08f6d",
     "result.englishOnlyNotice": "cdc32a8e13",
+    "result.feedback.answers.a_bit": "9fec4e8d32",
+    "result.feedback.answers.no": "1ea442a134",
+    "result.feedback.answers.yes": "85a39ab345",
+    "result.feedback.confident": "6073fcdbe8",
+    "result.feedback.failed": "7a5db3cbe6",
+    "result.feedback.lead": "21367c437e",
+    "result.feedback.send": "f6f4688ff2",
+    "result.feedback.sending": "e595f17fac",
+    "result.feedback.thanks": "ac9e62a6ce",
+    "result.feedback.title": "906797b423",
+    "result.feedback.understandNext": "c7603b0c70",
     "result.forDoctor": "60091ce4c9",
     "result.hideOwnWords": "f9a010b89a",
     "result.layout.back": "76900f1bfd",
@@ -429,6 +453,21 @@
         "required": "Tanpri ekri kèk mo. Nenpòt lang bon.",
         "changesRequired": "Tanpri ekri sa ou remake, oswa tcheke “Mwen pa remake okenn bagay ki repete”.",
         "tooLong": "Sa a gen {over} karaktè twòp. Tanpri fè l pi kout, {max} karaktè oswa mwens."
+      },
+      "voice": {
+        "start": "Di l",
+        "startLabel": "Di l olye de tape",
+        "privacy": "Nou voye anrejistreman ou a bay OpenAI pou yo ekri l, epi nou efase l. Nou pa janm sove l.",
+        "begin": "Kòmanse anrejistre",
+        "cancel": "Pa kounye a",
+        "stop": "Kanpe",
+        "remaining": "{time} ki rete",
+        "transcribing": "N ap ekri sa ou di a…",
+        "heard": "Tcheke mo nou tande yo, epi chanje nenpòt sa ki pa bon.",
+        "empty": "Nou pa tande okenn mo. Tanpri eseye ankò, oswa tape l.",
+        "failed": "Nou pa t kapab ekri sa fwa sa a. Tanpri tape l pito.",
+        "noMic": "Nou pa t kapab sèvi ak mikwofòn ou. Tanpri tape l pito.",
+        "busy": "Nou okipe kounye a. Tanpri tape l pito."
       }
     },
     "understand": {
@@ -597,6 +636,21 @@
         "next": "Pwochen",
         "back": "Retounen",
         "position": "{n} sou {total}"
+      },
+      "feedback": {
+        "title": "De ti kesyon rapid",
+        "lead": "Anonim: nou kenbe de repons sa yo sèlman.",
+        "confident": "Mwen santi m pi konfyans pou randevou mwen",
+        "understandNext": "Mwen konprann sa pou m fè apre",
+        "answers": {
+          "yes": "Wi",
+          "a_bit": "Yon ti kras",
+          "no": "Non"
+        },
+        "send": "Voye",
+        "sending": "N ap voye",
+        "thanks": "Mèsi. Sa ede nou fè CareNav AI vin pi bon.",
+        "failed": "Padon, nou pa t kapab voye sa. Tanpri eseye ankò."
       }
     },
     "explain": {

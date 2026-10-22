@@ -128,6 +128,19 @@
     "prepare.timing.started.today": "2b065c7c9c",
     "prepare.timing.started.weeks": "edbbe584b9",
     "prepare.timing.startedLegend": "fa5c931819",
+    "prepare.voice.begin": "30756af013",
+    "prepare.voice.busy": "9ee71aa25e",
+    "prepare.voice.cancel": "a0e63d7c71",
+    "prepare.voice.empty": "fdb4bd0042",
+    "prepare.voice.failed": "362fdf36d9",
+    "prepare.voice.heard": "22f755690d",
+    "prepare.voice.noMic": "b9e0eab717",
+    "prepare.voice.privacy": "88e60ed542",
+    "prepare.voice.remaining": "230d17409a",
+    "prepare.voice.start": "d08ee90704",
+    "prepare.voice.startLabel": "9f760e9ba2",
+    "prepare.voice.stop": "cae7d57bc0",
+    "prepare.voice.transcribing": "5edf9871ce",
     "prepare.who.ageBands.12_to_17": "91d93f330d",
     "prepare.who.ageBands.1_to_4": "8fa72306f4",
     "prepare.who.ageBands.5_to_11": "cfd2bbca85",
@@ -152,6 +165,17 @@
     "result.confidenceNotice": "75e5b0c6d5",
     "result.draftNotice": "982ad08f6d",
     "result.englishOnlyNotice": "cdc32a8e13",
+    "result.feedback.answers.a_bit": "9fec4e8d32",
+    "result.feedback.answers.no": "1ea442a134",
+    "result.feedback.answers.yes": "85a39ab345",
+    "result.feedback.confident": "6073fcdbe8",
+    "result.feedback.failed": "7a5db3cbe6",
+    "result.feedback.lead": "21367c437e",
+    "result.feedback.send": "f6f4688ff2",
+    "result.feedback.sending": "e595f17fac",
+    "result.feedback.thanks": "ac9e62a6ce",
+    "result.feedback.title": "906797b423",
+    "result.feedback.understandNext": "c7603b0c70",
     "result.forDoctor": "60091ce4c9",
     "result.hideOwnWords": "f9a010b89a",
     "result.layout.back": "76900f1bfd",
@@ -429,6 +453,21 @@
         "required": "請寫幾個字。任何語言都可以。",
         "changesRequired": "請寫下你留意到的情況，或剔選「我沒有留意到任何規律」。",
         "tooLong": "這裡超出了 {over} 個字元。請縮短至 {max} 個字元或以下。"
+      },
+      "voice": {
+        "start": "說出來",
+        "startLabel": "用說話代替打字",
+        "privacy": "你的錄音會傳送給 OpenAI 轉成文字，然後刪除。它絕不會被儲存。",
+        "begin": "開始錄音",
+        "cancel": "現在不用",
+        "stop": "停止",
+        "remaining": "還剩 {time}",
+        "transcribing": "正在把你說的話寫下來…",
+        "heard": "請檢查我們聽到的文字，把不對的地方改過來。",
+        "empty": "我們沒有聽到任何話。請再試一次，或改為輸入。",
+        "failed": "這次我們沒能把它寫下來。請改為輸入。",
+        "noMic": "我們無法使用你的麥克風。請改為輸入。",
+        "busy": "我們現在很繁忙。請改為輸入。"
       }
     },
     "understand": {
@@ -597,6 +636,21 @@
         "next": "下一張",
         "back": "上一張",
         "position": "第 {n} 張，共 {total} 張"
+      },
+      "feedback": {
+        "title": "兩個簡單的問題",
+        "lead": "匿名：我們只保留這兩個回答。",
+        "confident": "我對這次應診更有信心了",
+        "understandNext": "我明白接下來要做什麼",
+        "answers": {
+          "yes": "是",
+          "a_bit": "有一點",
+          "no": "沒有"
+        },
+        "send": "傳送",
+        "sending": "正在傳送",
+        "thanks": "謝謝。這能幫助我們把 CareNav AI 做得更好。",
+        "failed": "抱歉，我們未能傳送。請再試一次。"
       }
     },
     "explain": {
