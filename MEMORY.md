@@ -6,16 +6,17 @@ Running log of what's happened in this repo, for quick orientation at the start 
 
 ## 2026-10-22 — Session 3 progress (branch `build/layer-1`)
 
-**Done:** the 24 voice and feedback strings drafted in all 43 locales (`d3bc41a`, still `reviewed: false`). T-23 accounts (`c4fe5a4`) and T-24 encrypted saved summaries (`be69572`); details and new decisions in DECISIONS.md. 734 unit tests, urgency 70/70, a11y 24/24, build clean.
+**Done:** voice and feedback strings in 43 locales (`d3bc41a`). T-23 accounts (`c4fe5a4`), T-24 encrypted saved summaries (`be69572`). Account copy approved by the product owner and translated into 43 locales (`70ca4d6`). T-27 playful mode for jam/pcm (`6e5b4cc` prompt, `99afba1` code). All locale drafts are `reviewed: false`. 756 unit tests, urgency 70/70, a11y 25/25 (50 with `A11Y_LANGS=en,ur`), build clean.
 
-**Next:** T-27 playful mode (cut 1st under v0.3 A8). Translate the new `account.*`, `result.account.*`, `result.savedView.*` and `common.landing.{signIn,signedIn,account}` strings once the product owner approves the English. T-22 Tier A review (native speakers plus a live key). T-30 rehearsal.
+**Next:** translate the 5 `result.playful.*` strings once the product owner approves them. T-22 Tier A review (native speakers plus a live key). T-30 rehearsal. With a key: try playful mode on real Patois and Pidgin output (the strict span checks may reject it often).
 
 **Waiting on the product owner (in addition to the list below):**
-- Account and saved-summary copy in `content/ui/en.json`.
-- Whether regenerating a result, or changing the output language, should save a new entry (current behaviour) or replace the old one.
+- `src/lib/ai/prompts/style.v1.md` and the `result.playful.*` copy.
+- Whether a regenerated result, or a changed output language, should replace the earlier saved entry (it currently saves a new one).
 - Translator doubts on the voice and feedback strings: all of Twi; gendered "confident" in it/es/fr/ro/lt/sq/bg; "anonymous" rendered as "no name" in several languages; the voice privacy line in ar, ps, te, ml, pl, es, ru and uk.
+- Translator doubts on the account strings: Twi's "saving isn't set up"; "characters" in kri/yo/ig/sw/so; "once, for 15 minutes" in am/ti; masculine "signed in" in pl/fr; mixed button and sentence register in ta/bg/am/ti/tr.
 
-**Gotcha:** set `DATA_KEY` in `.env.local` or saving stays off. Create invite codes with `npm run invite:create`.
+**Gotcha:** set `DATA_KEY` in `.env.local` or saving stays off. Create invite codes with `npm run invite:create`. Restyle is always refused without a key, because the gate fails closed.
 
 ## 2026-10-22 — Session handoff (end of build session 2, branch `build/layer-1`)
 
