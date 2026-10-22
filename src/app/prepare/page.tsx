@@ -29,6 +29,7 @@ export default async function PreparePage() {
   return (
     <PrepareFlow
       maxChars={e.MAX_TEXT_CHARS}
+      contextMaxChars={e.MAX_SCREEN_CONTEXT_CHARS}
       urgentContent={urgentContent}
       languages={languageNames()}
       voiceMaxSeconds={voiceEnabled(language) ? e.MAX_AUDIO_SECONDS : null}

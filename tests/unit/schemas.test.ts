@@ -54,6 +54,7 @@ describe("screen request", () => {
       step: "step_text",
       ageBand: null,
       languageHint: null,
+      context: null,
     });
   });
 });

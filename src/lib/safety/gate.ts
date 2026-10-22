@@ -1,10 +1,11 @@
 import type { AiDeps } from "@/lib/ai/client";
-import type { AgeBand, GateCategory, GateResult, Register, SafetyLevel } from "@/lib/ai/schemas";
+import type { AgeBand, GateCategory, GateResult, Register, SafetyLevel, ScreenContext } from "@/lib/ai/schemas";
 import { env } from "@/lib/config/env";
 import { urgentMessageKeyFor } from "@/lib/content";
 import { db as defaultDb } from "@/lib/db";
 import { log } from "@/lib/log/logger";
-import { classify, classifyViaEnglish } from "./classifier";
+import { CLASSIFIER_PROMPT_VERSION, classify, classifyViaEnglish } from "./classifier";
+import { contextPairs, currentQuestion } from "./context";
 import { mostCautious } from "./levels";
 import { moderationLayer } from "./moderation";
 import { redact } from "./redact";
@@ -14,6 +15,8 @@ import { hasRulesListFor, runRules } from "./rules";
  * The safety gate (FR-05, PRD §9). Redact, then rules + classifier + moderation in parallel,
  * then the most cautious result wins. Every failure is `uncertain` (CLAUDE.md rule 2).
  * Languages without a rules list get the PRD 9.8 extra caution.
+ * Optional context (the question and earlier answers) goes to the classifier only, redacted like the
+ * text. Rules and moderation screen the current text alone, so context can never cancel their result.
  */
 
 type Layer = GateResult["failedLayers"][number];
@@ -24,6 +27,7 @@ export type ScreenOptions = {
   languageHint: string | null;
   endpoint: string;
   requestId?: string;
+  context?: ScreenContext | null;
 };
 
 export type Screened = GateResult & { redactedText: string };
@@ -38,7 +42,10 @@ export async function screen(text: string, opts: ScreenOptions, deps: AiDeps = {
 
   try {
     redactedText = redact(text);
-    const ctx = { step: opts.step, ageBand: opts.ageBand, endpoint: opts.endpoint, requestId: opts.requestId };
+    const context = opts.context
+      ? { question: currentQuestion(opts.context, redact), earlier: contextPairs(opts.context, opts.ageBand, redact) }
+      : null;
+    const ctx = { step: opts.step, ageBand: opts.ageBand, endpoint: opts.endpoint, requestId: opts.requestId, context };
     const rules = runRules(redactedText, { language: opts.languageHint, ageBand: opts.ageBand });
     const [cls, mod] = await Promise.allSettled([
       classify(redactedText, ctx, deps),
@@ -88,6 +95,7 @@ export async function screen(text: string, opts: ScreenOptions, deps: AiDeps = {
     language,
     register,
     failedLayers: [...new Set(failedLayers)],
+    promptVersion: CLASSIFIER_PROMPT_VERSION,
     redactedText,
   };
   recordEvent(result, opts, deps);
@@ -116,6 +124,7 @@ export function publicResult(r: Screened): GateResult {
     language: r.language,
     register: r.register,
     failedLayers: r.failedLayers,
+    promptVersion: r.promptVersion,
   };
 }
 

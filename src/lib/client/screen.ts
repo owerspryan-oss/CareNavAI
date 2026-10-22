@@ -5,10 +5,14 @@ import {
   screenRequestSchema,
   type AgeBand,
   type GateResult,
+  type screenContextSchema,
+  type ScreenQuestion,
   type screenStepSchema,
 } from "@/lib/ai/schemas";
 
 export type ScreenStep = z.infer<typeof screenStepSchema>;
+/** What a caller sends as context: the question being answered and the earlier answers, in order. */
+export type ScreenContextInput = z.input<typeof screenContextSchema>;
 
 /** Client-side network budget for one screen call. A timeout fails closed like any other error. */
 const SCREEN_TIMEOUT_MS = 20_000;
@@ -37,8 +41,9 @@ export async function screenText(
   text: string,
   step: ScreenStep,
   ageBand: AgeBand | null,
+  context: ScreenContextInput | null = null,
 ): Promise<GateResult> {
-  const request = screenRequestSchema.safeParse({ text, step, ageBand, languageHint: null });
+  const request = screenRequestSchema.safeParse({ text, step, ageBand, languageHint: null, context });
   if (!request.success) return failClosedResult();
 
   try {
@@ -71,4 +76,37 @@ export function mostCautious(results: readonly GateResult[]): GateResult | null 
   if (!worst) return null;
   const categories = [...new Set(results.filter((r) => r.level !== "clear").flatMap((r) => r.categories))];
   return { ...worst, categories };
+}
+
+const askedChars = (q: ScreenQuestion | null | undefined) => (q?.kind === "followup" ? q.question.length : 0);
+
+/**
+ * Keep the context within MAX_SCREEN_CONTEXT_CHARS (passed down from server config), in order:
+ * an earlier answer that would go over the budget is left out rather than cut, and the rest still go.
+ * Leaving context out only gives the classifier less to go on; the current text is always screened.
+ */
+export function fitContext(context: ScreenContextInput, maxChars: number): ScreenContextInput {
+  let used = askedChars(context.question);
+  const earlier = (context.earlier ?? []).filter((e) => {
+    const n = e.answer.length + askedChars(e.question);
+    if (used + n > maxChars) return false;
+    used += n;
+    return true;
+  });
+  return { ...context, earlier };
+}
+
+type AskedFollowUp = { intent: string; question: string; answer: string | null };
+
+/**
+ * Context for follow-up answer `index`: its own question, plus the earlier answers in `base`
+ * followed by the follow-ups answered before it.
+ */
+export function followUpContext(followUps: readonly AskedFollowUp[], index: number, base: ScreenContextInput = {}): ScreenContextInput {
+  const asked = (f: AskedFollowUp) => ({ kind: "followup" as const, intent: f.intent, question: f.question });
+  const before = followUps
+    .slice(0, index)
+    .filter((f) => f.answer !== null && f.answer.trim() !== "")
+    .map((f) => ({ question: asked(f), answer: f.answer as string }));
+  return { ...base, question: asked(followUps[index]), earlier: [...(base.earlier ?? []), ...before] };
 }

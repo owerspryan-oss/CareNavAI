@@ -5,7 +5,8 @@ import { useCallback, useEffect, useReducer, useRef, useState, type ReactNode } 
 import { flushSync } from "react-dom";
 import type { GateResult, SafetyLevel } from "@/lib/ai/schemas";
 import { fetchFollowUps, fetchSummary, type CallError, type FollowUpQuestion, type SummaryResult } from "@/lib/client/prepare";
-import { mostCautious, screenText } from "@/lib/client/screen";
+import { fitContext, mostCautious, screenText } from "@/lib/client/screen";
+import { fieldScreenContext, followUpScreenContext } from "@/lib/prepare/screen-context";
 import { fromPrepareAnswers, toPrepareAnswers, type AnsweredFollowUp } from "@/lib/prepare/answers";
 import type { DemoPreparePreset } from "@/lib/demo/presets";
 import { DemoMenu } from "@/components/demo/DemoMenu";
@@ -55,6 +56,8 @@ import styles from "./PrepareFlow.module.css";
 export interface PrepareFlowProps {
   /** MAX_TEXT_CHARS from server config (AC-06.1), passed down so it isn't hard-coded on the client. */
   maxChars: number;
+  /** MAX_SCREEN_CONTEXT_CHARS: the most earlier-answer text sent with one screen call, as classifier context. */
+  contextMaxChars: number;
   /** Static urgent-message content and URGENT_MODE, built on the server (getUrgentContent). */
   urgentContent: UrgentContent;
   /** Language names and direction from config/languages.json, for the result view (T-13). */
@@ -113,7 +116,7 @@ function firstInvalidStep(state: PrepareState, maxChars: number, c: PrepareCopy)
  * All answers live in React state only (guest = stateless). Every free-text answer is screened by the
  * urgency gate before the journey moves on; anything but `clear` hands over to <UrgentGate>.
  */
-export function PrepareFlow({ maxChars, urgentContent, languages, voiceMaxSeconds, demo }: PrepareFlowProps) {
+export function PrepareFlow({ maxChars, contextMaxChars, urgentContent, languages, voiceMaxSeconds, demo }: PrepareFlowProps) {
   const c = usePrepareCopy();
   const router = useRouter();
   const [state, dispatch] = useReducer(prepareReducer, undefined, initialPrepareState);
@@ -198,7 +201,9 @@ export function PrepareFlow({ maxChars, urgentContent, languages, voiceMaxSecond
 
     setScreening(true);
     const ageBand = effectiveAgeBand(state);
-    const results = await Promise.all(fields.map((f) => screenText(state.text[f], "step_text", ageBand)));
+    const results = await Promise.all(
+      fields.map((f) => screenText(state.text[f], "step_text", ageBand, fitContext(fieldScreenContext(state, f), contextMaxChars))),
+    );
     setScreening(false);
 
     const worst = mostCautious(results);
@@ -264,8 +269,10 @@ export function PrepareFlow({ maxChars, urgentContent, languages, voiceMaxSecond
     if (stage.name !== "followups" || stage.busy) return;
     setStage({ ...stage, busy: true });
     const ageBand = effectiveAgeBand(state);
-    const answers = answered.map((f) => f.answer).filter((a): a is string => a !== null);
-    const worst = mostCautious(await Promise.all(answers.map((a) => screenText(a, "followup_answer", ageBand))));
+    const screens = answered.flatMap((f, i) =>
+      f.answer === null ? [] : [screenText(f.answer, "followup_answer", ageBand, fitContext(followUpScreenContext(state, answered, i), contextMaxChars))],
+    );
+    const worst = mostCautious(await Promise.all(screens));
     if (worst) {
       setStage({ ...stage, busy: false });
       setGate({ result: worst, level: urgentLevel(worst), screened: {}, resume: { to: "review", followUps: answered } });

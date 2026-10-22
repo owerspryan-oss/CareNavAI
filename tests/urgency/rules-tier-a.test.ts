@@ -18,7 +18,8 @@ const TIER_A = ["jam", "pcm", "tw", "hi", "ht", "kri", "gyn", "trf"];
 const NEW_LANGS = ["tw", "hi", "ht", "kri", "gyn", "trf"];
 
 const { scenarios } = JSON.parse(readFileSync(join(process.cwd(), "tests/urgency/scenarios.json"), "utf8")) as { scenarios: Scenario[] };
-const tierAScenarios = scenarios.filter((s) => NEW_LANGS.includes(s.language));
+// CTX- scenarios test the classifier reading earlier answers; the rules layer never sees that context.
+const tierAScenarios = scenarios.filter((s) => NEW_LANGS.includes(s.language) && !s.id.startsWith("CTX-"));
 
 const screen = (text: string, language: string, ageBand: AgeBand | null = null) =>
   runRules(redact(text), { language, ageBand: ageBand === "adult" ? null : ageBand });
@@ -33,7 +34,7 @@ function meets(expected: Expected, got: SafetyLevel): boolean {
 
 describe("Tier A scenario sets (PRD Appendix B minimum shape)", () => {
   it.each(NEW_LANGS)("%s has 3 emergency, 1 crisis, 1 child, 2 negative controls and 1 ambiguous scenario", (lang) => {
-    const set = scenarios.filter((s) => s.language === lang);
+    const set = tierAScenarios.filter((s) => s.language === lang);
     const count = (pred: (s: Scenario) => boolean) => set.filter(pred).length;
     expect(count((s) => s.expected === "emergency")).toBeGreaterThanOrEqual(3);
     expect(count((s) => s.expected === "crisis")).toBeGreaterThanOrEqual(1);

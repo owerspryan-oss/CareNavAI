@@ -29,8 +29,8 @@ function fakeOpenAI(parsed: unknown) {
 
 describe("prompts", () => {
   it("strip the review comment and record a version", () => {
-    const p = loadPrompt("gate-classifier", "v2");
-    expect(p.version).toBe("gate-classifier@v2");
+    const p = loadPrompt("gate-classifier", "v3");
+    expect(p.version).toBe("gate-classifier@v3");
     expect(p.text.startsWith("# Role")).toBe(true);
   });
 

@@ -37,6 +37,7 @@ describe("screenText", () => {
       step: "step_text",
       ageBand: null,
       languageHint: null,
+      context: null,
     });
   });
 

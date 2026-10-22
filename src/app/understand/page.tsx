@@ -24,6 +24,7 @@ export default async function UnderstandPage() {
       maxImagePx={e.MAX_IMAGE_PX}
       maxLetterChars={e.MAX_LETTER_CHARS}
       maxAnswerChars={e.MAX_TEXT_CHARS}
+      contextMaxChars={e.MAX_SCREEN_CONTEXT_CHARS}
       urgentContent={getUrgentContent(language)}
       providerNotice={getDisclaimers(language).content.guestProviderNotice}
       languages={languageNames()}

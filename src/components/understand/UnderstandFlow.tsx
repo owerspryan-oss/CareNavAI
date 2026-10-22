@@ -6,7 +6,7 @@ import type { GateResult } from "@/lib/ai/schemas";
 import type { CallError } from "@/lib/client/call";
 import type { DemoLetterPreset } from "@/lib/demo/presets";
 import { resizeToJpeg } from "@/lib/client/image";
-import { mostCautious, screenText } from "@/lib/client/screen";
+import { fitContext, followUpContext, mostCautious, screenText } from "@/lib/client/screen";
 import {
   extractLetter,
   fetchExplain,
@@ -43,6 +43,8 @@ export interface UnderstandFlowProps {
   maxLetterChars: number;
   /** MAX_TEXT_CHARS: the limit for each follow-up answer. */
   maxAnswerChars: number;
+  /** MAX_SCREEN_CONTEXT_CHARS: the most earlier-answer text sent with one screen call, as classifier context. */
+  contextMaxChars: number;
   /** Static urgent-message content and URGENT_MODE, built on the server (getUrgentContent). */
   urgentContent: UrgentContent;
   /** Static guest provider notice (content/disclaimers, FR-11). */
@@ -90,6 +92,7 @@ export function UnderstandFlow({
   maxImagePx,
   maxLetterChars,
   maxAnswerChars,
+  contextMaxChars,
   urgentContent,
   providerNotice,
   languages,
@@ -245,8 +248,11 @@ export function UnderstandFlow({
   async function submitFollowUps(followUps: PostAnsweredFollowUp[]) {
     if (stage.name !== "followups" || stage.busy) return;
     setStage({ ...stage, busy: true });
-    const answers = followUps.map((f) => f.answer).filter((a): a is string => a !== null);
-    const worst = mostCautious(await Promise.all(answers.map((a) => screenText(a, "followup_answer", null))));
+    // Each answer is read with its own question and the answers before it (not the letter: it was screened on its own).
+    const screens = followUps.flatMap((f, i) =>
+      f.answer === null ? [] : [screenText(f.answer, "followup_answer", null, fitContext(followUpContext(followUps, i), contextMaxChars))],
+    );
+    const worst = mostCautious(await Promise.all(screens));
     if (worst) {
       setStage({ ...stage, busy: false });
       setGate({ result: worst, letter: false, resume: { to: "explain", followUps } });

@@ -35,6 +35,8 @@ export const envSchema = z.object({
   MAX_PDF_REQUEST_KB: z.coerce.number().int().positive().default(256),
   /** FR-23: most characters of result text sent to the STYLE model in one playful restyle. */
   MAX_RESTYLE_CHARS: z.coerce.number().int().positive().default(6000),
+  /** Most characters of earlier questions and answers sent with one /api/screen call (GATE classifier context only). */
+  MAX_SCREEN_CONTEXT_CHARS: z.coerce.number().int().positive().default(20000),
   LOG_LEVEL: z.enum(["debug", "info", "warn", "error", "silent"]).default("info"),
 });
 
