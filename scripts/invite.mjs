@@ -7,6 +7,7 @@
 import { createHash, randomInt } from "node:crypto";
 import { mkdirSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
 import Database from "better-sqlite3";
 
@@ -30,7 +31,7 @@ const db = new Database(file);
 db.pragma("foreign_keys = ON");
 
 // Apply any pending migration, the same way src/lib/db/index.ts does, so this works before first run.
-const dir = new URL("../src/lib/db/migrations/", import.meta.url).pathname;
+const dir = fileURLToPath(new URL("../src/lib/db/migrations/", import.meta.url));
 db.exec("CREATE TABLE IF NOT EXISTS schema_migrations (name TEXT PRIMARY KEY, applied_at INTEGER NOT NULL)");
 const done = new Set(db.prepare("SELECT name FROM schema_migrations").all().map((r) => r.name));
 for (const name of readdirSync(dir).filter((f) => /^\d{3}_.+\.sql$/.test(f) && !done.has(f)).sort()) {

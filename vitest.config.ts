@@ -11,6 +11,8 @@ export default defineConfig({
   test: {
     include: ["tests/**/*.test.ts"],
     environment: "node",
+    // Route tests import a lot on first use; 5 s isn't enough on a busy Windows machine.
+    testTimeout: 20_000,
     env: { LOG_LEVEL: "silent" },
   },
 });

@@ -10,6 +10,7 @@
 
 import { readFileSync } from "node:fs";
 import { createRequire } from "node:module";
+import { fileURLToPath } from "node:url";
 import { chromium } from "playwright-core";
 
 const require = createRequire(import.meta.url);
@@ -18,7 +19,7 @@ const BASE = process.env.A11Y_BASE_URL ?? "http://localhost:3000";
 const fixture = (name) => JSON.parse(readFileSync(new URL(`../tests/fixtures/${name}`, import.meta.url), "utf8"));
 const LETTER = fixture("gp-letter-explain.json");
 const SUMMARY = fixture("marcia-summary.json");
-const LETTER_PNG = new URL("../demo/letter/gp-letter.png", import.meta.url).pathname;
+const LETTER_PNG = fileURLToPath(new URL("../demo/letter/gp-letter.png", import.meta.url));
 
 /** A gate result with no user text, as /api/screen returns it. */
 const gate = (level, categories = []) => ({
