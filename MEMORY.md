@@ -4,6 +4,24 @@ Running log of what's happened in this repo, for quick orientation at the start 
 
 ---
 
+## 2026-10-22 — Session handoff (end of build session 2, branch `build/layer-1`)
+
+**State:** all work committed and pushed to `origin/build/layer-1`; no PR, nothing merged to `master`. 699 unit tests pass, `npm run test:urgency` 70/70 (offline), `npm run test:a11y` 24/24 screens (48 with `A11Y_LANGS=en,ur`), production build clean with no CSP violations.
+
+**Done this session (details in DECISIONS.md, newest at the bottom):**
+- Product-owner answers: age band for "Someone else"; crisis continue needs a two-step check (also on emergency + self-harm); breathing split (can't breathe = emergency, difficulty = urgent; classifier prompt v2); Samaritans line on emergency + self-harm; NHS 111 interpreter line on crisis; child thresholds kept as built; polite "you" kept in translations; copy approved.
+- Real logo (the brand PNG is already transparent).
+- T-17 demo mode, T-18 a11y check (automated), T-31/T-32 interface localisation (43 DRAFT locale files + review-sheet scripts), T-20 voice input (hidden until a language has `signoff.sttTested: true`), T-34 bundled PDF fonts + RTL, T-26 user feedback, T-25 session cap + cap alerts + `/admin/usage`, T-28 security pass (`src/proxy.ts`, `docs/security-checklist.md`).
+
+**Next, in order:**
+1. Translate the 24 new interface strings (`prepare.voice.*`, `result.feedback.*`) into the 43 locales. They show in English until then. With a key: `node --env-file=.env.local scripts/translate-ui.mjs --all`. Without one: draft them the way session 2 did (agents writing flat JSON checked by `problem()` in `scripts/lib/ui-locales.mjs`, then merged with source hashes via `writeLocale`).
+2. T-23/T-24 accounts (password + magic link with a dev inbox, sessions, invites; encrypted saved summaries, list/re-download/delete/export). Tables already exist in `src/lib/db/migrations/001_*.sql`. Cut 3rd under v0.3 A8.
+3. T-27 playful mode (cut 1st). T-22 Tier A review needs native speakers and a live key. T-30 rehearsal.
+
+**Waiting on the product owner:** native-speaker review of the interface drafts (`npm run ui:review:export -- <code>`) and of Tier A urgent content; trying voice locally and flipping `sttTested`; review of `translate-ui.v1.md`, the voice disclosure and the feedback card wording.
+
+**Gotchas (add to the ones below):** `next start` runs as `next-server`; stop dev/prod servers by scanning `/proc/*/cmdline` and skipping `$$`, never a chained `pkill -f` whose pattern appears in the same command line. `env()` is cached: tests that stub env must `vi.resetModules()` and re-import. Route files may only export route handlers and config.
+
 ## 2026-10-21 — Session handoff (end of build session 1, branch `build/layer-1`, HEAD 9c9f2e3)
 
 **State:** all work committed and pushed to `origin/build/layer-1`. Nothing has been merged to `master` and no PR has been opened. 556 unit tests pass; `npm run test:urgency` reports 0 MISS across 70 scenarios (offline).
