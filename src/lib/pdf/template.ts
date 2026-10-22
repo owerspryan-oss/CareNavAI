@@ -132,27 +132,40 @@ function postBody(r: PostAppointmentResult): string {
 
 // ---- Page shell -------------------------------------------------------------
 
-type Version = { result: PreAppointmentResult | PostAppointmentResult; clinician: boolean };
+/**
+ * `clinician`: Journey 1's English page for the doctor (with the feedback QR). `user`: the person's own
+ * version. `english`: Journey 2's English copy after a page in another language, for someone helping.
+ */
+type Version = { result: PreAppointmentResult | PostAppointmentResult; role: "clinician" | "user" | "english" };
 
 const WARNING_ICON =
   '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 2 20h20L12 3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 10v4M12 17v.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
 
 function versionPage(req: PdfRequest, v: Version, opts: TemplateOptions, urgentLevel: ResultMeta["urgentAcknowledged"]): string {
   const meta = v.result.meta;
-  const lang = v.clinician ? "en" : meta.outputLanguage;
-  const dir = v.clinician ? "ltr" : versionDir(meta, LANGUAGE_NAMES);
-  const copy = req.flow === "prepare" ? c.prepare : c.understand;
-  const title = v.clinician ? en(copy.clinicianTitle) : `${en(`${copy.userTitle}:`)} <bdi>${esc(userTabLabel(meta, LANGUAGE_NAMES, "Simple English"))}</bdi>`;
+  const clinician = v.role === "clinician";
+  const user = v.role === "user";
+  const lang = user ? meta.outputLanguage : "en";
+  const dir = user ? versionDir(meta, LANGUAGE_NAMES) : "ltr";
+  const versionName = `<bdi>${esc(userTabLabel(meta, LANGUAGE_NAMES, "Simple English"))}</bdi>`;
+  const [title, lead] =
+    req.flow === "prepare"
+      ? clinician
+        ? [en(c.prepare.clinicianTitle), c.prepare.clinicianLead]
+        : [`${en(`${c.prepare.userTitle}:`)} ${versionName}`, null]
+      : user
+        ? [`${en(`${c.understand.userTitle}:`)} ${versionName}`, c.understand.userLead]
+        : [en(`${c.understand.userTitle}: ${c.understand.englishTitle}`), c.understand.englishLead];
 
   const disclaimers = getDisclaimers(lang);
   const draft = opts.showDraftLabel ? `<div class="draft">${served(disclaimers.content.draftLabel, disclaimers.servedLanguage)}</div>` : "";
   // v0.3 A2: static banner, never model text, in the page's language where a file exists.
   const urgent = urgentLevel ? getUrgentMessage(urgentLevel, lang) : null;
   const banner = urgent ? `<div class="urgent" role="alert">${WARNING_ICON}<p>${served(urgent.message.banner, urgent.servedLanguage)}</p></div>` : "";
-  const confidence = !v.clinician && meta.confidenceNotice ? `<p class="notice">${en(c.confidenceNotice)}</p>` : "";
-  const body = req.flow === "prepare" ? preBody(v.result as PreAppointmentResult, v.clinician) : postBody(v.result as PostAppointmentResult);
+  const confidence = user && meta.confidenceNotice ? `<p class="notice">${en(c.confidenceNotice)}</p>` : "";
+  const body = req.flow === "prepare" ? preBody(v.result as PreAppointmentResult, clinician) : postBody(v.result as PostAppointmentResult);
   // On page 1, under the lead: a busy clinician may only read the first page.
-  const qr = v.clinician
+  const qr = clinician
     ? `<aside class="qr"><img src="data:image/svg+xml;base64,${Buffer.from(opts.qrSvg).toString("base64")}" alt=""><div><h2>${esc(c.qr.title)}</h2><p>${esc(c.qr.body)}</p><p class="link">${esc(opts.feedbackUrl)}</p><p class="small">${esc(c.qr.privacy)}</p></div></aside>`
     : "";
 
@@ -160,18 +173,30 @@ function versionPage(req: PdfRequest, v: Version, opts: TemplateOptions, urgentL
 <header class="top"><div class="wordmark">CareNav <span>AI</span></div><div class="date">${en(c.madeOn(formatDate(opts.now)))}</div></header>
 ${draft}${banner}
 <h1>${title}</h1>
-${v.clinician ? `<p class="lead">${esc(copy.clinicianLead)}</p>` : ""}${confidence}
+${lead ? `<p class="lead">${en(lead)}</p>` : ""}${confidence}
 ${qr}
 <div class="body">${body}</div>
 <section class="about"><h2>${en(c.aboutThis)}</h2>${list(v.result.disclaimer)}</section>
 </article>`;
 }
 
-/** The full HTML document. English clinician page first (AC-10.1), then the user version when one exists. */
+/**
+ * The full HTML document. Journey 1 (for the appointment): English clinician page first (AC-10.1), then
+ * the user version. Journey 2 (the person's own letter): their version first, then the English only when
+ * their version is in another language; no clinician QR (product owner, 2026-10-22).
+ */
 export function buildPdfHtml(req: PdfRequest, opts: TemplateOptions): string {
   const urgentLevel = req.english.meta.urgentAcknowledged ?? req.user?.meta.urgentAcknowledged ?? null;
-  const versions: Version[] = [{ result: req.english, clinician: true }];
-  if (req.user) versions.push({ result: req.user, clinician: false });
+  const versions: Version[] = [];
+  if (req.flow === "prepare") {
+    versions.push({ result: req.english, role: "clinician" });
+    if (req.user) versions.push({ result: req.user, role: "user" });
+  } else if (!req.user) {
+    versions.push({ result: req.english, role: "user" });
+  } else {
+    versions.push({ result: req.user, role: "user" });
+    if (req.user.meta.outputLanguage !== "en") versions.push({ result: req.english, role: "english" });
+  }
   const body = versions.map((v) => versionPage(req, v, opts, urgentLevel)).join("\n");
   // AC-10.5: bundled fonts for exactly the scripts in this document (fonts.ts).
   return `<!doctype html>

@@ -68,12 +68,37 @@ describe("PDF template", () => {
     expect(html).toContain("default-src 'none'");
   });
 
-  it("has the English clinician page first and the user version second (AC-10.1)", () => {
+  const pages = (html: string) => [...html.matchAll(/<article class="version" lang="([^"]+)"/g)].map((m) => m[1]);
+
+  it("Journey 1: the English clinician page first, then the user version (AC-10.1)", () => {
+    const html = buildPdfHtml(prepareReq(), opts());
+    expect(pages(html)).toEqual(["en", "jam"]);
+    expect(html).toContain(esc(pdfCopy.prepare.clinicianLead));
+  });
+
+  it("Journey 2 is for the person: their version first, then the English, and no clinician QR", () => {
     const html = buildPdfHtml(understandReq(), opts());
-    const pages = [...html.matchAll(/<article class="version" lang="([^"]+)"/g)].map((m) => m[1]);
-    expect(pages).toEqual(["en", "pcm"]);
-    expect(html).toContain("Di doctor don start you on new medicine");
+    expect(pages(html)).toEqual(["pcm", "en"]);
+    expect(html.indexOf("Di doctor don start you on new medicine")).toBeLessThan(html.indexOf(esc(pdfCopy.understand.englishLead)));
+    expect(html).toContain(esc(pdfCopy.understand.userLead));
     expect(html).toContain(pdfCopy.confidenceNotice);
+    expect(html).not.toContain('class="qr"');
+    expect(html).not.toContain("/c/AAAAAAAAAAAAAAAAAAAAAA");
+  });
+
+  it("Journey 2 in Simple English has one page: the English copy would repeat it", () => {
+    const req = understandReq();
+    req.user!.meta.outputLanguage = "en";
+    expect(pages(buildPdfHtml(req, opts()))).toEqual(["en"]);
+    expect(buildPdfHtml(req, opts())).not.toContain(esc(pdfCopy.understand.englishLead));
+  });
+
+  it("Journey 2 with no user version shows the English as the person's page", () => {
+    const req = understandReq();
+    req.user = null;
+    const html = buildPdfHtml(req, opts());
+    expect(pages(html)).toEqual(["en"]);
+    expect(html).toContain(esc(pdfCopy.understand.userLead));
   });
 
   it("is English only when there is no user version", () => {
@@ -156,7 +181,11 @@ describe("pdf_exports row (FR-10, rule 9)", () => {
     });
     expect(pdf.toString()).toBe("%PDF-stub");
     expect(ref).toMatch(REF_PATTERN);
-    expect(rendered).toContain(`/c/${ref}`);
+    expect(rendered).not.toContain(`/c/${ref}`); // Journey 2 carries no clinician QR
+
+    const j1 = await createPdf(prepareReq(), { db, now: new Date("2026-10-21T10:00:00Z"), render: async (html) => ((rendered = html), Buffer.from("%PDF-stub")) });
+    expect(rendered).toContain(`/c/${j1.ref}`);
+    db.prepare("DELETE FROM pdf_exports WHERE ref = ?").run(j1.ref);
 
     const rows = db.prepare("SELECT * FROM pdf_exports").all();
     expect(rows).toEqual([{ ref, ts: Date.parse("2026-10-21T10:00:00Z"), flow: "understand", language_pair: "en+pcm" }]);

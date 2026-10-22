@@ -32,9 +32,10 @@ export const pdfCopy = {
   },
 
   understand: {
-    clinicianTitle: "Letter explanation",
-    clinicianLead: "For the doctor, nurse or pharmacist. A plain-language explanation of a letter or what the patient was told. Each point quotes the source text.",
     userTitle: "What your letter means",
+    userLead: "A plain explanation of your letter, for you to keep. Each point shows the words from your letter it comes from.",
+    englishTitle: "In English",
+    englishLead: "The same explanation in English, to show a family member, a pharmacist or anyone helping you.",
     sections: {
       whatYouWereTold: "What you were told",
       whatItMeans: "What the words mean",
