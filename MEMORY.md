@@ -21,6 +21,7 @@ Running log of what's happened in this repo, for quick orientation at the start 
 - T-15 bilingual PDF + QR + clinician form `/c/[ref]`.
 - T-25 (part): per-device rate limits.
 - T-29: demo assets.
+- T-25: daily session cap (after the gate), cap alerts in the log, `/admin/usage` (localhost only).
 - T-26: anonymous two-question feedback after both results (`/api/feedback`).
 - T-34: bundled Noto fonts for every interface script in the PDF, RTL-safe template (`assets/fonts`).
 - T-20: voice input (`/api/transcribe`, recorder on guided free-text steps). Hidden until a language has `signoff.sttTested: true`; none do yet. To try: set it for `en`/`jam` locally with a key.
@@ -40,7 +41,6 @@ Running log of what's happened in this repo, for quick orientation at the start 
 - T-21 on-behalf-of child thresholds UI. Age band for "someone else" done 2026-10-21.
 - T-22 Tier A review.
 - T-23/T-24 accounts and saved history (cut 3rd).
-- T-25 cap alerts and admin usage page.
 - T-27 playful mode. Tag restyled output so `/api/pdf` can reject it.
 - T-28 security pass.
 - T-35 is effectively done inside the gate (PRD 9.8 second pass).

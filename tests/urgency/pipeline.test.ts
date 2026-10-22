@@ -118,3 +118,31 @@ describe("full pipelines on demo inputs", () => {
     expect(r.user?.ungrounded).toEqual(r.english.ungrounded);
   });
 });
+
+describe("daily session cap (FR-15, AC-15.2/15.4)", () => {
+  afterEach(() => vi.unstubAllEnvs());
+  const fillToday = (n: number) => {
+    for (let i = 0; i < n; i++) {
+      db.prepare("INSERT INTO usage_ledger (ts, endpoint, role, model, est_cost_gbp, request_id) VALUES (?, '/api/summary', 'DRAFT', 'm', 0, ?)").run(Date.now(), `earlier-${i}`);
+    }
+  };
+
+  it("refuses new generation once today's sessions reach the cap", async () => {
+    vi.stubEnv("DAILY_SESSION_CAP", "2");
+    vi.resetModules();
+    const { runSummary } = await import("@/lib/ai/pipeline/journeys");
+    fillToday(2);
+    const openai = fakeOpenAI();
+    await expect(runSummary({ answers: demo("inputs/marcia-prepare.json"), acknowledgedUrgent: false, outputLanguage: null }, ctx, { openai: openai as never, db, capGbp: 50 })).rejects.toMatchObject({ type: "cap_reached" });
+    expect(calledSchemas(openai)).not.toContain("pre_appointment_summary");
+  });
+
+  it("still screens and returns the static urgent message when the cap is reached", async () => {
+    vi.stubEnv("DAILY_SESSION_CAP", "1");
+    vi.resetModules();
+    const { runSummary } = await import("@/lib/ai/pipeline/journeys");
+    fillToday(1);
+    const r = await runSummary({ answers: demo("inputs/red-flag.json"), acknowledgedUrgent: false, outputLanguage: null }, ctx, { openai: fakeOpenAI() as never, db });
+    expect(r).toMatchObject({ kind: "urgent", gate: { level: "emergency" } });
+  });
+});

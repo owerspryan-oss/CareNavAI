@@ -199,6 +199,7 @@ export async function transcribe(
         tokensOut: 0,
         estCostGbp: audioCostGbp(model, Math.min(audio.seconds, audio.maxSeconds)),
         requestId: opts.requestId ?? null,
+        audioSeconds: Math.min(audio.seconds, audio.maxSeconds),
       });
       return out;
     });

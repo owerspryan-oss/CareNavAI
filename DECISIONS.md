@@ -158,3 +158,10 @@ Suggested format per entry:
 **Why:** FR-16 / T-26; the demo closes on this prompt.
 **Affects:** `src/lib/feedback/*`, `src/app/api/feedback/route.ts`, `src/components/result/FeedbackPrompt.*`, both result views, `content/ui/en.json`.
 **Alternatives considered:** auto-send on the second answer (surprising; no chance to change an answer).
+
+## T-25 usage controls and admin page — 2026-10-22
+
+**Decision:** (1) A *session* is one summary or explanation that reached generation (a distinct request id with a DRAFT call on `/api/summary` or `/api/explain`); days are UTC. `DAILY_SESSION_CAP` (default 200) is now enforced right after the gate in both journeys, so an urgent input still gets its static urgent message when the cap is hit (AC-15.2); otherwise the person sees the existing friendly "busy" message. (2) `writeLedger` logs a warning (allow-listed fields: route, requestId, status `cap_alert_50` / `cap_alert_80` / `cap_reached`) when a row takes month-to-date spend across 50%, 80% or 100% of `MONTHLY_CAP_GBP` (AC-15.3). Speech-to-text rows now record `audio_seconds` (AC-15.1). (3) `/admin/usage` shows month spend against the cap with the alert, sessions, average cost per session, spend by model role, and 14 days of sessions, spend and urgent-event counts by level, read only from `usage_ledger` and `safety_events` (AC-25.1/25.2). It is served only when the request's Host is localhost/127.0.0.1/[::1] and is `noindex`: a guard for a local build, not authentication (accounts are T-23). English only.
+**Why:** FR-15, FR-25 / T-25.
+**Affects:** `src/lib/ai/cost`, `src/lib/ai/client.ts`, `src/lib/limits/sessions.ts`, `src/lib/ai/pipeline/journeys.ts`, `src/lib/admin/usage.ts`, `src/app/admin/usage/*`.
+**Alternatives considered:** counting sessions by device cookie (would tie usage to a device id; the ledger already has what's needed).

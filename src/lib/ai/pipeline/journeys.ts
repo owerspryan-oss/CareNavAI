@@ -1,3 +1,4 @@
+import { assertSessionAvailable } from "@/lib/limits/sessions";
 import type { AiDeps } from "@/lib/ai/client";
 import {
   postAppointmentDraftSchema,
@@ -95,6 +96,7 @@ export async function runSummary(req: SummaryRequest, ctx: Ctx, deps?: AiDeps): 
   const gate = await screen(combined(parts), { step: "combined", ageBand: req.answers.forWhom.ageBand, languageHint: null, endpoint: "/api/summary", requestId: ctx.requestId }, deps);
   const decision = gateDecision(gate, req.acknowledgedUrgent);
   if (!decision.proceed) return urgent(publicResult(gate));
+  assertSessionAvailable(deps);
 
   const redacted = redactAnswers(req.answers);
   const { draft, promptVersion } = await generatePreMaster(redacted, { requestId: ctx.requestId }, deps);
@@ -130,6 +132,7 @@ export async function runExplain(req: ExplainRequest, ctx: Ctx, deps?: AiDeps): 
   const gate = await screen([req.confirmedText, ...answers].join("\n\n"), { step: "letter_text", ageBand: null, languageHint: null, endpoint: "/api/explain", requestId: ctx.requestId }, deps);
   const decision = gateDecision(gate, req.acknowledgedUrgent);
   if (!decision.proceed) return urgent(publicResult(gate));
+  assertSessionAvailable(deps);
 
   const source = redact(req.confirmedText);
   const followUps = req.followUps.map((f) => ({ ...f, answer: f.answer === null ? null : redact(f.answer) }));

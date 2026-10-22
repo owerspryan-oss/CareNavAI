@@ -1,5 +1,7 @@
 import { pricingConfig } from "@/lib/config";
+import { env } from "@/lib/config/env";
 import type { DB } from "@/lib/db";
+import { log } from "@/lib/log/logger";
 
 export type Usage = { inputTokens: number; cachedInputTokens?: number; outputTokens: number };
 
@@ -49,11 +51,24 @@ export type LedgerRow = {
   tokensOut: number;
   estCostGbp: number;
   requestId: string | null;
+  /** Speech to text: the recording's length (AC-15.1). */
+  audioSeconds?: number;
 };
 
-export function writeLedger(db: DB, r: LedgerRow): void {
+/** AC-15.3: the shares of the monthly cap at which the server log warns (the admin page shows them too). */
+export const CAP_ALERTS = [0.5, 0.8] as const;
+
+/** Writes one ledger row. Logs a warning when this row takes month-to-date spend across a cap alert. */
+export function writeLedger(db: DB, r: LedgerRow, capGbp: number = env().MONTHLY_CAP_GBP): void {
+  const before = monthToDateGbp(db, r.ts);
   db.prepare(
-    `INSERT INTO usage_ledger (ts, endpoint, role, model, tokens_in, tokens_out, est_cost_gbp, request_id)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-  ).run(r.ts, r.endpoint, r.role, r.model, r.tokensIn, r.tokensOut, r.estCostGbp, r.requestId);
+    `INSERT INTO usage_ledger (ts, endpoint, role, model, tokens_in, tokens_out, audio_seconds, est_cost_gbp, request_id)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+  ).run(r.ts, r.endpoint, r.role, r.model, r.tokensIn, r.tokensOut, r.audioSeconds ?? 0, r.estCostGbp, r.requestId);
+  const after = before + r.estCostGbp;
+  for (const share of [...CAP_ALERTS, 1]) {
+    if (before < share * capGbp && after >= share * capGbp) {
+      log.warn({ route: r.endpoint, requestId: r.requestId ?? undefined, status: share === 1 ? "cap_reached" : `cap_alert_${share * 100}` });
+    }
+  }
 }
