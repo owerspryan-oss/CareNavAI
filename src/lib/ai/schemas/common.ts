@@ -39,3 +39,23 @@ export const resultMetaSchema = z.object({
   urgentAcknowledged: safetyLevelSchema.exclude(["clear"]).nullable(),
 });
 export type ResultMeta = z.infer<typeof resultMetaSchema>;
+
+/**
+ * FR-23 / ADR-010: a playful (restyled) version carries `restyled: true`. It is for the screen only:
+ * AC-23.4 / AC-10.4 say it never reaches the PDF or a saved record, so those schemas reject any body
+ * with the tag anywhere in it (Zod objects would otherwise drop the unknown key silently).
+ */
+export function hasRestyledTag(value: unknown): boolean {
+  if (Array.isArray(value)) return value.some(hasRestyledTag);
+  if (value === null || typeof value !== "object") return false;
+  if ((value as Record<string, unknown>).restyled === true) return true;
+  return Object.values(value).some(hasRestyledTag);
+}
+
+/** Wraps a schema so anything tagged restyled is rejected before it is parsed. */
+export function notRestyled<S extends z.ZodType>(schema: S) {
+  return z
+    .unknown()
+    .refine((v) => !hasRestyledTag(v), { message: "restyled" })
+    .pipe(schema);
+}

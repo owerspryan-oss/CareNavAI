@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { z } from "zod";
-import { postAppointmentResultSchema, preAppointmentResultSchema, type AgeBand } from "@/lib/ai/schemas";
+import { notRestyled, postAppointmentResultSchema, preAppointmentResultSchema, type AgeBand } from "@/lib/ai/schemas";
 import { env } from "@/lib/config/env";
 import { open, seal } from "@/lib/crypto/aead";
 import type { DB } from "@/lib/db";
@@ -20,10 +20,13 @@ export function dataKey(): Buffer | null {
 }
 
 const fallback = z.enum(["parity", "protected_spans", "call_failed"]).nullable();
-export const savedResultSchema = z.discriminatedUnion("flow", [
-  z.object({ flow: z.literal("prepare"), english: preAppointmentResultSchema, user: preAppointmentResultSchema.nullable(), userFallback: fallback }),
-  z.object({ flow: z.literal("understand"), english: postAppointmentResultSchema, user: postAppointmentResultSchema.nullable(), userFallback: fallback }),
-]);
+/** Playful (restyled) text is never part of a saved record (AC-23.4). */
+export const savedResultSchema = notRestyled(
+  z.discriminatedUnion("flow", [
+    z.object({ flow: z.literal("prepare"), english: preAppointmentResultSchema, user: preAppointmentResultSchema.nullable(), userFallback: fallback }),
+    z.object({ flow: z.literal("understand"), english: postAppointmentResultSchema, user: postAppointmentResultSchema.nullable(), userFallback: fallback }),
+  ]),
+);
 export type SavedResult = z.infer<typeof savedResultSchema>;
 
 /** Who it was for, from the fixed list (Journey 1). Journey 2 doesn't ask. */

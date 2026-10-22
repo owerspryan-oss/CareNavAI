@@ -1,6 +1,8 @@
 import { z } from "zod";
-import { ageBandSchema, relationshipSchema } from "./common";
+import { ageBandSchema, languageCodeSchema, notRestyled, relationshipSchema } from "./common";
 import { POST_INTENTS, PRE_INTENTS } from "./followups";
+import { postAppointmentResultSchema } from "./post";
+import { preAppointmentResultSchema } from "./pre";
 
 // Request bodies shared by the UI and the API routes. Length limits are applied by the route
 // (MAX_TEXT_CHARS from env), not here, so they stay configuration.
@@ -71,3 +73,16 @@ export const followUpsRequestSchema = z.discriminatedUnion("journey", [
   z.object({ journey: z.literal("understand"), confirmedText: freeText.min(1), acknowledgedUrgent: z.boolean().default(false) }),
 ]);
 export type FollowUpsRequest = z.infer<typeof followUpsRequestSchema>;
+
+/**
+ * POST /api/restyle (FR-23). The English master of a result the client already holds (so untrusted:
+ * the server re-screens it and checks every protected span), and the dialect to restyle it into.
+ * Never a restyled version as the source.
+ */
+export const restyleRequestSchema = notRestyled(
+  z.discriminatedUnion("flow", [
+    z.object({ flow: z.literal("prepare"), language: languageCodeSchema, english: preAppointmentResultSchema }),
+    z.object({ flow: z.literal("understand"), language: languageCodeSchema, english: postAppointmentResultSchema }),
+  ]),
+);
+export type RestyleRequest = z.infer<typeof restyleRequestSchema>;

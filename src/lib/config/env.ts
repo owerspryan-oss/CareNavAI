@@ -33,6 +33,8 @@ export const envSchema = z.object({
   CHROMIUM_PATH: z.string().min(1).optional(),
   /** Largest /api/pdf request body: the result the client already holds (FR-10). */
   MAX_PDF_REQUEST_KB: z.coerce.number().int().positive().default(256),
+  /** FR-23: most characters of result text sent to the STYLE model in one playful restyle. */
+  MAX_RESTYLE_CHARS: z.coerce.number().int().positive().default(6000),
   LOG_LEVEL: z.enum(["debug", "info", "warn", "error", "silent"]).default("info"),
 });
 

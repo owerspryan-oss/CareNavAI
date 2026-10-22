@@ -390,6 +390,13 @@
       },
       "savedView": {
         "back": "Back to your account"
+      },
+      "playful": {
+        "turnOn": "Try it in {language}, for fun",
+        "turnOff": "Show the plain version",
+        "label": "This is for fun. Your clinician gets the plain English version.",
+        "loading": "Making your fun version…",
+        "failed": "We couldn’t make a fun version this time, so here is the plain one."
       }
     },
     "explain": {

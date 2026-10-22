@@ -14,6 +14,7 @@ export function makeResultCopy(m: UiMessages["result"], language: string) {
     weReadThisAs: (lang: string) => format(m.weReadThisAs, { language: lang }),
     youDidntMention: (sections: string[]) =>
       format(m.youDidntMention, { sections: formatList(sections.map((s) => s.toLocaleLowerCase(language)), language) }),
+    playfulOn: (lang: string) => format(m.playful.turnOn, { language: lang }),
   };
 }
 

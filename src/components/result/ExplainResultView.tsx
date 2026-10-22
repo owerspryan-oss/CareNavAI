@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import type { ExplainResult } from "@/lib/client/understand";
+import { requestRestyle } from "@/lib/client/restyle";
+import { applyPostPlayful, playfulLanguage } from "@/lib/restyle/fields";
 import { urgentMessageFor, type UrgentContent } from "@/lib/safety/urgent-content";
 import {
   detectedLanguageName,
@@ -36,6 +38,7 @@ import { AccountPrompt } from "./AccountPrompt";
 import { FeedbackPrompt } from "./FeedbackPrompt";
 import { SavePdfButton } from "./SavePdfButton";
 import { useResultLayout } from "./useResultLayout";
+import { PlayfulNote, usePlayful } from "./usePlayful";
 
 export interface ExplainResultViewProps {
   result: ExplainResult;
@@ -292,8 +295,16 @@ export function ExplainResultView({
     headingRef.current?.focus({ preventScroll: true });
   }, []);
 
-  const shown = tab === "user" && user ? user : english;
-  const isUser = shown === user;
+  // FR-23: not on a saved explanation, and never on a result with an urgent notice (AC-23.3).
+  // A new result (another output language) starts plain again.
+  const playfulLang = readOnly ? null : playfulLanguage(result, languages);
+  const playful = usePlayful(result, playfulLang !== null, async () => {
+    const fields = playfulLang ? await requestRestyle({ flow: "understand", language: playfulLang, english }) : null;
+    return fields && user ? applyPostPlayful(user, fields) : null;
+  });
+
+  const isUser = tab === "user" && user !== null;
+  const shown = isUser ? (playful.version ?? user) : english;
   const urgentLevel = english.meta.urgentAcknowledged;
   const detected = detectedLanguageName(english.meta.detectedLanguage, languages);
   const dir = versionDir(shown.meta, languages);
@@ -359,7 +370,13 @@ export function ExplainResultView({
               {layout === "deck" ? rc.layout.toList : rc.layout.toDeck}
             </Button>
           )}
+          {isUser && playfulLang && (
+            <Button variant="link" onClick={playful.toggle} aria-pressed={playful.status === "on"} aria-busy={playful.status === "loading" || undefined}>
+              {playful.status === "on" ? rc.playful.turnOff : rc.playfulOn(languages[playfulLang]?.nativeName ?? playfulLang)}
+            </Button>
+          )}
         </div>
+        {isUser && playfulLang && <PlayfulNote status={playful.status} />}
 
         <div className={own.picker} id="explain-picker" hidden={readOnly || !pickerOpen}>
           <label htmlFor="explain-language" className={own.pickerLabel}>
@@ -387,7 +404,7 @@ export function ExplainResultView({
         </div>
 
         <div
-          key={`${tab}-${shown.meta.outputLanguage}`}
+          key={`${tab}-${shown.meta.outputLanguage}-${playful.status === "on"}`}
           id="explain-panel"
           role={user ? "tabpanel" : undefined}
           aria-labelledby={user ? `explain-tab-${tab}` : undefined}

@@ -11,7 +11,7 @@ All people, inputs and the letter are **fictional** (T-29). The demo shows real 
 | 1:35 | Red flag | `inputs/red-flag.json` | The static urgent message appears first, with no AI text. "I understand" continues with the urgent banner (continue_after_ack) | FR-05, 24, 29 |
 | 2:00 | Mr Okafor's letter | `letter/gp-letter.txt` (photographed printout) | Letter photographed, extracted text confirmed, Amlodipine 5mg highlighted | FR-08 |
 | 2:30 | Explanation | live | Pidgin and English versions: what was said, what it means, next steps, and one flagged gap (no course length) | FR-02, 03, A5/A6 |
-| 3:05 | Playful mode (cut first if short of time, A8) | live | A few seconds, opt-in, labelled "for fun", clinician version unchanged | FR-23 |
+| 3:05 | Playful mode (cut first if short of time, A8) | live | On the Pidgin explanation (or Marcia's Patois result), tap "Try it in Naijá, for fun" (or "…Patwa…") in the options row. A few seconds of real STYLE output with "This is for fun. Your clinician gets the plain English version."; tap the doctor's tab to show the English unchanged. Not offered on a result with the urgent banner | FR-23 |
 | 3:20 | Feedback and close | live | Two-question prompt. The ask: approve the closed pilot | FR-16 |
 
 ## Letter design check
@@ -25,6 +25,7 @@ All people, inputs and the letter are **fictional** (T-29). The demo shows real 
 
 - Patois wording in `inputs/marcia-prepare.json` and `inputs/red-flag.json`: native speaker.
 - Every model output in the take: product owner. Pidgin output: native speaker.
+- Playful output (`style.v1.md`): native speaker for Patois and Pidgin, checking it is warm and never mocking. If the take's restyle fails a check, the plain version stays with one line: re-tap, or cut the scene (A8).
 
 ## Loading the inputs (demo mode, FR-26)
 

@@ -2,7 +2,7 @@ import type { PreAppointmentResult, ResultMeta } from "@/lib/ai/schemas";
 
 /* Pure helpers for the result view (FR-01, FR-03, AC-04.4). No React, so they are unit-tested directly. */
 
-export type LanguageNames = Record<string, { englishName: string; nativeName: string; dir: "ltr" | "rtl" }>;
+export type LanguageNames = Record<string, { englishName: string; nativeName: string; dir: "ltr" | "rtl"; playful?: boolean }>;
 
 export type Segment = { text: string; mark: boolean };
 

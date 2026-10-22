@@ -43,6 +43,8 @@ export const languageSchema = z.object({
   script: z.string().length(4),
   dir: z.enum(["ltr", "rtl"]),
   outputMode: z.enum(OUTPUT_MODES),
+  /** FR-23: the playful restyle is offered for this language (English-based dialects we support: PRD §10.5 item 5). */
+  playful: z.boolean().default(false),
   tierATarget: z.boolean(),
   signoff: z.object({
     interfaceReviewed: z.boolean(),
@@ -71,7 +73,14 @@ export function modelFor(role: ModelRole) {
   return modelsConfig.roles[role];
 }
 
-/** Every configured language's names and direction, for result views and pickers (CLAUDE.md rule 10). */
+/** Every configured language's names, direction and playful flag, for result views and pickers (CLAUDE.md rule 10). */
 export function languageNames(): LanguageNames {
-  return Object.fromEntries(languagesConfig.languages.map((l) => [l.code, { englishName: l.englishName, nativeName: l.nativeName, dir: l.dir }]));
+  return Object.fromEntries(
+    languagesConfig.languages.map((l) => [l.code, { englishName: l.englishName, nativeName: l.nativeName, dir: l.dir, playful: l.playful }]),
+  );
+}
+
+/** FR-23: true when the playful restyle may be offered for this language (config, never code). */
+export function isPlayfulLanguage(code: string): boolean {
+  return languagesConfig.languages.some((l) => l.code === code && l.playful);
 }

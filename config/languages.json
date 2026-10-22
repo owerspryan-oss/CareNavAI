@@ -1,5 +1,5 @@
 {
-  "$comment": "Language registry (FR-28, AC-28.1). Tier is DERIVED from signoff flags + content presence (ADR-013) - never add a tier field. tierATarget = v0.3 A4 list. outputMode per v0.3 A5.",
+  "$comment": "Language registry (FR-28, AC-28.1). Tier is DERIVED from signoff flags + content presence (ADR-013) - never add a tier field. tierATarget = v0.3 A4 list. outputMode per v0.3 A5. playful = FR-23 playful restyle offered (English-based dialects the project supports: PRD §10.5 item 5); absent means false.",
   "languages": [
     {
       "code": "en",
@@ -26,6 +26,7 @@
       "script": "Latn",
       "dir": "ltr",
       "outputMode": "simple_english",
+      "playful": true,
       "tierATarget": true,
       "signoff": {
         "interfaceReviewed": false,
@@ -44,6 +45,7 @@
       "script": "Latn",
       "dir": "ltr",
       "outputMode": "dialect_output",
+      "playful": true,
       "tierATarget": true,
       "signoff": {
         "interfaceReviewed": false,

@@ -342,6 +342,41 @@
   font-size: 0.9375rem;
 }
 
+/*
+ * FR-23 playful mode: one quiet line under the options row. Empty (no box) while off, so the live
+ * region is already in place when the label or a note arrives; the "for fun" label is a soft teal pill.
+ */
+.playfulNote {
+  margin-top: calc(-1 * var(--space-3));
+  font-size: var(--text-caption-size);
+  line-height: var(--text-caption-leading);
+  color: var(--color-ink-muted);
+}
+
+.playfulNote:empty {
+  display: block;
+  height: 0;
+  margin: 0;
+  margin-top: calc(-1 * var(--space-5));
+}
+
+.playfulNote[data-status="on"] {
+  justify-self: start;
+  align-self: flex-start;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--color-teal-100);
+  color: var(--color-teal-700);
+  font-weight: 600;
+  animation: materialize var(--spring-default-duration) var(--ease-spring-default) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .playfulNote[data-status="on"] {
+    animation: fade 0.2s linear both;
+  }
+}
+
 /* The person's own words, shown inline under a section only when they ask to see them. */
 .rowBody > .quote {
   margin-top: var(--space-3);

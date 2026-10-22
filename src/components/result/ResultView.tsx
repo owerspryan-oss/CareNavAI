@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import type { PreAppointmentResult } from "@/lib/ai/schemas";
 import type { SummaryResult } from "@/lib/client/prepare";
+import { requestRestyle } from "@/lib/client/restyle";
+import { applyPrePlayful, playfulLanguage } from "@/lib/restyle/fields";
 import { urgentMessageFor, type UrgentContent } from "@/lib/safety/urgent-content";
 import {
   detectedLanguageName,
@@ -22,6 +24,7 @@ import { AccountPrompt } from "./AccountPrompt";
 import { FeedbackPrompt } from "./FeedbackPrompt";
 import { SavePdfButton } from "./SavePdfButton";
 import { useResultLayout } from "./useResultLayout";
+import { PlayfulNote, usePlayful } from "./usePlayful";
 import { SegmentedControl } from "@/components/ui/SegmentedControl";
 import { TopBar } from "@/components/ui/TopBar";
 import {
@@ -216,8 +219,15 @@ export function ResultView({ result, ownWords, urgentContent, languages, onNotQu
     headingRef.current?.focus({ preventScroll: true });
   }, []);
 
-  const shown = tab === "user" && user ? user : english;
-  const isUser = shown === user;
+  // FR-23: not on a saved summary, and never on a result with an urgent notice (AC-23.3).
+  const playfulLang = readOnly ? null : playfulLanguage(result, languages);
+  const playful = usePlayful(result, playfulLang !== null, async () => {
+    const fields = playfulLang ? await requestRestyle({ flow: "prepare", language: playfulLang, english }) : null;
+    return fields && user ? applyPrePlayful(user, fields) : null;
+  });
+
+  const isUser = tab === "user" && user !== null;
+  const shown = isUser ? (playful.version ?? user) : english;
   const urgentLevel = english.meta.urgentAcknowledged;
   const detected = detectedLanguageName(english.meta.detectedLanguage, languages);
   const dir = versionDir(shown.meta, languages);
@@ -282,10 +292,16 @@ export function ResultView({ result, ownWords, urgentContent, languages, onNotQu
               {layout === "deck" ? c.layout.toList : c.layout.toDeck}
             </Button>
           )}
+          {isUser && playfulLang && (
+            <Button variant="link" onClick={playful.toggle} aria-pressed={playful.status === "on"} aria-busy={playful.status === "loading" || undefined}>
+              {playful.status === "on" ? c.playful.turnOff : c.playfulOn(languages[playfulLang]?.nativeName ?? playfulLang)}
+            </Button>
+          )}
         </div>
+        {isUser && playfulLang && <PlayfulNote status={playful.status} />}
 
         <div
-          key={tab}
+          key={`${tab}-${playful.status === "on"}`}
           id="result-panel"
           role={user ? "tabpanel" : undefined}
           aria-labelledby={user ? `result-tab-${tab}` : undefined}

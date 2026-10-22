@@ -30,6 +30,20 @@ const gate = (level, categories = []) => ({
   failedLayers: [],
 });
 
+/** FR-23: a stand-in playful version (the English fields unchanged), as /api/restyle returns it. */
+const restyled = ({ flow, language, english: e }) => ({
+  kind: "restyled",
+  restyled: true,
+  flow,
+  language,
+  promptVersion: "style@v1",
+  fields:
+    flow === "prepare"
+      ? { mainConcern: e.mainConcern, duration: e.duration.text, frequencyAndPattern: e.frequencyAndPattern, changesAndTriggers: e.changesAndTriggers, previousSupport: e.medicationAndSupport.previousSupport, worriesAndBarriers: e.worriesAndBarriers, questionsToAsk: e.questionsToAsk, whatToBring: e.whatToBring, notMentioned: e.notMentioned }
+      : { whatYouWereTold: e.whatYouWereTold.map((x) => x.text), whatItMeans: e.whatItMeans.map((x) => x.plainMeaning), nextSteps: e.nextSteps.map((x) => x.action), unclearOrMissing: e.unclearOrMissing.map((x) => x.item) },
+});
+const PATOIS = JSON.parse(readFileSync(new URL("../config/languages.json", import.meta.url), "utf8")).languages.find((l) => l.code === "jam").nativeName;
+
 /** Fake API: clear unless the text is one of the urgent probes below. */
 async function fakeApi(page) {
   await page.route("**/api/**", async (route) => {
@@ -53,6 +67,8 @@ async function fakeApi(page) {
         return json(LETTER.extract);
       case "/api/explain":
         return json(LETTER.explainDefault);
+      case "/api/restyle":
+        return json(restyled(JSON.parse(body)));
       default:
         return route.continue();
     }
@@ -72,6 +88,8 @@ const EN = readLocale("en");
 let strings = EN;
 const T = (key) => strings[key] ?? EN[key];
 const escape = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+// A string the locale doesn't have yet shows in English, wrapped in Unicode isolates on right-to-left pages.
+const exactOrFallback = (text) => new RegExp(`^[\u2066-\u2069]?${escape(text)}[\u2066-\u2069]?$`);
 const anyOf = (...keys) => new RegExp(`^(${keys.map((k) => escape(T(k))).join("|")})$`);
 
 const results = [];
@@ -158,6 +176,11 @@ async function journeyPrepare() {
   await page.getByRole("tab", { selected: true }).last().waitFor();
   await check(page, "J1 result (clinician tab)");
   await page.getByRole("tab").first().click();
+  // The fixture is a Patois result, so the playful toggle is offered (FR-23).
+  await page.getByRole("button", { name: exactOrFallback(T("result.playful.turnOn").replace("{language}", PATOIS)) }).click();
+  await page.getByText(exactOrFallback(T("result.playful.label"))).waitFor();
+  await check(page, "J1 result (playful on)");
+  await page.getByRole("button", { name: exactOrFallback(T("result.playful.turnOff")) }).click();
   await page.getByRole("button", { name: T("result.layout.toDeck"), exact: true }).click();
   await page.getByRole("button", { name: T("result.layout.toList"), exact: true }).waitFor();
   await check(page, "J1 result (card deck)");
