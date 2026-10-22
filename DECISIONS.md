@@ -151,3 +151,10 @@ Suggested format per entry:
 **Why:** T-34 / AC-10.5 — "fonts are bundled with the app", and a summary's own-language page can be in any interface language.
 **Affects:** `assets/fonts/*`, `src/lib/pdf/fonts.ts`, `src/lib/pdf/template.ts`, `tests/unit/pdf-render.test.ts` (one sample PDF per script, checked with `pdffonts`).
 **Alternatives considered:** system fonts (renders differently on every machine; the Linux container has only DejaVu); bundling Chinese bold too (+7 MB).
+
+## T-26 user feedback — 2026-10-22
+
+**Decision:** After both results, an optional card asks the two AC-16.1 statements ("I feel more confident about my appointment", "I understand what to do next"), each Yes / A bit / No. `POST /api/feedback` (strict schema: any extra field is rejected, so no content can ride along) stores flow, the result's output language, the two answers and a timestamp in `feedback_user`; no user or device id (AC-16.2). Sending needs at least one answer. Compact pill radios rather than ChoiceGroup cards, to keep the end of the result quiet.
+**Why:** FR-16 / T-26; the demo closes on this prompt.
+**Affects:** `src/lib/feedback/*`, `src/app/api/feedback/route.ts`, `src/components/result/FeedbackPrompt.*`, both result views, `content/ui/en.json`.
+**Alternatives considered:** auto-send on the second answer (surprising; no chance to change an answer).

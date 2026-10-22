@@ -358,6 +358,21 @@
         "next": "Next",
         "back": "Back",
         "position": "{n} of {total}"
+      },
+      "feedback": {
+        "title": "Two quick questions",
+        "lead": "Anonymous: we only keep these two answers.",
+        "confident": "I feel more confident about my appointment",
+        "understandNext": "I understand what to do next",
+        "answers": {
+          "yes": "Yes",
+          "a_bit": "A bit",
+          "no": "No"
+        },
+        "send": "Send",
+        "sending": "Sending",
+        "thanks": "Thank you. That helps us make CareNav AI better.",
+        "failed": "Sorry, we couldn't send that. Please try again."
       }
     },
     "explain": {

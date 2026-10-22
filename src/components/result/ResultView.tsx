@@ -18,6 +18,7 @@ import { UrgentBanner } from "@/components/safety/UrgentBanner";
 import { Banner } from "@/components/ui/Banner";
 import { Button } from "@/components/ui/Button";
 import { CardDeck } from "@/components/ui/CardDeck";
+import { FeedbackPrompt } from "./FeedbackPrompt";
 import { SavePdfButton } from "./SavePdfButton";
 import { useResultLayout } from "./useResultLayout";
 import { SegmentedControl } from "@/components/ui/SegmentedControl";
@@ -350,6 +351,8 @@ export function ResultView({ result, ownWords, urgentContent, languages, onNotQu
             </div>
           )}
         </section>
+
+        <FeedbackPrompt flow="prepare" language={(user ?? english).meta.outputLanguage} />
 
         <div className={styles.moreInfo} dir={dir} lang={lang}>
           <details className={styles.moreItem}>
