@@ -1,23 +1,15 @@
 import type { Metadata } from "next";
 import { connection } from "next/server";
 import { PrepareFlow } from "@/components/prepare/PrepareFlow";
-import { languagesConfig } from "@/lib/config";
+import { languageNames, languagesConfig } from "@/lib/config";
 import { env } from "@/lib/config/env";
 import { getUrgentContent } from "@/lib/content";
 import { demoPreparePresets } from "@/lib/demo/presets";
 import { requestUiLocale } from "@/lib/i18n/request";
-import type { LanguageNames } from "@/lib/result/view";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { messages } = await requestUiLocale();
   return { title: `${messages.common.meta.prepareTitle} · CareNav AI` };
-}
-
-/** Language names and direction for the result view (config/languages.json, CLAUDE.md rule 10). */
-function languageNames(): LanguageNames {
-  return Object.fromEntries(
-    languagesConfig.languages.map((l) => [l.code, { englishName: l.englishName, nativeName: l.nativeName, dir: l.dir }]),
-  );
 }
 
 /** AC-07.5: voice input only where speech-to-text has been tested and not switched off (config/languages.json). */

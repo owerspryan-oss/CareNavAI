@@ -54,6 +54,11 @@ export interface ExplainResultViewProps {
   /** The last language request failed; the previous result is still shown. */
   updateFailed: boolean;
   onBack: () => void;
+  /**
+   * A saved explanation reopened from the account page (FR-14): the back chevron returns there, and the
+   * language picker, feedback and account cards are left out.
+   */
+  readOnly?: boolean;
 }
 
 type Tab = "user" | "english";
@@ -264,6 +269,7 @@ export function ExplainResultView({
   updating,
   updateFailed,
   onBack,
+  readOnly = false,
 }: ExplainResultViewProps) {
   const c = useExplainCopy();
   const rc = useResultCopy();
@@ -297,7 +303,7 @@ export function ExplainResultView({
 
   return (
     <div className={`${styles.page} ${photoUrl ? own.withPhoto : ""}`}>
-      <TopBar backLabel={c.actions.backToWords} onBack={onBack} />
+      <TopBar backLabel={readOnly ? rc.savedView.back : c.actions.backToWords} onBack={onBack} />
       <main className={`${styles.main} ${own.main}`}>
         {urgentLevel && (
           <UrgentBanner
@@ -343,9 +349,11 @@ export function ExplainResultView({
           <Button variant="link" onClick={() => setShowSources(!showSources)} aria-pressed={showSources}>
             {showSources ? c.hideSources : c.showSources}
           </Button>
-          <Button variant="link" onClick={() => setPickerOpen(!pickerOpen)} aria-expanded={pickerOpen} aria-controls="explain-picker">
-            {c.languagePicker.toggle}
-          </Button>
+          {!readOnly && (
+            <Button variant="link" onClick={() => setPickerOpen(!pickerOpen)} aria-expanded={pickerOpen} aria-controls="explain-picker">
+              {c.languagePicker.toggle}
+            </Button>
+          )}
           {isUser && (
             <Button variant="link" onClick={() => setLayout(layout === "deck" ? "list" : "deck")}>
               {layout === "deck" ? rc.layout.toList : rc.layout.toDeck}
@@ -353,7 +361,7 @@ export function ExplainResultView({
           )}
         </div>
 
-        <div className={own.picker} id="explain-picker" hidden={!pickerOpen}>
+        <div className={own.picker} id="explain-picker" hidden={readOnly || !pickerOpen}>
           <label htmlFor="explain-language" className={own.pickerLabel}>
             {c.languagePicker.label}
           </label>
@@ -428,8 +436,12 @@ export function ExplainResultView({
           </section>
         )}
 
-        <FeedbackPrompt flow="understand" language={(user ?? english).meta.outputLanguage} />
-        <AccountPrompt />
+        {!readOnly && (
+          <>
+            <FeedbackPrompt flow="understand" language={(user ?? english).meta.outputLanguage} />
+            <AccountPrompt saved={result.saved} />
+          </>
+        )}
 
         <div className={styles.moreInfo} dir={dir} lang={lang}>
           <details className={styles.moreItem}>

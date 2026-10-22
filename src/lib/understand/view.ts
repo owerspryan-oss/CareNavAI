@@ -99,3 +99,17 @@ export function letterTerms(text: string, candidates: readonly { name: string; d
     .filter((t): t is string => !!t && lower.includes(t.toLocaleLowerCase()));
   return [...new Set([...fromPhoto, ...doseAndDateTerms(text)])];
 }
+
+/**
+ * The grounding source for a saved explanation reopened from the account page (FR-14). Only the result
+ * is saved, never the letter, and the server grounded every item before saving; so the source for the
+ * re-check is the English master's own quotes and terms. Items already ungrounded stay in `notFound`.
+ */
+export function savedLetterSource(english: Version): string {
+  return [
+    ...english.whatYouWereTold.map((i) => i.sourceQuote),
+    ...english.whatItMeans.map((i) => i.clinicianWords),
+    ...english.nextSteps.map((i) => i.sourceQuote),
+    ...english.medicines.flatMap((m) => [m.sourceQuote, m.name]),
+  ].join("\n\n");
+}

@@ -16,6 +16,7 @@ Checked on 2026-10-22 against the local build on `build/layer-1`. "Test" names t
 | Guest statelessness | Done | Guests write only counts: ledger, rate limits, safety-event levels, anonymous feedback answers, PDF refs. Audio and images stay in memory | `feedback-user.test.ts`, route tests |
 | Dependency audit | Done | `npm audit --omit=dev`: 0 vulnerabilities (2026-10-22). Repeat before the pilot | — |
 | Accounts (T-23) | Done | argon2id passwords (min 10), generic errors; session id and magic-link token 32 random bytes, sha256 stored only; cookie `cn_session` HttpOnly, SameSite=Lax, Secure off localhost; 24 h sliding; auth routes 403 unless HTTPS or localhost; login and magic-link requests limited per email (5 / 15 min) and per device; invite codes hash-only; magic links only in memory on the localhost `/dev/inbox` | `auth.test.ts` |
+| Saved summaries (T-24) | Done | AES-256-GCM with `DATA_KEY`, unique IV, `key_version`, row-bound associated data; saving off (never plain) without a key; owner-only reads and deletes; one-action account delete; export | `summaries.test.ts` (incl. raw database file holds no summary text) |
 | Admin page | Local-only guard | `/admin/usage` answers only requests addressed to localhost; aggregates only. **Not authentication**: before any shared deployment it needs real sign-in (T-23) | `usage-controls.test.ts` |
 
 ## Verified by hand (2026-10-22)

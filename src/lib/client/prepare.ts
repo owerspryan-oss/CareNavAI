@@ -7,6 +7,7 @@ import {
   type GateResult,
   type PrepareAnswers,
 } from "@/lib/ai/schemas";
+import { SAVE_STATUSES, type SaveStatus } from "@/lib/summaries/status";
 import { isUrgent, post, urgentGate, type CallError } from "./call";
 
 export { urgentGate, type CallError };
@@ -18,7 +19,8 @@ export { urgentGate, type CallError };
  */
 
 export type FollowUpQuestion = { intent: (typeof PRE_INTENTS)[number]; question: string };
-export type SummaryResult = Extract<SummaryResponse, { kind: "result" }>;
+/** `saved` is set only for a signed-in person (FR-14). */
+export type SummaryResult = Extract<SummaryResponse, { kind: "result" }> & { saved?: SaveStatus };
 
 export type FollowUpsOutcome =
   | { kind: "followups"; questions: FollowUpQuestion[] }
@@ -41,6 +43,7 @@ const summaryBodySchema = z.object({
   english: preAppointmentResultSchema,
   user: preAppointmentResultSchema.nullable(),
   userFallback: z.enum(["parity", "protected_spans", "call_failed"]).nullable(),
+  saved: z.enum(SAVE_STATUSES).optional(),
 });
 
 export async function fetchFollowUps(answers: PrepareAnswers, acknowledgedUrgent: boolean): Promise<FollowUpsOutcome> {

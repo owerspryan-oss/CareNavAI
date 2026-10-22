@@ -100,3 +100,8 @@
   text-decoration: underline;
   text-underline-offset: 0.2em;
 }
+
+.saved {
+  gap: var(--space-1);
+  color: var(--color-ink-muted);
+}

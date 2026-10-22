@@ -63,6 +63,11 @@ export interface ResultViewProps {
   languages: LanguageNames;
   /** "Not quite" and the back chevron: return to review with every answer kept (AC-03.5). */
   onNotQuite: () => void;
+  /**
+   * A saved summary reopened from the account page (FR-14): the back chevron returns there, and the
+   * match question, own words, feedback and account cards are left out.
+   */
+  readOnly?: boolean;
 }
 
 type Tab = "user" | "english";
@@ -196,7 +201,7 @@ function summaryRows(v: PreAppointmentResult, own: OwnWords["sections"] | null, 
  * Journey 1 result (FR-01, FR-03): user version and English master side by side via a segmented
  * control, the user's own words beside each section, and the static routes and disclaimer.
  */
-export function ResultView({ result, ownWords, urgentContent, languages, onNotQuite }: ResultViewProps) {
+export function ResultView({ result, ownWords, urgentContent, languages, onNotQuite, readOnly = false }: ResultViewProps) {
   const c = useResultCopy();
   const ui = useUiLang();
   const { english, user } = result;
@@ -223,7 +228,7 @@ export function ResultView({ result, ownWords, urgentContent, languages, onNotQu
 
   return (
     <div className={styles.page}>
-      <TopBar backLabel={c.actions.backToAnswers} onBack={onNotQuite} />
+      <TopBar backLabel={readOnly ? c.savedView.back : c.actions.backToAnswers} onBack={onNotQuite} />
       <main className={styles.main}>
         {urgentLevel && (
           <UrgentBanner
@@ -267,9 +272,11 @@ export function ResultView({ result, ownWords, urgentContent, languages, onNotQu
 
         {/* One quiet row of view options instead of controls scattered through the page. */}
         <div className={styles.viewOptions}>
-          <Button variant="link" onClick={() => setShowOwn(!showOwn)} aria-pressed={showOwn}>
-            {showOwn ? c.hideOwnWords : c.showOwnWords}
-          </Button>
+          {!readOnly && (
+            <Button variant="link" onClick={() => setShowOwn(!showOwn)} aria-pressed={showOwn}>
+              {showOwn ? c.hideOwnWords : c.showOwnWords}
+            </Button>
+          )}
           {isUser && (
             <Button variant="link" onClick={() => setLayout(layout === "deck" ? "list" : "deck")}>
               {layout === "deck" ? c.layout.toList : c.layout.toDeck}
@@ -333,28 +340,32 @@ export function ResultView({ result, ownWords, urgentContent, languages, onNotQu
           </section>
         </div>
 
-        <section className={styles.matchCard} aria-labelledby="result-match">
-          <h2 id="result-match" className={styles.matchQuestion}>
-            {c.match.question}
-          </h2>
-          {matched ? (
-            <p role="status" className={styles.matchThanks}>
-              {c.match.thanks}
-            </p>
-          ) : (
-            <div className={styles.matchActions}>
-              <Button variant="tertiary" onClick={onNotQuite}>
-                {c.match.notQuite}
-              </Button>
-              <Button variant="secondary" onClick={() => setMatched(true)}>
-                {c.match.yes}
-              </Button>
-            </div>
-          )}
-        </section>
+        {!readOnly && (
+          <>
+            <section className={styles.matchCard} aria-labelledby="result-match">
+              <h2 id="result-match" className={styles.matchQuestion}>
+                {c.match.question}
+              </h2>
+              {matched ? (
+                <p role="status" className={styles.matchThanks}>
+                  {c.match.thanks}
+                </p>
+              ) : (
+                <div className={styles.matchActions}>
+                  <Button variant="tertiary" onClick={onNotQuite}>
+                    {c.match.notQuite}
+                  </Button>
+                  <Button variant="secondary" onClick={() => setMatched(true)}>
+                    {c.match.yes}
+                  </Button>
+                </div>
+              )}
+            </section>
 
-        <FeedbackPrompt flow="prepare" language={(user ?? english).meta.outputLanguage} />
-        <AccountPrompt />
+            <FeedbackPrompt flow="prepare" language={(user ?? english).meta.outputLanguage} />
+            <AccountPrompt saved={result.saved} />
+          </>
+        )}
 
         <div className={styles.moreInfo} dir={dir} lang={lang}>
           <details className={styles.moreItem}>

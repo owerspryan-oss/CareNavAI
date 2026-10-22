@@ -2,6 +2,7 @@ import { z } from "zod";
 import languagesJson from "@config/languages.json";
 import modelsJson from "@config/models.json";
 import pricingJson from "@config/pricing.json";
+import type { LanguageNames } from "@/lib/result/view";
 
 // Models, prices and languages are configuration, never hard-coded (CLAUDE.md rule 10).
 
@@ -68,4 +69,9 @@ export const languagesConfig = languagesConfigSchema.parse(languagesJson);
 
 export function modelFor(role: ModelRole) {
   return modelsConfig.roles[role];
+}
+
+/** Every configured language's names and direction, for result views and pickers (CLAUDE.md rule 10). */
+export function languageNames(): LanguageNames {
+  return Object.fromEntries(languagesConfig.languages.map((l) => [l.code, { englishName: l.englishName, nativeName: l.nativeName, dir: l.dir }]));
 }

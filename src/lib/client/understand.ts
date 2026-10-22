@@ -7,6 +7,7 @@ import {
   type ExplainRequest,
   type GateResult,
 } from "@/lib/ai/schemas";
+import { SAVE_STATUSES, type SaveStatus } from "@/lib/summaries/status";
 import { isUrgent, post, urgentGate, type CallError } from "./call";
 
 /*
@@ -14,7 +15,8 @@ import { isUrgent, post, urgentGate, type CallError } from "./call";
  * is validated before use; an `urgent` response routes up even when its gate is malformed.
  */
 
-export type ExplainResult = Extract<ExplainResponse, { kind: "result" }>;
+/** `saved` is set only for a signed-in person (FR-14). */
+export type ExplainResult = Extract<ExplainResponse, { kind: "result" }> & { saved?: SaveStatus };
 export type PostFollowUpQuestion = { intent: (typeof POST_INTENTS)[number]; question: string };
 export type PostAnsweredFollowUp = ExplainRequest["followUps"][number];
 export type MedicineCandidate = { name: string; dose: string | null };
@@ -58,6 +60,7 @@ const explainBodySchema = z.object({
   english: postAppointmentResultSchema,
   user: postAppointmentResultSchema.nullable(),
   userFallback: z.enum(["parity", "protected_spans", "call_failed"]).nullable(),
+  saved: z.enum(SAVE_STATUSES).optional(),
 });
 
 export function extractProblemFor(status: number): ExtractProblem {

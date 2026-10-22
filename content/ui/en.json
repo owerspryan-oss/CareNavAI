@@ -382,7 +382,14 @@
         "title": "Keep your summaries",
         "lead": "Create a free account and we’ll save your next summaries for you. This one isn’t saved, so save it as a PDF if you want to keep it.",
         "link": "Create an account or sign in",
-        "newTab": "(opens in a new tab)"
+        "newTab": "(opens in a new tab)",
+        "saved": "Saved to your account.",
+        "savedLink": "See your saved summaries",
+        "saveFailed": "We couldn’t save this one to your account. You can still save it as a PDF.",
+        "saveOff": "Saving isn’t set up on this computer yet, so this one isn’t saved. You can still save it as a PDF."
+      },
+      "savedView": {
+        "back": "Back to your account"
       }
     },
     "explain": {
@@ -482,6 +489,40 @@
         "inviteNeeded": "This creates a new account. Please enter your invite code.",
         "invalid": "This link has expired or has already been used. You can ask for a new one.",
         "newLink": "Get a new link"
+      },
+      "saved": {
+        "heading": "Saved summaries",
+        "empty": "Nothing saved yet. While you’re signed in, each new summary is saved here.",
+        "off": "Saving isn’t set up on this computer yet, so new summaries aren’t saved.",
+        "loading": "Loading your saved summaries",
+        "loadFailed": "Sorry, we couldn’t load your saved summaries. Please try again.",
+        "retry": "Try again",
+        "forWhom": "For: {who}",
+        "language": "Language: {language}",
+        "open": "Open",
+        "pdf": "Download PDF",
+        "pdfMaking": "Making your PDF",
+        "pdfFailed": "Sorry, we couldn’t make the PDF. Please try again.",
+        "delete": "Delete",
+        "deleteConfirm": "Delete this summary? This can’t be undone.",
+        "deleteYes": "Yes, delete it",
+        "cancel": "Cancel",
+        "deleting": "Deleting",
+        "deleteFailed": "Sorry, we couldn’t delete that. Please try again.",
+        "unreadable": "This summary can’t be opened on this computer."
+      },
+      "data": {
+        "heading": "Your data",
+        "lead": "Download a copy of everything saved in your account, or delete it all.",
+        "export": "Download my data",
+        "exporting": "Preparing your file",
+        "exportFailed": "Sorry, we couldn’t make your file. Please try again.",
+        "deleteAccount": "Delete my account",
+        "deleteConfirm": "This deletes your account and every saved summary straight away. It can’t be undone.",
+        "deleteYes": "Yes, delete my account",
+        "deleting": "Deleting",
+        "deleteFailed": "Sorry, we couldn’t delete your account. Please try again.",
+        "deleted": "Your account and everything in it have been deleted."
       }
     }
   }
