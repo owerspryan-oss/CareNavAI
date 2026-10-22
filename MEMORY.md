@@ -4,6 +4,19 @@ Running log of what's happened in this repo, for quick orientation at the start 
 
 ---
 
+## 2026-10-22 — Session 3 progress (branch `build/layer-1`)
+
+**Done:** the 24 voice and feedback strings drafted in all 43 locales (`d3bc41a`, still `reviewed: false`). T-23 accounts (`c4fe5a4`) and T-24 encrypted saved summaries (`be69572`); details and new decisions in DECISIONS.md. 734 unit tests, urgency 70/70, a11y 24/24, build clean.
+
+**Next:** T-27 playful mode (cut 1st under v0.3 A8). Translate the new `account.*`, `result.account.*`, `result.savedView.*` and `common.landing.{signIn,signedIn,account}` strings once the product owner approves the English. T-22 Tier A review (native speakers plus a live key). T-30 rehearsal.
+
+**Waiting on the product owner (in addition to the list below):**
+- Account and saved-summary copy in `content/ui/en.json`.
+- Whether regenerating a result, or changing the output language, should save a new entry (current behaviour) or replace the old one.
+- Translator doubts on the voice and feedback strings: all of Twi; gendered "confident" in it/es/fr/ro/lt/sq/bg; "anonymous" rendered as "no name" in several languages; the voice privacy line in ar, ps, te, ml, pl, es, ru and uk.
+
+**Gotcha:** set `DATA_KEY` in `.env.local` or saving stays off. Create invite codes with `npm run invite:create`.
+
 ## 2026-10-22 — Session handoff (end of build session 2, branch `build/layer-1`)
 
 **State:** all work committed and pushed to `origin/build/layer-1`; no PR, nothing merged to `master`. 699 unit tests pass, `npm run test:urgency` 70/70 (offline), `npm run test:a11y` 24/24 screens (48 with `A11Y_LANGS=en,ur`), production build clean with no CSP violations.
