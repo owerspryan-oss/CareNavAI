@@ -115,6 +115,9 @@ export function UnderstandFlow({
   const libraryInput = useRef<HTMLInputElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const firstRender = useRef(true);
+  /** Explanations already made for an identical request, and the last one shown. */
+  const explained = useRef(new Map<string, ExplainResult>());
+  const lastExplained = useRef<{ request: Parameters<typeof fetchExplain>[0]; result: ExplainResult } | null>(null);
 
   // AC-08.6: the photo exists only as this object URL. Revoke it when it's replaced or the page is left.
   useEffect(() => {
@@ -145,6 +148,8 @@ export function UnderstandFlow({
     setAcknowledged(false);
     setOutputLanguage(null);
     setUpdateFailed(false);
+    explained.current.clear();
+    lastExplained.current = null;
   }
 
   function chooseTyping() {
@@ -199,6 +204,15 @@ export function UnderstandFlow({
       return;
     }
     if (text.length > maxLetterChars) return;
+    // Back from the result without changing the words: show that result again, with no new calls.
+    const last = lastExplained.current;
+    if (last && last.request.confirmedText === text && last.request.source === source) {
+      setAcknowledged(last.request.acknowledgedUrgent);
+      setOutputLanguage(last.request.outputLanguage);
+      setUpdateFailed(false);
+      setStage({ name: "result", result: last.result, followUps: last.request.followUps });
+      return;
+    }
     setBusy(true);
     const result = await screenText(text, "letter_text", null);
     setConfirmed(text);
@@ -243,8 +257,14 @@ export function UnderstandFlow({
 
   /** The explanation call. The server re-screens the letter and answers first. */
   async function requestExplain(letter: string, followUps: PostAnsweredFollowUp[], ack: boolean, lang: string | null) {
+    const request = { confirmedText: letter, source, followUps, acknowledgedUrgent: ack, outputLanguage: lang };
+    const cached = explained.current.get(JSON.stringify(request));
+    if (cached) {
+      setStage({ name: "result", result: cached, followUps });
+      return;
+    }
     setStage({ name: "loading" });
-    const out = await fetchExplain({ confirmedText: letter, source, followUps, acknowledgedUrgent: ack, outputLanguage: lang });
+    const out = await fetchExplainOnce(request);
     if (out.kind === "urgent") {
       setGate({ result: routeUp(out.gate), letter: true, resume: { to: "explain", followUps } });
     } else if (out.kind === "error") {
@@ -252,6 +272,19 @@ export function UnderstandFlow({
     } else {
       setStage({ name: "result", result: out, followUps });
     }
+  }
+
+  /** fetchExplain, reusing an earlier result for the identical request (token cost: going back and forth, switching language). */
+  async function fetchExplainOnce(request: Parameters<typeof fetchExplain>[0]) {
+    const key = JSON.stringify(request);
+    const cached = explained.current.get(key);
+    if (cached) return cached;
+    const out = await fetchExplain(request);
+    if (out.kind === "result") {
+      explained.current.set(key, out);
+      lastExplained.current = { request, result: out };
+    }
+    return out;
   }
 
   /** "Show me this in": re-request in another language, keeping the current result on screen meanwhile. */
@@ -262,7 +295,7 @@ export function UnderstandFlow({
     setOutputLanguage(lang);
     setUpdating(true);
     setUpdateFailed(false);
-    const out = await fetchExplain({ confirmedText: confirmed, source, followUps, acknowledgedUrgent: acknowledged, outputLanguage: lang });
+    const out = await fetchExplainOnce({ confirmedText: confirmed, source, followUps, acknowledgedUrgent: acknowledged, outputLanguage: lang });
     setUpdating(false);
     if (out.kind === "result") {
       setStage({ name: "result", result: out, followUps });
@@ -370,7 +403,7 @@ export function UnderstandFlow({
     return (
       <div className={p.page}>
         {demoItems.length > 0 && <DemoMenu items={demoItems} />}
-        <TopBar backLabel={c.actions.backToStart} onBack={() => router.push("/")} />
+        <TopBar backLabel={c.actions.backToStart} onBack={() => router.push("/")} confirmHome={false} />
         <main className={`${p.main} ${styles.step}`} key="choose">
           <div className={p.intro}>
             <h1 ref={headingRef} tabIndex={-1} className={p.title}>

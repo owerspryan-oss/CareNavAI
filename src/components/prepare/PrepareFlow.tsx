@@ -124,6 +124,8 @@ export function PrepareFlow({ maxChars, urgentContent, languages, voiceMaxSecond
   /** Answered follow-ups, shown and editable on review. Asked once, after the last guided step. */
   const [followUps, setFollowUps] = useState<AnsweredFollowUp[]>([]);
   const [followUpsAsked, setFollowUpsAsked] = useState(false);
+  /** The last summary and the exact request it came from: unchanged answers reuse it instead of a new call. */
+  const lastSummary = useRef<{ key: string; result: SummaryResult } | null>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const transitionToken = useRef(0);
   const firstRender = useRef(true);
@@ -275,13 +277,20 @@ export function PrepareFlow({ maxChars, urgentContent, languages, voiceMaxSecond
 
   /** Steps 8-9: the summary call (the server re-screens the combined input first). */
   async function requestSummary(followUps: AnsweredFollowUp[], acknowledged: boolean) {
+    const answers = toPrepareAnswers(state, followUps);
+    const key = JSON.stringify({ answers, acknowledged });
+    if (lastSummary.current?.key === key) {
+      setStage({ name: "result", result: lastSummary.current.result, followUps });
+      return;
+    }
     setStage({ name: "loading" });
-    const out = await fetchSummary(toPrepareAnswers(state, followUps), acknowledged);
+    const out = await fetchSummary(answers, acknowledged);
     if (out.kind === "urgent") {
       setGate({ result: out.gate, level: urgentLevel(out.gate), screened: {}, resume: { to: "summary", followUps } });
     } else if (out.kind === "error") {
       setStage({ name: "error", error: out.error, followUps });
     } else {
+      lastSummary.current = { key, result: out };
       setStage({ name: "result", result: out, followUps });
     }
   }
@@ -323,6 +332,7 @@ export function PrepareFlow({ maxChars, urgentContent, languages, voiceMaxSecond
     setStage({ name: "steps" });
     setFollowUps([]);
     setFollowUpsAsked(false);
+    lastSummary.current = null;
   }
 
   const demoItems = (demo ?? []).map((preset) => ({

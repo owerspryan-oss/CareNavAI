@@ -314,7 +314,7 @@ export function ExplainResultView({
 
   return (
     <div className={`${styles.page} ${photoUrl ? own.withPhoto : ""}`}>
-      <TopBar backLabel={readOnly ? rc.savedView.back : c.actions.backToWords} onBack={onBack} />
+      <TopBar backLabel={readOnly ? rc.savedView.back : c.actions.backToWords} onBack={onBack} confirmHome={!readOnly} />
       <main className={`${styles.main} ${own.main}`}>
         {urgentLevel && (
           <UrgentBanner

@@ -16,6 +16,10 @@
         "signedIn": "Signed in. Your summaries are saved.",
         "account": "Your account"
       },
+      "topBar": {
+        "home": "CareNav AI: go to the start",
+        "leaveConfirm": "Go back to the start? Your answers on this page will be cleared."
+      },
       "language": {
         "label": "Language",
         "unreviewedNotice": "This page was translated automatically and has not been checked by a native speaker yet."

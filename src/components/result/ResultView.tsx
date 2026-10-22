@@ -238,7 +238,7 @@ export function ResultView({ result, ownWords, urgentContent, languages, onNotQu
 
   return (
     <div className={styles.page}>
-      <TopBar backLabel={readOnly ? c.savedView.back : c.actions.backToAnswers} onBack={onNotQuite} />
+      <TopBar backLabel={readOnly ? c.savedView.back : c.actions.backToAnswers} onBack={onNotQuite} confirmHome={!readOnly} />
       <main className={styles.main}>
         {urgentLevel && (
           <UrgentBanner

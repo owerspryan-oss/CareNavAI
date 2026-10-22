@@ -40,7 +40,7 @@ export function VerifyLink({ token }: { token: string }) {
 
   return (
     <div className={styles.page}>
-      <TopBar backLabel={c.back} onBack={() => router.push("/")} />
+      <TopBar backLabel={c.back} onBack={() => router.push("/")} confirmHome={false} />
       <main className={styles.main}>
         <div className={styles.intro}>
           <h1 className={styles.title}>{c.verify.title}</h1>

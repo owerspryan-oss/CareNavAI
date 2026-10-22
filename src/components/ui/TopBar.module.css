@@ -50,6 +50,14 @@
   text-align: center;
   font-weight: 600;
   letter-spacing: -0.005em;
+  color: inherit;
+  text-decoration: none;
+  padding: var(--space-1);
+  border-radius: var(--radius-pill);
+  -webkit-tap-highlight-color: transparent;
+}
+.wordmark:active {
+  background: var(--color-surface-muted);
 }
 
 @media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
