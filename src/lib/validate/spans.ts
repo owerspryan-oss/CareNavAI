@@ -8,7 +8,7 @@ import { numberTokens } from "./numbers";
 export function missingProtectedSpans(master: string, derived: string, medicineNames: string[]): string[] {
   const missing: string[] = [];
   const count = (text: string, s: string) => text.split(s).length - 1;
-  for (const name of new Set(medicineNames.filter(Boolean))) {
+  for (const name of new Set(medicineNames.filter((n) => n && isMedicineName(n)))) {
     const short = count(master, name) - count(derived, name);
     for (let i = 0; i < short; i++) missing.push(name);
   }
@@ -19,6 +19,18 @@ export function missingProtectedSpans(master: string, derived: string, medicineN
     else pool.splice(i, 1);
   }
   return missing;
+}
+
+/** Everyday words that make a "medicine name" a description ("cream from the pharmacy"), which should be translated. */
+const DESCRIPTION_WORDS = /\b(the|a|an|my|from|that|which|some|gave|given|got|for)\b/i;
+
+/**
+ * A real medicine name ("Amlodipine", "co-codamol", "Milk of Magnesia") is kept letter for letter.
+ * A description of one the person couldn't name is translated like any other text; its numbers
+ * and doses are still protected by the number check.
+ */
+export function isMedicineName(name: string): boolean {
+  return !DESCRIPTION_WORDS.test(name);
 }
 
 /**

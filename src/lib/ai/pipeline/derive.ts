@@ -6,7 +6,7 @@ import { allStrings } from "@/lib/validate/forbidden";
 import { parityMismatch } from "@/lib/validate/parity";
 import { missingProtectedSpansByField } from "@/lib/validate/spans";
 
-export const DERIVE_PROMPT = { name: "derive", version: "v1" } as const;
+export const DERIVE_PROMPT = { name: "derive", version: "v2" } as const;
 
 export type OutputMode = Language["outputMode"];
 export type Target = { code: string; name: string; script: string; mode: OutputMode };

@@ -15,9 +15,10 @@
     },
     "TRANSLATE": {
       "model": "gpt-5.5",
+      "reasoningEffort": "none",
       "timeoutMs": 30000,
       "maxOutputTokens": 4000,
-      "selection": { "testedOn": null, "result": "untested placeholder" }
+      "selection": { "testedOn": "2026-10-25", "result": "gpt-5.5, reasoning none, prompt derive v2: 24/24 pass parity and protected spans, faithfulness 5/5 on all 24 (gpt-5.5 high-effort review, ht so ur zh-Hans pl pcm x J1/J2 fixtures), median 5.8 s vs 8.9 s at default effort with derive v1" }
     },
     "STYLE": {
       "model": "gpt-5.4-mini",

@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { allStrings, forbiddenHits } from "@/lib/validate/forbidden";
 import { numberTokens, numbersAppearIn } from "@/lib/validate/numbers";
 import { parityMismatch } from "@/lib/validate/parity";
-import { missingProtectedSpans, missingProtectedSpansByField, protectedSpansIntact } from "@/lib/validate/spans";
+import { isMedicineName, missingProtectedSpans, missingProtectedSpansByField, protectedSpansIntact } from "@/lib/validate/spans";
 
 describe("number check", () => {
   it("extracts doses, decimals and dates", () => {
@@ -37,6 +37,14 @@ describe("protected spans (CLAUDE.md rule 6)", () => {
   });
   it("counts repeated numbers", () => {
     expect(protectedSpansIntact("1 tablet, then 1 more", "1 tablet, then more", [])).toBe(false);
+  });
+  it("lets a description of an unnamed medicine be translated, but still protects its numbers", () => {
+    expect(isMedicineName("cream from the pharmacy")).toBe(false);
+    expect(isMedicineName("the tablets my GP gave me")).toBe(false);
+    for (const n of ["Amlodipine", "paracetamol", "co-codamol", "Milk of Magnesia", "insulin glargine", "Gaviscon Advance"]) expect(isMedicineName(n), n).toBe(true);
+    const master = "I use the cream from the pharmacy 2 times a day.";
+    expect(protectedSpansIntact(master, "我每天用2次药店买的药膏。", ["cream from the pharmacy"])).toBe(true);
+    expect(protectedSpansIntact(master, "我每天用3次药店买的药膏。", ["cream from the pharmacy"])).toBe(false);
   });
 });
 

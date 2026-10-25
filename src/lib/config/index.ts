@@ -13,6 +13,8 @@ const roleConfigSchema = z.object({
   model: z.string().min(1),
   timeoutMs: z.number().int().positive(),
   maxOutputTokens: z.number().int().nonnegative(),
+  /** Reasoning models only: how much the model thinks before answering. Unset = the model's default. */
+  reasoningEffort: z.enum(["none", "low", "medium", "high"]).optional(),
   selection: z.object({ testedOn: z.string().nullable(), result: z.string() }),
 });
 

@@ -84,7 +84,7 @@ function checkCap(role: ModelRole, model: string, chars: number, maxOut: number,
 }
 
 export async function callStructured<S extends z.ZodType>(call: StructuredCall<S>, deps: AiDeps = {}): Promise<z.infer<S>> {
-  const { model, timeoutMs, maxOutputTokens } = modelFor(call.role);
+  const { model, timeoutMs, maxOutputTokens, reasoningEffort } = modelFor(call.role);
   const now = deps.now ?? Date.now;
   const database = deps.db ?? defaultDb();
   const started = now();
@@ -102,6 +102,7 @@ export async function callStructured<S extends z.ZodType>(call: StructuredCall<S
           instructions: call.instructions,
           input: call.input,
           max_output_tokens: maxOutputTokens,
+          ...(reasoningEffort ? { reasoning: { effort: reasoningEffort } } : {}),
           text: { format: zodTextFormat(call.schema, call.schemaName) },
         },
         { timeout: timeoutMs },
