@@ -221,3 +221,10 @@ Suggested format per entry:
 **Why:** a letter explanation is read by the person who received the letter. AC-10.1 (clinician page first) and AC-10.2 (QR to the clinician form) now apply to Journey 1 only.
 **Affects:** FR-10, `src/lib/pdf/template.ts`, `src/lib/pdf/copy.ts` (new `userLead`, `englishTitle`, `englishLead`; Journey 2 clinician strings removed), `tests/unit/pdf-template.test.ts`.
 **Alternatives considered:** keeping the clinician page second (a doctor rarely needs a patient's letter explained back to them); keeping the QR on the English copy (it asks clinicians to rate a document written for the patient).
+
+## Voice switched on for English — 2026-10-25
+
+**Decision:** `config/languages.json`: English `signoff.sttTested` set to `true`, so the voice button shows when the interface is in English (AC-07.5). Every other language stays off. Checked: a synthetic English recording (Windows text-to-speech, about 5 s, WAV) sent to `/api/transcribe` came back word for word on `gpt-4o-transcribe`; the button shows on step 2 in English and not in French. Real voices, accents, Patois and code-switching are still untested.
+**Why:** the product owner asked why there was no voice option; it had been hidden for every language until speech-to-text was tried with a live key.
+**Affects:** FR-07, `config/languages.json`.
+**Alternatives considered:** switching on the Tier A languages too (not tested with real speech in those languages).

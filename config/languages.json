@@ -14,7 +14,7 @@
         "urgentMessagesReviewed": false,
         "rulesListPresent": false,
         "testScenariosPassed": false,
-        "sttTested": false,
+        "sttTested": true,
         "voiceDisabled": false,
         "pdfFontVerified": false
       }
