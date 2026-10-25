@@ -15,6 +15,8 @@ const roleConfigSchema = z.object({
   maxOutputTokens: z.number().int().nonnegative(),
   /** Reasoning models only: how much the model thinks before answering. Unset = the model's default. */
   reasoningEffort: z.enum(["none", "low", "medium", "high"]).optional(),
+  /** TRANSLATE only: translate the master's sections in this many parts at the same time (latency). Unset = 1. */
+  parallelParts: z.number().int().min(1).max(4).optional(),
   selection: z.object({ testedOn: z.string().nullable(), result: z.string() }),
 });
 

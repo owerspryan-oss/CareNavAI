@@ -16,7 +16,7 @@ import { isUrgent, post, urgentGate, type CallError } from "./call";
  */
 
 /** `saved` is set only for a signed-in person (FR-14). */
-export type ExplainResult = Extract<ExplainResponse, { kind: "result" }> & { saved?: SaveStatus };
+export type ExplainResult = Extract<ExplainResponse, { kind: "result" }> & { saved?: SaveStatus; masterToken?: string };
 export type PostFollowUpQuestion = { intent: (typeof POST_INTENTS)[number]; question: string };
 export type PostAnsweredFollowUp = ExplainRequest["followUps"][number];
 export type MedicineCandidate = { name: string; dose: string | null };
@@ -61,6 +61,7 @@ const explainBodySchema = z.object({
   user: postAppointmentResultSchema.nullable(),
   userFallback: z.enum(["parity", "protected_spans", "call_failed"]).nullable(),
   saved: z.enum(SAVE_STATUSES).optional(),
+  masterToken: z.string().optional(),
 });
 
 export function extractProblemFor(status: number): ExtractProblem {
@@ -100,6 +101,20 @@ export async function fetchLetterFollowUps(confirmedText: string, acknowledgedUr
   const parsed = followUpsBodySchema.safeParse(raw.body);
   if (!parsed.success) return { kind: "error", error: "failed" };
   return { kind: "followups", questions: parsed.data.questions };
+}
+
+/**
+ * "Change language": re-derive the signed English master only (/api/translate), which skips the
+ * re-screen and re-draft. The result keeps the original token. Any failure is an error: the caller
+ * then falls back to a full fetchExplain.
+ */
+export async function fetchTranslation(current: ExplainResult, outputLanguage: string | null): Promise<ExplainOutcome> {
+  if (!current.masterToken) return { kind: "error", error: "failed" };
+  const raw = await post("/api/translate", { english: current.english, masterToken: current.masterToken, outputLanguage }, EXPLAIN_TIMEOUT_MS);
+  if (!raw.ok) return { kind: "error", error: raw.error };
+  const parsed = explainBodySchema.safeParse(raw.body);
+  if (!parsed.success) return { kind: "error", error: "failed" };
+  return { ...parsed.data, masterToken: current.masterToken };
 }
 
 export async function fetchExplain(req: ExplainRequest): Promise<ExplainOutcome> {

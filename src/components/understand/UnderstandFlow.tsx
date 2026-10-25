@@ -10,6 +10,7 @@ import { fitContext, followUpContext, mostCautious, screenText } from "@/lib/cli
 import {
   extractLetter,
   fetchExplain,
+  fetchTranslation,
   fetchLetterFollowUps,
   type ExplainResult,
   type ExtractProblem,
@@ -301,7 +302,13 @@ export function UnderstandFlow({
     setOutputLanguage(lang);
     setUpdating(true);
     setUpdateFailed(false);
-    const out = await fetchExplainOnce({ confirmedText: confirmed, source, followUps, acknowledgedUrgent: acknowledged, outputLanguage: lang });
+    const request = { confirmedText: confirmed, source, followUps, acknowledgedUrgent: acknowledged, outputLanguage: lang };
+    // Translate the same English master only; a refused or failed translation falls back to a full explanation.
+    let out = explained.current.get(JSON.stringify(request)) ?? (await fetchTranslation(stage.result, lang));
+    if (out.kind === "result") {
+      explained.current.set(JSON.stringify(request), out);
+      lastExplained.current = { request, result: out };
+    } else out = await fetchExplainOnce(request);
     setUpdating(false);
     if (out.kind === "result") {
       setStage({ name: "result", result: out, followUps });

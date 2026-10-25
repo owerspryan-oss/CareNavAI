@@ -154,6 +154,27 @@ export async function runExplain(req: ExplainRequest, ctx: Ctx, deps?: AiDeps): 
   return { kind: "result", english, user, userFallback: derived.ok ? null : derived.reason };
 }
 
+/**
+ * Journey 2 "Change language": only the derived version is redone. The caller MUST have verified the
+ * master token: the master was made by this server after a clear or acknowledged gate.
+ */
+export async function runTranslate(english: PostAppointmentResult, outputLanguage: string | null, ctx: Ctx, deps?: AiDeps): Promise<ExplainResponse> {
+  const { ungrounded, meta: m } = english;
+  const grounded = postAppointmentDraftSchema.parse(english); // the master without ungrounded, disclaimer and meta
+  const target = outputLanguage ? targetFor(outputLanguage, "standard") : targetFor(m.detectedLanguage, m.register);
+  const derived = await deriveVersion(grounded, postAppointmentDraftSchema, target, grounded.medicines.map((x) => x.name), { endpoint: "/api/translate", requestId: ctx.requestId }, deps);
+  const versions = `${m.promptVersion.split("+")[0]}+${derived.promptVersion}`;
+  const user: PostAppointmentResult | null = derived.ok
+    ? {
+        ...derived.version,
+        ungrounded,
+        disclaimer: getDisclaimers(target.code).content.postAppointment,
+        meta: { ...m, outputLanguage: target.code, outputMode: target.mode, promptVersion: versions, confidenceNotice: derived.confidenceNotice },
+      }
+    : null;
+  return { kind: "result", english, user, userFallback: derived.ok ? null : derived.reason };
+}
+
 // ---- Follow-ups --------------------------------------------------------------
 
 export type FollowUpsResponse = UrgentResponse | { kind: "followups"; questions: FollowUp[] };

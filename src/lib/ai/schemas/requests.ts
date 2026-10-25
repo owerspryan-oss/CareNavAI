@@ -54,6 +54,16 @@ export const explainRequestSchema = z.object({
 });
 export type ExplainRequest = z.infer<typeof explainRequestSchema>;
 
+/** Journey 2 "Change language": re-derive a signed English master only (no re-screen, no re-draft). */
+export const translateRequestSchema = notRestyled(
+  z.object({
+    english: postAppointmentResultSchema,
+    masterToken: z.string().regex(/^[A-Za-z0-9_-]{43}$/),
+    outputLanguage: z.string().min(2).max(16).nullable(),
+  }),
+);
+export type TranslateRequest = z.infer<typeof translateRequestSchema>;
+
 /** Every free-text field in Journey 1, in step order. This is what the combined re-screen reads. */
 export function prepareFreeText(a: PrepareAnswers): { step: string; text: string }[] {
   const parts: { step: string; text: string | null }[] = [

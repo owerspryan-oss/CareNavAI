@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { deriveVersion, isTierA, targetFor } from "@/lib/ai/pipeline/derive";
+import { deriveVersion, isTierA, splitKeys, targetFor } from "@/lib/ai/pipeline/derive";
+import { modelFor } from "@/lib/config";
 import { postAppointmentDraftSchema, type PostAppointmentDraft } from "@/lib/ai/schemas";
 import { openDb, type DB } from "@/lib/db";
 
@@ -24,10 +25,21 @@ beforeEach(() => {
 });
 afterEach(() => db.close());
 
+/** TRANSLATE calls per attempt: the master is translated in parallel parts (config/models.json). */
+const PARTS = splitKeys(master, modelFor("TRANSLATE").parallelParts ?? 1).length;
+
+/** One fake version per attempt; each part's call gets back just the sections it asked for. */
 function client(...versions: unknown[]) {
-  const parse = vi.fn();
-  for (const v of versions) parse.mockResolvedValueOnce({ output_parsed: { confidence: "high", version: v }, usage: { input_tokens: 1, output_tokens: 1 } });
-  return { responses: { parse }, moderations: { create: vi.fn() } };
+  let n = 0;
+  const confidences: string[] = [];
+  const parse = vi.fn(async (req: { input: string }) => {
+    const v = versions[Math.floor(n / PARTS)] as Record<string, unknown> | undefined;
+    const confidence = confidences[n++] ?? "high";
+    if (!v) throw new Error("no fake version left");
+    const keys = Object.keys(JSON.parse(req.input.split("<english_master>\n")[1].split("\n</english_master>")[0]));
+    return { output_parsed: { confidence, version: Object.fromEntries(keys.map((k) => [k, v[k]])) }, usage: { input_tokens: 1, output_tokens: 1 } };
+  });
+  return { responses: { parse }, moderations: { create: vi.fn() }, confidences };
 }
 
 const run = (openai: ReturnType<typeof client>) =>
@@ -58,7 +70,25 @@ describe("deriveVersion (T-12)", () => {
     const openai = client(dropped, dropped);
     const r = await run(openai);
     expect(r).toMatchObject({ ok: false, reason: "parity", confidenceNotice: true });
-    expect(openai.responses.parse).toHaveBeenCalledTimes(2);
+    expect(openai.responses.parse).toHaveBeenCalledTimes(2 * PARTS);
+  });
+
+  it("splits the master into parts of similar size that cover every section once", () => {
+    const groups = splitKeys(master, 2);
+    expect(groups).toHaveLength(2);
+    expect(groups.flat().sort()).toEqual(Object.keys(master).sort());
+    expect(splitKeys(master, 1)).toEqual([expect.arrayContaining(Object.keys(master))]);
+  });
+
+  it("joins the parts and keeps the least confident part's confidence", async () => {
+    const openai = client(pidgin);
+    openai.confidences.push("high", "low");
+    const r = await run(openai);
+    expect(r.ok).toBe(true);
+    if (r.ok) {
+      expect(r.version).toEqual(pidgin);
+      expect(r.confidence).toBe(PARTS > 1 ? "low" : "high");
+    }
   });
 
   it("rejects a version that changes a dose (CLAUDE.md rule 6)", async () => {

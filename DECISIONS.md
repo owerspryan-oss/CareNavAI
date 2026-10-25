@@ -228,3 +228,16 @@ Suggested format per entry:
 **Why:** the product owner asked why there was no voice option; it had been hidden for every language until speech-to-text was tried with a live key.
 **Affects:** FR-07, `config/languages.json`.
 **Alternatives considered:** switching on the Tier A languages too (not tested with real speech in those languages).
+
+## Translation speed: effort none, derive v2, two parallel parts, translate-only language change — 2026-10-25
+
+**Decision:** Product owner asked to cut the wait for translations "without compromising accuracy". Measured with the usage ledger and a benchmark (the J1 and J2 fixtures into ht, so, ur, zh-Hans, pl, pcm; each translation reviewed against the English by `gpt-5.5` at high effort):
+1. Protected-span check: a medicine described rather than named ("cream from the pharmacy") is translated; real names and every digit stay byte-identical. It was failing correct translations (retry, often English only).
+2. Prompt `derive.v2`: keep only medicine names and digits exactly, translate dose, frequency and timing words, explain NHS words, keep timing exact.
+3. `TRANSLATE` runs `gpt-5.5` with reasoning effort `none` (new optional `reasoningEffort` per role).
+4. The master is translated in 2 parts at once (new optional `parallelParts`); parity and protected-span checks run on the joined result. Three parts drifted (a dropped negation in Haitian Creole), so 2.
+5. Journey 2 "Change language" calls `/api/translate`, which re-derives an English master the server signed (HMAC, per-process key) after a clear gate, instead of re-screening and re-drafting. A changed master or a stale token is refused and the client falls back to `/api/explain`.
+Results: benchmark before (derive v1, default effort, one call) median 8.9 s, faithfulness 4.50/5, 4 meaning issues; after (v2, none, one call) 5.8 s, 5.00/5, none; two parts 4.1 s, 4.83/5, one minor (a Polish masculine form). Live end to end: Journey 1 Haitian 13-14 s to about 10 s; Journey 2 Pidgin 12.6-13.3 s to about 6 s; change language 12-18 s to 4-5 s.
+**Why:** product-owner request; accuracy measured, not assumed.
+**Affects:** FR-03, CLAUDE.md rules 1, 5, 6, 10. `src/lib/validate/spans.ts`, `src/lib/ai/prompts/derive.v2.md`, `src/lib/ai/pipeline/derive.ts`, `src/lib/ai/client.ts`, `src/lib/config/index.ts`, `config/models.json`, `src/lib/security/master-token.ts`, `src/app/api/translate/route.ts`, `src/app/api/explain/route.ts`, `src/lib/client/understand.ts`, `src/components/understand/UnderstandFlow.tsx`.
+**Alternatives considered:** `gpt-5.4-mini` for translation (2.7 s, but real meaning errors such as "from tomorrow" becoming "the day after tomorrow"); three parts (faster, more drift); streaming (same total time).
