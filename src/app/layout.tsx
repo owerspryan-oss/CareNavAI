@@ -20,7 +20,7 @@ function languageOptions() {
   const codes = new Set(uiLanguages());
   return languagesConfig.languages
     .filter((l) => codes.has(l.code))
-    .map((l) => ({ code: l.code, nativeName: l.nativeName, dir: l.dir === "rtl" ? ("rtl" as const) : ("ltr" as const) }));
+    .map((l) => ({ code: l.code, nativeName: l.nativeName, englishName: l.englishName, dir: l.dir === "rtl" ? ("rtl" as const) : ("ltr" as const) }));
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {

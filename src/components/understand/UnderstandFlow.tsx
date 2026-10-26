@@ -23,6 +23,7 @@ import type { UrgentContent } from "@/lib/safety/urgent-content";
 import { letterTerms } from "@/lib/understand/view";
 import { DemoMenu } from "@/components/demo/DemoMenu";
 import { UnreviewedNotice } from "@/components/i18n/LanguagePicker";
+import { useUi } from "@/components/i18n/UiProvider";
 import { FollowUpsStep } from "@/components/prepare/FollowUpsStep";
 import { SummaryStatus } from "@/components/prepare/SummaryStatus";
 import { ExplainResultView } from "@/components/result/ExplainResultView";
@@ -100,6 +101,8 @@ export function UnderstandFlow({
   demo,
 }: UnderstandFlowProps) {
   const c = useUnderstandCopy();
+  /** The language the person reads the app in is where the explanation starts (2026-10-25). */
+  const { language: preference } = useUi();
   const router = useRouter();
   const [stage, setStage] = useState<Stage>({ name: "choose" });
   const [source, setSource] = useState<Source>("typed");
@@ -112,7 +115,7 @@ export function UnderstandFlow({
   const [acknowledged, setAcknowledged] = useState(false);
   const [gate, setGate] = useState<PendingGate | null>(null);
   const [busy, setBusy] = useState(false);
-  const [outputLanguage, setOutputLanguage] = useState<string | null>(null);
+  const [outputLanguage, setOutputLanguage] = useState<string | null>(preference);
   const [updating, setUpdating] = useState(false);
   const [updateFailed, setUpdateFailed] = useState(false);
   const cameraInput = useRef<HTMLInputElement>(null);
@@ -150,7 +153,7 @@ export function UnderstandFlow({
     setPhotoUrl(null);
     setConfirmed("");
     setAcknowledged(false);
-    setOutputLanguage(null);
+    setOutputLanguage(preference);
     setUpdateFailed(false);
     explained.current.clear();
     lastExplained.current = null;
@@ -220,9 +223,10 @@ export function UnderstandFlow({
     setBusy(true);
     const result = await screenText(text, "letter_text", null);
     setConfirmed(text);
-    // A new confirmation is a new letter: any earlier acknowledgement, language or answers no longer apply.
+    // A new confirmation is a new letter: any earlier acknowledgement or answers no longer apply, and the
+    // output language starts again from the person's own language.
     setAcknowledged(false);
-    setOutputLanguage(null);
+    setOutputLanguage(preference);
     setUpdateFailed(false);
     if (result.level !== "clear") {
       setBusy(false);
@@ -241,7 +245,7 @@ export function UnderstandFlow({
     } else if (out.kind === "followups" && out.questions.length > 0) {
       setStage({ name: "followups", questions: out.questions, busy: false });
     } else {
-      await requestExplain(letter, [], ack, null);
+      await requestExplain(letter, [], ack, preference);
     }
   }
 

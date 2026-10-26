@@ -8,7 +8,7 @@ import { mergeOverMaster, type UiDir, type UiLocale, type UiMessages } from "./m
 // scripts/translate-ui.mjs and stored, never translated at run time. Adding a language needs only a
 // file (AC-28.4). English is the master and the fallback for every missing string (AC-27.2).
 
-export const UI_COOKIE = "carenav_lang";
+export { UI_COOKIE } from "./messages";
 const DIR = path.join(process.cwd(), "content", "ui");
 
 type LocaleFile = {
@@ -114,6 +114,14 @@ export function matchUiLanguage(tag: string): string | null {
   const viaAlias = ALIASES[primary];
   if (viaAlias && codes.includes(viaAlias)) return viaAlias;
   return codes.find((c) => c.toLowerCase() === primary) ?? null;
+}
+
+/**
+ * True until the person has chosen a language (no usable cookie): starting a journey then asks first
+ * (2026-10-25 product-owner request). A language from Accept-Language alone is only a suggestion.
+ */
+export function needsLanguageChoice(cookieValue: string | undefined): boolean {
+  return !cookieValue || matchUiLanguage(cookieValue) === null;
 }
 
 /** AC-27.1: the remembered choice (cookie) wins, else the browser's Accept-Language, else English. */

@@ -117,9 +117,12 @@ describe("magic links (AC-13.1)", () => {
     const token = requestMagicLink({ email: "New@Example.com" }, { db, now: NOW });
     expect(token).toMatch(/^[A-Za-z0-9_-]{43}$/);
     expect(JSON.stringify(db.prepare("SELECT * FROM magic_links").all())).not.toContain(token);
-    const user = verifyMagicLink({ token, inviteCode: null }, opts({ now: NOW + 1000 }));
+    // A new account is asked for its language first; asking does not use the link up.
+    expect(await code(() => verifyMagicLink({ token, inviteCode: null }, opts({ now: NOW + 500 })))).toBe("400 language_required");
+    const user = verifyMagicLink({ token, inviteCode: null, language: "ur" }, opts({ now: NOW + 1000 }));
     expect(user.email).toBe("new@example.com");
     expect(user.password_hash).toBeNull();
+    expect(user.language).toBe("ur");
     expect(await code(() => verifyMagicLink({ token, inviteCode: null }, opts({ now: NOW + 2000 })))).toBe("400 link_invalid");
   });
 
@@ -138,10 +141,10 @@ describe("magic links (AC-13.1)", () => {
     createInvite(db, "AAAA-BBBB-CCCC");
     const token = requestMagicLink({ email: "new@example.com" }, { db, now: NOW });
     const on = opts({ invitesRequired: true });
-    expect(await code(() => verifyMagicLink({ token, inviteCode: null }, on))).toBe("400 invite_required");
-    expect(await code(() => verifyMagicLink({ token, inviteCode: "XXXX-XXXX-XXXX" }, on))).toBe("400 invite_invalid");
+    expect(await code(() => verifyMagicLink({ token, inviteCode: null, language: "fr" }, on))).toBe("400 invite_required");
+    expect(await code(() => verifyMagicLink({ token, inviteCode: "XXXX-XXXX-XXXX", language: "fr" }, on))).toBe("400 invite_invalid");
     expect(findUserByEmail(db, "new@example.com")).toBeUndefined();
-    expect(verifyMagicLink({ token, inviteCode: "aaaa bbbb cccc" }, on).email).toBe("new@example.com");
+    expect(verifyMagicLink({ token, inviteCode: "aaaa bbbb cccc", language: "fr" }, on).email).toBe("new@example.com");
   });
 
   it("dev inbox keeps recent unexpired links in memory only", () => {
@@ -256,6 +259,7 @@ describe("/api/auth routes", () => {
       body: body === undefined ? undefined : JSON.stringify(body),
     });
   const sessionFrom = (res: Response) => res.headers.getSetCookie().find((c) => c.startsWith("cn_session="))!;
+  const langFrom = (res: Response) => res.headers.getSetCookie().find((c) => c.startsWith("carenav_lang="));
 
   it("register -> me -> logout -> login, on localhost, with no email or password in the logs", async () => {
     const r = await routes();
@@ -300,9 +304,12 @@ describe("/api/auth routes", () => {
     const token = new URL(link).searchParams.get("token")!;
     expect(logged.join("\n")).not.toContain(token);
 
-    const first = await r.magicVerify(req("http://localhost:3000/api/auth/magic/verify", { token, inviteCode: null }));
+    const asks = await r.magicVerify(req("http://localhost:3000/api/auth/magic/verify", { token, inviteCode: null }));
+    expect(await asks.json()).toEqual({ error: "language_required" });
+    const first = await r.magicVerify(req("http://localhost:3000/api/auth/magic/verify", { token, inviteCode: null, language: "ur" }));
     expect(first.status).toBe(200);
     expect(sessionFrom(first)).toBeTruthy();
+    expect(langFrom(first)).toBe("carenav_lang=ur; Path=/; Max-Age=31536000; SameSite=Lax");
     const again = await r.magicVerify(req("http://localhost:3000/api/auth/magic/verify", { token, inviteCode: null }));
     expect(await again.json()).toEqual({ error: "link_invalid" });
   });

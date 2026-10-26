@@ -7,6 +7,7 @@ import type { UiLocale } from "@/lib/i18n/messages";
 export interface UiLanguageOption {
   code: string;
   nativeName: string;
+  englishName: string;
   dir: "ltr" | "rtl";
 }
 

@@ -385,10 +385,11 @@ export function ExplainResultView({
           <select
             id="explain-language"
             className={own.select}
-            value={outputLanguage ?? ""}
+            value={outputLanguage && outputLanguage !== "en" ? outputLanguage : ""}
             disabled={updating}
-            onChange={(e) => onOutputLanguage(e.target.value || null)}
+            onChange={(e) => onOutputLanguage(e.target.value || "en")}
           >
+            {/* "Simple English" is English (the person's preference may be English, 2026-10-25). */}
             <option value="">{c.languagePicker.defaultOption}</option>
             {Object.entries(languages)
               .filter(([code]) => code !== "en")

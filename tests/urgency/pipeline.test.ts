@@ -1,3 +1,4 @@
+import { modelFor } from "@/lib/config";
 import fs from "node:fs";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { runExplain, runFollowUps, runSummary } from "@/lib/ai/pipeline/journeys";
@@ -102,7 +103,9 @@ describe("full pipelines on demo inputs", () => {
     const r = await runSummary({ answers: demo("inputs/marcia-prepare.json"), acknowledgedUrgent: false, outputLanguage: null }, ctx, { openai: openai as never, db, capGbp: 50 });
     expect(r.kind).toBe("result");
     if (r.kind !== "result") return;
-    expect(calledSchemas(openai)).toEqual(["gate_classification", "pre_appointment_summary", "derived_version"]);
+    // The user version is translated in parallel parts (config/models.json TRANSLATE.parallelParts).
+    const parts = modelFor("TRANSLATE").parallelParts ?? 1;
+    expect(calledSchemas(openai)).toEqual(["gate_classification", "pre_appointment_summary", ...Array(parts).fill("derived_version")]);
     expect(r.user?.meta).toMatchObject({ outputLanguage: "jam", outputMode: "simple_english", confidenceNotice: true });
     expect(r.english.serviceRoutes.length).toBeGreaterThan(0);
     expect(r.english.disclaimer.join(" ")).toMatch(/not medical advice/);

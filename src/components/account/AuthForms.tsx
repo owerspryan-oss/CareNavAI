@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
+import { LanguageChoices } from "@/components/i18n/LanguageChooser";
+import { useUi } from "@/components/i18n/UiProvider";
 import { Button } from "@/components/ui/Button";
 import { SegmentedControl } from "@/components/ui/SegmentedControl";
 import { accountCall, looksLikeEmail } from "@/lib/client/account";
@@ -24,6 +26,8 @@ export function AuthForms({ invitesRequired, devInbox }: { invitesRequired: bool
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [inviteCode, setInviteCode] = useState("");
+  /** The account's language, pre-filled from the current interface language. */
+  const [language, setLanguage] = useState(useUi().language);
   const [busy, setBusy] = useState<"submit" | "link" | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [linkSent, setLinkSent] = useState(false);
@@ -44,7 +48,7 @@ export function AuthForms({ invitesRequired, devInbox }: { invitesRequired: bool
     const res =
       mode === "signIn"
         ? await accountCall("/api/auth/login", { body: { email, password } })
-        : await accountCall("/api/auth/register", { body: { email, password, inviteCode: invitesRequired ? inviteCode : null } });
+        : await accountCall("/api/auth/register", { body: { email, password, inviteCode: invitesRequired ? inviteCode : null, language } });
     setBusy(null);
     if (!res.ok) return setError(c.error(res.error));
     setPassword("");
@@ -85,6 +89,16 @@ export function AuthForms({ invitesRequired, devInbox }: { invitesRequired: bool
           onChange={(e) => setPassword(e.target.value)}
           required
         />
+        {mode === "register" && (
+          <div className={styles.field}>
+            {/* Visible title for sighted readers; the radio group's own legend names it for screen readers. */}
+            <p className={styles.label} aria-hidden="true">
+              {c.fields.language}
+            </p>
+            <p className={styles.hint}>{c.fields.languageHint}</p>
+            <LanguageChoices name="account-language" legend={c.fields.language} legendHidden value={language} onChange={setLanguage} bounded />
+          </div>
+        )}
         {mode === "register" && invitesRequired && (
           <Field id="account-invite" label={c.fields.inviteCode} hint={c.fields.inviteHint} autoComplete="off" autoCapitalize="characters" value={inviteCode} onChange={(e) => setInviteCode(e.target.value)} required />
         )}

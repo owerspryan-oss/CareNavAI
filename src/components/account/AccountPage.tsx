@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { LanguagePicker } from "@/components/i18n/LanguagePicker";
 import { Banner } from "@/components/ui/Banner";
 import { Button } from "@/components/ui/Button";
 import { TopBar } from "@/components/ui/TopBar";
@@ -15,7 +16,7 @@ import styles from "./Account.module.css";
 
 export interface AccountPageProps {
   /** The signed-in account, or null. */
-  user: { email: string; createdAt: number } | null;
+  user: { email: string; createdAt: number; language: string | null } | null;
   invitesRequired: boolean;
   /** Requested on this machine: the "links appear in the dev inbox" hint. */
   devInbox: boolean;
@@ -64,6 +65,19 @@ export function AccountPage({ user, invitesRequired, devInbox, languages }: Acco
               <Button variant="tertiary" onClick={() => void signOut()} loading={signingOut} loadingLabel={c.signedIn.signingOut}>
                 {c.signedIn.signOut}
               </Button>
+            </section>
+            {/* The account's language is the interface language: the picker saves it to the account too. */}
+            <section className={styles.section} aria-labelledby="language-heading">
+              <h2 id="language-heading" className={styles.heading}>
+                {c.language.heading}
+              </h2>
+              <div className={styles.card}>
+                <p className={styles.muted}>{c.language.lead}</p>
+                {!user.language && <p className={styles.muted}>{c.language.notSaved}</p>}
+                <div>
+                  <LanguagePicker variant="full" />
+                </div>
+              </div>
             </section>
             <SavedList languages={languages} />
             <YourData

@@ -2,7 +2,8 @@ import { randomUUID } from "node:crypto";
 import type { DB } from "@/lib/db";
 import { normaliseEmail } from "./tokens";
 
-export type UserRow = { id: string; email: string; password_hash: string | null; created_at: number };
+/** `language`: the code the person reads the app in (config/languages.json), or null when not chosen yet. */
+export type UserRow = { id: string; email: string; password_hash: string | null; created_at: number; language: string | null };
 
 export function findUserByEmail(db: DB, email: string): UserRow | undefined {
   return db.prepare("SELECT * FROM users WHERE email = ?").get(normaliseEmail(email)) as UserRow | undefined;
@@ -12,10 +13,15 @@ export function findUserById(db: DB, id: string): UserRow | undefined {
   return db.prepare("SELECT * FROM users WHERE id = ?").get(id) as UserRow | undefined;
 }
 
-export function createUser(db: DB, email: string, passwordHash: string | null, now: number): UserRow {
-  const row: UserRow = { id: randomUUID(), email: normaliseEmail(email), password_hash: passwordHash, created_at: now };
-  db.prepare("INSERT INTO users (id, email, password_hash, created_at) VALUES (?, ?, ?, ?)").run(row.id, row.email, row.password_hash, row.created_at);
+export function createUser(db: DB, email: string, passwordHash: string | null, now: number, language: string | null = null): UserRow {
+  const row: UserRow = { id: randomUUID(), email: normaliseEmail(email), password_hash: passwordHash, created_at: now, language };
+  db.prepare("INSERT INTO users (id, email, password_hash, created_at, language) VALUES (?, ?, ?, ?, ?)").run(row.id, row.email, row.password_hash, row.created_at, row.language);
   return row;
+}
+
+/** The account's language. Callers validate the code against config/languages.json first. */
+export function setUserLanguage(db: DB, userId: string, language: string): void {
+  db.prepare("UPDATE users SET language = ? WHERE id = ?").run(language, userId);
 }
 
 /**

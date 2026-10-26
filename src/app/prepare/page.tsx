@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { connection } from "next/server";
+import { LanguageFirst } from "@/components/i18n/LanguageChooser";
 import { PrepareFlow } from "@/components/prepare/PrepareFlow";
 import { languageNames, languagesConfig } from "@/lib/config";
 import { env } from "@/lib/config/env";
 import { getUrgentContent } from "@/lib/content";
 import { demoPreparePresets } from "@/lib/demo/presets";
-import { requestUiLocale } from "@/lib/i18n/request";
+import { requestNeedsLanguageChoice, requestUiLocale } from "@/lib/i18n/request";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { messages } = await requestUiLocale();
@@ -26,14 +27,17 @@ export default async function PreparePage() {
   const { language } = await requestUiLocale();
   const urgentContent = getUrgentContent(language);
   const e = env();
+  // No language chosen yet: ask first, then the journey opens in it (and its results follow it).
   return (
-    <PrepareFlow
-      maxChars={e.MAX_TEXT_CHARS}
-      contextMaxChars={e.MAX_SCREEN_CONTEXT_CHARS}
-      urgentContent={urgentContent}
-      languages={languageNames()}
-      voiceMaxSeconds={voiceEnabled(language) ? e.MAX_AUDIO_SECONDS : null}
-      demo={e.DEMO_MODE ? demoPreparePresets() : undefined}
-    />
+    <LanguageFirst needed={await requestNeedsLanguageChoice()}>
+      <PrepareFlow
+        maxChars={e.MAX_TEXT_CHARS}
+        contextMaxChars={e.MAX_SCREEN_CONTEXT_CHARS}
+        urgentContent={urgentContent}
+        languages={languageNames()}
+        voiceMaxSeconds={voiceEnabled(language) ? e.MAX_AUDIO_SECONDS : null}
+        demo={e.DEMO_MODE ? demoPreparePresets() : undefined}
+      />
+    </LanguageFirst>
   );
 }

@@ -3,17 +3,16 @@
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { ChevronDownIcon, GlobeIcon } from "@/components/ui/icons";
+import { chooseLanguage } from "@/lib/client/language";
 import { useUi } from "./UiProvider";
 import styles from "./LanguagePicker.module.css";
-
-/** Must match UI_COOKIE in @/lib/i18n/locale (server-only module, so not imported here). */
-const COOKIE = "carenav_lang";
 
 /**
  * Interface language picker (FR-27, AC-27.1): every language with an interface file, by its own name.
  * A native <select>, so it is the phone's own picker and works with every screen reader. The choice is
- * a browser cookie only. Switching re-renders the server parts; client state (the person's answers)
- * stays as it is (AC-27.5).
+ * the person's language everywhere: the interface cookie, the output language of new results, and the
+ * account's language when signed in. Switching re-renders the server parts; client state (the person's
+ * answers) stays as it is (AC-27.5).
  */
 export function LanguagePicker({ variant = "compact" }: { variant?: "compact" | "full" }) {
   const { language, options, messages } = useUi();
@@ -33,8 +32,11 @@ export function LanguagePicker({ variant = "compact" }: { variant?: "compact" | 
         aria-label={messages.common.language.label}
         value={language}
         onChange={(e) => {
-          document.cookie = `${COOKIE}=${encodeURIComponent(e.target.value)}; path=/; max-age=31536000; samesite=lax`;
-          startTransition(() => router.refresh());
+          const code = e.target.value;
+          startTransition(async () => {
+            await chooseLanguage(code);
+            router.refresh();
+          });
         }}
       >
         {options.map((o) => (

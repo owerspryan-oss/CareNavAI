@@ -6,6 +6,14 @@ export type UiMessages = (typeof import("../../../content/ui/en.json"))["message
 
 export type UiDir = "ltr" | "rtl";
 
+/** The interface language preference: a cookie, so the first paint is already in the right language and direction. */
+export const UI_COOKIE = "carenav_lang";
+
+/** The preference cookie (one year). Not HttpOnly: the language picker sets it in the browser too. */
+export function uiLanguageCookie(code: string, secure = false): string {
+  return `${UI_COOKIE}=${encodeURIComponent(code)}; Path=/; Max-Age=31536000; SameSite=Lax${secure ? "; Secure" : ""}`;
+}
+
 /** What the server hands the client for one interface language. */
 export interface UiLocale {
   /** The language actually served (has a file in content/ui), e.g. "en", "pcm", "ur". */

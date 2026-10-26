@@ -22,7 +22,16 @@
       },
       "language": {
         "label": "Language",
-        "unreviewedNotice": "This page was translated automatically and has not been checked by a native speaker yet."
+        "unreviewedNotice": "This page was translated automatically and has not been checked by a native speaker yet.",
+        "chooser": {
+          "title": "Which language do you want to use?",
+          "lead": "We’ll use it for the app and for your summary. You can change it at any time from the top of the screen.",
+          "listLabel": "Languages",
+          "filterLabel": "Find a language",
+          "noMatch": "No language matches that. Try another spelling, or its name in English.",
+          "continue": "Continue",
+          "continuing": "Opening"
+        }
       },
       "meta": {
         "description": "Get ready for your NHS appointment, and understand what you were told.",
@@ -462,7 +471,9 @@
         "password": "Password",
         "passwordHint": "At least 10 characters.",
         "inviteCode": "Invite code",
-        "inviteHint": "You’ll find this in your invitation."
+        "inviteHint": "You’ll find this in your invitation.",
+        "language": "Your language",
+        "languageHint": "We’ll use it for the app and for your summaries."
       },
       "signIn": {
         "submit": "Sign in",
@@ -499,7 +510,8 @@
         "button": "Sign in",
         "inviteNeeded": "This creates a new account. Please enter your invite code.",
         "invalid": "This link has expired or has already been used. You can ask for a new one.",
-        "newLink": "Get a new link"
+        "newLink": "Get a new link",
+        "languageNeeded": "This creates a new account. Which language do you want to use?"
       },
       "saved": {
         "heading": "Saved summaries",
@@ -534,6 +546,11 @@
         "deleting": "Deleting",
         "deleteFailed": "Sorry, we couldn’t delete your account. Please try again.",
         "deleted": "Your account and everything in it have been deleted."
+      },
+      "language": {
+        "heading": "Your language",
+        "lead": "We use it for the app and for your summaries. Changing it here, or at the top of any screen, changes it everywhere.",
+        "notSaved": "Not saved to your account yet. Choose a language to save it."
       }
     }
   }

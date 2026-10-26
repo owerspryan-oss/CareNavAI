@@ -6,6 +6,11 @@ export interface ChoiceOption<V extends string> {
   value: V;
   label: string;
   hint?: string;
+  /** The label's own language and direction, when it differs from the page (e.g. a language's native name). */
+  lang?: string;
+  dir?: "ltr" | "rtl";
+  /** The hint's own language, when it differs from the page. */
+  hintLang?: string;
 }
 
 export interface ChoiceGroupProps<V extends string> {
@@ -51,8 +56,14 @@ export function ChoiceGroup<V extends string>({
                 onChange={() => onChange(o.value)}
               />
               <span className={styles.text}>
-                <span className={styles.label}>{o.label}</span>
-                {o.hint && <span className={styles.hint}>{o.hint}</span>}
+                <span className={styles.label} lang={o.lang} dir={o.dir}>
+                  {o.label}
+                </span>
+                {o.hint && (
+                  <span className={styles.hint} lang={o.hintLang}>
+                    {o.hint}
+                  </span>
+                )}
               </span>
             </label>
           );

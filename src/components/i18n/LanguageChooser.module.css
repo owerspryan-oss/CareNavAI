@@ -1,0 +1,101 @@
+/* Language chooser (2026-10-25): by extension of DESIGN_SYSTEM.md — the journey page frame, radio cards, tokens only. */
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  max-width: 32rem;
+  margin: 0 auto;
+}
+
+.main {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding: var(--space-2) var(--space-4) var(--space-5);
+}
+
+.intro {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.title {
+  font-size: var(--text-display-size);
+  line-height: var(--text-display-leading);
+  letter-spacing: var(--text-display-tracking);
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.lead {
+  color: var(--color-ink-muted);
+}
+
+.choices {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.filter {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.filterLabel {
+  font-weight: 600;
+}
+
+.filterInput {
+  width: 100%;
+  min-height: 3rem;
+  padding: var(--space-3) var(--space-4);
+  border: 0;
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  box-shadow: inset 0 0 0 1px var(--color-border);
+  font-size: var(--text-body-size);
+  transition: box-shadow 0.15s linear;
+}
+
+.filterInput:focus {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--color-teal-500);
+}
+
+.noMatch {
+  color: var(--color-ink-muted);
+}
+
+.noMatch:empty {
+  display: none;
+}
+
+/* Inside a form: a fixed-height list; padding keeps the focus ring and card shadows inside the scroll box. */
+.bounded {
+  max-height: 20rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--space-1);
+  margin: calc(var(--space-1) * -1);
+}
+
+.footer {
+  position: sticky;
+  bottom: 0;
+  padding: var(--space-3) var(--space-4) calc(var(--space-4) + env(safe-area-inset-bottom));
+  background: color-mix(in srgb, var(--color-bg) 72%, transparent);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+}
+
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  .footer {
+    background: var(--color-bg);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border-top: 1px solid var(--color-border);
+  }
+}

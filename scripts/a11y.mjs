@@ -188,6 +188,26 @@ async function journeyPrepare() {
   await page.close();
 }
 
+/** No language chosen yet (no cookie; the browser asks for this one): the chooser before a journey, and registration. */
+async function languageScreens(code) {
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 }, locale: code });
+  try {
+    const page = await context.newPage();
+    await fakeApi(page);
+    await page.goto(`${BASE}/prepare`);
+    await page.getByRole("heading", { name: exactOrFallback(T("common.language.chooser.title")) }).waitFor();
+    await check(page, "language chooser");
+    await page.getByLabel(exactOrFallback(T("common.language.chooser.filterLabel"))).fill("zzzz");
+    await check(page, "language chooser (no match)");
+    await page.goto(`${BASE}/account`);
+    await page.getByRole("tab", { name: T("account.modes.register"), exact: true }).click();
+    await check(page, "account: create (language)");
+    await page.close();
+  } finally {
+    await context.close();
+  }
+}
+
 async function urgentScreens() {
   for (const [name, text] of [
     ["urgent: crisis", "I don't want to be here anymore"],
@@ -242,6 +262,7 @@ try {
     await journeyPrepare();
     await urgentScreens();
     await journeyUnderstand();
+    await languageScreens(code);
   }
 } catch (e) {
   const shot = process.env.A11Y_FAIL_SCREENSHOT ?? "a11y-failure.png";

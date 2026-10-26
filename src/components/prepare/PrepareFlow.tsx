@@ -11,6 +11,7 @@ import { fromPrepareAnswers, toPrepareAnswers, type AnsweredFollowUp } from "@/l
 import type { DemoPreparePreset } from "@/lib/demo/presets";
 import { DemoMenu } from "@/components/demo/DemoMenu";
 import { UnreviewedNotice } from "@/components/i18n/LanguagePicker";
+import { useUi } from "@/components/i18n/UiProvider";
 import {
   REVIEW_INDEX,
   STEP_IDS,
@@ -118,6 +119,8 @@ function firstInvalidStep(state: PrepareState, maxChars: number, c: PrepareCopy)
  */
 export function PrepareFlow({ maxChars, contextMaxChars, urgentContent, languages, voiceMaxSeconds, demo }: PrepareFlowProps) {
   const c = usePrepareCopy();
+  /** The language the person reads the app in is also the language of their summary (2026-10-25). */
+  const { language } = useUi();
   const router = useRouter();
   const [state, dispatch] = useReducer(prepareReducer, undefined, initialPrepareState);
   const [errors, setErrors] = useState<StepErrors>({});
@@ -285,13 +288,13 @@ export function PrepareFlow({ maxChars, contextMaxChars, urgentContent, language
   /** Steps 8-9: the summary call (the server re-screens the combined input first). */
   async function requestSummary(followUps: AnsweredFollowUp[], acknowledged: boolean) {
     const answers = toPrepareAnswers(state, followUps);
-    const key = JSON.stringify({ answers, acknowledged });
+    const key = JSON.stringify({ answers, acknowledged, language });
     if (lastSummary.current?.key === key) {
       setStage({ name: "result", result: lastSummary.current.result, followUps });
       return;
     }
     setStage({ name: "loading" });
-    const out = await fetchSummary(answers, acknowledged);
+    const out = await fetchSummary(answers, acknowledged, language);
     if (out.kind === "urgent") {
       setGate({ result: out.gate, level: urgentLevel(out.gate), screened: {}, resume: { to: "summary", followUps } });
     } else if (out.kind === "error") {

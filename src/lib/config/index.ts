@@ -84,6 +84,11 @@ export function languageNames(): LanguageNames {
   );
 }
 
+/** True for a code in config/languages.json (the account's language, the interface preference). */
+export function isKnownLanguage(code: string): boolean {
+  return languagesConfig.languages.some((l) => l.code === code);
+}
+
 /** FR-23: true when the playful restyle may be offered for this language (config, never code). */
 export function isPlayfulLanguage(code: string): boolean {
   return languagesConfig.languages.some((l) => l.code === code && l.playful);

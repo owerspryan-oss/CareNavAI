@@ -130,11 +130,11 @@ export function deleteSummary(db: DB, userId: string, id: string): boolean {
 }
 
 /** AC-14.4 export: the account and every saved summary, decrypted, as one readable JSON document. */
-export function exportAccount(db: DB, key: Buffer | null, user: { id: string; email: string; created_at: number }, now: number) {
+export function exportAccount(db: DB, key: Buffer | null, user: { id: string; email: string; created_at: number; language: string | null }, now: number) {
   const rows = db.prepare("SELECT * FROM summaries WHERE user_id = ? ORDER BY created_at, id").all(user.id) as Row[];
   return {
     exportedAt: new Date(now).toISOString(),
-    account: { email: user.email, createdAt: new Date(user.created_at).toISOString() },
+    account: { email: user.email, createdAt: new Date(user.created_at).toISOString(), language: user.language },
     summaries: rows.map((r) => {
       const { createdAt, ...meta } = toMeta(r);
       return { ...meta, createdAt: new Date(createdAt).toISOString(), result: key ? decrypt(r, key) : null };

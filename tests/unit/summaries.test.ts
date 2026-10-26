@@ -79,11 +79,11 @@ describe("summary store (AC-14.1, AC-14.3)", () => {
   });
 
   it("export holds the account and every summary, decrypted and readable", () => {
-    const user = createUser(db, "ana@example.com", null, NOW);
+    const user = createUser(db, "ana@example.com", null, NOW, "so");
     saveSummary(db, KEY, user.id, prepareResult(), { forWhom: "self", ageBand: null }, NOW);
     saveSummary(db, KEY, user.id, explainResult(), { forWhom: "not_asked", ageBand: null }, NOW + 1);
     const out = exportAccount(db, KEY, user, NOW + 2);
-    expect(out.account).toEqual({ email: "ana@example.com", createdAt: new Date(NOW).toISOString() });
+    expect(out.account).toEqual({ email: "ana@example.com", createdAt: new Date(NOW).toISOString(), language: "so" });
     expect(out.summaries.map((s) => [s.flow, s.result?.english.meta.detectedLanguage])).toEqual([
       ["prepare", "jam"],
       ["understand", letter.explainDefault.english.meta.detectedLanguage],
