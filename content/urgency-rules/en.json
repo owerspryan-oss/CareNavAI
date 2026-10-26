@@ -1,0 +1,273 @@
+{
+  "$comment": "DRAFT English red-flag rules (FR-05, PRD 9.1 layer 1). NOT CLINICALLY APPROVED: seed list for the local demo only; the clinical adviser owns the real list. Patterns are regular expressions matched against NORMALISED text: lower case, apostrophes removed (can't -> cant, I'm -> im), '&' -> ' and ' (A&E -> a and e), all other punctuation -> space, whitespace collapsed. Each pattern is matched as whole words. A rule fires when ANY of 'patterns' matches and, if 'requiresAlso' is present, at least one pattern from EVERY group in it also matches.",
+  "language": "en",
+  "kind": "language",
+  "status": "DRAFT_NOT_CLINICALLY_APPROVED",
+  "reviewed": false,
+  "rules": [
+    {
+      "id": "en.breathing.cannot_breathe",
+      "level": "emergency",
+      "category": "breathing",
+      "patterns": [
+        "(cant|can not|cannot|couldnt|could not|unable to|fighting to) (breathe|breath|get (my |a |his |her |their )?breath|catch (my |his |her |their )?breath)",
+        "fighting for (breath|air)",
+        "(not|stopped|isnt|is not|hes not|shes not|theyre not) breathing",
+        "gasping( for (air|breath))?",
+        "choking",
+        "(lips|tongue) .{0,12}(blue|grey|gray|bluish)",
+        "(blue|bluish|grey|gray) (lips|tongue)"
+      ]
+    },
+    {
+      "id": "en.breathing.difficult",
+      "level": "urgent",
+      "category": "breathing",
+      "patterns": [
+        "(struggling|struggles|struggled|struggle) (to|for) (breathe|breath|get (my |a |his |her |their )?breath)",
+        "(?<!(no|not|isnt|denies|denied|without|any|nor) )(difficulty|difficulties|trouble|problems?) (with )?breathing",
+        "(?<!(no|not|isnt|denies|denied|without|any|nor) )(hard|harder|difficult|painful) to breathe",
+        "(?<!(no|not|isnt|denies|denied|without|any|nor) )(short of breath|shortness of breath|breathless[a-z]*|out of breath)",
+        "breathing (is |has been |feels |got |gets )?(hard|harder|difficult|laboured|labored|a struggle)"
+      ]
+    },
+    {
+      "id": "en.chest.pain_with_red_flags",
+      "level": "emergency",
+      "category": "chest_pain",
+      "patterns": [
+        "chest .{0,15}(pain|pains|painful|hurt|hurts|hurting|ache|aching|tight|tightness|pressure|heavy|heaviness|squeez[a-z]*|crush[a-z]*|burning)",
+        "(pain|pains|hurt|hurts|hurting|ache|aching|tight|tightness|pressure|heaviness|squeez[a-z]*|crush[a-z]*) .{0,15}chest"
+      ],
+      "requiresAlso": [
+        [
+          "breath|breathe|breathing|breathless[a-z]*",
+          "sweat|sweaty|sweating|sweats|clammy",
+          "grey|gray|pale",
+          "(arm|arms|jaw|neck|back|shoulder) .{0,20}(pain|hurt|hurts|hurting|numb|tingl[a-z]*|heavy|ache|aching)",
+          "(pain|hurt|hurts|numb|numbness|tingl[a-z]*|heavy|heaviness) .{0,20}(arm|arms|jaw|neck|back|shoulder)",
+          "sick|nause[a-z]*|vomit[a-z]*|faint|dizzy|light ?headed",
+          "(spread|spreads|spreading|going|goes) (to|down|into|up)"
+        ]
+      ]
+    },
+    {
+      "id": "en.chest.crushing",
+      "level": "emergency",
+      "category": "chest_pain",
+      "patterns": [
+        "(crush[a-z]*|squeez[a-z]*|heavy weight|elephant) .{0,15}chest",
+        "chest .{0,15}(crush[a-z]*|squeez[a-z]*)",
+        "(having|is having|hes having|shes having|im having) a heart attack"
+      ]
+    },
+    {
+      "id": "en.chest.pain",
+      "level": "urgent",
+      "category": "chest_pain",
+      "patterns": [
+        "chest .{0,15}(pain|pains|painful|hurt|hurts|hurting|ache|aching|tight|tightness|pressure|heavy|heaviness|burning)",
+        "(pain|pains|hurt|hurts|hurting|ache|aching|tight|tightness|pressure|heaviness) .{0,15}chest"
+      ]
+    },
+    {
+      "id": "en.bleeding.severe",
+      "level": "emergency",
+      "category": "severe_bleeding",
+      "patterns": [
+        "(bleeding|blood|bleed) .{0,15}(wont|will not|doesnt|does not|isnt|cant|cannot|not) (stop|stopping)",
+        "(lots of|a lot of|loads of|so much|pouring|gushing|spurting) (blood|bleeding)",
+        "blood (is )?(pouring|gushing|spurting)",
+        "bleeding (badly|a lot|everywhere|loads|heavily from)"
+      ]
+    },
+    {
+      "id": "en.bleeding.heavy_or_coughing_vomiting",
+      "level": "urgent",
+      "category": "severe_bleeding",
+      "patterns": [
+        "(heavy|heavily) bleeding(?! .{0,25}period)",
+        "bleeding heavily(?! .{0,25}period)",
+        "(coughing|coughed|cough|vomiting|vomited|throwing up|threw up|being sick|been sick) (up )?blood",
+        "blood in (my |his |her |their )?(sick|vomit)"
+      ]
+    },
+    {
+      "id": "en.consciousness.unresponsive",
+      "level": "emergency",
+      "category": "loss_of_consciousness",
+      "patterns": [
+        "unconscious",
+        "unresponsive",
+        "collaps(ed|ing|es)",
+        "(wont|will not|isnt|is not|not) (wake|waking) up",
+        "(cant|can not|cannot|couldnt|could not) wake (him|her|them|my [a-z]+)"
+      ]
+    },
+    {
+      "id": "en.consciousness.fainted",
+      "level": "urgent",
+      "category": "loss_of_consciousness",
+      "patterns": [
+        "passed out",
+        "blacked out",
+        "faint(ed|ing)"
+      ]
+    },
+    {
+      "id": "en.seizure.ongoing",
+      "level": "emergency",
+      "category": "seizure",
+      "patterns": [
+        "(having|is having|hes having|shes having|keeps having|keep having) (a )?(seizure|seizures|fit|fits|convulsion|convulsions)",
+        "(seizure|fit|fitting|shaking|jerking) .{0,15}(wont|will not|doesnt|does not|isnt|is not|not) stop(ping)?",
+        "(first|first ever) (seizure|fit)",
+        "fitting",
+        "seizing",
+        "convuls(ing|ion|ions)"
+      ]
+    },
+    {
+      "id": "en.allergy.severe",
+      "level": "emergency",
+      "category": "severe_allergic_reaction",
+      "patterns": [
+        "(throat|tongue|lips|lip|mouth|face) .{0,15}(swelling|swollen|swell|swelled|closing|closing up)",
+        "anaphyla[a-z]*",
+        "(used|use|need|needs|needed|given) (my |his |her |their |an |the )?(epipen|epi pen|adrenaline)"
+      ]
+    },
+    {
+      "id": "en.allergy.reaction",
+      "level": "urgent",
+      "category": "severe_allergic_reaction",
+      "patterns": [
+        "allergic reaction"
+      ]
+    },
+    {
+      "id": "en.head.sudden_severe",
+      "level": "emergency",
+      "category": "severe_pain",
+      "patterns": [
+        "worst (headache|head ache|pain) (of|in|ive|i have|ever)",
+        "(sudden|suddenly) .{0,15}(severe|bad|terrible|really bad|awful) (headache|head ache)",
+        "thunderclap",
+        "(headache|head ache) .{0,40}(stiff neck|light hurts|cant look at (the )?light)"
+      ]
+    },
+    {
+      "id": "en.pain.extreme",
+      "level": "urgent",
+      "category": "severe_pain",
+      "patterns": [
+        "(unbearable|excruciating|agonising|agonizing) (pain|ache|headache)",
+        "pain is (unbearable|excruciating|agonising|agonizing)",
+        "in agony"
+      ]
+    },
+    {
+      "id": "en.rash.non_blanching",
+      "level": "emergency",
+      "category": "other",
+      "patterns": [
+        "rash .{0,60}(glass|tumbler)",
+        "(glass|tumbler) .{0,60}rash",
+        "(doesnt|does not|dont|do not|wont|will not|didnt|did not) (fade|go away|disappear) when (you |i )?press[a-z]*",
+        "non blanching",
+        "purple (spots|rash|blotches|patches)"
+      ]
+    },
+    {
+      "id": "en.pregnancy.warning_signs",
+      "level": "urgent",
+      "category": "pregnancy_concern",
+      "patterns": [
+        "pregnant|pregnancy"
+      ],
+      "requiresAlso": [
+        [
+          "bleed[a-z]*|blood",
+          "pain|cramp[a-z]*",
+          "waters (have )?(broken|broke|gone)",
+          "(baby|babys) .{0,15}(not|isnt|stopped|hasnt|less|fewer|slower) (moving|movements|kicking)",
+          "headache|blurred vision|blurry vision",
+          "swollen|swelling"
+        ]
+      ]
+    },
+    {
+      "id": "en.pregnancy.reduced_movements",
+      "level": "urgent",
+      "category": "pregnancy_concern",
+      "patterns": [
+        "(baby|babys) (is )?(moving|kicking) less",
+        "reduced (fetal|foetal|baby) movements?",
+        "(not|stopped) (feeling )?(the )?baby (move|moving|kick|kicking)"
+      ]
+    },
+    {
+      "id": "en.crisis.suicide_self_harm",
+      "level": "crisis",
+      "category": "self_harm_or_suicide",
+      "patterns": [
+        "(kill|killing|hurt|hurting|harm|harming|cut|cutting|end|ending) (myself|meself|my self)",
+        "suicid[a-z]*",
+        "self harm[a-z]*",
+        "(?<!(dont|do not|never|didnt|did not) )(want|wanted|going|gonna|planning|plan) to die",
+        "wish (i was|i were|i could be|i was just) dead",
+        "(dont|do not|no longer|didnt|did not) (want|wanna) to (be here|be alive|live|go on|wake up|exist)( anymore| any more)?",
+        "(end|ending|ended) (it all|my life|my own life|things)",
+        "(thinking|thought|think|thinks) (about|of) (ending|end) it",
+        "no (point|reason) (in )?(living|to live|going on)",
+        "better off (dead|without me)",
+        "(take|taking|took) my (own )?life",
+        "cant (go on|carry on)( anymore| any more| like this)?"
+      ]
+    },
+    {
+      "id": "en.crisis.overdose",
+      "level": "emergency",
+      "category": "self_harm_or_suicide",
+      "patterns": [
+        "(took|taken|take|swallowed|had) (an |a )?overdose",
+        "(took|taken|swallowed) (all|loads of|lots of|a lot of|too many|the whole (box|packet|pack|bottle) of) (my |his |her |their |the )?(tablets|pills|medication|medicine|paracetamol)"
+      ]
+    },
+    {
+      "id": "en.safeguarding.abuse",
+      "level": "urgent",
+      "category": "safeguarding",
+      "patterns": [
+        "(he|she|they|partner|husband|wife|boyfriend|girlfriend|someone|somebody) (keeps |has |)(hits|hit|beats|beat|beating|chokes|choked|strangled|kicks|kicked|punched|punches) me",
+        "(not|dont feel|do not feel) safe at home",
+        "(scared|afraid|frightened) (to go|of going) home",
+        "(being|been|is being|was) abused",
+        "domestic (abuse|violence)"
+      ]
+    },
+    {
+      "id": "en.letter.emergency_wording",
+      "level": "emergency",
+      "category": "urgent_wording_in_letter",
+      "patterns": [
+        "go (straight |directly |immediately |now )?to (a and e|accident and emergency|the emergency department|emergency department)",
+        "attend (a and e|accident and emergency|the emergency department|emergency department)",
+        "call 999"
+      ]
+    },
+    {
+      "id": "en.letter.urgent_wording",
+      "level": "urgent",
+      "category": "urgent_wording_in_letter",
+      "patterns": [
+        "urgent(ly)? (referral|referred|appointment|review|assessment|scan|investigation|investigations|treatment|admission)",
+        "referred (you )?urgently",
+        "(two|2) week wait",
+        "2ww",
+        "suspected cancer (pathway|referral)",
+        "(seek|get|needs|need) (urgent|immediate) (medical )?(help|attention|care|review)"
+      ]
+    }
+  ]
+}

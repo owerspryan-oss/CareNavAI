@@ -1,0 +1,49 @@
+{
+  "$comment": "Model per role (CONTEXT.md §9). Placeholders until each role is tested against real inputs; record date + result in `selection` when chosen (PRD §10.1).",
+  "roles": {
+    "GATE": {
+      "model": "gpt-5.5",
+      "timeoutMs": 12000,
+      "maxOutputTokens": 600,
+      "selection": { "testedOn": null, "result": "untested placeholder" }
+    },
+    "DRAFT": {
+      "model": "gpt-5.4-mini",
+      "timeoutMs": 30000,
+      "maxOutputTokens": 4000,
+      "selection": { "testedOn": null, "result": "untested placeholder" }
+    },
+    "TRANSLATE": {
+      "model": "gpt-5.5",
+      "reasoningEffort": "none",
+      "parallelParts": 2,
+      "timeoutMs": 30000,
+      "maxOutputTokens": 4000,
+      "selection": { "testedOn": "2026-10-25", "result": "gpt-5.5, reasoning none, prompt derive v2: 24/24 pass parity and protected spans, faithfulness 5/5 on all 24 (gpt-5.5 high-effort review, ht so ur zh-Hans pl pcm x J1/J2 fixtures), median 5.8 s vs 8.9 s at default effort with derive v1" }
+    },
+    "STYLE": {
+      "model": "gpt-5.4-mini",
+      "timeoutMs": 20000,
+      "maxOutputTokens": 2000,
+      "selection": { "testedOn": null, "result": "untested placeholder" }
+    },
+    "STT": {
+      "model": "gpt-4o-transcribe",
+      "timeoutMs": 30000,
+      "maxOutputTokens": 0,
+      "selection": { "testedOn": null, "result": "untested placeholder" }
+    },
+    "VISION": {
+      "model": "gpt-5.5",
+      "timeoutMs": 40000,
+      "maxOutputTokens": 3000,
+      "selection": { "testedOn": null, "result": "untested placeholder" }
+    },
+    "MODERATION": {
+      "model": "omni-moderation-latest",
+      "timeoutMs": 8000,
+      "maxOutputTokens": 0,
+      "selection": { "testedOn": null, "result": "untested placeholder" }
+    }
+  }
+}

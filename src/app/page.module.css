@@ -1,0 +1,92 @@
+.landing {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-7);
+  min-height: 100dvh;
+  max-width: 32rem;
+  margin: 0 auto;
+  padding: var(--space-7) var(--space-4) calc(var(--space-5) + env(safe-area-inset-bottom));
+  /* Soft warm glow in place of the mockup's illustration: low-stakes landing screen only (DESIGN_SYSTEM.md §6). */
+  background:
+    radial-gradient(60% 40% at 100% 55%, color-mix(in srgb, var(--color-coral-100) 70%, transparent), transparent 70%),
+    radial-gradient(55% 35% at 0% 70%, color-mix(in srgb, var(--color-teal-100) 70%, transparent), transparent 70%);
+}
+
+.top {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* Coral is reserved for the "AI" in the brand mark (DESIGN_SYSTEM.md §1). */
+.brandAi {
+  color: var(--color-coral-500);
+}
+
+.headline {
+  font-size: 2.375rem;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  text-wrap: balance;
+}
+
+.lead {
+  font-size: 1.125rem;
+  color: var(--color-ink-muted);
+  text-wrap: pretty;
+}
+
+.bottom {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.actions {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.language {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-2);
+  text-align: center;
+}
+
+.guest {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-size: var(--text-caption-size);
+  line-height: var(--text-caption-leading);
+  letter-spacing: var(--text-caption-tracking);
+  color: var(--color-ink-muted);
+}
+
+.guestIcon {
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Quiet, but still a 44px target (DESIGN_SYSTEM.md §9). */
+.accountLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  color: var(--color-teal-500);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}

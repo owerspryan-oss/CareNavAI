@@ -1,0 +1,91 @@
+{
+  "$comment": "DRAFT Trinidadian Creole red-flag rules (FR-05, PRD 9.1 layer 1). NOT CLINICALLY APPROVED and NOT YET REVIEWED BY A NATIVE SPEAKER: seed list for the local demo only. English (en.json) and Jamaican Patois (jam.json) rules always run as well, so this file only adds Trinidadian forms such as 'cyah' (can't), 'eh' (isn't/not), 'meh' (my/me) and 'doh' (don't). Matching rules are the same as en.json (normalised text, whole words; see en.json $comment). 'getting fit' means exercising, so only the plural 'fits' counts as a seizure word after get/getting.",
+  "language": "trf",
+  "kind": "language",
+  "status": "DRAFT_NOT_CLINICALLY_APPROVED",
+  "reviewed": false,
+  "rules": [
+    {
+      "id": "trf.breathing.cannot_breathe",
+      "level": "emergency",
+      "category": "breathing",
+      "patterns": [
+        "cyah (breathe|breath|ketch (meh|she|he|his|her) breath|catch (meh|she|he|his|her) breath|get (meh|she|he|his|her) breath)",
+        "(he|she|it|the baby|de baby) (eh|ent|aint) (breathin|breathing)"
+      ]
+    },
+    {
+      "id": "trf.breathing.difficult",
+      "level": "urgent",
+      "category": "breathing",
+      "patterns": [
+        "(meh|she|he|his|her) breath (short|tight)"
+      ]
+    },
+    {
+      "id": "trf.chest.pain",
+      "level": "urgent",
+      "category": "chest_pain",
+      "patterns": [
+        "chest .{0,15}(paining|painin|hurtin|tight up)"
+      ]
+    },
+    {
+      "id": "trf.stroke.face_side_speech",
+      "level": "emergency",
+      "category": "stroke_signs",
+      "patterns": [
+        "(face|mouth|mout) (gone|went|get|turn) (to one side|crooked|cross|twist up)",
+        "(mouth|mout|face) twist up",
+        "cyah talk (proper|properly|good|straight|right|clear)",
+        "one side (ah|of) (he|she|meh|his|her) body .{0,15}(dead|weak|numb|cyah move)"
+      ]
+    },
+    {
+      "id": "trf.bleeding.severe",
+      "level": "emergency",
+      "category": "severe_bleeding",
+      "patterns": [
+        "(blood|bleedin|bleeding) .{0,15}(eh|ent|aint|not|cyah) (stoppin|stopping|stop)",
+        "blood (just )?(pourin|pouring) out"
+      ]
+    },
+    {
+      "id": "trf.consciousness.unresponsive",
+      "level": "emergency",
+      "category": "loss_of_consciousness",
+      "patterns": [
+        "(he|she|it|the baby|de baby|meh mother|meh father|granny) (eh|ent|aint) (wakin|waking|wake)( up)?",
+        "(fall|fell|drop) down .{0,20}(eh|ent|aint|cyah) (wakin|waking|answerin|answering|talkin|talking)"
+      ]
+    },
+    {
+      "id": "trf.seizure.fits",
+      "level": "emergency",
+      "category": "seizure",
+      "patterns": [
+        "(havin|having|ketchin|ketching|catchin|catching) (ah |a )?(fit|fits|seizure)",
+        "(gettin|getting) fits"
+      ]
+    },
+    {
+      "id": "trf.allergy.swelling",
+      "level": "emergency",
+      "category": "severe_allergic_reaction",
+      "patterns": [
+        "(throat|tongue|lip|lips|mouth|face) .{0,10}(swellin|swell up|closin up|closin)"
+      ]
+    },
+    {
+      "id": "trf.crisis.suicide_self_harm",
+      "level": "crisis",
+      "category": "self_harm_or_suicide",
+      "patterns": [
+        "(?<!(doh|eh|ent|dont|nah) )(want|wanna) (to )?dead",
+        "(doh|eh|ent) (want|wanna) (to )?live (no more|again|anymore)",
+        "kill (mehself|meh self)",
+        "tired (ah|of) (livin|living)"
+      ]
+    }
+  ]
+}

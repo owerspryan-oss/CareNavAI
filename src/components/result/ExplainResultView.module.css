@@ -1,0 +1,189 @@
+/* Journey 2 result additions (DESIGN_SYSTEM.md §7). Shared pieces come from ResultView.module.css. */
+
+.items {
+  margin: 0;
+  list-style: none;
+}
+
+.panel[aria-busy] {
+  opacity: 0.55;
+  transition: opacity 0.2s linear;
+}
+
+.term {
+  font-weight: 700;
+}
+
+.detail {
+  font-size: 0.9375rem;
+  color: var(--color-ink-muted);
+}
+
+.medicineName {
+  font-weight: 700;
+  font-size: 1.0625rem;
+}
+
+.facts {
+  container-type: inline-size;
+  display: grid;
+  gap: var(--space-1);
+  margin: var(--space-1) 0 0;
+  font-size: 0.9375rem;
+}
+
+.fact {
+  display: grid;
+  grid-template-columns: minmax(6.5rem, auto) minmax(0, 1fr);
+  gap: var(--space-2);
+}
+
+.fact dt {
+  color: var(--color-ink-muted);
+}
+
+.fact dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+/* Very large text: each label sits above its value instead of beside it. */
+@container (max-width: 18em) {
+  .fact {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+}
+
+/* AC-02.5: ink text on the caution tint (caution-icon colour is never used for text, §2). */
+.check {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: 0.75rem;
+  background: var(--color-caution-bg);
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.checkIcon {
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: 0.0625rem;
+  color: var(--color-caution-icon);
+}
+
+.ask {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-teal-500);
+}
+
+/* "Show me this in" */
+
+.picker {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.picker[hidden] {
+  display: none;
+}
+
+.pickerLabel {
+  font-weight: 600;
+}
+
+.select {
+  appearance: none;
+  width: 100%;
+  min-height: 2.75rem;
+  padding-block: 0;
+  padding-inline: var(--space-4) 2.75rem;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-surface-muted);
+  /* Chevron, ink-muted, drawn inline so no icon font or image request is needed. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235B6670' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--space-4) center;
+  background-size: 1.125rem;
+  box-shadow: inset 0 0 0 1px var(--color-border);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+:global([dir="rtl"]) .select {
+  background-position: left var(--space-4) center;
+}
+
+.select:disabled {
+  color: var(--color-ink-muted);
+  cursor: progress;
+}
+
+.pickerStatus {
+  min-height: 1.4em;
+  font-size: var(--text-caption-size);
+  line-height: var(--text-caption-leading);
+  color: var(--color-ink-muted);
+}
+.pickerStatus:empty {
+  min-height: 0;
+}
+
+/* CLAUDE.md rule 7: neutral, clearly apart from the explanation. No tint, no badges, no highlights. */
+.notFound {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border-radius: var(--radius-card);
+  border: 1px dashed var(--color-ink-muted);
+  background: var(--color-surface-muted);
+}
+
+.notFoundHeading {
+  font-size: var(--text-body-size);
+  font-weight: 700;
+}
+
+.notFoundLead {
+  font-size: 0.9375rem;
+  color: var(--color-ink-muted);
+}
+
+.notFoundList {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0;
+  padding-inline-start: 1.25rem;
+  color: var(--color-ink-muted);
+  overflow-wrap: anywhere;
+}
+
+/* AC-08.6: the photo sits beside the result on wide screens, above it on a phone. */
+@media (min-width: 60rem) {
+  .withPhoto {
+    max-width: 60rem;
+  }
+
+  .withPhoto .main {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 20rem;
+    column-gap: var(--space-6);
+    align-items: start;
+  }
+
+  .withPhoto .main > * {
+    grid-column: 1;
+  }
+
+  .withPhoto .photo {
+    grid-column: 2;
+    grid-row: 1 / span 20;
+    position: sticky;
+    top: 4.5rem;
+  }
+}

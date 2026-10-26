@@ -1,0 +1,76 @@
+{
+  "$comment": "DRAFT Jamaican Patois red-flag rules (FR-05, PRD 9.1 layer 1). NOT CLINICALLY APPROVED and NOT YET REVIEWED BY A NATIVE SPEAKER: seed list for the local demo only. English rules (en.json) always run as well, because Patois speakers often code-switch, so this file only adds Patois-specific wording. Matching rules are the same as en.json (normalised text, whole words; see en.json $comment). Spelling varies a lot in written Patois; add variants rather than loosening patterns.",
+  "language": "jam",
+  "kind": "language",
+  "status": "DRAFT_NOT_CLINICALLY_APPROVED",
+  "reviewed": false,
+  "rules": [
+    {
+      "id": "jam.breathing.cannot_breathe",
+      "level": "emergency",
+      "category": "breathing",
+      "patterns": [
+        "(cyaan|caan|kyaan|kean) (catch|ketch|get|draw|find) (mi|me|him|her|im|dem|wi|she) (breath|breat|bret)",
+        "(cyaan|caan|kyaan|kean) (breathe|breath|breed|breeve)",
+        "(him|her|im|she|di baby|di pickney) (nah|nuh|nuh a) (breathe|breathing|breed)"
+      ]
+    },
+    {
+      "id": "jam.breathing.difficult",
+      "level": "urgent",
+      "category": "breathing",
+      "patterns": [
+        "(hard|haad) fi (breathe|breed|ketch (mi|me|him|her|im) breath)",
+        "(mi|me|him|her|im|she) breath (a |did |deh )?(short|tight)"
+      ]
+    },
+    {
+      "id": "jam.chest.pain",
+      "level": "urgent",
+      "category": "chest_pain",
+      "patterns": [
+        "chest .{0,15}(a hat|hat|a bun|bun|a buss|a pain|a hurt|tight up)",
+        "(mi|me) chest (a )?(hurt|hat|pain|tight)"
+      ]
+    },
+    {
+      "id": "jam.bleeding.severe",
+      "level": "emergency",
+      "category": "severe_bleeding",
+      "patterns": [
+        "(blood|bleeding|bleed) .{0,15}(nah|nuh|wah nuh|cyaan|caan|kyaan) stop",
+        "blood (a |deh )?(pour|gush|run) (out )?(bad|whole heap|nuff)"
+      ]
+    },
+    {
+      "id": "jam.consciousness.unresponsive",
+      "level": "emergency",
+      "category": "loss_of_consciousness",
+      "patterns": [
+        "(drop|drop dung|faint|pass out|dead out) .{0,20}(nah|nuh|cyaan|caan|wah nuh) wake",
+        "(him|her|im|she|di baby|di pickney) (nah|nuh|cyaan|caan|wah nuh) wake( up)?",
+        "(him|her|im|she) (nah|nuh) answer (mi|me|wi)"
+      ]
+    },
+    {
+      "id": "jam.seizure.fit",
+      "level": "emergency",
+      "category": "seizure",
+      "patterns": [
+        "(tek|ketch|a have|a get|a tek) (a )?(fit|fits|seizure)"
+      ]
+    },
+    {
+      "id": "jam.crisis.suicide_self_harm",
+      "level": "crisis",
+      "category": "self_harm_or_suicide",
+      "patterns": [
+        "(nuh|nah|dont|doh) (waan|want|wah|wan) (live|liv|bi yah|be here|deh yah|deh ya|bodda live)",
+        "(?<!(nuh|nah|dont|doh) )(waan|wah|wan) (dead|ded|dead off|fi dead|dead now)",
+        "kill (miself|meself|mi self|myself)",
+        "(mi|me) (tired|tyad|tiad) a (life|live|living)",
+        "(mi|me) (a go|gwine|ago|goin) (end it|tek mi life|kill miself)"
+      ]
+    }
+  ]
+}

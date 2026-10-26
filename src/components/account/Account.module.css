@@ -1,0 +1,185 @@
+/* Account pages (FR-12/13/14): built by extension of DESIGN_SYSTEM.md — surface cards, pill buttons, tokens only. */
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  max-width: 32rem;
+  margin: 0 auto;
+}
+
+.main {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding: var(--space-2) var(--space-4) var(--space-6);
+}
+
+.intro {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.title {
+  font-size: var(--text-display-size);
+  line-height: var(--text-display-leading);
+  letter-spacing: var(--text-display-tracking);
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.heading {
+  font-size: var(--text-title-size);
+  line-height: var(--text-title-leading);
+  letter-spacing: var(--text-title-tracking);
+  font-weight: 700;
+}
+
+.lead,
+.muted {
+  color: var(--color-ink-muted);
+}
+
+.muted {
+  font-size: var(--text-caption-size);
+  line-height: var(--text-caption-leading);
+  letter-spacing: var(--text-caption-tracking);
+}
+
+.card {
+  display: grid;
+  /* One column that never grows past the card, whatever the text size (no sideways scroll at 200%). */
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+  min-width: 0;
+  padding: var(--space-4);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+
+.form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+}
+
+.field {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.label {
+  font-weight: 600;
+}
+
+.hint {
+  color: var(--color-ink-muted);
+  font-size: 0.9375rem;
+}
+
+.input {
+  width: 100%;
+  min-height: 3rem;
+  padding: var(--space-3) var(--space-4);
+  border: 0;
+  border-radius: var(--radius-card);
+  background: var(--color-bg);
+  box-shadow: inset 0 0 0 1px var(--color-border);
+  font-size: var(--text-body-size);
+  transition: box-shadow 0.15s linear;
+}
+
+.input:focus {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--color-teal-500);
+}
+
+.error {
+  padding: var(--space-2) var(--space-3);
+  border-radius: 0.75rem;
+  background: var(--color-caution-bg);
+}
+
+.linkBlock {
+  display: grid;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+.linkStatus {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.linkStatus:empty {
+  display: none;
+}
+
+.textLink {
+  color: var(--color-teal-500);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.signedIn {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.section {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3);
+}
+
+.savedList {
+  display: grid;
+  gap: var(--space-3);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.savedMeta {
+  display: grid;
+  gap: var(--space-1);
+  overflow-wrap: anywhere;
+}
+
+.savedTitle {
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-leading);
+  font-weight: 700;
+}
+
+/* Quiet text actions in one row that wraps; each stays a 44px target. */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+}
+
+/* "Open" reads like its neighbouring link buttons (no underline). */
+.actions > a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  text-decoration: none;
+}
+
+.confirm {
+  display: grid;
+  gap: var(--space-3);
+}
+
+/* Body copy on a caution tint is always ink (DESIGN_SYSTEM.md §2). */
+.warning {
+  padding: var(--space-3) var(--space-4);
+  border-radius: 0.75rem;
+  background: var(--color-caution-bg);
+  font-weight: 500;
+}

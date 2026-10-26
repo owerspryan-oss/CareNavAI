@@ -1,0 +1,90 @@
+.deck {
+  display: grid;
+  gap: var(--space-4);
+}
+
+/* All cards share one grid cell, so the deck is as tall as its card height, not the sum. */
+.viewport {
+  display: grid;
+  position: relative;
+  touch-action: pan-y; /* vertical scroll stays native; horizontal swipes are ours */
+  user-select: none;
+  outline-offset: 4px;
+  border-radius: var(--radius-card);
+  /* Room for the cards waiting underneath to peek out below the top card. */
+  padding-bottom: 1.25rem;
+}
+
+.card {
+  grid-area: 1 / 1;
+  /* The top card fits its content (capped, so long ones scroll inside); see .card:not([data-current]). */
+  align-self: start;
+  max-height: min(62svh, 34rem);
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  transform-origin: 50% 100%;
+  will-change: transform;
+}
+
+.card:not([data-current]) {
+  pointer-events: none;
+  /* Cards underneath match the top card's height, so they only peek out by the stack offset. */
+  height: var(--deck-card-height, auto);
+  overflow: hidden;
+}
+
+.viewport[data-dragging] .body {
+  user-select: none;
+}
+
+.title {
+  margin: 0;
+  font-size: var(--text-title-size);
+  line-height: var(--text-title-leading);
+  letter-spacing: var(--text-title-tracking);
+}
+
+/* Long content (or large OS text sizes) scrolls inside the card, never off the deck. */
+.body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  user-select: text;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.controls > :last-child {
+  justify-self: end;
+}
+
+.position {
+  margin: 0;
+  font-size: var(--text-caption-size);
+  color: var(--color-ink-muted);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Cross-fade only: the stack does not move. */
+  .card {
+    transform: none !important;
+    transition: opacity var(--spring-default-duration) ease;
+  }
+  .card:not([data-current]) {
+    opacity: 0 !important;
+  }
+}

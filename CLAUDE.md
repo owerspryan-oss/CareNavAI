@@ -65,4 +65,16 @@ UI work (mockups, components, motion) follows Apple's interface-design approach,
 
 ## Commands
 
-No build/lint/test commands exist yet — there is no `package.json`. Once the Next.js project is scaffolded, record the actual commands here (dev server, typecheck, lint, `vitest`/`vitest run <file>` for a single test, the urgency test runner, Playwright e2e) rather than guessing generic ones.
+- `npm run dev` — Next.js dev server (http://localhost:3000)
+- `npm run build` — production build (also typechecks)
+- `npm run typecheck` — `tsc --noEmit`
+- `npm run lint` — ESLint (next core-web-vitals + typescript)
+- `npm test` — all Vitest tests; single file: `npx vitest run tests/unit/logger.test.ts`
+- `npm run test:urgency` — urgency matrix (T-16): every seed scenario through the full gate, prints a pass/fail table. Uses live models when `OPENAI_API_KEY` is set; fails only on a MISS (a must-route-up case returned `clear`).
+- Demo mode (FR-26): `DEMO_MODE=true` in `.env.local`, then Alt+Shift+D on a journey's first screen loads the fictional inputs in `demo/` (see `demo/script.md`).
+- `npm run test:a11y` — T-18 accessibility check (needs `npm run dev` running; `A11Y_BASE_URL` to point elsewhere, `CHROMIUM_PATH` for the browser): drives both journeys with the API faked from `tests/fixtures`, runs axe (WCAG 2.1 AA) on 24 screens and checks for sideways scrolling at 200% text.
+- Interface languages (FR-27, T-32): `content/ui/en.json` is the master. `node --env-file=.env.local scripts/translate-ui.mjs <code…>|--all` translates missing or out-of-date strings (TRANSLATE role, prompt `translate-ui.v1.md`); `--stamp <code>` records the current English as the source after a hand edit. `npm run ui:review:export -- <code>` writes a CSV review sheet; `npm run ui:review:import -- <code> <file.csv>` brings it back and sets `reviewed: true` only when every string is approved.
+- Accounts (FR-12/13, T-23): `/account`. Locally, magic links show on `/dev/inbox` (localhost only, memory only). With `PILOT_INVITE_REQUIRED=true`, `npm run invite:create -- [--uses N] [--days D]` prints a new invite code once (only its hash is stored). Saved summaries (FR-14, T-24) need `DATA_KEY` (32 bytes, base64) in `.env.local`; without it, saving is off and nothing is stored.
+- Windows: install with `npm ci --ignore-scripts`. npm 11 ignores better-sqlite3's `gypfile: false` and tries to compile it (needs Visual Studio), although the package ships a `win32-x64` binary. No other dependency needs its install script on Windows.
+- Copy `.env.example` to `.env.local` for local config. Playwright e2e will be recorded here when it exists.
+- Next.js 16 differs from older versions — check `node_modules/next/dist/docs/` before using an unfamiliar API (see `AGENTS.md`).

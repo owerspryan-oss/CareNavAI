@@ -1,0 +1,70 @@
+.list {
+  position: relative;
+  display: flex;
+  gap: var(--space-1);
+  padding: var(--space-1);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-muted);
+  box-shadow: inset 0 0 0 1px var(--color-border);
+}
+
+.thumb {
+  position: absolute;
+  top: var(--space-1);
+  bottom: var(--space-1);
+  left: 0;
+  border-radius: var(--radius-pill);
+  background: var(--color-coral-700);
+  box-shadow: var(--shadow-button);
+  pointer-events: none;
+}
+
+/* Slide on the default spring once placed (DESIGN_SYSTEM.md §8). */
+.thumb[data-ready] {
+  transition:
+    transform var(--spring-default-duration) var(--ease-spring-default),
+    width var(--spring-default-duration) var(--ease-spring-default);
+}
+
+.tab {
+  position: relative; /* above the thumb */
+  flex: 1 1 auto;
+  min-height: 2.75rem;
+  padding: var(--space-2) var(--space-3);
+  border: 0;
+  white-space: nowrap;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-ink);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition:
+    color 0.15s linear,
+    transform var(--spring-default-duration) var(--ease-spring-default);
+}
+
+.tab:active {
+  transform: scale(0.97);
+  transition-duration: 0.1s;
+}
+
+/* Thumb is coral-700: white 15px text needs >= 4.5:1, which coral-500/600 don't reach (DESIGN_SYSTEM.md §2). */
+.tab[aria-selected="true"] {
+  color: var(--color-on-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .thumb[data-ready] {
+    transition: none;
+  }
+  .tab:active {
+    transform: none;
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "$comment": "DRAFT Sierra Leonean Krio red-flag rules (FR-05, PRD 9.1 layer 1). NOT CLINICALLY APPROVED and NOT YET REVIEWED BY A NATIVE SPEAKER: seed list for the local demo only. English rules (en.json) and the Pidgin/Patois lists always run as well, so this file only adds Krio wording. Matching rules are the same as en.json (normalised text, whole words; see en.json $comment). Krio is written both in the standard orthography (ɛ, ɔ) and informally with e/o, so patterns accept both. 'blo' means breathe but also blow (blo nos = blow your nose), so the breathing rule excludes 'blo ... nos'. 'day' means die.",
+  "language": "kri",
+  "kind": "language",
+  "status": "DRAFT_NOT_CLINICALLY_APPROVED",
+  "reviewed": false,
+  "rules": [
+    {
+      "id": "kri.breathing.cannot_breathe",
+      "level": "emergency",
+      "category": "breathing",
+      "patterns": [
+        "n(ɔ|o) (ebul|eble|able|kin|de|go ebul) (blo|blow|briv)(?! (mi|yu|in|i|di|dɛn|den) (nos|nose))",
+        "(blo|blow|briv|breath) .{0,10}n(ɔ|o) de (kam|kɔm|come)"
+      ]
+    },
+    {
+      "id": "kri.chest.pain_with_red_flags",
+      "level": "emergency",
+      "category": "chest_pain",
+      "patterns": [
+        "ch(ɛ|e)st (de|d(ɔ|o)n) (at|hat|pen|pain|tayt|tight)",
+        "ch(ɛ|e)st .{0,10}(at|hat|pen|pain) mi"
+      ],
+      "requiresAlso": [
+        [
+          "blo|blow|briv|breath",
+          "sw(ɛ|e)t|sweat",
+          "(an|han|arm|jɔ|jo) (de |d(ɔ|o)n )?(at|hat|pen|pain|day|numb)"
+        ]
+      ]
+    },
+    {
+      "id": "kri.chest.pain",
+      "level": "urgent",
+      "category": "chest_pain",
+      "patterns": [
+        "ch(ɛ|e)st (de|d(ɔ|o)n) (at|hat|pen|pain|tayt|tight)",
+        "ch(ɛ|e)st .{0,10}(at|hat|pen|pain) mi"
+      ]
+    },
+    {
+      "id": "kri.stroke.face_side_speech",
+      "level": "emergency",
+      "category": "stroke_signs",
+      "patterns": [
+        "(fes|face|m(ɔ|o)t|mouth) d(ɔ|o)n (twis|twist|dr(ɔ|o)p|f(ɔ|o)d(ɔ|o)m|chenj)",
+        "wan say .{0,25}(d(ɔ|o)n day|n(ɔ|o) de muv|n(ɔ|o) de move|d(ɔ|o)n wik|d(ɔ|o)n weak)",
+        "n(ɔ|o) (ebul|eble|able|kin) t(ɔ|o)k (fayn|fine|klia|klear|clear|p(ɔ|o)p(ɔ|o))"
+      ]
+    },
+    {
+      "id": "kri.bleeding.severe",
+      "level": "emergency",
+      "category": "severe_bleeding",
+      "patterns": [
+        "bl(ɔ|o|oo)d .{0,15}n(ɔ|o) (de |gri |wan )?st(ɔ|o)p",
+        "b(ɔ|o)ku bl(ɔ|o|oo)d (de )?(r(ɔ|o)n|k(ɔ|o)m(ɔ|o)t|kam|kɔm|come)"
+      ]
+    },
+    {
+      "id": "kri.consciousness.unresponsive",
+      "level": "emergency",
+      "category": "loss_of_consciousness",
+      "patterns": [
+        "i n(ɔ|o) (de |ebul |gri )?wek( (ɔ|o)p)?",
+        "(di pikin|di bebi|mi mama|mi papa|mi granma|mi granpa) n(ɔ|o) (de |ebul |gri )?(wek|wake)( (ɔ|o)p| up)?",
+        "f(ɔ|o)d(ɔ|o)m .{0,20}n(ɔ|o) (de )?(wek|t(ɔ|o)k|ansa)"
+      ]
+    },
+    {
+      "id": "kri.seizure.fit",
+      "level": "emergency",
+      "category": "seizure",
+      "patterns": [
+        "(fit|fits|k(ɔ|o)nv(ɔ|o)lsh(ɔ|o)n|convulsion) (de |d(ɔ|o)n )?(kech|ketch|(ɔ|o)l|hold) (am|i|in)"
+      ]
+    },
+    {
+      "id": "kri.allergy.swelling",
+      "level": "emergency",
+      "category": "severe_allergic_reaction",
+      "patterns": [
+        "(m(ɔ|o)t|lip|lips|t(ɔ|o)ng|tong|trot|fes) (d(ɔ|o)n |de )?(sw(ɛ|e)l|swell)"
+      ]
+    },
+    {
+      "id": "kri.crisis.suicide_self_harm",
+      "level": "crisis",
+      "category": "self_harm_or_suicide",
+      "patterns": [
+        "(?<!n(ɔ|o) )(a|mi) (j(ɔ|o)s |jus )?(wan|want) (f(ɔ|o) |to )?(day|die)",
+        "kil (mis(ɛ|e)f|mi s(ɛ|e)f)|kill (mis(ɛ|e)f|mi s(ɛ|e)f)",
+        "(a|mi) n(ɔ|o) (wan|want) (f(ɔ|o) )?liv (igen|again|m(ɔ|o)|more|no more)",
+        "(a|mi) (d(ɔ|o)n )?tay(a)?d (f(ɔ|o)|to) liv"
+      ]
+    }
+  ]
+}

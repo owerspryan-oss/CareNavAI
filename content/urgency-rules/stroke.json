@@ -1,0 +1,58 @@
+{
+  "$comment": "DRAFT stroke (FAST: Face, Arms, Speech, Time) patterns (FR-05, PRD 9.1). NOT CLINICALLY APPROVED; the Patois and Pidgin variants are NOT YET REVIEWED BY A NATIVE SPEAKER. Shared list: runs on every input whatever the language. Matching rules are the same as en.json (normalised text, whole words).",
+  "language": "*",
+  "kind": "stroke",
+  "status": "DRAFT_NOT_CLINICALLY_APPROVED",
+  "reviewed": false,
+  "rules": [
+    {
+      "id": "stroke.face",
+      "level": "emergency",
+      "category": "stroke_signs",
+      "patterns": [
+        "face .{0,20}(dropped|drooping|droop|droops|fallen|sagging|lopsided|gone (funny|numb|weak))",
+        "(one side|side) of (my|his|her|their|the) (face|mouth) .{0,20}(dropped|drooping|droop|droops|numb|weak|fallen)",
+        "(cant|can not|cannot|unable to) smile",
+        "face (a |dun |did )?(drop|twis|tun)",
+        "mout(h)? (a |dun |did )?(twis|twist|drop|tun)",
+        "face don (shift|turn|twist|fall|drop|scatter)",
+        "mouth don (twist|turn|shift|fall|drop)"
+      ]
+    },
+    {
+      "id": "stroke.arm_or_side_weakness",
+      "level": "emergency",
+      "category": "stroke_signs",
+      "patterns": [
+        "(weak|weakness|numb|numbness|paralysed|paralyzed|cant move) .{0,25}(one side|left side|right side)",
+        "(one side|left side|right side) .{0,25}(weak|weakness|numb|numbness|paralysed|paralyzed|wont move|cant move|dead)",
+        "(cant|can not|cannot|unable to) (lift|raise|hold up) (both|one of) (my|his|her|their) arms",
+        "one side (a |ah )?(dead|weak|numb)",
+        "one side (of (im|her|his|my) body )?(no dey move|don die|don weak|no fit move)"
+      ]
+    },
+    {
+      "id": "stroke.speech",
+      "level": "emergency",
+      "category": "stroke_signs",
+      "patterns": [
+        "(speech|words|talking|voice) .{0,15}(slurred|slurring|jumbled|muddled|garbled)",
+        "(slurred|slurring|slurs)",
+        "(cant|can not|cannot|unable to) (speak|talk) (properly|clearly|right|straight|at all)",
+        "(cant|can not|cannot) get (his|her|my|their) words out",
+        "(cyaan|caan|kyaan) talk (good|proper|properly|straight|right|clear)",
+        "talk (a |di )?slur",
+        "no (fit|dey fit) talk (well|proper|properly|clear|straight)",
+        "talk dey (slur|scatter|jam)"
+      ]
+    },
+    {
+      "id": "stroke.named",
+      "level": "emergency",
+      "category": "stroke_signs",
+      "patterns": [
+        "(having|is having|hes having|shes having|im having|might be having) a stroke"
+      ]
+    }
+  ]
+}

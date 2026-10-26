@@ -48,9 +48,11 @@ All values are light-mode. **Dark mode has not been designed** — flag this as 
 | `--color-coral-400` | `#FD8A6E` | Hover/active tints, progress-bar filled segments |
 | `--color-coral-500` | `#F2654B` | **Primary accent** — primary buttons, active tab, links on dark |
 | `--color-coral-600` | `#E8543E` | Primary button pressed state, urgent CTA ("I understand, continue") |
+| `--color-coral-700` | `#C93F2A` | Coral fill behind small white text (e.g. active segmented-control tab). 4.97:1 with white, passes AA at any size |
 | `--color-teal-100` | `#D6EDE6` | Pale teal tint (info banners, secondary icon badges) |
 | `--color-teal-500` | `#1F6F6B` | **Secondary accent** — secondary button fill ("Understand what I was told"), secondary links ("Start again") |
 | `--color-teal-700` | `#14504C` | Secondary button pressed state |
+| `--color-on-accent` | `#FFFFFF` | Text and icons on coral/teal fills |
 
 ### Semantic / status colors
 
@@ -71,7 +73,7 @@ All values are light-mode. **Dark mode has not been designed** — flag this as 
 | Pairing | Ratio | Pass? |
 | --- | --- | --- |
 | `--color-ink` on `--color-bg` | ~17.8:1 | ✅ |
-| White text on `--color-coral-500` | ~3.1:1 | ⚠️ borderline — use white text only at ≥18px/bold (large-text threshold is 3:1), or darken to `--color-coral-600` for small text on buttons |
+| White text on `--color-coral-500` | ~3.1:1 | ⚠️ borderline — use white text only at ≥18px/bold (large-text threshold is 3:1), or use `--color-coral-700` for small text (coral-600 is only ~3.6:1) |
 | `--color-caution-icon` on `--color-caution-bg` | ~2.6:1 | ❌ fails for text — only ever use this pairing for the icon glyph, not for caution body copy (body copy on caution banners must use `--color-ink`, as in the mockup) |
 | `--color-ink` on `--color-urgent-bg` | ~15.9:1 | ✅ |
 
@@ -134,6 +136,7 @@ Follows the Apple Design rule: tighten tracking as size increases, loosen (sligh
 | Token | Value | Use |
 | --- | --- | --- |
 | `--shadow-button` | `0 6px 16px rgba(242,101,75,0.28)` | Under filled coral/teal buttons — colored, soft, matches the button hue (not a generic gray shadow) |
+| `--shadow-button-secondary` | `0 6px 16px rgba(31,111,107,0.28)` | Same recipe under teal (secondary) buttons |
 | `--shadow-card` | `0 2px 8px rgba(11,18,22,0.06)` | Cards/banners on cream background |
 
 ---
@@ -199,6 +202,8 @@ Load `.claude/skills/apple-design/SKILL.md` before implementing any of this — 
 | Banner/card appearance | Materialize (blur+scale together), not a flat fade — per materials guidance §12 of the skill |
 | Mic button while listening | Continuous, real-time feedback (waveform or pulsing ring) synced to actual audio input — never a looping decorative animation that's disconnected from real mic state |
 | Reduced motion | All of the above degrade to opacity cross-fades only, no scale/slide, per `prefers-reduced-motion` |
+
+CSS can't run a true spring, so `design/tokens.css` exposes `--ease-spring-default` (a `linear()` curve sampled from the critically damped spring above, damping 1.0 / response 0.35s) with `--spring-default-duration` (0.45s, the curve's settle time). Use them for CSS transitions and view transitions; switch to a JS spring only for gesture-driven, interruptible motion.
 
 ---
 

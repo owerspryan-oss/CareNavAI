@@ -1,0 +1,799 @@
+{
+  "$comment": "Language registry (FR-28, AC-28.1). Tier is DERIVED from signoff flags + content presence (ADR-013) - never add a tier field. tierATarget = v0.3 A4 list. outputMode per v0.3 A5. playful = FR-23 playful restyle offered (English-based dialects the project supports: PRD §10.5 item 5); absent means false.",
+  "languages": [
+    {
+      "code": "en",
+      "englishName": "English",
+      "nativeName": "English",
+      "script": "Latn",
+      "dir": "ltr",
+      "outputMode": "simple_english",
+      "tierATarget": false,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": true,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "jam",
+      "englishName": "Jamaican Patois",
+      "nativeName": "Patwa",
+      "script": "Latn",
+      "dir": "ltr",
+      "outputMode": "simple_english",
+      "playful": true,
+      "tierATarget": true,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "pcm",
+      "englishName": "Nigerian Pidgin",
+      "nativeName": "Naijá",
+      "script": "Latn",
+      "dir": "ltr",
+      "outputMode": "dialect_output",
+      "playful": true,
+      "tierATarget": true,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "tw",
+      "englishName": "Twi",
+      "nativeName": "Twi",
+      "script": "Latn",
+      "dir": "ltr",
+      "outputMode": "translation",
+      "tierATarget": true,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "hi",
+      "englishName": "Hindi",
+      "nativeName": "हिन्दी",
+      "script": "Deva",
+      "dir": "ltr",
+      "outputMode": "translation",
+      "tierATarget": true,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "ht",
+      "englishName": "Haitian Creole",
+      "nativeName": "Kreyòl ayisyen",
+      "script": "Latn",
+      "dir": "ltr",
+      "outputMode": "translation",
+      "tierATarget": true,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "kri",
+      "englishName": "Sierra Leonean Krio",
+      "nativeName": "Krio",
+      "script": "Latn",
+      "dir": "ltr",
+      "outputMode": "simple_english",
+      "tierATarget": true,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "gyn",
+      "englishName": "Guyanese Creole",
+      "nativeName": "Creolese",
+      "script": "Latn",
+      "dir": "ltr",
+      "outputMode": "simple_english",
+      "tierATarget": true,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "trf",
+      "englishName": "Trinidadian Creole",
+      "nativeName": "Trinidadian Creole",
+      "script": "Latn",
+      "dir": "ltr",
+      "outputMode": "simple_english",
+      "tierATarget": true,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "so",
+      "englishName": "Somali",
+      "nativeName": "Soomaali",
+      "script": "Latn",
+      "dir": "ltr",
+      "outputMode": "translation",
+      "tierATarget": false,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "pl",
+      "englishName": "Polish",
+      "nativeName": "Polski",
+      "script": "Latn",
+      "dir": "ltr",
+      "outputMode": "translation",
+      "tierATarget": false,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "ur",
+      "englishName": "Urdu",
+      "nativeName": "اردو",
+      "script": "Arab",
+      "dir": "rtl",
+      "outputMode": "translation",
+      "tierATarget": false,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "pa-Guru",
+      "englishName": "Panjabi (Gurmukhi)",
+      "nativeName": "ਪੰਜਾਬੀ",
+      "script": "Guru",
+      "dir": "ltr",
+      "outputMode": "translation",
+      "tierATarget": false,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "pa-Arab",
+      "englishName": "Panjabi (Shahmukhi)",
+      "nativeName": "پنجابی",
+      "script": "Arab",
+      "dir": "rtl",
+      "outputMode": "translation",
+      "tierATarget": false,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "zh-Hans",
+      "englishName": "Mandarin (Simplified)",
+      "nativeName": "简体中文",
+      "script": "Hans",
+      "dir": "ltr",
+      "outputMode": "translation",
+      "tierATarget": false,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "zh-Hant",
+      "englishName": "Cantonese (Traditional)",
+      "nativeName": "繁體中文",
+      "script": "Hant",
+      "dir": "ltr",
+      "outputMode": "translation",
+      "tierATarget": false,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "bn",
+      "englishName": "Bengali",
+      "nativeName": "বাংলা",
+      "script": "Beng",
+      "dir": "ltr",
+      "outputMode": "translation",
+      "tierATarget": false,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "ro",
+      "englishName": "Romanian",
+      "nativeName": "Română",
+      "script": "Latn",
+      "dir": "ltr",
+      "outputMode": "translation",
+      "tierATarget": false,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "pt",
+      "englishName": "Portuguese",
+      "nativeName": "Português",
+      "script": "Latn",
+      "dir": "ltr",
+      "outputMode": "translation",
+      "tierATarget": false,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "es",
+      "englishName": "Spanish",
+      "nativeName": "Español",
+      "script": "Latn",
+      "dir": "ltr",
+      "outputMode": "translation",
+      "tierATarget": false,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "it",
+      "englishName": "Italian",
+      "nativeName": "Italiano",
+      "script": "Latn",
+      "dir": "ltr",
+      "outputMode": "translation",
+      "tierATarget": false,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "fr",
+      "englishName": "French",
+      "nativeName": "Français",
+      "script": "Latn",
+      "dir": "ltr",
+      "outputMode": "translation",
+      "tierATarget": false,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "tr",
+      "englishName": "Turkish",
+      "nativeName": "Türkçe",
+      "script": "Latn",
+      "dir": "ltr",
+      "outputMode": "translation",
+      "tierATarget": false,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "lt",
+      "englishName": "Lithuanian",
+      "nativeName": "Lietuvių",
+      "script": "Latn",
+      "dir": "ltr",
+      "outputMode": "translation",
+      "tierATarget": false,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "sq",
+      "englishName": "Albanian",
+      "nativeName": "Shqip",
+      "script": "Latn",
+      "dir": "ltr",
+      "outputMode": "translation",
+      "tierATarget": false,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "bg",
+      "englishName": "Bulgarian",
+      "nativeName": "Български",
+      "script": "Cyrl",
+      "dir": "ltr",
+      "outputMode": "translation",
+      "tierATarget": false,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "ru",
+      "englishName": "Russian",
+      "nativeName": "Русский",
+      "script": "Cyrl",
+      "dir": "ltr",
+      "outputMode": "translation",
+      "tierATarget": false,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "uk",
+      "englishName": "Ukrainian",
+      "nativeName": "Українська",
+      "script": "Cyrl",
+      "dir": "ltr",
+      "outputMode": "translation",
+      "tierATarget": false,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "ar",
+      "englishName": "Arabic",
+      "nativeName": "العربية",
+      "script": "Arab",
+      "dir": "rtl",
+      "outputMode": "translation",
+      "tierATarget": false,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "fa",
+      "englishName": "Farsi",
+      "nativeName": "فارسی",
+      "script": "Arab",
+      "dir": "rtl",
+      "outputMode": "translation",
+      "tierATarget": false,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "ps",
+      "englishName": "Pashto",
+      "nativeName": "پښتو",
+      "script": "Arab",
+      "dir": "rtl",
+      "outputMode": "translation",
+      "tierATarget": false,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "ckb",
+      "englishName": "Sorani Kurdish",
+      "nativeName": "کوردی",
+      "script": "Arab",
+      "dir": "rtl",
+      "outputMode": "translation",
+      "tierATarget": false,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "gu",
+      "englishName": "Gujarati",
+      "nativeName": "ગુજરાતી",
+      "script": "Gujr",
+      "dir": "ltr",
+      "outputMode": "translation",
+      "tierATarget": false,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "ta",
+      "englishName": "Tamil",
+      "nativeName": "தமிழ்",
+      "script": "Taml",
+      "dir": "ltr",
+      "outputMode": "translation",
+      "tierATarget": false,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "te",
+      "englishName": "Telugu",
+      "nativeName": "తెలుగు",
+      "script": "Telu",
+      "dir": "ltr",
+      "outputMode": "translation",
+      "tierATarget": false,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "ml",
+      "englishName": "Malayalam",
+      "nativeName": "മലയാളം",
+      "script": "Mlym",
+      "dir": "ltr",
+      "outputMode": "translation",
+      "tierATarget": false,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "ne",
+      "englishName": "Nepali",
+      "nativeName": "नेपाली",
+      "script": "Deva",
+      "dir": "ltr",
+      "outputMode": "translation",
+      "tierATarget": false,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "ti",
+      "englishName": "Tigrinya",
+      "nativeName": "ትግርኛ",
+      "script": "Ethi",
+      "dir": "ltr",
+      "outputMode": "translation",
+      "tierATarget": false,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "am",
+      "englishName": "Amharic",
+      "nativeName": "አማርኛ",
+      "script": "Ethi",
+      "dir": "ltr",
+      "outputMode": "translation",
+      "tierATarget": false,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "yo",
+      "englishName": "Yoruba",
+      "nativeName": "Yorùbá",
+      "script": "Latn",
+      "dir": "ltr",
+      "outputMode": "translation",
+      "tierATarget": false,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "ig",
+      "englishName": "Igbo",
+      "nativeName": "Igbo",
+      "script": "Latn",
+      "dir": "ltr",
+      "outputMode": "translation",
+      "tierATarget": false,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "sw",
+      "englishName": "Swahili",
+      "nativeName": "Kiswahili",
+      "script": "Latn",
+      "dir": "ltr",
+      "outputMode": "translation",
+      "tierATarget": false,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "vi",
+      "englishName": "Vietnamese",
+      "nativeName": "Tiếng Việt",
+      "script": "Latn",
+      "dir": "ltr",
+      "outputMode": "translation",
+      "tierATarget": false,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    },
+    {
+      "code": "tl",
+      "englishName": "Tagalog",
+      "nativeName": "Tagalog",
+      "script": "Latn",
+      "dir": "ltr",
+      "outputMode": "translation",
+      "tierATarget": false,
+      "signoff": {
+        "interfaceReviewed": false,
+        "urgentMessagesReviewed": false,
+        "rulesListPresent": false,
+        "testScenariosPassed": false,
+        "sttTested": false,
+        "voiceDisabled": false,
+        "pdfFontVerified": false
+      }
+    }
+  ]
+}

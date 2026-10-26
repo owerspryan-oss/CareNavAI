@@ -1,0 +1,144 @@
+/* Clinician feedback form (FR-16). Built by extension of DESIGN_SYSTEM.md: card, radio cards, primary pill button. */
+
+.page {
+  max-width: 36rem;
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-4) var(--space-7);
+}
+
+.top {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-3) 0 var(--space-5);
+}
+
+.wordmark {
+  font-weight: 800;
+  font-size: var(--text-title-size);
+  letter-spacing: var(--text-title-tracking);
+}
+
+.wordmark span {
+  color: var(--color-coral-500);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-5);
+}
+
+.title {
+  font-size: var(--text-display-size);
+  line-height: var(--text-display-leading);
+  letter-spacing: var(--text-display-tracking);
+  font-weight: 700;
+}
+
+.lead,
+.caption {
+  color: var(--color-ink-muted);
+}
+
+.caption {
+  font-size: var(--text-caption-size);
+  line-height: var(--text-caption-leading);
+  letter-spacing: var(--text-caption-tracking);
+  margin-top: var(--space-2);
+}
+
+.error {
+  background: var(--color-caution-bg);
+  border-radius: var(--radius-card);
+  padding: var(--space-3) var(--space-4);
+}
+
+.group {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+.legend {
+  display: block;
+  font-size: var(--text-title-size);
+  line-height: var(--text-title-leading);
+  font-weight: 700;
+  padding: 0;
+  margin-bottom: var(--space-3);
+}
+
+.options {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 3rem;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  cursor: pointer;
+}
+
+.option:has(input:checked) {
+  border-color: var(--color-coral-500);
+  background: var(--color-coral-100);
+}
+
+.option input {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin: 0;
+  accent-color: var(--color-coral-600);
+}
+
+/* Patient-details warning: ink text on the caution tint (caution icon colour fails as text). */
+.warning {
+  background: var(--color-caution-bg);
+  border-radius: var(--radius-card);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-3);
+  font-weight: 500;
+}
+
+.textarea {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  resize: vertical;
+}
+
+.submit {
+  align-self: stretch;
+  min-height: 3.25rem;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--color-coral-500);
+  color: var(--color-on-accent);
+  /* White on coral passes only as large text (DESIGN_SYSTEM.md §2), as in the shared Button. */
+  font-size: 1.1875rem;
+  font-weight: 700;
+  box-shadow: var(--shadow-button);
+  cursor: pointer;
+  transition: transform var(--spring-default-duration) var(--ease-spring-default);
+}
+
+.submit:active {
+  transform: scale(0.97);
+  background: var(--color-coral-600);
+  box-shadow: none;
+  transition-duration: 0.1s;
+}

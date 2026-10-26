@@ -1,0 +1,24 @@
+{
+  "$comment": "Static disclaimers and notices (FR-01, FR-02, FR-11, FR-29). The model never writes these. English is the master. DRAFT until the product owner approves. The provider notice deliberately makes no claim about the provider's data retention: that check has no owner yet (CONTEXT.md §15 item 2).",
+  "language": "en",
+  "status": "DRAFT_NOT_CLINICALLY_APPROVED",
+  "reviewed": false,
+  "derivedFrom": null,
+  "draftLabel": "DRAFT, NOT CLINICALLY APPROVED",
+  "preAppointment": [
+    "This summary is here to help you talk to a doctor, nurse or other health professional. It is not medical advice and it does not diagnose anything.",
+    "It is based only on what you told us. Please check it is right before you share it.",
+    "If you feel worse or you are worried, contact NHS 111, or call 999 in an emergency."
+  ],
+  "postAppointment": [
+    "This explains what you were told, or what your letter says, in plainer words. It is not medical advice.",
+    "Always follow what your doctor, nurse or pharmacist told you. If something here does not match, go with what they said.",
+    "If anything is unclear, ask the person who wrote it, your GP surgery or a pharmacist."
+  ],
+  "guestProviderNotice": [
+    "To work, CareNav AI sends what you type, say or photograph to an AI service run by another company (OpenAI).",
+    "As a guest, nothing you enter is saved by CareNav AI. Recordings and photos are never saved.",
+    "Please leave out your name, address and NHS number. We remove NHS numbers, phone numbers, email addresses and postcodes that we can spot before anything is sent, but we cannot catch everything.",
+    "If you take a photo of a letter, cover your name, address and NHS number first."
+  ]
+}

@@ -1,0 +1,557 @@
+{
+  "$comment": "Interface text, English master (FR-27, D13). Every other file in content/ui is derived from this one by scripts/translate-ui.mjs and reviewed by a native speaker. {name} placeholders must survive translation unchanged. Approved by the product owner on 2026-10-21 (copy review).",
+  "language": "en",
+  "derivedFrom": null,
+  "reviewed": true,
+  "messages": {
+    "common": {
+      "landing": {
+        "headline": "Let’s get ready for your appointment.",
+        "lead": "Clear information. Better conversations. You’ve got this.",
+        "navLabel": "Choose what you need",
+        "prepare": "Prepare for my appointment",
+        "understand": "Understand what I was told",
+        "guest": "Guest mode — nothing is saved.",
+        "signIn": "Sign in",
+        "signedIn": "Signed in. Your summaries are saved.",
+        "account": "Your account"
+      },
+      "topBar": {
+        "home": "CareNav AI: go to the start",
+        "leaveConfirm": "Go back to the start? Your answers on this page will be cleared."
+      },
+      "language": {
+        "label": "Language",
+        "unreviewedNotice": "This page was translated automatically and has not been checked by a native speaker yet.",
+        "chooser": {
+          "title": "Which language do you want to use?",
+          "lead": "We’ll use it for the app and for your summary. You can change it at any time from the top of the screen.",
+          "listLabel": "Languages",
+          "filterLabel": "Find a language",
+          "noMatch": "No language matches that. Try another spelling, or its name in English.",
+          "continue": "Continue",
+          "continuing": "Opening"
+        }
+      },
+      "meta": {
+        "description": "Get ready for your NHS appointment, and understand what you were told.",
+        "prepareTitle": "Prepare for my appointment",
+        "understandTitle": "Understand what I was told",
+        "accountTitle": "Your account"
+      }
+    },
+    "prepare": {
+      "draftNotice": "This is a draft to help you prepare. It is not medical advice.",
+      "stepLabel": "Step {n} of {total}",
+      "steps": {
+        "who": {
+          "title": "Who is this appointment for?",
+          "lead": "We'll write your summary from the right point of view."
+        },
+        "concern": {
+          "title": "What would you like to talk to your doctor about?",
+          "lead": "Write it in your own words, in any language. There's no wrong way to say it."
+        },
+        "timing": {
+          "title": "How long and how often?",
+          "lead": "Pick the answers that fit best. “I'm not sure” is fine."
+        },
+        "changes": {
+          "title": "Have you noticed any changes or patterns?",
+          "lead": "For example, if it's worse at night, after food, or at certain times."
+        },
+        "medicines": {
+          "title": "Medicines and help so far",
+          "lead": "This step is optional. You can skip it."
+        },
+        "worries": {
+          "title": "Is anything worrying you, or making this hard to talk about?",
+          "lead": "This step is optional. You can skip it."
+        },
+        "review": {
+          "title": "Check your answers",
+          "lead": "You can change anything before we make your summary."
+        }
+      },
+      "who": {
+        "legend": "Choose one",
+        "options": {
+          "self": "Me",
+          "parent": "My child",
+          "carer": "Someone I look after",
+          "other": "Someone else"
+        },
+        "ageLegend": "How old is your child?",
+        "ageLegendOther": "How old are they?",
+        "ageBands": {
+          "under_1": "Under 1",
+          "1_to_4": "1 to 4",
+          "5_to_11": "5 to 11",
+          "12_to_17": "12 to 17",
+          "adult": "18 or over"
+        },
+        "labelLabel": "Who are they to you? (optional)",
+        "labelHint": "For example: my mum, my neighbour."
+      },
+      "concern": {
+        "label": "Your main concern",
+        "placeholder": "Type here, in any language."
+      },
+      "timing": {
+        "startedLegend": "When did it start?",
+        "started": {
+          "today": "Today",
+          "days": "In the last few days",
+          "weeks": "1 to 4 weeks ago",
+          "months": "1 to 6 months ago",
+          "over_6_months": "More than 6 months ago",
+          "not_sure": "I'm not sure"
+        },
+        "patternLegend": "How often is it there?",
+        "pattern": {
+          "constant": "All the time",
+          "comes_and_goes": "It comes and goes",
+          "changing": "It's changing",
+          "not_sure": "I'm not sure"
+        },
+        "notesLabel": "Anything else about when it happens? (optional)"
+      },
+      "changes": {
+        "label": "Changes or patterns you've noticed",
+        "placeholder": "Type here, in any language.",
+        "nonePattern": "I haven't noticed any pattern"
+      },
+      "medicines": {
+        "medicinesLabel": "Medicines you take now",
+        "medicinesHint": "Include anything from a pharmacy or shop.",
+        "supportLabel": "Help you've already had",
+        "supportHint": "For example: a pharmacist, a GP visit or a hospital."
+      },
+      "worries": {
+        "label": "Your worries",
+        "placeholder": "Type here, in any language."
+      },
+      "review": {
+        "change": "Change",
+        "followUpsHeading": "Your extra answers",
+        "skipped": "You skipped this",
+        "noPattern": "I haven't noticed any pattern",
+        "whoHeading": "Who it's for",
+        "concernHeading": "Main concern",
+        "timingHeading": "How long and how often",
+        "changesHeading": "Changes and patterns",
+        "medicinesHeading": "Medicines",
+        "supportHeading": "Help so far",
+        "worriesHeading": "Worries",
+        "startedPrefix": "Started:",
+        "patternPrefix": "How often:",
+        "childAge": "My child, aged {band}",
+        "otherAge": "aged {band}",
+        "getSummary": "Get my summary"
+      },
+      "followUps": {
+        "title": "A few quick questions",
+        "lead": "These help your doctor understand you. You can skip any of them.",
+        "placeholder": "Type here, in any language.",
+        "skip": "Skip",
+        "skipped": "Skipped",
+        "undoSkip": "Answer this",
+        "continue": "Continue"
+      },
+      "summaryStatus": {
+        "makingTitle": "Making your summary",
+        "makingLead": "This can take up to a minute. Please keep this page open.",
+        "errors": {
+          "too_long": {
+            "title": "Some of your answers are too long",
+            "body": "Please go back and make your answers a little shorter, then try again."
+          },
+          "busy": {
+            "title": "We're busy right now",
+            "body": "Too many people are using CareNav AI at the moment. Please try again in a few minutes."
+          },
+          "failed": {
+            "title": "Something went wrong",
+            "body": "We couldn't make your summary this time. Your answers are still here. Please try again."
+          }
+        },
+        "tryAgain": "Try again",
+        "backToAnswers": "Back to my answers"
+      },
+      "actions": {
+        "back": "Back",
+        "backToStart": "Back to start",
+        "next": "Next",
+        "skip": "Skip this step",
+        "saveAndReview": "Save and review",
+        "checking": "Checking your answer"
+      },
+      "errors": {
+        "chooseOne": "Please choose one.",
+        "chooseAge": "Please choose an age.",
+        "required": "Please write a few words. Any language is fine.",
+        "changesRequired": "Please write what you've noticed, or tick “I haven't noticed any pattern”.",
+        "tooLong": "This is {over} characters too long. Please shorten it to {max} characters or fewer."
+      },
+      "voice": {
+        "start": "Say it",
+        "startLabel": "Say it instead of typing",
+        "privacy": "Your recording is sent to OpenAI to write it down, then deleted. It is never saved.",
+        "begin": "Start recording",
+        "cancel": "Not now",
+        "stop": "Stop",
+        "remaining": "{time} left",
+        "transcribing": "Writing down what you said…",
+        "heard": "Check the words we heard, and change anything that's wrong.",
+        "empty": "We didn't catch any words. Please try again, or type it.",
+        "failed": "We couldn't write that down this time. Please type it instead.",
+        "noMic": "We couldn't use your microphone. Please type it instead.",
+        "busy": "We're busy right now. Please type it instead."
+      }
+    },
+    "understand": {
+      "choose": {
+        "title": "What were you told?",
+        "lead": "Add a letter, prescription or note from your appointment. We'll explain it in plainer words.",
+        "photo": "Take a photo of a letter or prescription",
+        "photoHint": "We'll read the words for you to check.",
+        "type": "Type or paste it",
+        "typeHint": "Any language is fine.",
+        "noticeSummary": "We send your words to an AI service (OpenAI) to explain them. As a guest, nothing is saved.",
+        "noticeMore": "More about privacy"
+      },
+      "photoAdvice": {
+        "title": "Before you take the photo",
+        "lead": "Please cover or fold over these, so they are not in the photo:",
+        "items": [
+          "Your name",
+          "Your address",
+          "Your NHS number"
+        ],
+        "afterItems": "Lay the letter flat in good light, and fit the whole page in the photo.",
+        "privacy": "Your photo stays on this device. We never save it.",
+        "openCamera": "Open camera",
+        "choosePhoto": "Choose a photo instead"
+      },
+      "reading": {
+        "title": "Reading your letter",
+        "lead": "This can take up to a minute. Please keep this page open."
+      },
+      "photoProblems": {
+        "retake": {
+          "title": "We couldn't read that clearly",
+          "body": "Please take the photo again. Lay the letter flat, use good light, and hold the phone steady."
+        },
+        "unreadable": {
+          "title": "We couldn't open that photo",
+          "body": "Please try a different photo, or type the words instead."
+        },
+        "invalid": {
+          "title": "We couldn't open that photo",
+          "body": "Please try a different photo, or type the words instead."
+        },
+        "too_large": {
+          "title": "That photo is too big",
+          "body": "Please take the photo again, or type the words instead."
+        },
+        "rate_limited": {
+          "title": "Please wait a moment",
+          "body": "You've sent a lot in a short time. Please wait a minute, then try again."
+        },
+        "busy": {
+          "title": "We're busy right now",
+          "body": "Too many people are using CareNav AI at the moment. Please try again in a few minutes."
+        },
+        "failed": {
+          "title": "Something went wrong",
+          "body": "We couldn't read your photo this time. Please try again, or type the words instead."
+        }
+      },
+      "retake": "Take the photo again",
+      "typeInstead": "Type it instead",
+      "confirm": {
+        "photoTitle": "Check the words from your photo",
+        "photoLead": "We may have misread something. Fix anything that's wrong before we explain it.",
+        "typedTitle": "What does your letter say?",
+        "typedLead": "Type or paste the words from your letter, prescription or appointment.",
+        "label": "The words from your letter",
+        "placeholder": "Type or paste here.",
+        "found": "Medicines, doses and dates we spotted:",
+        "checkThese": "Check these against your letter or the label.",
+        "confirm": "This is right, explain it",
+        "checking": "Checking",
+        "required": "Please type or paste some words first.",
+        "retakePhoto": "Retake photo"
+      },
+      "photo": {
+        "alt": "Your photo of the letter",
+        "caption": "Your photo. It stays on this device and is gone when you leave.",
+        "larger": "Show larger",
+        "smaller": "Show smaller"
+      },
+      "fromLetter": {
+        "heading": "From your letter",
+        "showAll": "Show all of it",
+        "showLess": "Show less"
+      },
+      "followUpsLead": "These help us explain your letter clearly. You can skip any of them.",
+      "status": {
+        "makingTitle": "Explaining your letter",
+        "makingLead": "This can take up to a minute. Please keep this page open.",
+        "errors": {
+          "too_long": {
+            "title": "Your letter is too long",
+            "body": "Please go back and shorten it to the part you want explained, then try again."
+          },
+          "busy": {
+            "title": "We're busy right now",
+            "body": "Too many people are using CareNav AI at the moment. Please try again in a few minutes."
+          },
+          "failed": {
+            "title": "Something went wrong",
+            "body": "We couldn't explain your letter this time. Your words are still here. Please try again."
+          }
+        },
+        "tryAgain": "Try again",
+        "backToAnswers": "Back to the words"
+      },
+      "actions": {
+        "back": "Back",
+        "backToStart": "Back to start",
+        "continue": "Continue"
+      },
+      "errors": {
+        "tooLong": "This is {over} characters too long. Please shorten it to {max} characters or fewer."
+      }
+    },
+    "result": {
+      "title": "Here's your summary",
+      "draftNotice": "A draft to help you prepare. Not medical advice.",
+      "weReadThisAs": "We read this as: {language}",
+      "tabsLabel": "Choose a version",
+      "simpleEnglish": "Simple English",
+      "forDoctor": "English (for your doctor)",
+      "confidenceNotice": "Please double-check this with someone who speaks your language.",
+      "englishOnlyNotice": "We couldn't make a reliable version in your language this time, so your summary is in English only. Nothing is missing from it, and you can show it to your doctor as it is.",
+      "sections": {
+        "forWhom": "Who it's for",
+        "mainConcern": "Main concern",
+        "duration": "How long",
+        "frequency": "How often",
+        "changes": "Changes and patterns",
+        "medicines": "Medicines",
+        "previousSupport": "Help so far",
+        "worries": "Worries",
+        "questions": "Questions you could ask",
+        "whatToBring": "What to bring",
+        "notMentioned": "Not mentioned",
+        "followUps": "Your extra answers",
+        "serviceRoutes": "Where to get help",
+        "disclaimer": "About this summary"
+      },
+      "youDidntMention": "You didn't mention: {sections}.",
+      "nothingMissing": "Nothing important seems to be missing.",
+      "showOwnWords": "Show my words",
+      "hideOwnWords": "Hide my words",
+      "ownWordsHeading": "What you told us",
+      "skippedQuestion": "You skipped this question.",
+      "match": {
+        "question": "Does this match what you meant?",
+        "yes": "Yes",
+        "notQuite": "Not quite",
+        "thanks": "Thank you. You can show this to your doctor or nurse."
+      },
+      "actions": {
+        "backToAnswers": "Back to my answers",
+        "savePdf": "Save as PDF",
+        "savingPdf": "Making your PDF",
+        "pdfFailed": "Sorry, we couldn't make the PDF. Please try again.",
+        "comingSoon": "Coming soon"
+      },
+      "layout": {
+        "toDeck": "One card at a time",
+        "toList": "Show as a list",
+        "deckLabel": "Your result, one card at a time",
+        "next": "Next",
+        "back": "Back",
+        "position": "{n} of {total}"
+      },
+      "feedback": {
+        "title": "Two quick questions",
+        "lead": "Anonymous: we only keep these two answers.",
+        "confident": "I feel more confident about my appointment",
+        "understandNext": "I understand what to do next",
+        "answers": {
+          "yes": "Yes",
+          "a_bit": "A bit",
+          "no": "No"
+        },
+        "send": "Send",
+        "sending": "Sending",
+        "thanks": "Thank you. That helps us make CareNav AI better.",
+        "failed": "Sorry, we couldn't send that. Please try again."
+      },
+      "account": {
+        "title": "Keep your summaries",
+        "lead": "Create a free account and we’ll save your next summaries for you. This one isn’t saved, so save it as a PDF if you want to keep it.",
+        "link": "Create an account or sign in",
+        "newTab": "(opens in a new tab)",
+        "saved": "Saved to your account.",
+        "savedLink": "See your saved summaries",
+        "saveFailed": "We couldn’t save this one to your account. You can still save it as a PDF.",
+        "saveOff": "Saving isn’t set up on this computer yet, so this one isn’t saved. You can still save it as a PDF."
+      },
+      "savedView": {
+        "back": "Back to your account"
+      },
+      "playful": {
+        "turnOn": "Try it in {language}, for fun",
+        "turnOff": "Show the plain version",
+        "label": "This is for fun. Your clinician gets the plain English version.",
+        "loading": "Making your fun version…",
+        "failed": "We couldn’t make a fun version this time, so here is the plain one."
+      }
+    },
+    "explain": {
+      "title": "Here's what your letter means",
+      "draftNotice": "A draft, not medical advice. Please check it with a pharmacist or GP.",
+      "englishOnlyNotice": "We couldn't make a reliable version in your language this time, so this explanation is in English only. Nothing is missing from it.",
+      "sections": {
+        "told": "What you were told",
+        "means": "What it means",
+        "steps": "Next steps",
+        "medicines": "Medicines",
+        "unclear": "Unclear or missing",
+        "disclaimer": "About this explanation"
+      },
+      "nothingFound": "We couldn't pick out the main points. Please check the letter itself.",
+      "byWhen": "When: {when}",
+      "medicine": {
+        "dose": "Dose",
+        "frequency": "How often",
+        "duration": "How long",
+        "instructions": "How to take it",
+        "notStated": "Not in your letter"
+      },
+      "checkThese": "Check these against your letter or the label.",
+      "whoToAsk": {
+        "clinician": "Ask the person who wrote your letter",
+        "pharmacist": "Ask a pharmacist",
+        "gp_surgery": "Ask your GP surgery"
+      },
+      "showSources": "Show letter's words",
+      "hideSources": "Hide letter's words",
+      "fromLetter": "From your letter",
+      "notFound": {
+        "heading": "We couldn't find this in your letter",
+        "lead": "We couldn't find these in your letter, so don't rely on them."
+      },
+      "languagePicker": {
+        "toggle": "Change language",
+        "label": "Show me this in",
+        "defaultOption": "Simple English",
+        "updating": "Updating…",
+        "failed": "We couldn't make that version this time. You're still seeing the last one."
+      },
+      "actions": {
+        "backToWords": "Back to the words"
+      }
+    },
+    "account": {
+      "title": "Your account",
+      "lead": "You don’t need an account to use CareNav AI. With one, your summaries are saved so you can open them again later.",
+      "back": "Back to start",
+      "modeLabel": "Sign in or create an account",
+      "modes": {
+        "signIn": "Sign in",
+        "register": "Create an account"
+      },
+      "fields": {
+        "email": "Email",
+        "password": "Password",
+        "passwordHint": "At least 10 characters.",
+        "inviteCode": "Invite code",
+        "inviteHint": "You’ll find this in your invitation.",
+        "language": "Your language",
+        "languageHint": "We’ll use it for the app and for your summaries."
+      },
+      "signIn": {
+        "submit": "Sign in",
+        "submitting": "Signing in",
+        "failed": "That email and password don’t match.",
+        "linkLead": "No password? We can send you a link that signs you in.",
+        "linkButton": "Email me a sign-in link",
+        "linkSending": "Sending",
+        "linkSent": "If that email can be used here, we’ve sent a sign-in link. It works once, for 15 minutes.",
+        "devInbox": "On this test computer, links appear in the dev inbox instead of an email.",
+        "devInboxLink": "Open the dev inbox"
+      },
+      "register": {
+        "submit": "Create account",
+        "submitting": "Creating your account",
+        "tooShort": "Please use at least 10 characters.",
+        "failed": "We couldn’t create an account with those details. If you already have one, sign in instead.",
+        "inviteInvalid": "That invite code doesn’t work. Please check it and try again."
+      },
+      "errors": {
+        "emailInvalid": "Please enter a full email address, like name@example.com.",
+        "rateLimited": "Too many tries. Please wait a few minutes and try again.",
+        "httpsRequired": "Accounts only work over a secure connection.",
+        "generic": "Something went wrong. Please try again."
+      },
+      "signedIn": {
+        "as": "Signed in as {email}",
+        "signOut": "Sign out",
+        "signingOut": "Signing out"
+      },
+      "verify": {
+        "title": "Finish signing in",
+        "lead": "Press the button to sign in to CareNav AI.",
+        "button": "Sign in",
+        "inviteNeeded": "This creates a new account. Please enter your invite code.",
+        "invalid": "This link has expired or has already been used. You can ask for a new one.",
+        "newLink": "Get a new link",
+        "languageNeeded": "This creates a new account. Which language do you want to use?"
+      },
+      "saved": {
+        "heading": "Saved summaries",
+        "empty": "Nothing saved yet. While you’re signed in, each new summary is saved here.",
+        "off": "Saving isn’t set up on this computer yet, so new summaries aren’t saved.",
+        "loading": "Loading your saved summaries",
+        "loadFailed": "Sorry, we couldn’t load your saved summaries. Please try again.",
+        "retry": "Try again",
+        "forWhom": "For: {who}",
+        "language": "Language: {language}",
+        "open": "Open",
+        "pdf": "Download PDF",
+        "pdfMaking": "Making your PDF",
+        "pdfFailed": "Sorry, we couldn’t make the PDF. Please try again.",
+        "delete": "Delete",
+        "deleteConfirm": "Delete this summary? This can’t be undone.",
+        "deleteYes": "Yes, delete it",
+        "cancel": "Cancel",
+        "deleting": "Deleting",
+        "deleteFailed": "Sorry, we couldn’t delete that. Please try again.",
+        "unreadable": "This summary can’t be opened on this computer."
+      },
+      "data": {
+        "heading": "Your data",
+        "lead": "Download a copy of everything saved in your account, or delete it all.",
+        "export": "Download my data",
+        "exporting": "Preparing your file",
+        "exportFailed": "Sorry, we couldn’t make your file. Please try again.",
+        "deleteAccount": "Delete my account",
+        "deleteConfirm": "This deletes your account and every saved summary straight away. It can’t be undone.",
+        "deleteYes": "Yes, delete my account",
+        "deleting": "Deleting",
+        "deleteFailed": "Sorry, we couldn’t delete your account. Please try again.",
+        "deleted": "Your account and everything in it have been deleted."
+      },
+      "language": {
+        "heading": "Your language",
+        "lead": "We use it for the app and for your summaries. Changing it here, or at the top of any screen, changes it everywhere.",
+        "notSaved": "Not saved to your account yet. Choose a language to save it."
+      }
+    }
+  }
+}

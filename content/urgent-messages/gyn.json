@@ -1,0 +1,68 @@
+{
+  "$comment": "Guyanese Creole (Creolese) urgent messages. DRAFT translation derived from en.json; needs native-speaker review and clinical adviser approval. Phone numbers and hrefs are byte-identical to en.json.",
+  "language": "gyn",
+  "status": "DRAFT_NOT_CLINICALLY_APPROVED",
+  "reviewed": false,
+  "derivedFrom": "en",
+  "labels": {
+    "acknowledge": "Me understand, leh we go on",
+    "startAgain": "Start back"
+  },
+  "messages": {
+    "emergency": {
+      "title": "Dis coulda be a emergency",
+      "body": [
+        "Wha yuh describe coulda be serious.",
+        "Call 999 right now.",
+        "Doan wait fuh see if it go get betta.",
+        "Dis app cyaan check symptom or give medical advice."
+      ],
+      "banner": "Yuh tell we something wha coulda be a emergency. If yuh ain do it yet, call 999 right now.",
+      "actions": [
+        { "id": "call_999", "label": "Call 999", "href": "tel:999" }
+      ],
+      "selfHarmLine": "When yuh safe, Samaritans deh deh any time, day or night. Call 116 123."
+    },
+    "urgent": {
+      "title": "Please, get help soon",
+      "body": [
+        "Wha yuh describe might need a doctor or nurse fuh look at it soon.",
+        "Contact NHS 111 now, pun de phone or online, or call yuh GP surgery if it open.",
+        "If it get worse, or yuh feel is a emergency, call 999.",
+        "Dis app cyaan check symptom or give medical advice."
+      ],
+      "banner": "Yuh tell we something wha might need help soon. If yuh ain do it yet, contact NHS 111 or yuh GP surgery.",
+      "actions": [
+        { "id": "call_111", "label": "Call NHS 111", "href": "tel:111" },
+        { "id": "nhs_111_online", "label": "NHS 111 online", "href": "https://111.nhs.uk" },
+        { "id": "call_999", "label": "Call 999", "href": "tel:999" }
+      ]
+    },
+    "crisis": {
+      "title": "Yuh doan have fuh face dis by yuhself",
+      "body": [
+        "It soun like yuh going through something real hard right now.",
+        "Yuh could talk to Samaritans fuh free, any time, day or night. Call 116 123.",
+        "If yuh in danger right now, or yuh might act pun dem thought, call 999 right now.",
+        "Yuh could call NHS 111 too fuh urgent mental health help.",
+        "Fuh talk in yuh own language, call NHS 111 an ask fuh a interpreter."
+      ],
+      "banner": "Yuh tell we yuh might be going through something real hard. Samaritans deh deh any time pun 116 123. If yuh in danger right now, call 999.",
+      "actions": [
+        { "id": "call_samaritans", "label": "Call Samaritans 116 123", "href": "tel:116123" },
+        { "id": "call_999", "label": "Call 999", "href": "tel:999" },
+        { "id": "call_111", "label": "Call NHS 111", "href": "tel:111" }
+      ],
+      "continueCheck": {
+        "link": "Me nah in danger an me want go on",
+        "title": "Before yuh go on",
+        "body": [
+          "Only go on if yuh nah in danger right now.",
+          "Samaritans deh deh any time, day or night. Call 116 123."
+        ],
+        "confirm": "Me nah in danger right now",
+        "button": "Go on"
+      }
+    }
+  }
+}

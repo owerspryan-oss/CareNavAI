@@ -1,0 +1,68 @@
+{
+  "$comment": "Static urgent messages (FR-05, PRD 9.2/9.3, ADR-004). The model never writes or edits these. English is the master; every other language is derived from this file. 'uncertain' uses the 'urgent' message. Phone numbers and hrefs must stay byte-identical in every language. DRAFT until the clinical adviser approves.",
+  "language": "en",
+  "status": "DRAFT_NOT_CLINICALLY_APPROVED",
+  "reviewed": false,
+  "derivedFrom": null,
+  "labels": {
+    "acknowledge": "I understand, continue",
+    "startAgain": "Start again"
+  },
+  "messages": {
+    "emergency": {
+      "title": "This could be an emergency",
+      "body": [
+        "What you have described could be serious.",
+        "Call 999 now.",
+        "Do not wait to see if it gets better.",
+        "This app cannot check symptoms or give medical advice."
+      ],
+      "banner": "You told us something that could be an emergency. If you have not already, call 999 now.",
+      "actions": [
+        { "id": "call_999", "label": "Call 999", "href": "tel:999" }
+      ],
+      "selfHarmLine": "When you are safe, Samaritans are there any time, day or night. Call 116 123."
+    },
+    "urgent": {
+      "title": "Please get help soon",
+      "body": [
+        "What you have described may need a health professional to look at it soon.",
+        "Contact NHS 111 now, by phone or online, or call your GP surgery if it is open.",
+        "If it gets worse, or you think it is an emergency, call 999.",
+        "This app cannot check symptoms or give medical advice."
+      ],
+      "banner": "You told us something that may need help soon. If you have not already, contact NHS 111 or your GP surgery.",
+      "actions": [
+        { "id": "call_111", "label": "Call NHS 111", "href": "tel:111" },
+        { "id": "nhs_111_online", "label": "NHS 111 online", "href": "https://111.nhs.uk" },
+        { "id": "call_999", "label": "Call 999", "href": "tel:999" }
+      ]
+    },
+    "crisis": {
+      "title": "You do not have to face this alone",
+      "body": [
+        "It sounds like you are going through something very hard right now.",
+        "You can talk to Samaritans for free, any time, day or night. Call 116 123.",
+        "If you are in immediate danger, or you might act on these thoughts, call 999 now.",
+        "You can also call NHS 111 for urgent mental health help.",
+        "If you would rather talk in your own language, call NHS 111 and ask for an interpreter."
+      ],
+      "banner": "You told us you may be going through something very hard. Samaritans are there any time on 116 123. If you are in immediate danger, call 999.",
+      "actions": [
+        { "id": "call_samaritans", "label": "Call Samaritans 116 123", "href": "tel:116123" },
+        { "id": "call_999", "label": "Call 999", "href": "tel:999" },
+        { "id": "call_111", "label": "Call NHS 111", "href": "tel:111" }
+      ],
+      "continueCheck": {
+        "link": "I'm not in danger and want to carry on",
+        "title": "Before you carry on",
+        "body": [
+          "Only carry on if you are not in danger right now.",
+          "Samaritans are there any time, day or night. Call 116 123."
+        ],
+        "confirm": "I am not in danger right now",
+        "button": "Carry on"
+      }
+    }
+  }
+}

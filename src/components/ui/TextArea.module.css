@@ -1,0 +1,96 @@
+.field {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.label {
+  font-weight: 600;
+}
+
+.hint {
+  color: var(--color-ink-muted);
+  font-size: 0.9375rem;
+}
+
+.box {
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  box-shadow:
+    inset 0 0 0 1px var(--color-border),
+    var(--shadow-card);
+  transition: box-shadow 0.15s linear;
+}
+
+.box:focus-within {
+  box-shadow:
+    inset 0 0 0 2px var(--color-teal-500),
+    var(--shadow-card);
+}
+
+.box[data-invalid] {
+  box-shadow:
+    inset 0 0 0 2px var(--color-coral-600),
+    var(--shadow-card);
+}
+
+.input {
+  display: block;
+  width: 100%;
+  field-sizing: content; /* grows in height with the text where supported */
+  max-width: 100%; /* ...but never in width: long unbroken strings wrap instead */
+  overflow-wrap: anywhere;
+  padding: var(--space-4) var(--space-4) var(--space-2);
+  border: 0;
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+  background: transparent;
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-leading);
+  resize: none;
+}
+
+/* The box draws the focus ring, so the textarea itself doesn't need one. */
+.input:focus-visible {
+  outline: none;
+}
+
+.input::placeholder {
+  color: var(--color-ink-muted);
+}
+
+.input[readonly] {
+  color: var(--color-ink-muted);
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap; /* a long voice-input note drops to its own row instead of squeezing the counter */
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  min-height: 2.25rem;
+  padding: 0 var(--space-4) var(--space-2);
+}
+
+.counter {
+  flex: none;
+  white-space: nowrap;
+  font-size: var(--text-caption-size);
+  line-height: var(--text-caption-leading);
+  letter-spacing: var(--text-caption-tracking);
+  color: var(--color-ink-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.counter[data-over] {
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+/* Ink text on a pale tint: coral text on cream would fail contrast (DESIGN_SYSTEM.md §2). */
+.error {
+  padding: var(--space-2) var(--space-3);
+  border-radius: 0.75rem;
+  background: var(--color-urgent-bg);
+  color: var(--color-ink);
+  font-size: 0.9375rem;
+}

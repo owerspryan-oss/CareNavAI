@@ -1,0 +1,215 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  max-width: 32rem;
+  margin: 0 auto;
+}
+
+.main {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding: var(--space-2) var(--space-4) var(--space-5);
+}
+
+/* The step content is the only thing that slides (global .guided-step class); stepper and banner stay put. */
+.step {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.intro {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.title {
+  font-size: var(--text-display-size);
+  line-height: var(--text-display-leading);
+  letter-spacing: var(--text-display-tracking);
+  font-weight: 700;
+  scroll-margin-top: 4rem;
+}
+
+.lead {
+  color: var(--color-ink-muted);
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+/*
+ * Back and the primary action share a row; at large text sizes, when both no longer fit, they wrap onto
+ * two full-width rows (in reading order) instead of running off the screen.
+ */
+.footer {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4) calc(var(--space-4) + env(safe-area-inset-bottom));
+  background: color-mix(in srgb, var(--color-bg) 72%, transparent);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+}
+
+.backButton {
+  flex: 1 1 auto;
+  min-width: 6.5rem;
+}
+
+.footer > :last-child {
+  flex: 999 1 10rem;
+  min-width: 0;
+}
+
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  .footer {
+    background: var(--color-bg);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border-top: 1px solid var(--color-border);
+  }
+}
+
+/* Review */
+
+.reviewList {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.reviewItem {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4) var(--space-4);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  box-shadow:
+    inset 0 0 0 1px var(--color-border),
+    var(--shadow-card);
+}
+
+.reviewHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.reviewHeading {
+  font-size: var(--text-caption-size);
+  line-height: var(--text-caption-leading);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--color-ink-muted);
+}
+
+.changeButton {
+  min-height: 2.75rem;
+  margin-inline-end: calc(var(--space-3) * -1);
+  font-size: var(--text-body-size);
+}
+
+.reviewBody {
+  display: grid;
+  gap: var(--space-1);
+}
+
+/* The user's own words, kept exactly as typed (line breaks included). */
+.userText {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.structuredText {
+  font-weight: 500;
+}
+
+.skipped {
+  color: var(--color-ink-muted);
+  font-style: italic;
+}
+
+/* Follow-ups (step 7) */
+
+.followUpList {
+  display: grid;
+  gap: var(--space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.followUpItem {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.followUpQuestion {
+  font-weight: 600;
+}
+
+.followUpRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.followUpRow[data-align="end"] {
+  justify-content: flex-end;
+}
+
+/* Summary loading and error states */
+
+.status {
+  display: grid;
+  gap: var(--space-3);
+  padding-top: var(--space-6);
+  text-align: center;
+  justify-items: center;
+}
+
+.statusSpinner {
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-bottom: var(--space-3);
+  border-radius: 50%;
+  border: 3px solid var(--color-coral-100);
+  border-top-color: var(--color-coral-500);
+  animation: status-spin 0.9s linear infinite;
+}
+
+@keyframes status-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes status-pulse {
+  50% {
+    opacity: 0.4;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .statusSpinner {
+    animation: status-pulse 1.6s ease-in-out infinite;
+  }
+}
+
+.statusActions {
+  display: grid;
+  gap: var(--space-3);
+  width: 100%;
+  margin-top: var(--space-4);
+}

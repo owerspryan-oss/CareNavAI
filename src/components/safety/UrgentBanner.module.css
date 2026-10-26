@@ -1,0 +1,88 @@
+/* Persistent urgent banner — DESIGN_SYSTEM.md §2 urgent colours, §7 banners. Ink text for contrast. */
+
+.banner {
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  background: var(--color-urgent-bg);
+  color: var(--color-ink);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--color-urgent-icon) 30%, transparent),
+    var(--shadow-card);
+}
+
+/* Inside the card the label is a strip, separated by a hairline rather than a second tint. */
+.draft {
+  border-bottom: 1px solid color-mix(in srgb, var(--color-urgent-icon) 30%, transparent);
+}
+
+.inner {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4) var(--space-4);
+}
+
+.lead {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.icon {
+  flex: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--color-urgent-icon);
+}
+
+.text {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: var(--text-body-size);
+  line-height: 1.45;
+  font-weight: 600;
+  overflow-wrap: break-word;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.actions > li {
+  flex: 1 1 10rem;
+  min-width: 0;
+}
+
+/* Banner pills: a little shorter than the screen's buttons, still over the 44px target. */
+.actions a {
+  min-height: 2.75rem;
+  padding-block: var(--space-2);
+  padding-inline: var(--space-4);
+  background: var(--color-surface);
+  overflow-wrap: break-word;
+}
+
+.actions svg {
+  display: block;
+}
+
+/* Very large text (em follows the user's text size): icons give way so the words keep the room. */
+.inner {
+  container-type: inline-size;
+}
+@container (max-width: 20em) {
+  .icon,
+  .actions span:has(> svg) {
+    display: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .banner {
+    box-shadow: inset 0 0 0 1px var(--color-ink);
+  }
+}

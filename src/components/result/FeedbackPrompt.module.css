@@ -1,0 +1,107 @@
+/* FR-16 feedback prompt: quiet card after the result, compact three-way answers. */
+.card {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+
+.title {
+  font-size: var(--text-title-size);
+  line-height: var(--text-title-leading);
+  letter-spacing: var(--text-title-tracking);
+  font-weight: 700;
+}
+
+.lead,
+.thanks {
+  color: var(--color-ink-muted);
+  font-size: var(--text-caption-size);
+  line-height: var(--text-caption-leading);
+}
+
+.thanks {
+  color: var(--color-ink);
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-leading);
+}
+
+.question {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.statement {
+  padding: 0;
+  font-weight: 600;
+  line-height: var(--text-body-leading);
+}
+
+.options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(5.5rem, 1fr));
+  gap: var(--space-2);
+}
+
+.option {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 2.75rem; /* 44px target */
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-muted);
+  box-shadow: inset 0 0 0 1px var(--color-border);
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* The native radio fills the pill invisibly, so the whole pill is the control. */
+.radio {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.option:has(.radio:checked) {
+  background: var(--color-coral-700);
+  box-shadow: none;
+  color: var(--color-on-accent);
+}
+
+.option:has(.radio:focus-visible) {
+  outline: 3px solid var(--color-teal-500);
+  outline-offset: 2px;
+}
+
+.failed {
+  padding: var(--space-2) var(--space-3);
+  border-radius: 0.75rem;
+  background: var(--color-caution-bg);
+}
+
+/* The account offer under the feedback card (AccountPrompt): a quiet text link, 44px target. */
+.accountLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  color: var(--color-teal-500);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.saved {
+  gap: var(--space-1);
+  color: var(--color-ink-muted);
+}

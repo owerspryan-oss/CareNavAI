@@ -1,0 +1,68 @@
+{
+  "$comment": "Sierra Leonean Krio urgent messages. DRAFT translation derived from en.json, written in the standard Krio orthography (ɛ, ɔ); needs native-speaker review (including whether an informal e/o spelling reads better for UK users) and clinical adviser approval. Phone numbers and hrefs are byte-identical to en.json.",
+  "language": "kri",
+  "status": "DRAFT_NOT_CLINICALLY_APPROVED",
+  "reviewed": false,
+  "derivedFrom": "en",
+  "labels": {
+    "acknowledge": "A ɔndastand, mek wi kɔntinyu",
+    "startAgain": "Bigin bak"
+  },
+  "messages": {
+    "emergency": {
+      "title": "Dis kin bi emergency",
+      "body": [
+        "Wetin yu tɔk kin bi siriɔs.",
+        "Kɔl 999 naw.",
+        "Nɔ wet fɔ si if i go bɛtɛ.",
+        "Dis app nɔ ebul chɛk sik sain, ɛn i nɔ ebul gi mɛdikal advays."
+      ],
+      "banner": "Yu tɛl wi sɔntin we kin bi emergency. If yu nɔ dɔn du am yet, kɔl 999 naw.",
+      "actions": [
+        { "id": "call_999", "label": "Kɔl 999", "href": "tel:999" }
+      ],
+      "selfHarmLine": "We yu de sef, Samaritans de ɛnitɛm, de ɔ nɛt. Kɔl 116 123."
+    },
+    "urgent": {
+      "title": "Duya, go fɛn ɛp kwik",
+      "body": [
+        "Wetin yu tɔk kin nid dɔktɔ ɔ nɔs fɔ luk am kwik.",
+        "Kɔntakt NHS 111 naw, na fon ɔ ɔnlayn, ɔ kɔl yu GP surgery if dɛn opin.",
+        "If i de wɔs, ɔ yu tink se na emergency, kɔl 999.",
+        "Dis app nɔ ebul chɛk sik sain, ɛn i nɔ ebul gi mɛdikal advays."
+      ],
+      "banner": "Yu tɛl wi sɔntin we kin nid ɛp kwik. If yu nɔ dɔn du am yet, kɔntakt NHS 111 ɔ yu GP surgery.",
+      "actions": [
+        { "id": "call_111", "label": "Kɔl NHS 111", "href": "tel:111" },
+        { "id": "nhs_111_online", "label": "NHS 111 ɔnlayn", "href": "https://111.nhs.uk" },
+        { "id": "call_999", "label": "Kɔl 999", "href": "tel:999" }
+      ]
+    },
+    "crisis": {
+      "title": "Yu nɔ nid fɔ fes dis wan yu wan",
+      "body": [
+        "I tan lɛk se yu de pas tru sɔntin we at bad bad naw.",
+        "Yu kin tɔk to Samaritans fri, ɛnitɛm, de ɔ nɛt. Kɔl 116 123.",
+        "If yu de na denja naw, ɔ yu kin du sɔntin bɔt dɛn tin we yu de tink, kɔl 999 naw.",
+        "Yu kin kɔl NHS 111 bak fɔ kwik ɛp fɔ mental health.",
+        "Fɔ tɔk na yu yon langwej, kɔl NHS 111 ɛn aks fɔ intapreta."
+      ],
+      "banner": "Yu tɛl wi se yu kin de pas tru sɔntin we at bad bad. Samaritans de ɛnitɛm na 116 123. If yu de na denja naw, kɔl 999.",
+      "actions": [
+        { "id": "call_samaritans", "label": "Kɔl Samaritans 116 123", "href": "tel:116123" },
+        { "id": "call_999", "label": "Kɔl 999", "href": "tel:999" },
+        { "id": "call_111", "label": "Kɔl NHS 111", "href": "tel:111" }
+      ],
+      "continueCheck": {
+        "link": "A nɔ de na denja, a want kɔntinyu",
+        "title": "Bifo yu kɔntinyu",
+        "body": [
+          "Kɔntinyu ɔnli if yu nɔ de na denja naw.",
+          "Samaritans de ɛnitɛm, de ɔ nɛt. Kɔl 116 123."
+        ],
+        "confirm": "A nɔ de na denja naw",
+        "button": "Kɔntinyu"
+      }
+    }
+  }
+}

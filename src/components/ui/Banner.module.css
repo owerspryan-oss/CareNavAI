@@ -1,0 +1,56 @@
+.banner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-card);
+  color: var(--color-ink);
+  animation: materialize var(--spring-default-duration) var(--ease-spring-default) both;
+}
+
+.info {
+  background: var(--color-info-bg);
+}
+.info .icon {
+  color: var(--color-info-icon);
+}
+
+.caution {
+  background: var(--color-caution-bg);
+}
+.caution .icon {
+  color: var(--color-caution-icon);
+}
+
+.icon {
+  flex: none;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.text {
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  padding-top: 0.0625rem;
+}
+
+/* Materialize (blur + scale together), not a flat fade — DESIGN_SYSTEM.md §8. */
+@keyframes materialize {
+  from {
+    opacity: 0;
+    filter: blur(4px);
+    transform: scale(0.98);
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .banner {
+    animation-name: fade;
+  }
+}

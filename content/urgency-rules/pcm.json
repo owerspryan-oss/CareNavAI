@@ -1,0 +1,94 @@
+{
+  "$comment": "DRAFT Nigerian Pidgin red-flag rules (FR-05, PRD 9.1 layer 1). NOT CLINICALLY APPROVED and NOT YET REVIEWED BY A NATIVE SPEAKER: seed list for the local demo only. English rules (en.json) always run as well, because Pidgin speakers often code-switch, so this file only adds Pidgin-specific wording. Matching rules are the same as en.json (normalised text, whole words; see en.json $comment).",
+  "language": "pcm",
+  "kind": "language",
+  "status": "DRAFT_NOT_CLINICALLY_APPROVED",
+  "reviewed": false,
+  "rules": [
+    {
+      "id": "pcm.breathing.cannot_breathe",
+      "level": "emergency",
+      "category": "breathing",
+      "patterns": [
+        "no (fit |dey fit |fit dey )?(breathe|breath|draw breath|catch (my |im |her |his )?breath)",
+        "breath dey (cut|hold|stop)",
+        "breath no (dey )?(come|reach)"
+      ]
+    },
+    {
+      "id": "pcm.breathing.difficult",
+      "level": "urgent",
+      "category": "breathing",
+      "patterns": [
+        "breath dey (tight|hard|short)",
+        "breath (dey )?short"
+      ]
+    },
+    {
+      "id": "pcm.chest.pain",
+      "level": "urgent",
+      "category": "chest_pain",
+      "patterns": [
+        "chest (dey|de) (pain|hurt|do|tight|scratch|catch)",
+        "chest .{0,15}(well well|bad bad)"
+      ]
+    },
+    {
+      "id": "pcm.bleeding.severe",
+      "level": "emergency",
+      "category": "severe_bleeding",
+      "patterns": [
+        "blood no (gree|wan|dey|fit) stop",
+        "blood dey (rush|pour|comot|commot|run|come out) (well well|plenty|anyhow)",
+        "(plenty|too much) blood dey (comot|commot|come out|pour|rush)"
+      ]
+    },
+    {
+      "id": "pcm.consciousness.unresponsive",
+      "level": "emergency",
+      "category": "loss_of_consciousness",
+      "patterns": [
+        "(e|he|she|im|di pikin|the pikin|di baby|the baby|my papa|my mama) no (dey |fit |gree )?(wake|respond)",
+        "no dey respond",
+        "(faint|collapse|fall down) .{0,15}no (dey |fit |gree )?wake"
+      ]
+    },
+    {
+      "id": "pcm.seizure.convulsion",
+      "level": "emergency",
+      "category": "seizure",
+      "patterns": [
+        "(dey|don) (convulse|convulsing|jerk anyhow)",
+        "convulsion (dey|don) (catch|hold)"
+      ]
+    },
+    {
+      "id": "pcm.pregnancy.warning_signs",
+      "level": "urgent",
+      "category": "pregnancy_concern",
+      "patterns": [
+        "(get|carry|dey carry|with|carry) belle"
+      ],
+      "requiresAlso": [
+        [
+          "blood",
+          "pain",
+          "(pikin|baby) no (dey )?(move|kick)",
+          "water don (break|burst|comot)"
+        ]
+      ]
+    },
+    {
+      "id": "pcm.crisis.suicide_self_harm",
+      "level": "crisis",
+      "category": "self_harm_or_suicide",
+      "patterns": [
+        "(?<!no )(wan|want|wan just) die",
+        "kill (myself|mysef|my self|mi self)",
+        "(i|me) no (wan|want) (live|dey alive|dey here)( again| anymore| no more)?",
+        "(make|mek) i (just )?die",
+        "(i|me) (go|wan|want) end (am|my life|everything|my self|myself)"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "$comment": "FICTIONAL /api/summary response for demo/inputs/marcia-prepare.json, hand-written for UI tests (T-13). jam is outputMode simple_english (v0.3 A5), so the user version is first-person simple English. Static fields copied from content/*/en.json.",
+  "kind": "result",
+  "english": {
+    "forWhom": { "relationship": "self", "label": "Me", "ageBand": null },
+    "mainConcern": "Pain in both knees for about two months, worse in the right knee. Finding it hard to walk up stairs.",
+    "duration": { "text": "About two months (started 1 to 6 months ago)", "stated": true },
+    "frequencyAndPattern": "Comes and goes. Worse in the morning when first getting up.",
+    "changesAndTriggers": [
+      "Hurts more when rain is coming.",
+      "Gets stiff after sitting for a long time.",
+      "Tries to walk a little every day."
+    ],
+    "medicationAndSupport": {
+      "provided": true,
+      "medicines": [
+        { "name": "paracetamol", "dose": "two tablets, sometimes" },
+        { "name": "cream from the pharmacy", "dose": null }
+      ],
+      "previousSupport": ["A pharmacist gave a cream."]
+    },
+    "worriesAndBarriers": [
+      "Worried about being told to stop work.",
+      "Does not always understand when the doctor talks fast."
+    ],
+    "questionsToAsk": [
+      "What could be causing the pain in my knees, and how will we find out?",
+      "Is it okay to keep taking paracetamol the way I do now?",
+      "What can I do to make the stairs easier?",
+      "What should I do if it gets worse before my next appointment?",
+      "Could you please speak a little slower so I can follow?"
+    ],
+    "whatToBring": [
+      "The paracetamol box and the cream from the pharmacy.",
+      "A note of which days the pain is worse."
+    ],
+    "notMentioned": ["You didn't mention what makes it better."],
+    "serviceRoutes": [
+      { "id": "gp_surgery", "name": "Your GP surgery", "description": "For health concerns that are not urgent, and to book or change an appointment.", "contacts": [] },
+      { "id": "pharmacy", "name": "A pharmacy", "description": "Pharmacists can talk to you about your medicines and help with many everyday health problems, often without an appointment.", "contacts": [] },
+      { "id": "nhs_111", "name": "NHS 111", "description": "If you need help quickly but it is not an emergency. Free, any time, day or night.", "contacts": [ { "label": "Call NHS 111", "href": "tel:111" }, { "label": "NHS 111 online", "href": "https://111.nhs.uk" } ] },
+      { "id": "emergency_999", "name": "999", "description": "Only in an emergency, when someone is seriously ill or hurt, or their life is at risk.", "contacts": [ { "label": "Call 999", "href": "tel:999" } ] },
+      { "id": "samaritans", "name": "Samaritans", "description": "If you are finding things hard to cope with, you can talk to someone for free, any time, day or night.", "contacts": [ { "label": "Call Samaritans 116 123", "href": "tel:116123" } ] }
+    ],
+    "disclaimer": [
+      "This summary is here to help you talk to a doctor, nurse or other health professional. It is not medical advice and it does not diagnose anything.",
+      "It is based only on what you told us. Please check it is right before you share it.",
+      "If you feel worse or you are worried, contact NHS 111, or call 999 in an emergency."
+    ],
+    "meta": {
+      "detectedLanguage": "jam",
+      "register": "dialect_or_creole",
+      "outputLanguage": "en",
+      "outputMode": "simple_english",
+      "promptVersion": "pre-master.v1+derive.v1",
+      "confidenceNotice": false,
+      "urgentAcknowledged": null
+    }
+  },
+  "user": {
+    "forWhom": { "relationship": "self", "label": "Me", "ageBand": null },
+    "mainConcern": "My knees have hurt a lot for about two months, mostly the right one. I can't walk up the stairs well any more.",
+    "duration": { "text": "About two months", "stated": true },
+    "frequencyAndPattern": "It comes and goes. It is worse in the morning when I first get up.",
+    "changesAndTriggers": [
+      "It hurts more when rain is coming.",
+      "If I sit for a long time, it gets stiff.",
+      "I try to walk a little every day."
+    ],
+    "medicationAndSupport": {
+      "provided": true,
+      "medicines": [
+        { "name": "paracetamol", "dose": "two tablets, sometimes" },
+        { "name": "cream from the pharmacy", "dose": null }
+      ],
+      "previousSupport": ["The pharmacist gave me a cream."]
+    },
+    "worriesAndBarriers": [
+      "I'm scared they will tell me to stop work.",
+      "I don't always understand when the doctor talks fast."
+    ],
+    "questionsToAsk": [
+      "What could be causing the pain in my knees, and how will we find out?",
+      "Is it okay to keep taking paracetamol the way I do now?",
+      "What can I do to make the stairs easier?",
+      "What should I do if it gets worse before my next appointment?",
+      "Could you please speak a little slower so I can follow?"
+    ],
+    "whatToBring": [
+      "My paracetamol box and the cream from the pharmacy.",
+      "A note of which days the pain is worse."
+    ],
+    "notMentioned": ["I didn't say what makes it better."],
+    "serviceRoutes": [
+      { "id": "gp_surgery", "name": "Your GP surgery", "description": "For health concerns that are not urgent, and to book or change an appointment.", "contacts": [] },
+      { "id": "pharmacy", "name": "A pharmacy", "description": "Pharmacists can talk to you about your medicines and help with many everyday health problems, often without an appointment.", "contacts": [] },
+      { "id": "nhs_111", "name": "NHS 111", "description": "If you need help quickly but it is not an emergency. Free, any time, day or night.", "contacts": [ { "label": "Call NHS 111", "href": "tel:111" }, { "label": "NHS 111 online", "href": "https://111.nhs.uk" } ] },
+      { "id": "emergency_999", "name": "999", "description": "Only in an emergency, when someone is seriously ill or hurt, or their life is at risk.", "contacts": [ { "label": "Call 999", "href": "tel:999" } ] },
+      { "id": "samaritans", "name": "Samaritans", "description": "If you are finding things hard to cope with, you can talk to someone for free, any time, day or night.", "contacts": [ { "label": "Call Samaritans 116 123", "href": "tel:116123" } ] }
+    ],
+    "disclaimer": [
+      "This summary is here to help you talk to a doctor, nurse or other health professional. It is not medical advice and it does not diagnose anything.",
+      "It is based only on what you told us. Please check it is right before you share it.",
+      "If you feel worse or you are worried, contact NHS 111, or call 999 in an emergency."
+    ],
+    "meta": {
+      "detectedLanguage": "jam",
+      "register": "dialect_or_creole",
+      "outputLanguage": "jam",
+      "outputMode": "simple_english",
+      "promptVersion": "pre-master.v1+derive.v1",
+      "confidenceNotice": true,
+      "urgentAcknowledged": null
+    }
+  },
+  "userFallback": null
+}

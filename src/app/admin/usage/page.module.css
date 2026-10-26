@@ -1,0 +1,125 @@
+/* Admin usage page (FR-25): plain, dense, tokens only. */
+.page {
+  display: grid;
+  gap: var(--space-5);
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4);
+}
+
+.title {
+  font-size: var(--text-display-size);
+  line-height: var(--text-display-leading);
+  letter-spacing: var(--text-display-tracking);
+  font-weight: 700;
+}
+
+.lead,
+.muted {
+  color: var(--color-ink-muted);
+  font-size: var(--text-caption-size);
+  line-height: var(--text-caption-leading);
+}
+
+.alert {
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-card);
+  background: var(--color-caution-bg);
+  font-weight: 600;
+}
+
+.alert[data-level="100"] {
+  background: var(--color-urgent-bg);
+}
+
+.card {
+  display: grid;
+  gap: var(--space-3);
+  min-width: 0;
+  padding: var(--space-4);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+
+.heading {
+  font-size: var(--text-title-size);
+  line-height: var(--text-title-leading);
+  font-weight: 700;
+}
+
+.big {
+  font-size: 1.75rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.meter {
+  height: 0.75rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-muted);
+  box-shadow: inset 0 0 0 1px var(--color-border);
+  overflow: hidden;
+}
+
+.meter span {
+  display: block;
+  height: 100%;
+  background: var(--color-teal-500);
+}
+
+.meter span[data-level="50"],
+.meter span[data-level="80"] {
+  background: var(--color-caution-icon);
+}
+
+.meter span[data-level="100"] {
+  background: var(--color-coral-700);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+}
+
+.stats dt {
+  color: var(--color-ink-muted);
+  font-size: var(--text-caption-size);
+}
+
+.stats dd {
+  margin: 0;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.scroll {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+  font-size: var(--text-caption-size);
+}
+
+.table caption {
+  text-align: start;
+  font-weight: 600;
+  padding-bottom: var(--space-2);
+}
+
+.table th,
+.table td {
+  padding: var(--space-1) var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+  text-align: end;
+  white-space: nowrap;
+}
+
+.table th:first-child {
+  text-align: start;
+}

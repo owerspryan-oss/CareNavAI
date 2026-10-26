@@ -19,9 +19,11 @@
   --color-coral-400: #FD8A6E;
   --color-coral-500: #F2654B;
   --color-coral-600: #E8543E;
+  --color-coral-700: #C93F2A; /* white text at any size: 4.97:1 (AA) */
   --color-teal-100: #D6EDE6;
   --color-teal-500: #1F6F6B;
   --color-teal-700: #14504C;
+  --color-on-accent: #FFFFFF; /* text/icons on coral or teal fills */
 
   /* Semantic / status */
   --color-info-bg: var(--color-teal-100);
@@ -64,6 +66,7 @@
 
   /* Elevation */
   --shadow-button: 0 6px 16px rgba(242, 101, 75, 0.28);
+  --shadow-button-secondary: 0 6px 16px rgba(31, 111, 107, 0.28); /* same recipe, teal-500 hue */
   --shadow-card: 0 2px 8px rgba(11, 18, 22, 0.06);
 
   /* Motion (see DESIGN_SYSTEM.md §8 and .claude/skills/apple-design) */
@@ -71,11 +74,16 @@
   --spring-default-response: 0.35s;
   --spring-momentum-damping: 0.8;
   --spring-momentum-response: 0.35s;
+  /* CSS approximation of the default spring (damping 1.0, response 0.35s), sampled as
+     x(t) = 1 - (1 + wt)e^(-wt), w = 2pi/0.35. Use with --spring-default-duration. */
+  --ease-spring-default: linear(0, 0.102, 0.293, 0.48, 0.634, 0.75, 0.833, 0.89, 0.929, 0.954, 0.971, 0.981, 0.988, 0.993, 0.995, 1);
+  --spring-default-duration: 0.45s;
 }
 
 @media (prefers-reduced-motion: reduce) {
   :root {
     --spring-default-response: 0s;
     --spring-momentum-response: 0s;
+    --spring-default-duration: 0.2s; /* cross-fades only under reduced motion */
   }
 }

@@ -1,0 +1,19 @@
+{
+  "$comment": "FICTIONAL demo input (T-29). Marcia, 58, Jamaican Patois/English. Needs native-speaker check of the Patois wording.",
+  "forWhom": {
+    "relationship": "self",
+    "label": null,
+    "ageBand": null
+  },
+  "mainConcern": "Mi knee dem a hurt mi bad fi bout two month now, especially di right one. Mi cyaan walk up di stairs dem good again.",
+  "timing": {
+    "started": "1_to_6_months",
+    "pattern": "comes_and_goes",
+    "note": "It worse inna di morning when mi first get up"
+  },
+  "changes": "When rain a come it hurt more. If mi siddung long, it stiff up. Mi try walk likkle every day.",
+  "medicines": "Mi tek paracetamol sometime, two tablet. Mi use di cream weh di pharmacy gi mi.",
+  "previousSupport": null,
+  "worries": "Mi fraid seh dem a go tell mi fi stop work. Mi nuh always understand when di doctor talk fast.",
+  "followUps": []
+}

@@ -1,0 +1,161 @@
+{
+  "$comment": "DRAFT child and infant patterns (FR-05, FR-09, PRD 9.4). NOT CLINICALLY APPROVED; the clinical adviser sets the real list and age cut-offs. The Patois, Pidgin, Twi, Hindi, Haitian Creole, Krio, Guyanese and Trinidadian variants are NOT YET REVIEWED BY A NATIVE SPEAKER. Generic words for 'child' (pikin, bachcha, timoun, abofra) sit in the 1_to_4 band, the more cautious choice, because they do not say the age. These rules only apply when the subject is a child: either the request carries a child ageBand, or the text itself mentions a baby or young child (subjectPatterns), in which case the youngest band wins. 'levelByAgeBand' lists the bands a rule applies to and the level it routes to. Any child rule hit for under_1 or 1_to_4 routes to at least 'urgent' (PRD 9.4). Matching rules are the same as en.json (normalised text, whole words).",
+  "language": "*",
+  "kind": "child",
+  "status": "DRAFT_NOT_CLINICALLY_APPROVED",
+  "reviewed": false,
+  "subjectPatterns": {
+    "under_1": [
+      "baby|babys|babies|newborn|new born|infant",
+      "[0-9]+ (day|days|week|weeks|month|months) old",
+      "pickney baby|likkle baby|small baby|pikin baby",
+      "bebi|bebe|ti bebe|tibebe|akokoaa",
+      "शिशु|नवजात|shishu|navjaat|navjat",
+      "[0-9]+ (दिन|हफ्ते|हफ़्ते|सप्ताह|महीने) (का|की|के) (बच्चा|बच्ची|बच्चे|बेटा|बेटी)",
+      "[0-9]+ (din|hafte|haftay|mahine|mahina) (ka|ki|ke) (bachcha|baccha|bacha|bachchi|bacchi|bachi|bachche|bacche|bache|beta|beti)"
+    ],
+    "1_to_4": [
+      "toddler|toddlers",
+      "pikin|pickney|pickni",
+      "[1-4] (year|years|yr|yrs) old",
+      "बच्चा|बच्ची|बच्चे|बच्चों",
+      "bachcha|baccha|bacha|bachchi|bacchi|bachi|bachche|bacche|bache",
+      "timoun|abofra|abɔfra"
+    ]
+  },
+  "rules": [
+    {
+      "id": "child.not_feeding",
+      "category": "child_concern",
+      "levelByAgeBand": { "under_1": "urgent", "1_to_4": "urgent" },
+      "patterns": [
+        "(wont|will not|not|isnt|is not|hasnt|has not|stopped|refusing to|refuses to|cant|cannot|doesnt|does not) (feed|feeding|fed|eat|eating|drink|drinking|take (the |her |his |a |any )?(bottle|breast|milk|feed|feeds))",
+        "(off|refusing) (her |his |their )?(feeds|food|milk|bottle)",
+        "(nah|nuh|cyaan|caan|wah nuh) (feed|eat|nyam|drink|tek (di )?(bottle|breast|milk))",
+        "no (dey |gree |wan |fit )?(chop|eat|suck|drink|feed|take (di |the )?(breast|bottle|milk))",
+        "(nah|nuh|na|cyan|cyaan|caan|eh|ent|aint) (feedin|feeding|eatin|eating|drinkin|drinking|tek (de |di )?(bottle|breast|milk))",
+        "दूध (नहीं|नही) पी (रहा|रही|रहे)",
+        "(कुछ )?(नहीं|नही) खा (रहा|रही|रहे)",
+        "(doodh|dudh) (nahi|nahin|nhi) (pee|pi) (raha|rahi|rha|rhi)",
+        "(kuch )?(nahi|nahin|nhi) (kha|khaa) (raha|rahi|rha|rhi)",
+        "pa (vle|ka) (tete|manje|bw(è|e)|pran bibon|pran tete)",
+        "n(ɔ|o) (de|wan|gri) (it|s(ɔ|o)k|dring)",
+        "n(ɔ|o) s(ɔ|o)k",
+        "(ɔ|o)nnom nufu(ɔ|o)?"
+      ]
+    },
+    {
+      "id": "child.fever_infant",
+      "category": "child_concern",
+      "levelByAgeBand": { "under_1": "urgent" },
+      "patterns": [
+        "hot",
+        "burning up",
+        "(high )?(temperature|temp|fever|feverish)",
+        "(bun|burn) up",
+        "body (a )?(hot|feel hot)",
+        "body dey hot",
+        "dey hot",
+        "बुखार|bukhar|bukhaar",
+        "(शरीर|बदन) (बहुत )?(गर्म|गरम|तप)",
+        "(badan|sharir|shareer) (bahut )?(garam|garm|tap)",
+        "lafy(è|e)v|fy(è|e)v|cho",
+        "(skin|b(ɔ|o)di) (de )?hot",
+        "fiva",
+        "ho (a|re)?y(ɛ|e) hyew"
+      ]
+    },
+    {
+      "id": "child.floppy_or_unresponsive",
+      "category": "child_concern",
+      "levelByAgeBand": { "under_1": "emergency", "1_to_4": "emergency", "5_to_11": "emergency", "12_to_17": "emergency" },
+      "patterns": [
+        "floppy",
+        "limp",
+        "unresponsive",
+        "(hard|difficult) to wake",
+        "(wont|will not|cant|can not|cannot|not|isnt) (wake|waking)( up)?",
+        "(nah|nuh|cyaan|caan) wake( up)?",
+        "(weak weak|soft soft)",
+        "(body )?don soft",
+        "no dey (wake|respond)",
+        "(ढीला|ढीली) पड़ (गया|गई)",
+        "जाग (नहीं|नही) (रहा|रही)",
+        "(dheela|dhila|dheeli|dhili) (pad|padh|par) (gaya|gayi|gai)",
+        "jaag (nahi|nahin|nhi) (raha|rahi|rha|rhi)",
+        "k(ò|o) (li )?(mou|lage)"
+      ]
+    },
+    {
+      "id": "child.drowsy",
+      "category": "child_concern",
+      "levelByAgeBand": { "under_1": "urgent", "1_to_4": "urgent" },
+      "patterns": [
+        "drowsy",
+        "lethargic",
+        "(very|really|unusually|so|too) sleepy",
+        "सुस्त|sust"
+      ]
+    },
+    {
+      "id": "child.breathing",
+      "category": "breathing",
+      "levelByAgeBand": { "under_1": "emergency", "1_to_4": "emergency", "5_to_11": "urgent", "12_to_17": "urgent" },
+      "patterns": [
+        "grunting",
+        "(breathing|breathes|breath) .{0,15}(fast|quick|quickly|hard|noisy|noisily|funny|strange|struggl[a-z]*|difficult)",
+        "(ribs|tummy|chest|skin between (the |her |his )?ribs) .{0,15}(sucking|sucked|pulling|pulls) in",
+        "(struggling|working hard|fighting) (to|for) (breathe|breath)",
+        "wheez[a-z]*",
+        "(cyaan|caan) (breathe|breed|ketch (him|her|im) breath)",
+        "no (dey |fit )?breathe (well|proper|properly)",
+        "breath dey (cut|catch|hard)",
+        "(सा[ंँ]स|श्वास) (बहुत )?(तेज|तेज़|जल्दी जल्दी)",
+        "saa?ns (bahut )?(tez|tej|jaldi jaldi)",
+        "respire (vit|rapid|di|mal)"
+      ]
+    },
+    {
+      "id": "child.blue_or_mottled",
+      "category": "child_concern",
+      "levelByAgeBand": { "under_1": "emergency", "1_to_4": "emergency", "5_to_11": "emergency", "12_to_17": "emergency" },
+      "patterns": [
+        "(lips|lip|tongue|skin|face|mouth) .{0,12}(blue|grey|gray|bluish|blotchy|mottled)",
+        "(blue|bluish|grey|gray) (lips|tongue|skin|face)",
+        "blotchy",
+        "mottled",
+        "lip (dem )?(a )?(tun )?blue",
+        "(lips|lip|mouth) don (blue|change colour|change color)"
+      ]
+    },
+    {
+      "id": "child.dehydration",
+      "category": "child_concern",
+      "levelByAgeBand": { "under_1": "urgent", "1_to_4": "urgent" },
+      "patterns": [
+        "(no|not had a|not had any|hasnt had a|hasnt had any|has not had a|has not had any) wet napp(y|ies)",
+        "dry napp(y|ies)",
+        "sunken (soft spot|fontanelle|eyes)",
+        "no tears"
+      ]
+    },
+    {
+      "id": "child.infant_cry_or_fontanelle",
+      "category": "child_concern",
+      "levelByAgeBand": { "under_1": "urgent" },
+      "patterns": [
+        "(high pitched|weak|unusual|strange|constant|non stop|inconsolable) (cry|crying|scream|screaming)",
+        "(soft spot|fontanelle) .{0,15}(bulging|bulge|swollen|sunken)"
+      ]
+    },
+    {
+      "id": "child.green_vomit",
+      "category": "child_concern",
+      "levelByAgeBand": { "under_1": "urgent", "1_to_4": "urgent" },
+      "patterns": [
+        "(green|bile|bilious) (vomit|sick)",
+        "(vomit|vomiting|sick|being sick) .{0,10}green"
+      ]
+    }
+  ]
+}

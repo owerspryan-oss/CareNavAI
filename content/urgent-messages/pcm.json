@@ -1,0 +1,68 @@
+{
+  "$comment": "Nigerian Pidgin urgent messages. DRAFT translation derived from en.json; needs native-speaker review and clinical adviser approval. Phone numbers and hrefs are byte-identical to en.json.",
+  "language": "pcm",
+  "status": "DRAFT_NOT_CLINICALLY_APPROVED",
+  "reviewed": false,
+  "derivedFrom": "en",
+  "labels": {
+    "acknowledge": "I understand, make we continue",
+    "startAgain": "Start again"
+  },
+  "messages": {
+    "emergency": {
+      "title": "Dis one fit be emergency",
+      "body": [
+        "Wetin you describe fit be serious.",
+        "Call 999 now now.",
+        "No wait to see whether e go better.",
+        "Dis app no fit check symptoms or give medical advice."
+      ],
+      "banner": "You tell us something wey fit be emergency. If you never do am, call 999 now now.",
+      "actions": [
+        { "id": "call_999", "label": "Call 999", "href": "tel:999" }
+      ],
+      "selfHarmLine": "When you don dey safe, Samaritans dey any time, day or night. Call 116 123."
+    },
+    "urgent": {
+      "title": "Abeg, find help quick",
+      "body": [
+        "Wetin you describe fit need doctor or nurse to look am quick.",
+        "Contact NHS 111 now, for phone or online, or call your GP surgery if dem open.",
+        "If e dey worse, or you think say na emergency, call 999.",
+        "Dis app no fit check symptoms or give medical advice."
+      ],
+      "banner": "You tell us something wey fit need help quick. If you never do am, contact NHS 111 or your GP surgery.",
+      "actions": [
+        { "id": "call_111", "label": "Call NHS 111", "href": "tel:111" },
+        { "id": "nhs_111_online", "label": "NHS 111 online", "href": "https://111.nhs.uk" },
+        { "id": "call_999", "label": "Call 999", "href": "tel:999" }
+      ]
+    },
+    "crisis": {
+      "title": "You no need to face dis one alone",
+      "body": [
+        "E be like say you dey pass through something wey hard well well now.",
+        "You fit talk to Samaritans free, any time, day or night. Call 116 123.",
+        "If you dey for danger now now, or you fit act on dis kain thought, call 999 now now.",
+        "You fit also call NHS 111 for urgent mental health help.",
+        "To talk for your own language, call NHS 111 and ask for interpreter."
+      ],
+      "banner": "You tell us say you fit dey pass through something wey hard well well. Samaritans dey any time for 116 123. If you dey for danger now now, call 999.",
+      "actions": [
+        { "id": "call_samaritans", "label": "Call Samaritans 116 123", "href": "tel:116123" },
+        { "id": "call_999", "label": "Call 999", "href": "tel:999" },
+        { "id": "call_111", "label": "Call NHS 111", "href": "tel:111" }
+      ],
+      "continueCheck": {
+        "link": "I no dey for danger, I wan continue",
+        "title": "Before you continue",
+        "body": [
+          "Only continue if you no dey for danger now now.",
+          "Samaritans dey any time, day or night. Call 116 123."
+        ],
+        "confirm": "I no dey for danger now now",
+        "button": "Continue"
+      }
+    }
+  }
+}

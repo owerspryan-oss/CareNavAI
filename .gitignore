@@ -32,3 +32,12 @@ Thumbs.db
 coverage/
 playwright-report/
 test-results/
+
+# TypeScript / Next generated
+*.tsbuildinfo
+next-env.d.ts
+
+# Claude Code agent worktrees
+.claude/worktrees/
+a11y-failure.png
+ui-review-*.csv

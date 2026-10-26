@@ -1,0 +1,141 @@
+@import "../../design/tokens.css";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-leading);
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+/* Large text (T-18): a long word in a big heading breaks rather than pushing the page sideways. */
+h1,
+h2,
+h3 {
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-teal-500);
+  outline-offset: 2px;
+}
+
+/* Headings receive programmatic focus on step change; no ring for that, only for keyboard focus. */
+[tabindex="-1"]:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/*
+ * Guided-step transitions (DESIGN_SYSTEM.md §8): forward slides in from the right and out to
+ * the left; Back mirrors it exactly. The flow sets data-step-direction on <html> for the
+ * duration of the view transition. Pseudo-elements must be global, so they live here.
+ */
+/* Global (not a CSS module) so the view-transition-name isn't hashed. */
+.guided-step {
+  view-transition-name: guided-step;
+}
+
+::view-transition-group(guided-step),
+::view-transition-old(guided-step),
+::view-transition-new(guided-step) {
+  animation-duration: var(--spring-default-duration);
+  animation-timing-function: var(--ease-spring-default);
+  animation-fill-mode: both;
+}
+
+html[data-step-direction="forward"]::view-transition-old(guided-step) {
+  animation-name: step-out-to-left;
+}
+html[data-step-direction="forward"]::view-transition-new(guided-step) {
+  animation-name: step-in-from-right;
+}
+html[data-step-direction="back"]::view-transition-old(guided-step) {
+  animation-name: step-out-to-right;
+}
+html[data-step-direction="back"]::view-transition-new(guided-step) {
+  animation-name: step-in-from-left;
+}
+
+/* Right-to-left (AC-27.3): forward travels the other way, and arrow icons point the other way. */
+html[dir="rtl"][data-step-direction="forward"]::view-transition-old(guided-step) {
+  animation-name: step-out-to-right;
+}
+html[dir="rtl"][data-step-direction="forward"]::view-transition-new(guided-step) {
+  animation-name: step-in-from-left;
+}
+html[dir="rtl"][data-step-direction="back"]::view-transition-old(guided-step) {
+  animation-name: step-out-to-left;
+}
+html[dir="rtl"][data-step-direction="back"]::view-transition-new(guided-step) {
+  animation-name: step-in-from-right;
+}
+[dir="rtl"] svg[data-mirror] {
+  transform: scaleX(-1);
+}
+
+@keyframes step-in-from-right {
+  from { opacity: 0; transform: translateX(2rem); }
+}
+@keyframes step-out-to-left {
+  to { opacity: 0; transform: translateX(-2rem); }
+}
+@keyframes step-in-from-left {
+  from { opacity: 0; transform: translateX(-2rem); }
+}
+@keyframes step-out-to-right {
+  to { opacity: 0; transform: translateX(2rem); }
+}
+@keyframes step-fade-in {
+  from { opacity: 0; }
+}
+@keyframes step-fade-out {
+  to { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-step-direction]::view-transition-old(guided-step) {
+    animation-name: step-fade-out;
+  }
+  html[data-step-direction]::view-transition-new(guided-step) {
+    animation-name: step-fade-in;
+  }
+}

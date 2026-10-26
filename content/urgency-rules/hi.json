@@ -1,0 +1,153 @@
+{
+  "$comment": "DRAFT Hindi red-flag rules (FR-05, PRD 9.1 layer 1). NOT CLINICALLY APPROVED and NOT YET REVIEWED BY A NATIVE SPEAKER: seed list for the local demo only. English rules (en.json) always run as well, because Hindi speakers often code-switch, so this file only adds Hindi wording. Each rule has Devanagari patterns first, then common romanised (Hinglish) spellings. Matching rules are the same as en.json (normalised text, whole words; see en.json $comment). Text and patterns are both NFKC-normalised, so nukta letters (ड़, ज़) match whether typed as one character or two. Spelling varies: chandrabindu/anusvara (साँस/सांस), नहीं/नही, and many romanised spellings; add variants rather than loosening patterns.",
+  "language": "hi",
+  "kind": "language",
+  "status": "DRAFT_NOT_CLINICALLY_APPROVED",
+  "reviewed": false,
+  "rules": [
+    {
+      "id": "hi.breathing.cannot_breathe",
+      "level": "emergency",
+      "category": "breathing",
+      "patterns": [
+        "(सा[ंँ]स|श्वास) (बिल्कुल |ठीक से )?(नहीं|नही|न) (ले|आ)",
+        "दम घुट (रहा|रही|रहे)",
+        "saa?ns (bilkul |theek se |thik se )?(nahi|nahin|nai|nhi|na) (le|aa|a)",
+        "dam ghut (raha|rahi|rahe|rha|rhi)"
+      ]
+    },
+    {
+      "id": "hi.breathing.difficult",
+      "level": "urgent",
+      "category": "breathing",
+      "patterns": [
+        "(सा[ंँ]स|श्वास) (लेने में )?(बहुत )?(तकलीफ|दिक्कत|परेशानी|मुश्किल)",
+        "saa?ns (lene )?(me |mein |mai )?(bahut |bohot |bahot )?(takleef|taklif|dikkat|pareshani|mushkil)"
+      ]
+    },
+    {
+      "id": "hi.chest.pain_with_red_flags",
+      "level": "emergency",
+      "category": "chest_pain",
+      "patterns": [
+        "(सीने|सीना|छाती) (में )?(बहुत )?(तेज )?(दर्द|जलन|भारीपन|दबाव|जकड़न)",
+        "(seene|sine|seena|chhati|chati|chaati|chhaati|chest) (me |mein |main |mai )?(bahut |bohot |bahot |tez )?(dard|jalan|bharipan|bhaaripan|dabav|dabaav)"
+      ],
+      "requiresAlso": [
+        [
+          "(सा[ंँ]स|श्वास)|पसीना|पसीने|उल्टी|चक्कर|घबराहट",
+          "(बा[ंँ]ह|हाथ|जबड़े|जबड़ा|कंधे|गर्दन) .{0,20}(दर्द|सुन्न|भारी)",
+          "saa?ns|pasina|paseena|pasine|ulti|chakkar|ghabrahat",
+          "(baah|baanh|bah|haath|hath|jabda|jabde|kandhe|gardan|arm) .{0,20}(dard|sunn|bhaari|bhari|numb)"
+        ]
+      ]
+    },
+    {
+      "id": "hi.chest.heart_attack_now",
+      "level": "emergency",
+      "category": "chest_pain",
+      "patterns": [
+        "दिल का दौरा पड़ (रहा|रही)",
+        "dil ka daura (pad|padh|par) (raha|rha)"
+      ]
+    },
+    {
+      "id": "hi.chest.pain",
+      "level": "urgent",
+      "category": "chest_pain",
+      "patterns": [
+        "(सीने|सीना|छाती) (में )?(बहुत )?(तेज )?(दर्द|जलन|भारीपन|दबाव|जकड़न)",
+        "(seene|sine|seena|chhati|chati|chaati|chhaati|chest) (me |mein |main |mai )?(bahut |bohot |bahot |tez )?(dard|jalan|bharipan|bhaaripan|dabav|dabaav)"
+      ]
+    },
+    {
+      "id": "hi.stroke.face_side_speech",
+      "level": "emergency",
+      "category": "stroke_signs",
+      "patterns": [
+        "(चेहरा|मुँह|मुंह|मुह) .{0,15}(टेढ़ा|लटक)",
+        "एक (तरफ|तरफ़|साइड) .{0,20}(सुन्न|कमजोर|कमज़ोर|काम नहीं|हिल नहीं)",
+        "(ठीक से|साफ) बोल (नहीं|नही) पा",
+        "(जुबान|जबान|ज़ुबान|ज़बान) (लड़खड़ा|अटक)",
+        "(chehra|chehara|muh|munh) .{0,15}(tedha|tedhaa|terha|latak)",
+        "ek (taraf|side) .{0,20}(sunn|kamzor|kamjor|kaam nahi|hil nahi)",
+        "(theek se|thik se|saaf) bol (nahi|nahin|nhi) pa",
+        "(zubaan|zuban|jubaan|juban|jaban) (ladkhada|larkhara|ladkhad|atak)"
+      ]
+    },
+    {
+      "id": "hi.bleeding.severe",
+      "level": "emergency",
+      "category": "severe_bleeding",
+      "patterns": [
+        "खून (बंद|रुक) (ही )?(नहीं|नही) (हो )?(रहा|रही)",
+        "(बहुत|बहुत ज्यादा|बहुत ज़्यादा) खून (बह|निकल) (रहा|रही)",
+        "kh(oo|u)n (band|ruk) (hi )?(nahi|nahin|nhi|nai) (ho )?(raha|rahi|rha|rhi)",
+        "(bahut|bohot|bahot) (zyada |jyada |jada )?kh(oo|u)n (beh|bah|nikal) (raha|rahi|rha|rhi)"
+      ]
+    },
+    {
+      "id": "hi.consciousness.unresponsive",
+      "level": "emergency",
+      "category": "loss_of_consciousness",
+      "patterns": [
+        "होश (में )?(नहीं|नही) (आ|आया|आई)",
+        "जाग (नहीं|नही) (रहा|रही|रहे)",
+        "बेहोश (है|हैं|पड़ा|पड़ी|पड़े)",
+        "hosh (me |mein )?(nahi|nahin|nhi) (aa|aaya|a)",
+        "jaag (nahi|nahin|nhi) (raha|rahi|rahe|rha|rhi)",
+        "behosh (hai|hain|pada|padi|pade|para|pari|pare)"
+      ]
+    },
+    {
+      "id": "hi.consciousness.fainted",
+      "level": "urgent",
+      "category": "loss_of_consciousness",
+      "patterns": [
+        "बेहोश",
+        "behosh"
+      ]
+    },
+    {
+      "id": "hi.seizure.ongoing",
+      "level": "emergency",
+      "category": "seizure",
+      "patterns": [
+        "(दौरा|दौरे) पड़ (रहा|रहे)",
+        "झटके (आ|लग) (रहे|रहा)",
+        "(daura|daure|dora|dore) (pad|padh|par) (raha|rahe|rha|rhe)",
+        "jhatke (aa|lag) (rahe|raha|rhe|rha)"
+      ]
+    },
+    {
+      "id": "hi.allergy.severe",
+      "level": "emergency",
+      "category": "severe_allergic_reaction",
+      "patterns": [
+        "(होंठ|होंठों|होठ|जीभ|चेहरा|चेहरे) .{0,12}सूज",
+        "गला बंद (हो )?(रहा|रही)",
+        "(honth|honthon|hoth|hont|jeebh|jeeb|jibh|chehra|chehre) .{0,12}(sooj|suj)(an|a|i|e|h)?",
+        "gala band (ho )?(raha|rha)"
+      ]
+    },
+    {
+      "id": "hi.crisis.suicide_self_harm",
+      "level": "crisis",
+      "category": "self_harm_or_suicide",
+      "patterns": [
+        "(मरना|मर जाना) चाहता|(मरना|मर जाना) चाहती",
+        "(जीना|जीना ही) (नहीं|नही) चाहत(ा|ी)",
+        "जीने का (मन|कोई मतलब|कोई फायदा) (नहीं|नही)",
+        "आत्महत्या|खुदकुशी|ख़ुदकुशी",
+        "(खुद|अपने आप) को (मार(ना|ने|ूंगा|ूँगा|ूंगी|ूँगी)?|खत्म|ख़त्म|नुकसान|चोट)",
+        "(जिंदगी|ज़िंदगी|जान) (खत्म|ख़त्म) कर",
+        "(marna|mar jana|mar jaana) (chahta|chahti|chahata)",
+        "(jeena|jina) (hi )?(nahi|nahin|nhi) (chahta|chahti|chahata)",
+        "jeene ka (man|mann|koi matlab|koi fayda) (nahi|nahin|nhi)",
+        "(aatmahatya|atmahatya|khudkushi|khudkhushi)",
+        "(khud|apne aap) ko ((maar|mar)(na|ne|unga|ungi|lunga|lungi|du|dunga|dungi)?|khatam|khatm|nuksan|nuksaan|chot)",
+        "(zindagi|jindagi|jaan) (khatam|khatm) kar"
+      ]
+    }
+  ]
+}

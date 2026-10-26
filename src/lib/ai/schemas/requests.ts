@@ -1,0 +1,98 @@
+import { z } from "zod";
+import { ageBandSchema, languageCodeSchema, notRestyled, relationshipSchema } from "./common";
+import { POST_INTENTS, PRE_INTENTS } from "./followups";
+import { postAppointmentResultSchema } from "./post";
+import { preAppointmentResultSchema } from "./pre";
+
+// Request bodies shared by the UI and the API routes. Length limits are applied by the route
+// (MAX_TEXT_CHARS from env), not here, so they stay configuration.
+
+const freeText = z.string().trim();
+
+export const STARTED_OPTIONS = ["today", "few_days", "1_to_4_weeks", "1_to_6_months", "over_6_months", "not_sure"] as const;
+export const PATTERN_OPTIONS = ["constant", "comes_and_goes", "changing", "not_sure"] as const;
+
+export const answeredFollowUpSchema = <T extends readonly [string, ...string[]]>(intents: T) =>
+  z.object({ intent: z.enum(intents), question: z.string(), answer: freeText.nullable() });
+
+/** Journey 1 answers (PRD §3.2 steps 1-7). Structured picks are never sent to the classifier. */
+export const prepareAnswersSchema = z.object({
+  forWhom: z.object({
+    relationship: relationshipSchema,
+    label: freeText.max(60).nullable(),
+    ageBand: ageBandSchema.nullable(),
+  }),
+  mainConcern: freeText.min(1),
+  timing: z.object({
+    started: z.enum(STARTED_OPTIONS).nullable(),
+    pattern: z.enum(PATTERN_OPTIONS).nullable(),
+    note: freeText.nullable(),
+  }),
+  changes: freeText.nullable(),
+  medicines: freeText.nullable(),
+  previousSupport: freeText.nullable().default(null),
+  worries: freeText.nullable(),
+  followUps: z.array(answeredFollowUpSchema(PRE_INTENTS)).max(3),
+});
+export type PrepareAnswers = z.infer<typeof prepareAnswersSchema>;
+
+export const summaryRequestSchema = z.object({
+  answers: prepareAnswersSchema,
+  /** Set when the user acknowledged an urgent message earlier in the journey (continue_after_ack). */
+  acknowledgedUrgent: z.boolean().default(false),
+  outputLanguage: z.string().min(2).max(16).nullable().default(null),
+});
+export type SummaryRequest = z.infer<typeof summaryRequestSchema>;
+
+/** Journey 2 (PRD §3.3). `confirmedText` is what the user checked after typing, speaking or photographing. */
+export const explainRequestSchema = z.object({
+  confirmedText: freeText.min(1),
+  source: z.enum(["typed", "voice", "photo"]),
+  followUps: z.array(answeredFollowUpSchema(POST_INTENTS)).max(3),
+  acknowledgedUrgent: z.boolean().default(false),
+  outputLanguage: z.string().min(2).max(16).nullable().default(null),
+});
+export type ExplainRequest = z.infer<typeof explainRequestSchema>;
+
+/** Journey 2 "Change language": re-derive a signed English master only (no re-screen, no re-draft). */
+export const translateRequestSchema = notRestyled(
+  z.object({
+    english: postAppointmentResultSchema,
+    masterToken: z.string().regex(/^[A-Za-z0-9_-]{43}$/),
+    outputLanguage: z.string().min(2).max(16).nullable(),
+  }),
+);
+export type TranslateRequest = z.infer<typeof translateRequestSchema>;
+
+/** Every free-text field in Journey 1, in step order. This is what the combined re-screen reads. */
+export function prepareFreeText(a: PrepareAnswers): { step: string; text: string }[] {
+  const parts: { step: string; text: string | null }[] = [
+    { step: "main_concern", text: a.mainConcern },
+    { step: "timing_note", text: a.timing.note },
+    { step: "changes", text: a.changes },
+    { step: "medicines", text: a.medicines },
+    { step: "previous_support", text: a.previousSupport },
+    { step: "worries", text: a.worries },
+    ...a.followUps.map((f) => ({ step: `followup_${f.intent}`, text: f.answer })),
+  ];
+  return parts.filter((p): p is { step: string; text: string } => !!p.text && p.text.length > 0);
+}
+
+export const followUpsRequestSchema = z.discriminatedUnion("journey", [
+  z.object({ journey: z.literal("prepare"), answers: prepareAnswersSchema, acknowledgedUrgent: z.boolean().default(false) }),
+  z.object({ journey: z.literal("understand"), confirmedText: freeText.min(1), acknowledgedUrgent: z.boolean().default(false) }),
+]);
+export type FollowUpsRequest = z.infer<typeof followUpsRequestSchema>;
+
+/**
+ * POST /api/restyle (FR-23). The English master of a result the client already holds (so untrusted:
+ * the server re-screens it and checks every protected span), and the dialect to restyle it into.
+ * Never a restyled version as the source.
+ */
+export const restyleRequestSchema = notRestyled(
+  z.discriminatedUnion("flow", [
+    z.object({ flow: z.literal("prepare"), language: languageCodeSchema, english: preAppointmentResultSchema }),
+    z.object({ flow: z.literal("understand"), language: languageCodeSchema, english: postAppointmentResultSchema }),
+  ]),
+);
+export type RestyleRequest = z.infer<typeof restyleRequestSchema>;
