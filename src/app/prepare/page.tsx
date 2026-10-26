@@ -13,10 +13,14 @@ export async function generateMetadata(): Promise<Metadata> {
   return { title: `${messages.common.meta.prepareTitle} · CareNav AI` };
 }
 
-/** AC-07.5: voice input only where speech-to-text has been tested and not switched off (config/languages.json). */
+/**
+ * Voice input in every configured language unless switched off for it (config/languages.json
+ * `voiceDisabled`). Product owner, 2026-10-26: open dictation to all languages; `sttTested` still
+ * records which languages have actually been tried, for Tier A sign-off (AC-28.2).
+ */
 function voiceEnabled(language: string): boolean {
   const signoff = languagesConfig.languages.find((l) => l.code === language)?.signoff;
-  return !!signoff && signoff.sttTested && !signoff.voiceDisabled;
+  return !!signoff && !signoff.voiceDisabled;
 }
 
 export default async function PreparePage() {

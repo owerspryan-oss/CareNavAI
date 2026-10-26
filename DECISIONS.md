@@ -248,3 +248,10 @@ Results: benchmark before (derive v1, default effort, one call) median 8.9 s, fa
 **Why:** product-owner request.
 **Affects:** FR-27, FR-03, FR-12/14. `src/lib/db/migrations/002_user_language.sql`, `src/lib/auth/*`, `src/app/api/account/language/route.ts`, `src/components/i18n/LanguageChooser.*`, `src/components/i18n/LanguagePicker.tsx`, `src/lib/i18n/*`, `src/app/prepare/page.tsx`, `src/app/understand/page.tsx`, `src/components/prepare/PrepareFlow.tsx`, `src/components/understand/UnderstandFlow.tsx`, `src/components/account/*`, `content/ui/en.json`, `scripts/a11y.mjs`.
 **Alternatives considered:** asking on the start page itself (the product owner asked for "before starting the process flow"); separate interface and output language settings (two choices for one question).
+
+## Voice input in every language — 2026-10-26
+
+**Decision:** Product owner: "open up the dictation to all languages". The voice button now shows in every configured language unless that language has `voiceDisabled: true` in `config/languages.json` (none do). `sttTested` keeps its meaning (actually tried with real speech; only English so far) and still counts toward Tier A sign-off (AC-28.2); it no longer hides the button. Checked: the button shows on step 2 in French, Urdu and Somali; English transcription was checked live on 2026-10-25. Transcription in other languages is untested (no non-English test voice on this machine); the transcript is always shown for the person to check and edit, and is screened before the journey moves on.
+**Why:** product-owner request.
+**Affects:** FR-07 / AC-07.5 (narrowed to "unless switched off"), `src/app/prepare/page.tsx`.
+**Alternatives considered:** setting `sttTested: true` for every language (would record a test that never happened, and would count toward Tier A).
