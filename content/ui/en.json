@@ -38,6 +38,23 @@
         "prepareTitle": "Prepare for my appointment",
         "understandTitle": "Understand what I was told",
         "accountTitle": "Your account"
+      },
+      "progress": {
+        "check": ["Reading what you wrote…", "Checking for anything that needs help quickly…"],
+        "followUps": ["Looking over it all again…", "Seeing if anything needs a little more detail…"],
+        "letterCheck": ["Reading your letter…", "Checking for anything that needs help quickly…"],
+        "photo": ["Getting your photo ready…", "Reading the words in your letter…", "Looking for any medicine names…"],
+        "summary": {
+          "check": "Checking your answers again…",
+          "write": "Writing your summary in plain English…"
+        },
+        "explain": {
+          "check": "Checking your letter and answers again…",
+          "write": "Explaining your letter in plain English…",
+          "match": "Matching each point to the words in your letter…"
+        },
+        "translate": "Putting it into {language}…",
+        "verify": "Checking medicines and numbers match…"
       }
     },
     "prepare": {
@@ -450,7 +467,6 @@
         "toggle": "Change language",
         "label": "Show me this in",
         "defaultOption": "Simple English",
-        "updating": "Updating…",
         "failed": "We couldn't make that version this time. You're still seeing the last one."
       },
       "actions": {

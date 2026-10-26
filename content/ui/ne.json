@@ -98,7 +98,6 @@
     "explain.languagePicker.failed": "3bd16bc163",
     "explain.languagePicker.label": "884e1fc50c",
     "explain.languagePicker.toggle": "009ed110ba",
-    "explain.languagePicker.updating": "dfe40efe92",
     "explain.medicine.dose": "6b942766c4",
     "explain.medicine.duration": "8ddab050d5",
     "explain.medicine.frequency": "7710cdf129",
@@ -789,7 +788,6 @@
         "toggle": "भाषा बदल्नुहोस्",
         "label": "मलाई यो यस भाषामा देखाउनुहोस्",
         "defaultOption": "सजिलो अङ्ग्रेजी",
-        "updating": "अपडेट गर्दै…",
         "failed": "यस पटक हामीले त्यो संस्करण बनाउन सकेनौँ। तपाईंले अझै पनि पछिल्लो संस्करण नै हेरिरहनुभएको छ।"
       },
       "actions": {

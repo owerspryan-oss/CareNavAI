@@ -29,6 +29,8 @@ import { SummaryStatus } from "@/components/prepare/SummaryStatus";
 import { ExplainResultView } from "@/components/result/ExplainResultView";
 import { UrgentGate } from "@/components/safety/UrgentGate";
 import { Button } from "@/components/ui/Button";
+import { ProgressFeed, useProgressCopy } from "@/components/ui/ProgressFeed";
+import { PROGRESS_LONG_INTERVAL_MS, explainLines, outputLanguageName } from "@/components/ui/progress";
 import { TopBar } from "@/components/ui/TopBar";
 import { CameraIcon, ChevronRightIcon, EyeOffIcon, LockIcon, PencilIcon } from "@/components/ui/icons";
 import { useUnderstandCopy } from "./copy";
@@ -115,6 +117,9 @@ export function UnderstandFlow({
   const [acknowledged, setAcknowledged] = useState(false);
   const [gate, setGate] = useState<PendingGate | null>(null);
   const [busy, setBusy] = useState(false);
+  /** What "Confirm" is waiting on, for the progress feed: the letter's urgency check, then the follow-up questions. */
+  const [confirmWait, setConfirmWait] = useState<"letterCheck" | "followUps">("letterCheck");
+  const progress = useProgressCopy();
   const [outputLanguage, setOutputLanguage] = useState<string | null>(preference);
   const [updating, setUpdating] = useState(false);
   const [updateFailed, setUpdateFailed] = useState(false);
@@ -220,6 +225,7 @@ export function UnderstandFlow({
       setStage({ name: "result", result: last.result, followUps: last.request.followUps });
       return;
     }
+    setConfirmWait("letterCheck");
     setBusy(true);
     const result = await screenText(text, "letter_text", null);
     setConfirmed(text);
@@ -233,6 +239,7 @@ export function UnderstandFlow({
       setGate({ result, letter: true, resume: { to: "followups" } });
       return;
     }
+    setConfirmWait("followUps");
     await startFollowUps(text, false);
     setBusy(false);
   }
@@ -361,7 +368,11 @@ export function UnderstandFlow({
       />
     );
   }
-  if (stage.name === "loading") return <SummaryStatus kind="loading" copy={c.status} />;
+  if (stage.name === "loading") {
+    return (
+      <SummaryStatus kind="loading" copy={c.status} progress={explainLines(progress, outputLanguageName(outputLanguage, languages))} />
+    );
+  }
   if (stage.name === "error") {
     const { followUps } = stage;
     return (
@@ -527,6 +538,7 @@ export function UnderstandFlow({
             </h1>
             <p className={p.lead}>{c.reading.lead}</p>
           </div>
+          <ProgressFeed lines={progress.photo} intervalMs={PROGRESS_LONG_INTERVAL_MS} className={p.statusFeed} />
           {photoUrl && <LetterPhoto url={photoUrl} />}
         </main>
       </div>
@@ -621,6 +633,11 @@ export function UnderstandFlow({
         </form>
       </main>
       <footer className={p.footer}>
+        {busy && (
+          <div className={p.footerFeed}>
+            <ProgressFeed key={confirmWait} lines={progress[confirmWait]} />
+          </div>
+        )}
         <Button variant="tertiary" className={p.backButton} onClick={() => setStage({ name: "choose" })} disabled={busy}>
           {c.actions.back}
         </Button>

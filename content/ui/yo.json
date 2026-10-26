@@ -98,7 +98,6 @@
     "explain.languagePicker.failed": "3bd16bc163",
     "explain.languagePicker.label": "884e1fc50c",
     "explain.languagePicker.toggle": "009ed110ba",
-    "explain.languagePicker.updating": "dfe40efe92",
     "explain.medicine.dose": "6b942766c4",
     "explain.medicine.duration": "8ddab050d5",
     "explain.medicine.frequency": "7710cdf129",
@@ -789,7 +788,6 @@
         "toggle": "Yí èdè padà",
         "label": "Fi èyí hàn mí ní",
         "defaultOption": "Gẹ̀ẹ́sì tó rọrùn",
-        "updating": "À ń ṣe àtúnṣe…",
         "failed": "A kò lè ṣe ẹ̀yà yẹn ní àkókò yìí. O ṣì ń rí èyí tó kẹ́yìn."
       },
       "actions": {

@@ -3,6 +3,8 @@
 import { useEffect, useRef } from "react";
 import type { CallError } from "@/lib/client/prepare";
 import { Button } from "@/components/ui/Button";
+import { ProgressFeed } from "@/components/ui/ProgressFeed";
+import { PROGRESS_LONG_INTERVAL_MS } from "@/components/ui/progress";
 import { TopBar } from "@/components/ui/TopBar";
 import { usePrepareCopy } from "./copy";
 import styles from "./PrepareFlow.module.css";
@@ -17,7 +19,7 @@ export type StatusCopy = {
 };
 
 export type SummaryStatusProps = { copy?: StatusCopy } & (
-  | { kind: "loading" }
+  | { kind: "loading"; /** The progress feed's lines (common.progress), in order. */ progress: string[] }
   | { kind: "error"; error: CallError; onRetry: () => void; onBackToAnswers: () => void }
 );
 
@@ -43,6 +45,8 @@ export function SummaryStatus(props: SummaryStatusProps) {
             </h1>
             <p className={styles.lead}>{s.makingLead}</p>
           </div>
+          {/* Outside the status region above: the feed has its own live region, announced once. */}
+          <ProgressFeed lines={props.progress} intervalMs={PROGRESS_LONG_INTERVAL_MS} className={styles.statusFeed} />
         </main>
       </div>
     );

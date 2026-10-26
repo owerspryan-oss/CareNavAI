@@ -1,0 +1,94 @@
+/* Progress feed: one status line at a time (DESIGN_SYSTEM.md §8: cross-fade + slide, reduced motion = just change). */
+
+.feed {
+  min-width: 0;
+}
+
+/* Both lines share one grid cell, so the leaving and arriving lines cross-fade in place. */
+.lines {
+  display: grid;
+  margin: 0;
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-leading);
+  color: var(--color-ink-muted);
+  overflow-wrap: anywhere;
+}
+
+.line {
+  grid-area: 1 / 1;
+}
+
+.current {
+  /* Soft shimmer: a teal glint across muted ink. Both colours are AA on the page background. */
+  background: linear-gradient(
+    100deg,
+    var(--color-ink-muted) 0%,
+    var(--color-ink-muted) 40%,
+    var(--color-teal-500) 50%,
+    var(--color-ink-muted) 60%,
+    var(--color-ink-muted) 100%
+  );
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation:
+    progress-arrive var(--spring-default-duration) var(--ease-spring-default) both,
+    progress-shimmer 2.4s ease-in-out infinite;
+}
+
+.leaving {
+  animation: progress-leave var(--spring-default-duration) var(--ease-spring-default) both;
+}
+
+@keyframes progress-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(0.5em);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes progress-leave {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-0.5em);
+  }
+}
+
+@keyframes progress-shimmer {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+
+/* Reduced motion: no shimmer, no slide, no fade. The text just changes. */
+@media (prefers-reduced-motion: reduce) {
+  .current {
+    animation: none;
+    background: none;
+    color: var(--color-ink-muted);
+  }
+
+  .leaving {
+    display: none;
+  }
+}
+
+/* Forced colours drop backgrounds, which would leave clipped text invisible. */
+@media (forced-colors: active) {
+  .current {
+    background: none;
+    color: CanvasText;
+  }
+}

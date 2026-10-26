@@ -98,7 +98,6 @@
     "explain.languagePicker.failed": "3bd16bc163",
     "explain.languagePicker.label": "884e1fc50c",
     "explain.languagePicker.toggle": "009ed110ba",
-    "explain.languagePicker.updating": "dfe40efe92",
     "explain.medicine.dose": "6b942766c4",
     "explain.medicine.duration": "8ddab050d5",
     "explain.medicine.frequency": "7710cdf129",
@@ -789,7 +788,6 @@
         "toggle": "மொழியை மாற்று",
         "label": "இதை எனக்கு இந்த மொழியில் காட்டு",
         "defaultOption": "எளிய ஆங்கிலம்",
-        "updating": "புதுப்பிக்கப்படுகிறது…",
         "failed": "இந்த முறை அந்தப் பதிப்பை உருவாக்க முடியவில்லை. நீங்கள் இன்னும் முந்தைய பதிப்பையே பார்க்கிறீர்கள்."
       },
       "actions": {
