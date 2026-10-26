@@ -32,6 +32,8 @@ import {
 } from "@/lib/prepare/state";
 import { Banner } from "@/components/ui/Banner";
 import { Button } from "@/components/ui/Button";
+import { ProgressFeed, useProgressCopy } from "@/components/ui/ProgressFeed";
+import { outputLanguageName, summaryLines } from "@/components/ui/progress";
 import { ProgressStepper } from "@/components/ui/ProgressStepper";
 import { TopBar } from "@/components/ui/TopBar";
 import { UrgentGate } from "@/components/safety/UrgentGate";
@@ -125,6 +127,9 @@ export function PrepareFlow({ maxChars, contextMaxChars, urgentContent, language
   const [state, dispatch] = useReducer(prepareReducer, undefined, initialPrepareState);
   const [errors, setErrors] = useState<StepErrors>({});
   const [screening, setScreening] = useState(false);
+  /** What the footer button is waiting on, for the progress feed: the urgency check or the follow-up questions. */
+  const [waitFor, setWaitFor] = useState<"check" | "followUps">("check");
+  const progress = useProgressCopy();
   const [gate, setGate] = useState<PendingGate | null>(null);
   const [stage, setStage] = useState<Stage>({ name: "steps" });
   /** Answered follow-ups, shown and editable on review. Asked once, after the last guided step. */
@@ -202,6 +207,7 @@ export function PrepareFlow({ maxChars, contextMaxChars, urgentContent, language
     const screened = Object.fromEntries(fields.map((f) => [f, state.text[f]])) as Partial<Record<TextField, string>>;
     if (fields.length === 0) return { clear: true, screened };
 
+    setWaitFor("check");
     setScreening(true);
     const ageBand = effectiveAgeBand(state);
     const results = await Promise.all(
@@ -252,6 +258,7 @@ export function PrepareFlow({ maxChars, contextMaxChars, urgentContent, language
   /** Step 7 (FR-22): ask for follow-ups before review. None, or any failure, goes straight to review. */
   async function startFollowUps(acknowledged: boolean) {
     setFollowUpsAsked(true);
+    setWaitFor("followUps");
     setScreening(true);
     const out = await fetchFollowUps(toPrepareAnswers(state), acknowledged);
     setScreening(false);
@@ -381,7 +388,9 @@ export function PrepareFlow({ maxChars, contextMaxChars, urgentContent, language
       />
     );
   }
-  if (stage.name === "loading") return <SummaryStatus kind="loading" />;
+  if (stage.name === "loading") {
+    return <SummaryStatus kind="loading" progress={summaryLines(progress, outputLanguageName(language, languages))} />;
+  }
   if (stage.name === "error") {
     return (
       <SummaryStatus
@@ -468,6 +477,11 @@ export function PrepareFlow({ maxChars, contextMaxChars, urgentContent, language
       </main>
 
       <footer className={styles.footer}>
+        {screening && (
+          <div className={styles.footerFeed}>
+            <ProgressFeed key={waitFor} lines={progress[waitFor]} />
+          </div>
+        )}
         <Button variant="tertiary" className={styles.backButton} onClick={onBack} disabled={screening}>
           {state.stepIndex === 0 ? c.actions.backToStart : c.actions.back}
         </Button>

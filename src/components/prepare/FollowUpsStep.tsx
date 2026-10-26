@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
+import { ProgressFeed, useProgressCopy } from "@/components/ui/ProgressFeed";
 import { TextArea } from "@/components/ui/TextArea";
 import { TopBar } from "@/components/ui/TopBar";
 import { usePrepareCopy } from "./copy";
@@ -36,6 +37,7 @@ export function FollowUpsStep<I extends string>({
   onBack,
 }: FollowUpsStepProps<I>) {
   const c = usePrepareCopy();
+  const progress = useProgressCopy();
   const [values, setValues] = useState<string[]>(() => questions.map((_, i) => initial[i]?.answer ?? ""));
   const [skipped, setSkipped] = useState<boolean[]>(() => questions.map((_, i) => initial.length > 0 && initial[i]?.answer === null));
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -134,6 +136,11 @@ export function FollowUpsStep<I extends string>({
       </main>
 
       <footer className={styles.footer}>
+        {busy && (
+          <div className={styles.footerFeed}>
+            <ProgressFeed lines={progress.check} />
+          </div>
+        )}
         <Button variant="tertiary" className={styles.backButton} onClick={onBack} disabled={busy}>
           {c.actions.back}
         </Button>

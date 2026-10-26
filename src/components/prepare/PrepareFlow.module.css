@@ -207,6 +207,47 @@
   }
 }
 
+/* The progress feed under a loading page's lead. */
+.statusFeed {
+  margin-top: var(--space-4);
+  text-align: center;
+}
+
+/* The progress feed while a footer button waits: a small pill just above the buttons. It is out of
+   flow, so neither the buttons nor the page move when it appears. */
+.footerFeed {
+  position: absolute;
+  bottom: 100%;
+  left: var(--space-4);
+  right: var(--space-4);
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.footerFeed > * {
+  max-width: 100%;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  text-align: center;
+  animation: footer-feed-in var(--spring-default-duration) var(--ease-spring-default) both;
+}
+
+@keyframes footer-feed-in {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footerFeed > * {
+    animation: none;
+  }
+}
+
 .statusActions {
   display: grid;
   gap: var(--space-3);

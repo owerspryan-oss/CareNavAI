@@ -45,10 +45,22 @@ const restyled = ({ flow, language, english: e }) => ({
 });
 const PATOIS = JSON.parse(readFileSync(new URL("../config/languages.json", import.meta.url), "utf8")).languages.find((l) => l.code === "jam").nativeName;
 
+/** API paths held open until released, so a wait's progress feed can be checked (`hold`). */
+const held = new Map();
+function hold(path) {
+  let release;
+  held.set(path, new Promise((r) => (release = r)));
+  return () => {
+    held.delete(path);
+    release();
+  };
+}
+
 /** Fake API: clear unless the text is one of the urgent probes below. */
 async function fakeApi(page) {
   await page.route("**/api/**", async (route) => {
     const url = new URL(route.request().url());
+    await held.get(url.pathname);
     const body = route.request().postData() ?? "";
     const json = (data) => route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(data) });
     switch (url.pathname) {
@@ -158,7 +170,13 @@ async function journeyPrepare() {
   await next(page);
   await page.locator("textarea").first().fill("Worse in the morning.");
   await check(page, "J1 step 4 changes");
-  await next(page);
+  let release = hold("/api/screen");
+  await page.getByRole("button", { name: T("prepare.actions.next"), exact: true }).click();
+  await page.locator("[data-progress-feed]").waitFor();
+  await check(page, "J1 step check (progress feed)");
+  release();
+  await page.locator("[data-progress-feed]").waitFor({ state: "detached" });
+  await page.waitForTimeout(700);
   await check(page, "J1 step 5 medicines");
   await press(page, page.getByRole("button", { name: anyOf("prepare.actions.skip", "prepare.actions.next") }).first());
   await check(page, "J1 step 6 worries");
@@ -167,7 +185,11 @@ async function journeyPrepare() {
   await page.locator("textarea").first().fill("About an hour.");
   await press(page, page.getByRole("button", { name: T("prepare.followUps.continue"), exact: true }));
   await check(page, "J1 review");
+  release = hold("/api/summary");
   await page.getByRole("button", { name: T("prepare.review.getSummary"), exact: true }).click();
+  await page.locator("[data-progress-feed]").waitFor();
+  await check(page, "J1 summary loading (progress feed)");
+  release();
   await page.getByRole("heading", { name: T("result.title"), exact: true }).waitFor({ timeout: 15000 });
   await check(page, "J1 result (list)");
   await page.getByRole("button", { name: T("result.showOwnWords"), exact: true }).click();
@@ -221,6 +243,8 @@ async function urgentScreens() {
     await page.locator("textarea").first().fill(text);
     await next(page);
     await page.waitForSelector("[data-level]");
+    // Nothing but the static urgent content on an urgent screen (CLAUDE.md rule 3), not even the progress feed.
+    if (await page.locator("[data-progress-feed]").count()) throw new Error(`${name}: progress feed on an urgent screen`);
     await check(page, name);
     await page.locator('[data-action="open-continue-check"]').click();
     await check(page, `${name} (continue check open)`);
@@ -240,7 +264,11 @@ async function journeyUnderstand() {
   await check(page, "J2 confirm words");
   await press(page, page.getByRole("button", { name: T("understand.confirm.confirm"), exact: true }));
   await check(page, "J2 follow-ups");
-  await press(page, page.getByRole("button", { name: T("prepare.followUps.continue"), exact: true }));
+  const release = hold("/api/explain");
+  await page.getByRole("button", { name: T("prepare.followUps.continue"), exact: true }).click();
+  await page.getByRole("heading", { name: T("understand.status.makingTitle"), exact: true }).waitFor();
+  await check(page, "J2 explanation loading (progress feed)");
+  release();
   await page.waitForTimeout(800);
   await check(page, "J2 result");
   await page.getByRole("button", { name: T("explain.showSources"), exact: true }).click();

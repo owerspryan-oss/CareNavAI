@@ -98,7 +98,6 @@
     "explain.languagePicker.failed": "3bd16bc163",
     "explain.languagePicker.label": "884e1fc50c",
     "explain.languagePicker.toggle": "009ed110ba",
-    "explain.languagePicker.updating": "dfe40efe92",
     "explain.medicine.dose": "6b942766c4",
     "explain.medicine.duration": "8ddab050d5",
     "explain.medicine.frequency": "7710cdf129",
@@ -789,7 +788,6 @@
         "toggle": "Chanje lang",
         "label": "Montre m sa a nan",
         "defaultOption": "Angle senp",
-        "updating": "N ap mete l ajou…",
         "failed": "Nou pa t ka fè vèsyon sa a fwa sa a. Ou toujou ap wè dènye a."
       },
       "actions": {

@@ -74,7 +74,7 @@ describe.skipIf(!hasBrowser)("PDF rendering with headless Chromium", () => {
     expect(pageCount(pdf, file)).toBeGreaterThanOrEqual(2);
     if (has("pdftotext")) {
       const t = text(file);
-      expect(t).toContain("Letter explanation".toLowerCase());
+      expect(t).toContain("What your letter means: In English".toLowerCase());
       expect(t).toContain("Amlodipine 5mg, to be taken once a day in the morning".toLowerCase());
       expect(t).toContain("What your letter means: Naijá".toLowerCase());
       expect(t).toContain("Di doctor don start you on new medicine".toLowerCase());

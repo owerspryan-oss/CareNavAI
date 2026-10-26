@@ -98,7 +98,6 @@
     "explain.languagePicker.failed": "3bd16bc163",
     "explain.languagePicker.label": "884e1fc50c",
     "explain.languagePicker.toggle": "009ed110ba",
-    "explain.languagePicker.updating": "dfe40efe92",
     "explain.medicine.dose": "6b942766c4",
     "explain.medicine.duration": "8ddab050d5",
     "explain.medicine.frequency": "7710cdf129",
@@ -789,7 +788,6 @@
         "toggle": "ભાષા બદલો",
         "label": "આ મને આ ભાષામાં બતાવો",
         "defaultOption": "સરળ અંગ્રેજી",
-        "updating": "અપડેટ થઈ રહ્યું છે…",
         "failed": "આ વખતે અમે તે વર્ઝન બનાવી શક્યા નહીં. તમે હજી પણ છેલ્લું વર્ઝન જ જોઈ રહ્યા છો."
       },
       "actions": {

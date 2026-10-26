@@ -18,6 +18,8 @@ import { UrgentBanner } from "@/components/safety/UrgentBanner";
 import { Banner } from "@/components/ui/Banner";
 import { Button } from "@/components/ui/Button";
 import { CardDeck } from "@/components/ui/CardDeck";
+import { ProgressFeed, useProgressCopy } from "@/components/ui/ProgressFeed";
+import { changeLanguageLines, outputLanguageName } from "@/components/ui/progress";
 import { SegmentedControl } from "@/components/ui/SegmentedControl";
 import { TopBar } from "@/components/ui/TopBar";
 import {
@@ -277,6 +279,7 @@ export function ExplainResultView({
   const c = useExplainCopy();
   const rc = useResultCopy();
   const ui = useUiLang();
+  const progress = useProgressCopy();
   const { english, user } = result;
   const [tab, setTab] = useState<Tab>(user ? "user" : "english");
   const [layout, setLayout] = useResultLayout();
@@ -400,8 +403,14 @@ export function ExplainResultView({
               ))}
           </select>
           <p className={own.pickerStatus} role="status" aria-live="polite">
-            {updating ? c.languagePicker.updating : updateFailed ? c.languagePicker.failed : ""}
+            {!updating && updateFailed ? c.languagePicker.failed : ""}
           </p>
+          {updating && (
+            <ProgressFeed
+              key={outputLanguage ?? ""}
+              lines={changeLanguageLines(progress, outputLanguageName(outputLanguage, languages) ?? c.languagePicker.defaultOption)}
+            />
+          )}
         </div>
 
         <div
